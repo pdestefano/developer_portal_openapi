@@ -1,0 +1,1426 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MedsAPI Dynamic Health EBSCO Partners",
+    "version": "1.0",
+    "contact": {
+      "name": "EBSCO Information Services",
+      "url": "https://connect.ebsco.com/"
+    },
+    "description": "MedsAPI Dynamic Health APIs for Partners Endpoints"
+  },
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "Dynamic Health Token API"
+    },
+    {
+      "name": "Article Exclusions",
+      "description": "Dynamic Health Article Exclusions Endpoints"
+    },
+    {
+      "name": "Custom Articles",
+      "description": "Dynamic Health Custom Articles Endpoints"
+    },
+    {
+      "name": "Article Notes",
+      "description": "Dynamic Health Article Notes Endpoints"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1",
+      "description": "Apigee Live Server"
+    }
+  ],
+  "paths": {
+    "/token": {
+      "servers": [
+        {
+          "url": "https://ebscois-live.apigee.net/medsapi-auth/v1",
+          "description": "MedsAPI token endpoint"
+        }
+      ],
+      "post": {
+        "summary": "Get an authorization token",
+        "tags": [
+          "Authorization"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token_expires_in": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "The number of seconds remaining before the refresh token will expire.  The lifespan of refresh tokens is usually larger than Access tokens. The exact duration depends on the type of Refresh Tokens issued. The different types explained below in the document."
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "dynamic-health",
+                      "description": "The type of token issued"
+                    },
+                    "organization_name": {
+                      "type": "string",
+                      "example": "ebscois",
+                      "description": "The issuer of the token"
+                    },
+                    "developer.email": {
+                      "type": "string",
+                      "example": "msmith@mycompany.com",
+                      "description": "Name of the owener of the token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "BearerToken",
+                      "description": "Always set to be a bearer token"
+                    },
+                    "issued_at": {
+                      "type": "string",
+                      "example": "1593011837412",
+                      "description": "Epoch time when the token was issued"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "example": "{client_id}",
+                      "description": "Client Id that the token can be used by"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "{actual bearer token to use}",
+                      "description": "Bearer token"
+                    },
+                    "application_name": {
+                      "type": "string",
+                      "example": "{id}",
+                      "description": "Id of the application that is registered for this token"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "admin:rw",
+                      "description": "Authorization scope"
+                    },
+                    "expires_in": {
+                      "type": "string",
+                      "example": "14399",
+                      "description": "Seconds until this token has expired"
+                    },
+                    "refresh_count": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "When this token can be refreshed automatically"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "approved",
+                      "description": "Indicates that the token has been approved"
+                    }
+                  },
+                  "required": [
+                    "refresh_token_expires_in",
+                    "product",
+                    "organization_name",
+                    "developer.email",
+                    "token_type",
+                    "issued_at",
+                    "client_id",
+                    "access_token",
+                    "application_name",
+                    "scope",
+                    "expires_in",
+                    "refresh_count",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials",
+                    "description": "Must be set to client_credentials"
+                  },
+                  "product": {
+                    "type": "string",
+                    "example": "dynamic-health",
+                    "description": "Must be set to dynamic-health"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "example": "{client_id}",
+                    "description": "The client_id to use will be provided by EBSCO"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "example": "{client secret}",
+                    "description": "This will be provided by EBSCO"
+                  }
+                }
+              },
+              "examples": {
+                "Example Body": {
+                  "value": {
+                    "grant_type": "client_credentials",
+                    "product": "dynamic-health",
+                    "client_id": "{client id}",
+                    "client_secret": "{client secret}"
+                  }
+                }
+              }
+            },
+            "application/javascript": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          },
+          "description": "{\n  \"grant_type\": \"client_credentials\",\n  \"product\": \"dynamic-health\",\n  \"client_id\": \"client_id\",\n  \"client_secret\": \"client secret\"\n}\n"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": ""
+          }
+        ],
+        "description": "The authentication endpoint for getting a token, used in all other Dynamic Health APIs."
+      }
+    },
+    "/content/article-exclusions": {
+      "get": {
+        "tags": [
+          "Article Exclusions"
+        ],
+        "summary": "Get all article exclusions for a given customer",
+        "operationId": "get-all-article-exclusions-by-customer",
+        "description": "Get a list of all article exclusions for a given customer by providing that customer's id as a query parameter.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "customerId",
+            "description": "ID of customer owning the article exclusion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "links",
+                        "totalItems"
+                      ],
+                      "properties": {
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items",
+                          "example": 1
+                        },
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relationship type of the href value"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/article-exclusions",
+                                "description": "Hypermedia link"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "List of all article exclusions for a customer",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "customer": {
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "awsbasic",
+                                "description": "Customer associated with this article exclusion"
+                              }
+                            }
+                          },
+                          "parentArticle": {
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "T915929",
+                                "description": "Id of the article exclusion"
+                              },
+                              "title": {
+                                "type": "string",
+                                "example": "Implementing Psychiatric Advance Directives for Clients with Mental Health Disorders",
+                                "description": "Title of the article exclusion"
+                              },
+                              "category": {
+                                "type": "object",
+                                "required": [
+                                  "title"
+                                ],
+                                "properties": {
+                                  "title": {
+                                    "type": "string",
+                                    "example": "Allied Health Skills",
+                                    "description": "Category type"
+                                  }
+                                }
+                              },
+                              "slug": {
+                                "type": "string",
+                                "example": "/skills/t915929-implementing-psychiatric-advance-directives-for-clients-with-mental-health-disorders",
+                                "description": "Location of the article exclusion"
+                              }
+                            }
+                          },
+                          "lastUpdate": {
+                            "type": "object",
+                            "required": [
+                              "timestamp",
+                              "firstName",
+                              "lastName",
+                              "username"
+                            ],
+                            "properties": {
+                              "timestamp": {
+                                "type": "string",
+                                "example": "2017-10-06T19:05:04.133Z",
+                                "description": "Date and time when last updated"
+                              },
+                              "firstName": {
+                                "type": "string",
+                                "example": "Mary"
+                              },
+                              "lastName": {
+                                "type": "string",
+                                "example": "Smith"
+                              },
+                              "username": {
+                                "type": "string",
+                                "example": "msmith"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "parent",
+                          "lastUpdate",
+                          "customer"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      },
+      "parameters": [
+        
+      ]
+    },
+    "/content/article-exclusion-customers": {
+      "get": {
+        "summary": "Get a list of all customers that have article exclusions",
+        "tags": [
+          "Article Exclusions"
+        ],
+        "operationId": "get-list-of-all-customers-with-article-exclusions",
+        "description": "Return a list of all customers who have article exclusions",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "links",
+                        "totalItems"
+                      ],
+                      "properties": {
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relationship type of the href value"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/article-exclusion-customers",
+                                "description": "Hypermedia link"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "List of all customers with article exclusions",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "abc123",
+                            "description": "Customer ID"
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    },
+    "/content/custom-articles": {
+      "get": {
+        "tags": [
+          "Custom Articles"
+        ],
+        "summary": "Get all custom articles for a given customer",
+        "operationId": "get-all-custom-articles-by-customer",
+        "description": "Get a list of all custom articles for a given customer by providing that customer's id as a query parameter.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "customerId",
+            "description": "ID of the customer owning the custom article",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "links",
+                        "totalItems"
+                      ],
+                      "properties": {
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items",
+                          "example": 1
+                        },
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relationship type of the href value"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/custom-articles",
+                                "description": "Hypermedia link"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "List of all the custom articles owned by the customer",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "C306256"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "My Custom Article",
+                            "example": "My Article Title"
+                          },
+                          "slug": {
+                            "type": "string",
+                            "description": "c306256-post-deployment\"",
+                            "example": "c306256--post-deployment"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "PUBLISHED",
+                            "example": "PUBLISHED"
+                          },
+                          "customer": {
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "ns123456",
+                                "description": "ID of the customer"
+                              }
+                            }
+                          },
+                          "lastUpdate": {
+                            "type": "object",
+                            "required": [
+                              "timestamp",
+                              "username"
+                            ],
+                            "properties": {
+                              "timestamp": {
+                                "type": "string",
+                                "example": "2020-04-13T19:40:09.000Z",
+                                "description": "UTC Date and time of last update"
+                              },
+                              "username": {
+                                "type": "string",
+                                "description": "username of person making the update",
+                                "example": "msmith"
+                              }
+                            }
+                          },
+                          "links": {
+                            "type": "object",
+                            "required": [
+                              "rel",
+                              "href"
+                            ],
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/custom-articles/C306256",
+                                "description": "Link to a particular custom article"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "slug",
+                          "lastUpdate",
+                          "links"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      },
+      "parameters": [
+        
+      ]
+    },
+    "/content/custom-articles/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "description": "ID of the Custom Article",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "in": "query",
+          "name": "customerId",
+          "description": "ID of the customer owning the custom article",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get a specific custom article for the given customer",
+        "operationId": "get-a-custom-article-by-id-and-customer-id",
+        "description": "Get a specific custom article for a given customer by providing the custom article id in the path and the customer's id as a query parameter.",
+        "tags": [
+          "Custom Articles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "C306256",
+                      "description": "Id of the custom article"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Admission and Discharge Articles for our Org",
+                      "description": "Displayed title for the article"
+                    },
+                    "links": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "example": "self",
+                            "description": ""
+                          },
+                          "href": {
+                            "type": "string",
+                            "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/custom-articles/C306256"
+                          }
+                        },
+                        "required": [
+                          "rel",
+                          "href"
+                        ]
+                      }
+                    },
+                    "customer": {
+                      "type": "object",
+                      "description": "Customer who owns the article",
+                      "required": [
+                        "id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "ns123456",
+                          "description": "ID of the customer"
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Description of the article"
+                    },
+                    "purpose": {
+                      "type": "string",
+                      "example": "Purpose for the article"
+                    },
+                    "redFlags": {
+                      "type": "array",
+                      "description": "Concerns for the article",
+                      "items": {
+                        "type": "string",
+                        "example": "Do not do this if..."
+                      }
+                    },
+                    "supplies": {
+                      "type": "array",
+                      "description": "Supplies for the procedure",
+                      "items": {
+                        "type": "string",
+                        "example": "syringe"
+                      }
+                    },
+                    "preProcedureSteps": {
+                      "type": "array",
+                      "description": "Steps before starting",
+                      "items": {
+                        "type": "string",
+                        "example": "Sterilize the needle"
+                      }
+                    },
+                    "procedureSteps": {
+                      "type": "array",
+                      "description": "Steps that must be done",
+                      "items": {
+                        "type": "string",
+                        "example": "Steps 1..."
+                      }
+                    },
+                    "postProcedureSteps": {
+                      "type": "array",
+                      "description": "Procedural steps after completion",
+                      "items": {
+                        "type": "string",
+                        "example": "To cleanup after this process..."
+                      }
+                    },
+                    "patientFamilyEducation": {
+                      "type": "string",
+                      "description": "Patient family education"
+                    },
+                    "documentation": {
+                      "type": "string",
+                      "example": "List any required documentation for the procedure"
+                    },
+                    "notes": {
+                      "type": "string",
+                      "example": "Any other comments"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "links",
+                    "description",
+                    "purpose",
+                    "procedureSteps"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    },
+    "/custom-article-customers": {
+      "get": {
+        "summary": "Get all customers that have custom articles",
+        "tags": [
+          "Custom Articles"
+        ],
+        "operationId": "get-list-of-all-customers-with-custom-articles",
+        "description": "Return a list of all customers who have custom articles",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "links",
+                        "totalItems"
+                      ],
+                      "properties": {
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relationship type of the href value"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/custom-article-customers",
+                                "description": "Hypermedia link"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "List of all customers with custom articles",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "abc123",
+                            "description": "Customer ID"
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    },
+    "/content/article-notes": {
+      "get": {
+        "tags": [
+          "Article Notes"
+        ],
+        "summary": "Get all article notes for a given customer",
+        "operationId": "get-all-article-notes-by-customer",
+        "description": "Get a list of all article notes for a given customer by providing that customer's id as a query parameter.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "articleId",
+            "description": "ID of the article that the note relates to"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "customerId",
+            "description": "ID of the customer owning the article note",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "links",
+                        "totalItems"
+                      ],
+                      "properties": {
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items",
+                          "example": 1
+                        },
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relationship type of the href value"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/article-notes",
+                                "description": "Hypermedia link"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "List of all the sections for an article",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "customer": {
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "awsbasic",
+                                "description": "Customer associated with this article note"
+                              }
+                            }
+                          },
+                          "parentArticle": {
+                            "type": "object",
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "T913805",
+                                "description": "Id of the article containing this note"
+                              }
+                            }
+                          },
+                          "text": {
+                            "type": "string",
+                            "example": "This is our note for this article",
+                            "description": "Actual text of the article note"
+                          },
+                          "lastUpdate": {
+                            "type": "object",
+                            "required": [
+                              "timestamp",
+                              "username"
+                            ],
+                            "properties": {
+                              "timestamp": {
+                                "type": "string",
+                                "example": "2019-10-28T18:51:18.614Z",
+                                "description": "Date when this note was added"
+                              },
+                              "username": {
+                                "type": "string",
+                                "example": "msmith",
+                                "description": "User who created this note"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "customerId",
+                          "parent",
+                          "text",
+                          "lastUpdate"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      },
+      "parameters": [
+        
+      ]
+    },
+    "/content/article-note-customers": {
+      "get": {
+        "summary": "Get all customers that have article notes",
+        "tags": [
+          "Article Notes"
+        ],
+        "operationId": "get-list-of-all-customers-with-article-notes",
+        "description": "Return a list of all customers who have article notes",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "links",
+                        "totalItems"
+                      ],
+                      "properties": {
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relationship type of the href value"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://ebscois-live.apigee.net/medsapi-partner-dynamic-health/v1/content/article-note-customers",
+                                "description": "Hypermedia link"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "List of all customers with article notes",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "abc123",
+                            "description": "Customer ID"
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error-Response": {
+        "title": "Error-Response",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Standardized reason phrase for this status code",
+            "example": "Error Name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Details about the error",
+            "example": "Error Description"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

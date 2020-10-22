@@ -1,0 +1,189 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EBSCOHost Entitlement API",
+    "description": "The EBSCOHost Entitlement API enables libraries and partners to customize key functions of the EBSCO open link resolver to get their patrons easy access to EBSCOhost full text database content.",
+    "version": "1.0.0",
+    "license": {
+      "name": "Copyright EBSCO",
+      "url": "https://www.ebsco.com/terms-of-use"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://ebscois-staging.apigee.net/ehostentitlements"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Full Text Finder Resource"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/{profile}/discovery": {
+      "get": {
+        "tags": [
+          "Full Text Finder Resource"
+        ],
+        "summary": "Get Full Text Links",
+        "description": "This operation allows you to use a DOI, or Digital Object Identifier, to get access to full text links.  The operation can accept a DOI in either openurl 1.0 or 1.1 format.",
+        "operationId": "openurl",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "profile",
+            "in": "path",
+            "description": "EBSCO credentials formatted as customerId.groupId.profileId",
+            "required": true,
+            "type": "string",
+            "default": "demo.main.ftf"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Profile token",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-forwarded-proto",
+            "in": "header",
+            "description": "Protocol of link resolver",
+            "required": false,
+            "type": "string",
+            "default": "https"
+          },
+          {
+            "name": "x-forwarded-host",
+            "in": "header",
+            "description": "Host of link resolver",
+            "required": false,
+            "type": "string",
+            "default": "apigee.ebsco.com"
+          },
+          {
+            "name": "doi",
+            "in": "query",
+            "description": "Digital Object Identifier query",
+            "required": false,
+            "type": "string",
+            "default": "10,1080/1470243032000214340"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoveryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DiagnosticMessage": {
+        "type": "object",
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "UUID Correlation ID",
+            "allowEmptyValue": false
+          },
+          "level": {
+            "type": "string",
+            "description": "Diagnostic Level",
+            "allowEmptyValue": false,
+            "enum": [
+              "\"OFF\"",
+              "\"FATAL\"",
+              "\"ERROR\"",
+              "\"WARN\"",
+              "\"INFO\"",
+              "\"DEBUG\"",
+              "\"TRACE\"",
+              "\"ALL\""
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "Diagnostic Message",
+            "allowEmptyValue": false
+          },
+          "service": {
+            "type": "string",
+            "description": "Service Name",
+            "allowEmptyValue": false
+          },
+          "timeStamp": {
+            "type": "string",
+            "description": "Timestamp of Diagnostic Message",
+            "allowEmptyValue": false
+          }
+        },
+        "title": "DiagnosticMessage"
+      },
+      "DiscoveryResponse": {
+        "type": "object",
+        "properties": {
+          "link": {
+            "type": "string",
+            "description": "Discovered ehUrl",
+            "allowEmptyValue": false,
+            "example": "http://search.ebscohost.com/login.aspx?direct=true&scope=site&db=aph&AN=16133335&ErrorURL=http%3A%2F%2Flinksource%2Eebsco%2Ecom%2Ferror%2Easpx"
+          }
+        },
+        "title": "DiscoveryResponse",
+        "description": "Get FTF Links Response"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://apis.ebsco.com/oauth-proxy/token",
+            "scopes": {
+              
+            }
+          }
+        }
+      }
+    }
+  }
+}
