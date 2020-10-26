@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "DynaMed",
-    "description": "The MedsAPI DynaMed APIs provides endpoints to search and retrieve\ncurrent and accurate evidence-based content.",
+    "description": "MedsAPI DynaMed provides endpoints to search and retrieve current and accurate evidence-based content. The documentation on this site covers all supported functionality of the MedsAPI suite of APIs. Any fields or parameters not represented by the documentation are unsupported and subject to change. Additional optional query parameters and fields in the response could be added in the future as a non breaking change. Any other change that could break the contract would be considered in a future version.",
     "contact": {
       "name": "EBSCO Information Services",
       "url": "https://connect.ebsco.com/"

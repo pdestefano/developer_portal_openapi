@@ -7,7 +7,7 @@
       "name": "EBSCO Information Services",
       "url": "https://connect.ebsco.com/"
     },
-    "description": "MedsAPI Dynamic Health Endpoints"
+    "description": "MedsAPI Dynamic Health Endpoints.  The documentation on this site covers all supported functionality of the MedsAPI suite of APIs. Any fields or parameters not represented by the documentation are unsupported and subject to change. Additional optional query parameters and fields in the response could be added in the future as a non breaking change. Any other change that could break the contract would be considered in a future version."
   },
   "tags": [
     {
@@ -1143,8 +1143,7 @@
             }
           },
           "data": {
-            "type": "object",
-            "description": "structured content of article"
+            "type": "object"
           }
         }
       },
@@ -1193,10 +1192,6 @@
           "metadata": {
             "type": "object",
             "properties": {
-              "mono.id": {
-                "type": "string",
-                "example": "glycopyrrolateoralinhalation"
-              },
               "DC.Type": {
                 "type": "string",
                 "example": "topic"
@@ -1204,14 +1199,6 @@
               "DC.Title": {
                 "type": "string",
                 "example": "Gait Belt Utilization for Ambulation"
-              },
-              "drug.type": {
-                "type": "string",
-                "example": "drug.monograph"
-              },
-              "search.id": {
-                "type": "string",
-                "example": "glycopyrrolate, oral inhalation"
               },
               "abstract": {
                 "type": "string",

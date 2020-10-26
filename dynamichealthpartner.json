@@ -7,24 +7,24 @@
       "name": "EBSCO Information Services",
       "url": "https://connect.ebsco.com/"
     },
-    "description": "MedsAPI Dynamic Health APIs for Partners Endpoints"
+    "description": "MedsAPI Dynamic Health EBSCO Partner Endpoints. The documentation on this site covers all supported functionality of the MedsAPI suite of APIs. Any fields or parameters not represented by the documentation are unsupported and subject to change. Additional optional query parameters and fields in the response could be added in the future as a non breaking change. Any other change that could break the contract would be considered in a future version."
   },
   "tags": [
     {
       "name": "Authorization",
-      "description": "Dynamic Health Token API"
+      "description": "MedsAPI Token API"
     },
     {
       "name": "Article Exclusions",
-      "description": "Dynamic Health Article Exclusions Endpoints"
+      "description": "MedsAPI Dynamic Health EBSCO Partner Article Exclusions Endpoints"
     },
     {
       "name": "Custom Articles",
-      "description": "Dynamic Health Custom Articles Endpoints"
+      "description": "MedsAPI Dynamic Health EBSCO Partner Custom Articles Endpoints"
     },
     {
       "name": "Article Notes",
-      "description": "Dynamic Health Article Notes Endpoints"
+      "description": "MedsAPI Dynamic Health EBSCO Partner Article Notes Endpoints"
     }
   ],
   "servers": [
@@ -241,7 +241,7 @@
             "description": ""
           }
         ],
-        "description": "The authentication endpoint for getting a token, used in all other Dynamic Health APIs."
+        "description": "The authentication endpoint for getting a token, used in all other Dynamic Health and Dynamic Health EBSCO Partner APIs."
       }
     },
     "/content/article-exclusions": {
