@@ -124,9 +124,9 @@
           {
             "name": "localeid",
             "in": "path",
-            "description": "Locale Identifier",
+            "description": "Locale Identifier.  For more information on locale identifiers, see [Get Alpha Browser Menu](/knowledge-services/publicationiq/docs/get-alpha-browser-menu).",
             "required": true,
-            "type": "string"
+            "type": "integer"
           },
           {
             "name": "sessionid",
@@ -149,7 +149,7 @@
           {
             "name": "menuid",
             "in": "query",
-            "description": "Menu ID. Used for filtering menus in position 1. Must be a positive number.",
+            "description": "Menu ID. Used for filtering menus in position 1. The menu id must be a value greater than or equal to 65 and less than or equal to 90.",
             "required": true,
             "type": "string"
           },

@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "EBSCOHost Entitlement API",
-    "description": "The EBSCOHost Entitlement API enables libraries and partners to customize key functions of the EBSCO open link resolver to get their patrons easy access to EBSCOhost full text database content.",
+    "title": "EBSCOhost Entitlement API",
+    "description": "The EBSCOhost Entitlement API enables libraries and partners to customize key functions of the EBSCO open link resolver to get their patrons easy access to EBSCOhost full text database content.",
     "version": "1.0.0",
     "license": {
       "name": "Copyright EBSCO",
