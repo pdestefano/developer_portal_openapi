@@ -2752,6 +2752,11 @@
               "$ref": "#/components/schemas/nItem"
             }
           },
+          "customCoverageOwnership": {
+            "type": "string",
+            "description": "Custom Coverage Ownership. Valid values are Set By Customer or Set By EP.",
+            "example": "Set By EP"
+          },		  
           "coverageStatement": {
             "type": "string",
             "description": "Coverage Statement",
