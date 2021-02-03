@@ -38,6 +38,7 @@
         "tags": [
           "Label and Proxy Resources"
         ],
+		"summary": "Get Labels and Root Proxy",
         "description": "This operation allows you to retrieve the list of all custom field labels and the root proxy.\n\n  **Please Note:**  The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -96,6 +97,7 @@
         "tags": [
           "Label and Proxy Resources"
         ],
+		"summary": "Create and Label Custom Fields",
         "description": "This operation allows you to create and label up to five custom fields for your Title Details. Specify the field label ID, Display Label Name and indicate whether you’d like the information to display on Publication Finder and/or Full Text Finder. Once the Custom Label field(s) have been created, one can verify it in  Title Details REST end point. Not specifying the Custom labels details  for a given custom label ID in the payload will result in setting displayLabel to empty string.\n\n  **Please Note:** The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  Only use one bodyoption below when trying this operation.  If more than one bodyoption is used, the Swagger UI will use the last one in the list for the PUT.  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -161,6 +163,7 @@
         "tags": [
           "Label and Proxy Resources"
         ],
+		"summary": "Get Customer Proxies",
         "description": "This operation allows you to retrieve the list of all available customer proxies.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -221,6 +224,7 @@
         "tags": [
           "Vendor Resources"
         ],
+		"summary": "Get Vendors",
         "description": "This operation allows you to search EPKB by vendor.  It returns a list of vendors that includes customer context and the total number of results.  When searching for vendors without a search parameter, sort options will be by vendor name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -315,6 +319,7 @@
         "tags": [
           "Vendor Resources"
         ],
+		"summary": "Get Vendor Details",
         "description": "This operation allows you to retrieve vendor details from EPKB for a specific vendor ID.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -372,6 +377,7 @@
         "tags": [
           "Vendor Resources"
         ],
+		"summary": "Update Vendor Proxy and Token Values",
         "description": "This operation allows you to update vendor proxy and token values for a specific vendor ID.  If a vendor does not have a token set up, the JSON payload should have an empty token with a proxy value.  A vendor with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the vendor proxy with the root proxy if the root proxy is set.   \n\n  **Please Note:** Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -470,6 +476,7 @@
         "tags": [
           "Vendor Resources"
         ],
+		"summary": "Get List of Packages for a Vendor",
         "description": "This operation allows you to retrieve a list of packages from EPKB for a vendor including customer context.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -603,6 +610,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Create Custom Packages",
         "description": "This operation allows you to create custom packages.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -673,6 +681,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Get List of Packages",
         "description": "This operation allows you to search for packages and returns a list of packages from EPKB.  The list is not limited to a single vendor ID.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for packages without a search parameter, the sort options will be by package name.  When the search parameter is not null, then the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -800,6 +809,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Get Package Details",
         "description": "This operation allows you to retrieve EPKB information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -866,6 +876,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Update a Package",
         "description": "This operation allows you to update selection and customizations to a package in a customer EPKB account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization. \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1056,6 +1067,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Get Titles that are Part of a Package",
         "description": "This operation allows you to search and retrieve a list of titles from EPKB that are part of a specified package.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for titles without a search parameter, the sort options will be by title name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1220,6 +1232,7 @@
         "tags": [
           "Title Resources"
         ],
+		"summary": "Create Custom Titles",
         "description": "This operation allows you to create custom titles.  The titleName and pubType elements are required in the custom title payload.  If your JSON POST payload contains multiple coverage dates, the dates must be in descending order.   \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1299,6 +1312,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Get Package-Title Details",
         "description": "This operation allows you to retrieve details for a particular package-title from EPKB.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1374,6 +1388,7 @@
         "tags": [
           "Package Resources"
         ],
+		"summary": "Update a Title in a Package",
         "description": "This operation allows you to update selection status, proxy value or coverage customizations for a title within a package in a customer EPKB account.  A title with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the title proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title update payload.  For both managed and custom titles, removing a title with isSelected set to false in the payload will result in a loss of customization made previously at the title level.  Removing a custom title with isSelected set to false in the payload will result in the deletion (hard delete) of the custom title from the custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization. \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1691,6 +1706,7 @@
         "tags": [
           "Title Resources"
         ],
+		"summary": "Get List of Titles Regardless of Package",
         "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1858,6 +1874,7 @@
         "tags": [
           "Title Resources"
         ],
+		"summary": "Get Title Details Regardless of Package",
         "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1917,6 +1934,7 @@
         "tags": [
           "Holdings Resources"
         ],
+		"summary": "Download Holdings",
         "description": "This operation allows you to download customer holdings in KBART2 (JSON) format.  Before using this resource, you need to perform a Holdings Resource POST to populate holdings data to a staging area.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1995,6 +2013,7 @@
         "tags": [
           "Holdings Resources"
         ],
+		"summary": "Stage Holdings",
         "description": "This operation populates holdings data to a staging area.  You must perform this operation before using the GET holdings resources.  Customer holdings will be refreshed each time a POST is complete.  Hidden titles and packages are excluded from the holdings download.  If the customer has made changes since the last POST, another POST needs to be performed before using a GET holdings resource in order to download all of the changes.  If any metadata has changed since the last POST, you do not need to perform another POST in order to see the metadata changes in the GET holdings.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -2057,6 +2076,7 @@
         "tags": [
           "Holdings Resources"
         ],
+		"summary": "Get Snapshot Status",
         "description": "This operation allows you to retrieve the status of a holdings snapshot.  The response reveals if the holdings snapshot is in progress, completed, not staged (none) or has failed.  The status enables you to decide when to download customer holdings (upon completion).  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
