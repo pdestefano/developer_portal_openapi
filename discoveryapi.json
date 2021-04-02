@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://ebscois-live.apigee.net/discoveryapi"
+      "url": "https://apis.ebsco.com/discoveryapi"
     }
   ],
   "tags": [
