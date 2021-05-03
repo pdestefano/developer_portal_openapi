@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "EBSCO HoldingsIQ",
-    "description": "The EBSCO HoldingsIQ service retrieves vendor, package and title related information in JSON format.  The information includes customer selected resources as reflected in the EBSCO Knowledge Base for both EBSCO managed and customer managed resources.",
+    "description": "The EBSCO TEST TEST HoldingsIQ service retrieves vendor, package and title related information in JSON format.  The information includes customer selected resources as reflected in the EBSCO Knowledge Base for both EBSCO managed and customer managed resources.",
     "termsOfService": "",
     "license": {
       "name": "Copyright EBSCO",
