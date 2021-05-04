@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "The PublicationIQ service provides the ability to search for publications designated as a part of a customer's collection.",
+    "description": "The PublicationIQ service provides the ability to search for publications designated as a part of a customer's collection.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  The interactive documentation below uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
     "termsOfService": "",
     "version": "1.0.0",
     "title": "EBSCO PublicationIQ",
@@ -33,7 +33,7 @@
           "Package Resources"
         ],
         "summary": "Get all Packages",
-        "description": "This resource allows you to retrieve a list of all packages from EPKB limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.\n\n",
+        "description": "This resource allows you to retrieve a list of all packages from EPKB limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.\n\n",
         "operationId": "findAllPackagesUsingGET",
         "consumes": [
           "application/json"
@@ -119,7 +119,7 @@
         "produces": [
           "application/json"
         ],
-        "description": "This resource allows you to retrieve an Alpha Browser menu by locale ID and resource type.",
+        "description": "This resource allows you to retrieve an Alpha Browser menu by locale ID and resource type.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "localeid",
@@ -199,7 +199,7 @@
           "Package Resources"
         ],
         "summary": "Get Packages by Package Name",
-        "description": "This resource allows you to search for packages and returns a list of packages from EPKB. The list is limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.",
+        "description": "This resource allows you to search for packages and returns a list of packages from EPKB. The list is limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "operationId": "findPackagesByNameUsingGET",
         "consumes": [
           "application/json"
@@ -314,7 +314,7 @@
           "Title Resources"
         ],
         "summary": "Get Publication by Title ID",
-        "description": "This resource allows you to retrieve a publication by title ID.",
+        "description": "This resource allows you to retrieve a publication by title ID.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "operationId": "getPublicationUsingGET",
         "consumes": [
           "application/json"
@@ -390,7 +390,7 @@
           "Title Resources"
         ],
         "summary": "Get Publications by Specified Title Attributes",
-        "description": "This resource allows you to search for publications and returns a list of publications.  The list is limited to a single customer ID.  The response will reflect the context of the EBSCO customer ID included in the request.",
+        "description": "This resource allows you to search for publications and returns a list of publications.  The list is limited to a single customer ID.  The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "operationId": "findPublicationsUsingGET",
         "consumes": [
           "application/json"
