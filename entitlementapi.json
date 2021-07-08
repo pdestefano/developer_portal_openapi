@@ -75,7 +75,7 @@
             "description": "Digital Object Identifier query",
             "required": false,
             "type": "string",
-            "default": "10,1080/1470243032000214340"
+            "default": "10.1080/1470243032000214340"
           }
         ],
         "responses": {

@@ -1800,6 +1800,17 @@
             }
           },
           {
+            "name": "packageidfilter",
+            "in": "query",
+            "description": "A comma-separated list of package ID(s).  Limits the results by package ID(s).  The packageidfilter is an optional parameter.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },			  
+          {
             "name": "orderby",
             "in": "query",
             "description": "Valid values are relevance or titlename.  Default is relevance.",
@@ -2817,7 +2828,12 @@
             "type": "string",
             "description": "User Defined Field 5",
             "example": "string5"
-          }
+          },
+          "selectedBy": {
+            "type": "string",
+            "description": "The resource last selected by EBSCO or the customer.",
+            "example": ""
+          }		  
         },
         "description": "This object represents data elements that describe customer resources information."
       },
@@ -2974,6 +2990,9 @@
             "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom.",
             "example": "Complete"
           },
+          "proxy": {
+            "$ref": "#/components/schemas/proxyInfo"
+          },		  
           "isPackageCustom": {
             "type": "boolean",
             "description": "Is the Package Custom.",
@@ -3075,12 +3094,12 @@
           "beginCoverage": {
             "type": "string",
             "description": "Coverage Start Date",
-            "example": "2003-01-01T00:00:00.000Z"
+            "example": "2002-02-01"
           },
           "endCoverage": {
             "type": "string",
             "description": "Coverage End Date",
-            "example": "2003-12-12T00:00:00.000Z"
+            "example": "2020-01-02"
           }
         },
         "description": "Dates of Coverage"
@@ -3753,6 +3772,11 @@
             "type": "string",
             "description": "User Defined Field 5",
             "example": "string5"
+          },
+          "selectedBy": {
+            "type": "string",
+            "description": "The resource last selected by EBSCO or the customer.",
+            "example": ""
           }
         },
         "description": "This object represents data elements that describe customer resources information."
@@ -5137,16 +5161,6 @@
             "description": "Key",
             "example": "CCC.Password"
           },
-          "shouldShowOneResourcePerLinkSource": {
-            "type": "boolean",
-            "description": "Indicates if should show one resource per link source.",
-            "example": true
-          },
-          "targetID": {
-            "type": "string",
-            "description": "Target ID",
-            "example": "19"
-          },
           "token": {
             "type": "string",
             "description": "Token",
@@ -5155,15 +5169,10 @@
         }
       },
       "proxyList": {
-        "type": "object",
-        "properties": {
-          "proxies": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/proxyWithURL"
-            }
-          }
-        },
+            },
         "description": "List of all customer proxies."
       }
     }
