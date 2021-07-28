@@ -508,7 +508,7 @@
           {
             "name": "searchtype",
             "in": "query",
-            "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.",
+            "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/knowledge-services/holdingsiq/docs/search-types).",
             "required": false,
 			"schema": {
               "type": "string",
@@ -718,7 +718,7 @@
           {
             "name": "searchtype",
             "in": "query",
-            "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.",
+            "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/knowledge-services/holdingsiq/docs/search-types).",
             "required": false,
 			"schema": {
               "type": "string",
@@ -1811,7 +1811,7 @@
           {
             "name": "searchtype",
             "in": "query",
-            "description": "Type of search. Search types are any, contains, exactmatch, beginswith, proximity, exactphrase and advanced. It is also valid to use 0 for any, 1 for contains, 2 for exactmatch, 3 for beginswith, 4 for proximity, 5 for exactphrase or 6 for advanced.  searchtype is an optional parameter and defaults to contains if not provided.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/guides/overviewsearch/)",
+            "description": "Type of search. Search types are any, contains, exactmatch, beginswith, proximity, exactphrase and advanced. It is also valid to use 0 for any, 1 for contains, 2 for exactmatch, 3 for beginswith, 4 for proximity, 5 for exactphrase or 6 for advanced.  searchtype is an optional parameter and defaults to contains if not provided.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/knowledge-services/holdingsiq/docs/search-types).",
             "schema": {
               "type": "string",
               "enum": [
