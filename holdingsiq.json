@@ -506,6 +506,19 @@
             }
           },
           {
+            "name": "searchtype",
+            "in": "query",
+            "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.",
+            "required": false,
+			"schema": {
+              "type": "string",
+              "enum": [
+                "exactphrase",
+                "advanced"
+              ]
+			}
+          },				  
+          {
             "name": "selection",
             "in": "query",
             "description": "Limits the result set.  Valid values are all, selected, notselected and orderedthroughebsco.  It is also valid to use 0 for all, 1 for selected, 2 for notselected, or 3 for ordered through EBSCO.  When you filter by all(0), the total results count takes selected and not selected into consideration.",
@@ -702,6 +715,19 @@
               "type": "string"
             }
           },
+          {
+            "name": "searchtype",
+            "in": "query",
+            "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.",
+            "required": false,
+			"schema": {
+              "type": "string",
+              "enum": [
+                "exactphrase",
+                "advanced"
+              ]
+			}
+          },		  
           {
             "name": "selection",
             "in": "query",
