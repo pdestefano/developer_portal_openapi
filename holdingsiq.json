@@ -2602,6 +2602,13 @@
             "description": "Title Name",
             "example": "A Tale of Two Cities"
           },
+          "alternateTitleList": {
+            "type": "array",
+			"description": "Alternate Titles",
+            "items": {
+              "$ref": "#/components/schemas/alternateTitle"
+            }
+          },			  
           "publisherName": {
             "type": "string",
             "description": "Publisher Name",
@@ -3645,6 +3652,13 @@
             "description": "Title Name",
             "example": "A Tale of Two Cities"
           },
+          "alternateTitleList": {
+            "type": "array",
+			"description": "Alternate Titles",
+            "items": {
+              "$ref": "#/components/schemas/alternateTitle"
+            }
+          },		  
           "publisherName": {
             "type": "string",
             "description": "Publisher Name",
@@ -3684,7 +3698,22 @@
         },
         "description": "This object represents data elements that describe a title."
       },
-      "customerResourcesPackageId": {
+      "alternateTitle": {
+        "type": "object",
+        "properties": {
+          "alternateTitle": {
+            "type": "string",
+			"description": "Alternate Title",
+			"example": "Boston Coll Law Rev"
+          },
+          "titleType": {
+            "type": "string",
+			"description": "Title Type. Valid values are Variant, Alternate, Proper, Former, Translated or Abbreviated.",
+			"example": "Abbreviated"
+          }
+        }
+      },      
+	  "customerResourcesPackageId": {
         "required": [
           "packageType",
           "titleId"
