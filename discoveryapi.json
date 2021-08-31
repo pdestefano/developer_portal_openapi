@@ -313,8 +313,8 @@
          "type": "oauth2",
          "flows": {
            "authorizationCode": {
-             "authorizationUrl": "https://ebscois-live.apigee.net/oauth-proxy/authorize",
-             "tokenUrl": "https://ebscois-live.apigee.net/oauth-proxy/token",
+             "authorizationUrl": "https://auth.ebsco.zone/api/dispatcher/oauth/authorize",
+             "tokenUrl": "https://auth.ebsco.zone/api/dispatcher/oauth/token",			 
              "scopes": {}
            }
          }

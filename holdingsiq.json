@@ -535,7 +535,7 @@
           {
             "name": "contenttype",
             "in": "query",
-            "description": "Limit by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown and onlinereference.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown or 7 for online reference.",
+            "description": "Limit by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "schema": {
               "type": "string",
               "enum": [
@@ -546,7 +546,9 @@
                 "ejournal",
                 "print",
                 "unknown",
-                "onlinereference"
+                "onlinereference",
+				"streamingmedia",
+				"mixedcontent"
               ]
             }
           },
@@ -655,7 +657,7 @@
           }
         ],
         "requestBody": {
-          "description": "JSON POST payload.  Specify the packageName in the payload.  Set contentType in the payload to 1 for Agregated Full Text, 2 for Abstract and Index, 3 for Ebook, 4 for E-Journal, 5 for Print, 6 for Unknown or 7 for Online Reference.  Set the custom coverage dates.  Set the proxy ID.",
+          "description": "JSON POST payload.  Specify the packageName in the payload.  Set contentType in the payload to 1 for Agregated Full Text, 2 for Abstract and Index, 3 for Ebook, 4 for E-Journal, 5 for Print, 6 for Unknown, 7 for Online Reference, 8 for Streaming Media or 9 for Mixed Content.  Set the custom coverage dates.  Set the proxy ID.",
           "content": {
             "application/json": {
               "schema": {
@@ -745,7 +747,7 @@
           {
             "name": "contenttype",
             "in": "query",
-            "description": "Limits the results by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown and onlinereference.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown or 7 for online reference.",
+            "description": "Limits the results by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "schema": {
               "type": "string",
               "enum": [
@@ -756,7 +758,9 @@
                 "ejournal",
                 "print",
                 "unknown",
-                "onlinereference"
+                "onlinereference",
+				"streamingmedia",
+                "mixedcontent"
               ]
             }
           },
@@ -2495,7 +2499,7 @@
           "contentType": {
             "type": "string",
             "description": "Indicates the content type of the package.",
-            "example": "Abstract"
+            "example": "aggregatedfulltext"
           },
           "packageType": {
             "type": "string",
@@ -2705,7 +2709,7 @@
           "contentType": {
             "type": "string",
             "description": "Indicates the content type of the package.",
-            "example": "Abstract"
+            "example": "aggregatedfulltext"
           },
           "visibilityData": {
             "$ref": "#/components/schemas/visibilityInfo"
@@ -3865,7 +3869,7 @@
           },
           "contentType": {
             "type": "integer",
-            "description": "Content Type. Valid values are 1 for Agregated Full Text, 2 for Abstract and Index, 3 for Ebook, 4 for E-Journal, 5 for Print, 6 for Unknown or 7 for Online Reference.",
+            "description": "Content Type.  Valid values are 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "example": 3
           },
           "customCoverage": {
@@ -4952,7 +4956,7 @@
           },
           "contentType": {
             "type": "integer",
-            "description": "Content Type. Valid values are 1 for Agregated Full Text, 2 for Abstract and Index, 3 for Ebook, 4 for E-Journal, 5 for Print, 6 for Unknown or 7 for Online Reference.",
+            "description": "Content Type. Valid values are 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "example": 3
           },		
           "isSelected": {
@@ -5033,7 +5037,7 @@
           },
           "contentType": {
             "type": "integer",
-            "description": "Content Type. Valid values are 1 for Agregated Full Text, 2 for Abstract and Index, 3 for Ebook, 4 for E-Journal, 5 for Print, 6 for Unknown or 7 for Online Reference.",
+            "description": "Content Type. Valid values are 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "example": 3
           },
           "isSelected": {
