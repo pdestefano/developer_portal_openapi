@@ -38,7 +38,7 @@
         "tags": [
           "Label and Proxy Resources"
         ],
-		"summary": "Get Labels and Root Proxy",
+        "summary": "Get Labels and Root Proxy",
         "description": "This operation allows you to retrieve the list of all custom field labels and the root proxy.\n\n  **Please Note:**  The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -97,7 +97,7 @@
         "tags": [
           "Label and Proxy Resources"
         ],
-		"summary": "Create and Label Custom Fields",
+        "summary": "Create and Label Custom Fields",
         "description": "This operation allows you to create and label up to five custom fields for your Title Details. Specify the field label ID, Display Label Name and indicate whether you’d like the information to display on Publication Finder and/or Full Text Finder. Once the Custom Label field(s) have been created, one can verify it in  Title Details REST end point. Not specifying the Custom labels details  for a given custom label ID in the payload will result in setting displayLabel to empty string.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:** The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -133,7 +133,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "404": {
             "description": "Customer not found.",
@@ -163,7 +165,7 @@
         "tags": [
           "Label and Proxy Resources"
         ],
-		"summary": "Get Customer Proxies",
+        "summary": "Get Customer Proxies",
         "description": "This operation allows you to retrieve the list of all available customer proxies.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -224,7 +226,7 @@
         "tags": [
           "Vendor Resources"
         ],
-		"summary": "Get Vendors",
+        "summary": "Get Vendors",
         "description": "This operation allows you to search EPKB by vendor.  It returns a list of vendors that includes customer context and the total number of results.  When searching for vendors without a search parameter, sort options will be by vendor name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -319,7 +321,7 @@
         "tags": [
           "Vendor Resources"
         ],
-		"summary": "Get Vendor Details",
+        "summary": "Get Vendor Details",
         "description": "This operation allows you to retrieve vendor details from EPKB for a specific vendor ID.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -377,7 +379,7 @@
         "tags": [
           "Vendor Resources"
         ],
-		"summary": "Update Vendor Proxy and Token Values",
+        "summary": "Update Vendor Proxy and Token Values",
         "description": "This operation allows you to update vendor proxy and token values for a specific vendor ID.  If a vendor does not have a token set up, the JSON payload should have an empty token with a proxy value.  A vendor with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the vendor proxy with the root proxy if the root proxy is set.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:** Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -414,41 +416,41 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/updateVendorPayload"
-              },  
+              },
               "examples": {
-                 "bodyoptiona": {
-                   "summary": "JSON payload to update a vendor with a proxy",
-                   "value": {
-                       "proxy": {
-                           "id": "EZ_proxy"
-                        },
-                        "vendorToken": {
-                           "value": "myValue"
-                        }
-                   }
-                 },
-                 "bodyoptionb": {
-                   "summary": "JSON payload to update a vendor with an inherited proxy",
-                   "value": {
-                       "proxy": {
-                            "id": "",
-                            "inherited": true
-                       }
-                   }
-                 },					 
-                 "bodyoptionc": {
-                   "summary": "JSON payload to update a vendor with a non-inherited proxy",
-                   "value": {
-                        "proxy": {
-                           "id": "EZ_proxy",
-                           "inherited": false
-                        },
-                        "vendorToken": {
-                           "value": "myValue"
-                        }
-                   }
-                 }			 
-              }		    
+                "bodyoptiona": {
+                  "summary": "JSON payload to update a vendor with a proxy",
+                  "value": {
+                    "proxy": {
+                      "id": "EZ_proxy"
+                    },
+                    "vendorToken": {
+                      "value": "myValue"
+                    }
+                  }
+                },
+                "bodyoptionb": {
+                  "summary": "JSON payload to update a vendor with an inherited proxy",
+                  "value": {
+                    "proxy": {
+                      "id": "",
+                      "inherited": true
+                    }
+                  }
+                },
+                "bodyoptionc": {
+                  "summary": "JSON payload to update a vendor with a non-inherited proxy",
+                  "value": {
+                    "proxy": {
+                      "id": "EZ_proxy",
+                      "inherited": false
+                    },
+                    "vendorToken": {
+                      "value": "myValue"
+                    }
+                  }
+                }
+              }
             }
           },
           "required": false
@@ -456,7 +458,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -476,7 +480,7 @@
         "tags": [
           "Vendor Resources"
         ],
-		"summary": "Get List of Packages for a Vendor",
+        "summary": "Get List of Packages for a Vendor",
         "description": "This operation allows you to retrieve a list of packages from EPKB for a vendor including customer context.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -510,14 +514,14 @@
             "in": "query",
             "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/knowledge-services/holdingsiq/docs/search-types).",
             "required": false,
-			"schema": {
+            "schema": {
               "type": "string",
               "enum": [
                 "exactphrase",
                 "advanced"
               ]
-			}
-          },				  
+            }
+          },
           {
             "name": "selection",
             "in": "query",
@@ -547,8 +551,8 @@
                 "print",
                 "unknown",
                 "onlinereference",
-				"streamingmedia",
-				"mixedcontent"
+                "streamingmedia",
+                "mixedcontent"
               ]
             }
           },
@@ -625,7 +629,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Create Custom Packages",
+        "summary": "Create Custom Packages",
         "description": "This operation allows you to create custom packages.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -696,7 +700,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Get List of Packages",
+        "summary": "Get List of Packages",
         "description": "This operation allows you to search for packages and returns a list of packages from EPKB.  The list is not limited to a single vendor ID.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for packages without a search parameter, the sort options will be by package name.  When the search parameter is not null, then the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -722,14 +726,14 @@
             "in": "query",
             "description": "Type of search to be performed.  Valid values are exactphrase and advanced.  It is also valid to use 1 for exactphrase or 2 for advanced.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/knowledge-services/holdingsiq/docs/search-types).",
             "required": false,
-			"schema": {
+            "schema": {
               "type": "string",
               "enum": [
                 "exactphrase",
                 "advanced"
               ]
-			}
-          },		  
+            }
+          },
           {
             "name": "selection",
             "in": "query",
@@ -759,7 +763,7 @@
                 "print",
                 "unknown",
                 "onlinereference",
-				"streamingmedia",
+                "streamingmedia",
                 "mixedcontent"
               ]
             }
@@ -839,7 +843,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Get Package Details",
+        "summary": "Get Package Details",
         "description": "This operation allows you to retrieve EPKB information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -906,7 +910,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Update a Package",
+        "summary": "Update a Package",
         "description": "This operation allows you to update selection and customizations to a package in a customer EPKB account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -952,124 +956,124 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/setPackagePayload"
-              },  
+              },
               "examples": {
-                 "bodyoptiona": {
-                   "summary": "JSON payload to select the entire package",
-                   "value": {
-                       "isSelected": true
-                   }
-                 },
-                 "bodyoptionb": {
-                   "summary": "JSON payload to set custom coverage including hiding titles",
-                   "value": {
-                      "isSelected": true,
-                      "customCoverage": {
-                         "beginCoverage": "2003-01-01",
-                         "endCoverage": "2003-12-12"
-                      },
-                      "isHidden": true				   
-                   }
-                 },					 
-                 "bodyoptionc": {
-                   "summary": "JSON payload to hide a package",
-                   "value": {
-                      "isSelected": true,
-                      "isHidden": true
-                   }
-                 },
-                 "bodyoptiond": {
-                   "summary": "JSON payload to set custom coverage excluding hiding titles",
-                   "value": {
-                       "isSelected": true,
-                       "customCoverage": {
-                          "beginCoverage": "2003-01-01",
-                          "endCoverage": "2003-12-12"
-                       },
-                       "isHidden": false                       
-                   }
-                 },
-                 "bodyoptione": {
-                   "summary": "JSON payload to unselect the entire package",
-                   "value": {
-			           "isSelected": false
-                   }
-                 },					 
-                 "bodyoptionf": {
-                   "summary": "JSON payload to set custom coverage to a partially selected package",
-                   "value": {
-                       "isSelected": true,
-                       "isFullPackage": false,
-                       "customCoverage": {
-                          "beginCoverage": "2003-01-01",
-                          "endCoverage": "2003-12-12"
-                       }
-                   }
-                 },					 
-                 "bodyoptiong": {
-                   "summary": "JSON payload to set values in a managed package",
-                   "description": "JSON payload to set values in a managed package.  isSelected is required for a managed package.",
-                   "value": {
-                     "isSelected": true,
-                     "isHidden": false,
-                     "allowEbscoToAddTitles": true,
-                     "customCoverage": {
-                        "beginCoverage": "2003-01-01",
-                        "endCoverage": "2003-12-12"
-                     },
-                     "proxy": {
-                        "id": "EZ_proxy",
-                        "inherited": false
-                     },
-                     "packageToken": {
-                        "value": "myValue"
-                     }
-					}
-                 },
-                 "bodyoptionh": {
-				   "summary": "JSON payload to set values in a custom package",
-                   "description": "JSON payload to set values in a custom package. isSelected, contentType, and packageName are required for a custom package.",
-                   "value": {
-                      "packageName": "Library Package 1",
-                      "contentType": 3,
-                      "isSelected": true,
-                      "isHidden": false,
-                      "customCoverage": {
-                        "beginCoverage": "2003-01-01",
-                        "endCoverage": "2003-12-12"
-                      },
-                      "proxy": {
-                        "id": "EZ_proxy",
-                        "inherited": false
-                      }                   
-                   }
-                 },
-                 "bodyoptioni": {
-                   "summary": "JSON payload to update a package with a proxy",
-                   "value": {
-                       "isSelected": true,
-                       "proxy": {
-                          "id": "EZ_proxy"
-                       },
-                       "packageToken": {
-                          "value": "myValue"
-                       }			           
-                   }
-                 },					 
-                 "bodyoptionj": {
-                   "summary": "JSON payload to update a package with an inherited proxy",
-                   "value": {
-                      "isSelected": true,
-                      "proxy": {
-                         "id": "",
-                         "inherited": true
-                      },
-                      "packageToken": {
-                         "value": "myValue"
-                     }                      
-                   }
-                 }					 
-              }	
+                "bodyoptiona": {
+                  "summary": "JSON payload to select the entire package",
+                  "value": {
+                    "isSelected": true
+                  }
+                },
+                "bodyoptionb": {
+                  "summary": "JSON payload to set custom coverage including hiding titles",
+                  "value": {
+                    "isSelected": true,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "isHidden": true
+                  }
+                },
+                "bodyoptionc": {
+                  "summary": "JSON payload to hide a package",
+                  "value": {
+                    "isSelected": true,
+                    "isHidden": true
+                  }
+                },
+                "bodyoptiond": {
+                  "summary": "JSON payload to set custom coverage excluding hiding titles",
+                  "value": {
+                    "isSelected": true,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "isHidden": false
+                  }
+                },
+                "bodyoptione": {
+                  "summary": "JSON payload to unselect the entire package",
+                  "value": {
+                    "isSelected": false
+                  }
+                },
+                "bodyoptionf": {
+                  "summary": "JSON payload to set custom coverage to a partially selected package",
+                  "value": {
+                    "isSelected": true,
+                    "isFullPackage": false,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    }
+                  }
+                },
+                "bodyoptiong": {
+                  "summary": "JSON payload to set values in a managed package",
+                  "description": "JSON payload to set values in a managed package.  isSelected is required for a managed package.",
+                  "value": {
+                    "isSelected": true,
+                    "isHidden": false,
+                    "allowEbscoToAddTitles": true,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "proxy": {
+                      "id": "EZ_proxy",
+                      "inherited": false
+                    },
+                    "packageToken": {
+                      "value": "myValue"
+                    }
+                  }
+                },
+                "bodyoptionh": {
+                  "summary": "JSON payload to set values in a custom package",
+                  "description": "JSON payload to set values in a custom package. isSelected, contentType, and packageName are required for a custom package.",
+                  "value": {
+                    "packageName": "Library Package 1",
+                    "contentType": 3,
+                    "isSelected": true,
+                    "isHidden": false,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "proxy": {
+                      "id": "EZ_proxy",
+                      "inherited": false
+                    }
+                  }
+                },
+                "bodyoptioni": {
+                  "summary": "JSON payload to update a package with a proxy",
+                  "value": {
+                    "isSelected": true,
+                    "proxy": {
+                      "id": "EZ_proxy"
+                    },
+                    "packageToken": {
+                      "value": "myValue"
+                    }
+                  }
+                },
+                "bodyoptionj": {
+                  "summary": "JSON payload to update a package with an inherited proxy",
+                  "value": {
+                    "isSelected": true,
+                    "proxy": {
+                      "id": "",
+                      "inherited": true
+                    },
+                    "packageToken": {
+                      "value": "myValue"
+                    }
+                  }
+                }
+              }
             }
           },
           "required": false
@@ -1077,7 +1081,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -1097,7 +1103,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Get Titles that are Part of a Package",
+        "summary": "Get Titles that are Part of a Package",
         "description": "This operation allows you to search and retrieve a list of titles from EPKB that are part of a specified package.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for titles without a search parameter, the sort options will be by title name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1226,6 +1232,20 @@
             }
           },
           {
+            "name": "subjects",
+            "in": "query",
+            "description": "Types of subjects to be returned. By default returns tli and bisac. Valid values are: bisac, tli, libraryofcongress and medical.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+			  "items": {
+				  "type": "string"				  
+			  }
+            }
+          },		  		  
+          {
             "name": "x-api-key",
             "in": "header",
             "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
@@ -1262,7 +1282,7 @@
         "tags": [
           "Title Resources"
         ],
-		"summary": "Create Custom Titles",
+        "summary": "Create Custom Titles",
         "description": "This operation allows you to create custom titles.  The titleName and pubType elements are required in the custom title payload.  If your JSON POST payload contains multiple coverage dates, the dates must be in descending order.   \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1342,7 +1362,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Get Package-Title Details",
+        "summary": "Get Package-Title Details",
         "description": "This operation allows you to retrieve details for a particular package-title from EPKB.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1382,6 +1402,20 @@
             }
           },
           {
+            "name": "subjects",
+            "in": "query",
+            "description": "Types of subjects to be returned. By default returns tli and bisac. Valid values are: bisac, tli, libraryofcongress and medical.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+			  "items": {
+				  "type": "string"				  
+			  }
+            }
+          },	  
+          {
             "name": "x-api-key",
             "in": "header",
             "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
@@ -1418,7 +1452,7 @@
         "tags": [
           "Package Resources"
         ],
-		"summary": "Update a Title in a Package",
+        "summary": "Update a Title in a Package",
         "description": "This operation allows you to update selection status, proxy value or coverage customizations for a title within a package in a customer EPKB account.  A title with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the title proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title update payload.  For both managed and custom titles, removing a title with isSelected set to false in the payload will result in a loss of customization made previously at the title level.  Removing a custom title with isSelected set to false in the payload will result in the deletion (hard delete) of the custom title from the custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1473,210 +1507,110 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/setTitleinPackagePayload"
-              },  
+              },
               "examples": {
-                 "bodyoptiona": {
-				 "summary": "JSON payload to select a package-title",
-                   "description": "JSON payload to select a package-title. The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                       "isSelected": true,
-                       "titleName": "A Tale of Two Cities",
-                       "pubType": "Book"                       
-                   }
-                 },
-                 "bodyoptionb": {
-				   "summary": "JSON payload to hide a package-title",
-                   "description": "JSON payload to hide a package-title. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                       "isSelected": true,
-                       "isHidden": true,
-                       "titleName": "A Tale of Two Cities",
-                       "pubType": "Book"			   
-                   }
-                 },					 
-                 "bodyoptionc": {
-                   "summary": "JSON payload to set custom coverage, coverage statement and custom embargo",
-				   "description":"JSON payload to set custom coverage, coverage statement and custom embargo. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload. When adding multiple custom coverage date ranges, the most recent date range must be first followed by date ranges in descending order. If another custom coverage date range is added that is greater than the previously entered date range, the system will show the error message - CoverageList contains a date that exceeds a previous date value.",
-                   "value": {
-                       "isSelected": true,
-                       "titleName": "A Tale of Two Cities",
-                       "pubType": "Book",
-                       "customCoverageList": [
-                          {
-                            "beginCoverage": "2003-01-01",
-                            "endCoverage": "2003-12-12"
-                          }
-                        ],
-                       "coverageStatement": "2009 - 2009",
-                       "customEmbargoPeriod": {
-                       "embargoUnit": "Days",
-                       "embargoValue": "1"
-                       }
-                   }
-                 },
-                 "bodyoptiond": {
-                   "summary": "JSON payload to un-select a package-title",
-				   "description": "JSON payload to un-select a package-title. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                     "isSelected": false,
-                     "titleName": "A Tale of Two Cities",
-                     "pubType": "Book"                     
-                   }
-                 },
-                 "bodyoptione": {
-                   "summary": "JSON payload to un-hide a package-title",
-				   "description": "JSON payload to un-hide a package-title. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                      "isSelected": true,
-                      "isHidden": false,
-                      "titleName": "A Tale of Two Cities",
-                      "pubType": "Book"	
-                   }
-                 },					 
-                 "bodyoptionf": {
-                   "summary": "JSON payload to set user defined fields",
-				   "description": "JSON payload to set user defined fields. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                       "isSelected": true,
-                       "titleName": "A Tale of Two Cities",
-                       "pubType": "Book",
-                       "userDefinedField1": "string1",
-                       "userDefinedField2": "string2",
-                       "userDefinedField3": "string3",
-                       "userDefinedField4": "string4",
-                       "userDefinedField5": "string5"
-                   }
-                 },					 
-                 "bodyoptiong": {
-                   "summary": "JSON combined payload",
-				   "description": "JSON combined payload. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload. When adding multiple custom coverage date ranges, the most recent date range must be first followed by date ranges in descending order. If another custom coverage date range is added that is greater than the previously entered date range, the system will show the error message - CoverageList contains a date that exceeds a previous date value.",
-                   "value": {
-                       "isSelected": true,
-                       "titleName": "A Tale of Two Cities",
-                       "pubType": "Book",
-                       "isHidden": false,
-                       "userDefinedField1": "string1",
-                       "userDefinedField2": "string2",
-                       "userDefinedField3": "string3",
-                       "userDefinedField4": "string4",
-                       "userDefinedField5": "string5",
-                       "customCoverageList": [
-                         {
-                           "beginCoverage": "2003-01-01",
-                           "endCoverage": "2003-12-12"
-                         }
-                       ],
-                       "coverageStatement": "2009 - 2009",
-                       "customEmbargoPeriod": {
-                       "embargoUnit": "Days",
-                       "embargoValue": "1"
-                       } 
-					}
-                 },
-                 "bodyoptionh": {
-                   "summary": "JSON payload to update the details of a custom title",
-				   "description": "JSON payload to update the details of a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                      "isSelected": true,
-                      "titleName": "custom-title-74",
-                      "pubType": "Book",
-                      "publisherName": "EBSCO Publishing",
-                      "isPeerReviewed": false,
-                      "edition": "1",
-                      "description": "description-test",
-                      "url": "http://www.ebsco.com",
-                      "customCoverageList": [
-                        {
-                          "beginCoverage": "2003-01-01",
-                          "endCoverage": "2003-12-12"
-                        }
-                      ],
-                      "isHidden": false,
-                      "coverageStatement": "Issues on or after 6/1/1992",
-                      "customEmbargoPeriod": {
-                        "embargoUnit": "Days",
-                        "embargoValue": "1"
-                      },
-                      "userDefinedField1": "String1",
-                      "userDefinedField2": "String2",
-                      "userDefinedField3": "String3",
-                      "userDefinedField4": "String4",
-                      "userDefinedField5": "String5"                 
-                   }
-                 },
-                 "bodyoptioni": {
-                   "summary": "JSON payload to update the proxy value for a custom title",
-				   "description": "JSON payload to update the proxy value for a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                      "isSelected": true,
-                      "titleName": "custom-title-74",
-                      "pubType": "Book",
-                      "publisherName": "EBSCO Publishing",
-                      "isPeerReviewed": false,
-                      "edition": "1",
-                      "description": "description-test",
-                      "url": "http://www.ebsco.com",
-                      "customCoverageList": [
-                        {
-                          "beginCoverage": "2003-01-01",
-                          "endCoverage": "2003-12-12"
-                        }
-                      ],
-                      "isHidden": false,
-                      "coverageStatement": "Issues on or after 6/1/1992",
-                      "customEmbargoPeriod": {
-                        "embargoUnit": "Days",
-                        "embargoValue": "1"
-                      },
-                      "userDefinedField1": "String1",
-                      "userDefinedField2": "String2",
-                      "userDefinedField3": "String3",
-                      "userDefinedField4": "String4",
-                      "userDefinedField5": "String5",
-                      "proxy": {
-                        "id": "EZ_proxy"
-                      }			           
-                   }
-                 },					 
-                 "bodyoptionj": {
-                   "summary": "JSON payload to update the proxy value for a custom title {option 2}",
-				   "description": "JSON payload to update the proxy value for a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
-                     "isSelected": true,
-                     "titleName": "custom-title-74",
-                     "pubType": "Book",
-                     "publisherName": "EBSCO Publishing",
-                     "isPeerReviewed": false,
-                     "edition": "1",
-                     "description": "description-test",
-                     "url": "http://www.ebsco.com",
-                     "customCoverageList": [
-                       {
-                         "beginCoverage": "2003-01-01",
-                         "endCoverage": "2003-12-12"
-                       }
-                     ],
-                     "isHidden": false,
-                     "coverageStatement": "Issues on or after 6/1/1992",
-                     "customEmbargoPeriod": {
-                       "embargoUnit": "Days",
-                       "embargoValue": "1"
-                     },
-                     "userDefinedField1": "String1",
-                     "userDefinedField2": "String2",
-                     "userDefinedField3": "String3",
-                     "userDefinedField4": "String4",
-                     "userDefinedField5": "String5",
-                     "proxy": {
-                        "id": "EZ_proxy",
-                        "inherited": false
-                     }                                           
-                   }
-                 },					 
-                 "bodyoptionk": {
-                   "summary": "JSON payload to update the inherited proxy value for a custom title",
-				   "description": "JSON payload to update the inherited proxy value for a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
-                   "value": {
+                "bodyoptiona": {
+                  "summary": "JSON payload to select a package-title",
+                  "description": "JSON payload to select a package-title. The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book"
+                  }
+                },
+                "bodyoptionb": {
+                  "summary": "JSON payload to hide a package-title",
+                  "description": "JSON payload to hide a package-title. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "isHidden": true,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book"
+                  }
+                },
+                "bodyoptionc": {
+                  "summary": "JSON payload to set custom coverage, coverage statement and custom embargo",
+                  "description": "JSON payload to set custom coverage, coverage statement and custom embargo. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload. When adding multiple custom coverage date ranges, the most recent date range must be first followed by date ranges in descending order. If another custom coverage date range is added that is greater than the previously entered date range, the system will show the error message - CoverageList contains a date that exceeds a previous date value.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book",
+                    "customCoverageList": [
+                      {
+                        "beginCoverage": "2003-01-01",
+                        "endCoverage": "2003-12-12"
+                      }
+                    ],
+                    "coverageStatement": "2009 - 2009",
+                    "customEmbargoPeriod": {
+                      "embargoUnit": "Days",
+                      "embargoValue": "1"
+                    }
+                  }
+                },
+                "bodyoptiond": {
+                  "summary": "JSON payload to un-select a package-title",
+                  "description": "JSON payload to un-select a package-title. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": false,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book"
+                  }
+                },
+                "bodyoptione": {
+                  "summary": "JSON payload to un-hide a package-title",
+                  "description": "JSON payload to un-hide a package-title. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "isHidden": false,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book"
+                  }
+                },
+                "bodyoptionf": {
+                  "summary": "JSON payload to set user defined fields",
+                  "description": "JSON payload to set user defined fields. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book",
+                    "userDefinedField1": "string1",
+                    "userDefinedField2": "string2",
+                    "userDefinedField3": "string3",
+                    "userDefinedField4": "string4",
+                    "userDefinedField5": "string5"
+                  }
+                },
+                "bodyoptiong": {
+                  "summary": "JSON combined payload",
+                  "description": "JSON combined payload. The isSelected payload element is mandatory for managed and custom titles. The titleName and pubType payload elements are mandatory for the custom title payload. When adding multiple custom coverage date ranges, the most recent date range must be first followed by date ranges in descending order. If another custom coverage date range is added that is greater than the previously entered date range, the system will show the error message - CoverageList contains a date that exceeds a previous date value.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "A Tale of Two Cities",
+                    "pubType": "Book",
+                    "isHidden": false,
+                    "userDefinedField1": "string1",
+                    "userDefinedField2": "string2",
+                    "userDefinedField3": "string3",
+                    "userDefinedField4": "string4",
+                    "userDefinedField5": "string5",
+                    "customCoverageList": [
+                      {
+                        "beginCoverage": "2003-01-01",
+                        "endCoverage": "2003-12-12"
+                      }
+                    ],
+                    "coverageStatement": "2009 - 2009",
+                    "customEmbargoPeriod": {
+                      "embargoUnit": "Days",
+                      "embargoValue": "1"
+                    }
+                  }
+                },
+                "bodyoptionh": {
+                  "summary": "JSON payload to update the details of a custom title",
+                  "description": "JSON payload to update the details of a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
                     "isSelected": true,
                     "titleName": "custom-title-74",
                     "pubType": "Book",
@@ -1686,28 +1620,128 @@
                     "description": "description-test",
                     "url": "http://www.ebsco.com",
                     "customCoverageList": [
-                       {
+                      {
                         "beginCoverage": "2003-01-01",
                         "endCoverage": "2003-12-12"
-                       }
-                     ],
-                     "isHidden": false,
-                     "coverageStatement": "Issues on or after 6/1/1992",
-                     "customEmbargoPeriod": {
+                      }
+                    ],
+                    "isHidden": false,
+                    "coverageStatement": "Issues on or after 6/1/1992",
+                    "customEmbargoPeriod": {
                       "embargoUnit": "Days",
                       "embargoValue": "1"
-                     },
-                     "userDefinedField1": "String1",
-                     "userDefinedField2": "String2",
-                     "userDefinedField3": "String3",
-                     "userDefinedField4": "String4",
-                     "userDefinedField5": "String5",
-                     "proxy": {
-                        "id": "",
-                        "inherited": true
-                      } 
-					}
-                 }					 
+                    },
+                    "userDefinedField1": "String1",
+                    "userDefinedField2": "String2",
+                    "userDefinedField3": "String3",
+                    "userDefinedField4": "String4",
+                    "userDefinedField5": "String5"
+                  }
+                },
+                "bodyoptioni": {
+                  "summary": "JSON payload to update the proxy value for a custom title",
+                  "description": "JSON payload to update the proxy value for a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "custom-title-74",
+                    "pubType": "Book",
+                    "publisherName": "EBSCO Publishing",
+                    "isPeerReviewed": false,
+                    "edition": "1",
+                    "description": "description-test",
+                    "url": "http://www.ebsco.com",
+                    "customCoverageList": [
+                      {
+                        "beginCoverage": "2003-01-01",
+                        "endCoverage": "2003-12-12"
+                      }
+                    ],
+                    "isHidden": false,
+                    "coverageStatement": "Issues on or after 6/1/1992",
+                    "customEmbargoPeriod": {
+                      "embargoUnit": "Days",
+                      "embargoValue": "1"
+                    },
+                    "userDefinedField1": "String1",
+                    "userDefinedField2": "String2",
+                    "userDefinedField3": "String3",
+                    "userDefinedField4": "String4",
+                    "userDefinedField5": "String5",
+                    "proxy": {
+                      "id": "EZ_proxy"
+                    }
+                  }
+                },
+                "bodyoptionj": {
+                  "summary": "JSON payload to update the proxy value for a custom title {option 2}",
+                  "description": "JSON payload to update the proxy value for a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "custom-title-74",
+                    "pubType": "Book",
+                    "publisherName": "EBSCO Publishing",
+                    "isPeerReviewed": false,
+                    "edition": "1",
+                    "description": "description-test",
+                    "url": "http://www.ebsco.com",
+                    "customCoverageList": [
+                      {
+                        "beginCoverage": "2003-01-01",
+                        "endCoverage": "2003-12-12"
+                      }
+                    ],
+                    "isHidden": false,
+                    "coverageStatement": "Issues on or after 6/1/1992",
+                    "customEmbargoPeriod": {
+                      "embargoUnit": "Days",
+                      "embargoValue": "1"
+                    },
+                    "userDefinedField1": "String1",
+                    "userDefinedField2": "String2",
+                    "userDefinedField3": "String3",
+                    "userDefinedField4": "String4",
+                    "userDefinedField5": "String5",
+                    "proxy": {
+                      "id": "EZ_proxy",
+                      "inherited": false
+                    }
+                  }
+                },
+                "bodyoptionk": {
+                  "summary": "JSON payload to update the inherited proxy value for a custom title",
+                  "description": "JSON payload to update the inherited proxy value for a custom title. The isSelected, titleName and pubType payload elements are mandatory for the custom title payload.",
+                  "value": {
+                    "isSelected": true,
+                    "titleName": "custom-title-74",
+                    "pubType": "Book",
+                    "publisherName": "EBSCO Publishing",
+                    "isPeerReviewed": false,
+                    "edition": "1",
+                    "description": "description-test",
+                    "url": "http://www.ebsco.com",
+                    "customCoverageList": [
+                      {
+                        "beginCoverage": "2003-01-01",
+                        "endCoverage": "2003-12-12"
+                      }
+                    ],
+                    "isHidden": false,
+                    "coverageStatement": "Issues on or after 6/1/1992",
+                    "customEmbargoPeriod": {
+                      "embargoUnit": "Days",
+                      "embargoValue": "1"
+                    },
+                    "userDefinedField1": "String1",
+                    "userDefinedField2": "String2",
+                    "userDefinedField3": "String3",
+                    "userDefinedField4": "String4",
+                    "userDefinedField5": "String5",
+                    "proxy": {
+                      "id": "",
+                      "inherited": true
+                    }
+                  }
+                }
               }
             }
           },
@@ -1716,7 +1750,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -1736,7 +1772,7 @@
         "tags": [
           "Title Resources"
         ],
-		"summary": "Get List of Titles Regardless of Package",
+        "summary": "Get List of Titles Regardless of Package",
         "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1839,7 +1875,7 @@
               "type": "string"
             },
             "collectionFormat": "multi"
-          },			  
+          },
           {
             "name": "orderby",
             "in": "query",
@@ -1876,6 +1912,20 @@
               "type": "integer"
             }
           },
+          {
+            "name": "subjects",
+            "in": "query",
+            "description": "Types of subjects to be returned. By default returns tli and bisac. Valid values are: bisac, tli, libraryofcongress and medical.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+			  "items": {
+				  "type": "string"				  
+			  }
+            }
+          },		  	  
           {
             "name": "x-api-key",
             "in": "header",
@@ -1915,7 +1965,7 @@
         "tags": [
           "Title Resources"
         ],
-		"summary": "Get Title Details Regardless of Package",
+        "summary": "Get Title Details Regardless of Package",
         "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -1936,6 +1986,20 @@
               "type": "integer"
             }
           },
+          {
+            "name": "subjects",
+            "in": "query",
+            "description": "Types of subjects to be returned. By default returns tli and bisac. Valid values are: bisac, tli, libraryofcongress and medical.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+			  "items": {
+				  "type": "string"				  
+			  }
+            }
+          },	  		  
           {
             "name": "x-api-key",
             "in": "header",
@@ -1975,7 +2039,7 @@
         "tags": [
           "Holdings Resources"
         ],
-		"summary": "Download Holdings",
+        "summary": "Download Holdings",
         "description": "This operation allows you to download customer holdings in KBART2 (JSON) format.  Before using this resource, you need to perform a Holdings Resource POST to populate holdings data to a staging area.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -2002,7 +2066,7 @@
           {
             "name": "count",
             "in": "query",
-            "description": "The maximum number of results to return in the response. Count can not exceed 5000.",
+            "description": "The maximum number of results to return in the response. Count can not exceed 4000.",
             "required": true,
             "schema": {
               "type": "integer"
@@ -2054,7 +2118,7 @@
         "tags": [
           "Holdings Resources"
         ],
-		"summary": "Stage Holdings",
+        "summary": "Stage Holdings",
         "description": "This operation populates holdings data to a staging area.  You must perform this operation before using the GET holdings resources.  Customer holdings will be refreshed each time a POST is complete.  Hidden titles and packages are excluded from the holdings download.  If the customer has made changes since the last POST, another POST needs to be performed before using a GET holdings resource in order to download all of the changes.  If any metadata has changed since the last POST, you do not need to perform another POST in order to see the metadata changes in the GET holdings.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -2087,7 +2151,9 @@
         "responses": {
           "202": {
             "description": "The request to populate holdings has been accepted for processing, but the processing has not been completed.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "409": {
             "description": "Snapshot is currently in progress.",
@@ -2117,7 +2183,7 @@
         "tags": [
           "Holdings Resources"
         ],
-		"summary": "Get Snapshot Status",
+        "summary": "Get Snapshot Status",
         "description": "This operation allows you to retrieve the status of a holdings snapshot.  The response reveals if the holdings snapshot is in progress, completed, not staged (none) or has failed.  The status enables you to decide when to download customer holdings (upon completion).  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -2551,6 +2617,13 @@
             "description": "Is this a custom title owned by the customer.",
             "example": false
           },
+          "alternateTitleList": {
+            "type": "array",
+            "description": "Alternate Titles",
+            "items": {
+              "$ref": "#/components/schemas/alternateTitle"
+            }
+          },
           "pubType": {
             "type": "string",
             "description": "Publication Type",
@@ -2608,11 +2681,11 @@
           },
           "alternateTitleList": {
             "type": "array",
-			"description": "Alternate Titles",
+            "description": "Alternate Titles",
             "items": {
               "$ref": "#/components/schemas/alternateTitle"
             }
-          },			  
+          },
           "publisherName": {
             "type": "string",
             "description": "Publisher Name",
@@ -2824,7 +2897,7 @@
             "type": "string",
             "description": "Custom Coverage Ownership. Valid values are Set By Customer or Set By EP.",
             "example": "Set By EP"
-          },		  
+          },
           "coverageStatement": {
             "type": "string",
             "description": "Coverage Statement",
@@ -2870,7 +2943,7 @@
             "type": "string",
             "description": "The resource last selected by EBSCO or the customer.",
             "example": ""
-          }		  
+          }
         },
         "description": "This object represents data elements that describe customer resources information."
       },
@@ -2960,7 +3033,9 @@
           },
           "managedEmbargoPeriod": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              
+            },
             "description": "Null Managed Embargo Period"
           },
           "customEmbargoPeriod": {
@@ -3029,7 +3104,7 @@
           },
           "proxy": {
             "$ref": "#/components/schemas/proxyInfo"
-          },		  
+          },
           "isPackageCustom": {
             "type": "boolean",
             "description": "Is the Package Custom.",
@@ -3658,11 +3733,11 @@
           },
           "alternateTitleList": {
             "type": "array",
-			"description": "Alternate Titles",
+            "description": "Alternate Titles",
             "items": {
               "$ref": "#/components/schemas/alternateTitle"
             }
-          },		  
+          },
           "publisherName": {
             "type": "string",
             "description": "Publisher Name",
@@ -3707,17 +3782,17 @@
         "properties": {
           "alternateTitle": {
             "type": "string",
-			"description": "Alternate Title",
-			"example": "Boston Coll Law Rev"
+            "description": "Alternate Title",
+            "example": "Boston Coll Law Rev"
           },
           "titleType": {
             "type": "string",
-			"description": "Title Type. Valid values are Variant, Alternate, Proper, Former, Translated or Abbreviated.",
-			"example": "Abbreviated"
+            "description": "Title Type. Valid values are Variant, Alternate, Proper, Former, Translated or Abbreviated.",
+            "example": "Abbreviated"
           }
         }
-      },      
-	  "customerResourcesPackageId": {
+      },
+      "customerResourcesPackageId": {
         "required": [
           "packageType",
           "titleId"
@@ -4487,7 +4562,7 @@
           }
         },
         "description": "JSON payload to update a vendor."
-      },	  
+      },
       "updateVendorNonInheritedProxyPayload": {
         "required": [
           "proxy",
@@ -4845,7 +4920,7 @@
           }
         },
         "description": "This object represents data elements to update a title within a package."
-      },	  
+      },
       "setProxyInPayload": {
         "required": [
           "isSelected"
@@ -4958,7 +5033,7 @@
             "type": "integer",
             "description": "Content Type. Valid values are 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "example": 3
-          },		
+          },
           "isSelected": {
             "type": "boolean",
             "description": "Indicates if the packages is selected in a customer's account.",
@@ -4969,7 +5044,7 @@
             "description": "Field to indicate if title is hidden.",
             "example": false
           },
-		  "isFullPackage": {
+          "isFullPackage": {
             "type": "boolean",
             "description": "Field to indicate if a full package.",
             "example": false
@@ -4990,7 +5065,7 @@
           }
         },
         "description": "This object represents data elements that describe the payload to update values for a package."
-      },	  
+      },
       "setManagedPackagePayload": {
         "required": [
           "isSelected"
@@ -5228,10 +5303,10 @@
         }
       },
       "proxyList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/proxyWithURL"
-            },
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/proxyWithURL"
+        },
         "description": "List of all customer proxies."
       }
     }
