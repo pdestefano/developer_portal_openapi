@@ -1240,11 +1240,11 @@
             "explode": true,
             "schema": {
               "type": "array",
-			  "items": {
-				  "type": "string"				  
-			  }
+              "items": {
+                "type": "string"
+              }
             }
-          },		  		  
+          },
           {
             "name": "x-api-key",
             "in": "header",
@@ -1410,11 +1410,11 @@
             "explode": true,
             "schema": {
               "type": "array",
-			  "items": {
-				  "type": "string"				  
-			  }
+              "items": {
+                "type": "string"
+              }
             }
-          },	  
+          },
           {
             "name": "x-api-key",
             "in": "header",
@@ -1921,11 +1921,11 @@
             "explode": true,
             "schema": {
               "type": "array",
-			  "items": {
-				  "type": "string"				  
-			  }
+              "items": {
+                "type": "string"
+              }
             }
-          },		  	  
+          },
           {
             "name": "x-api-key",
             "in": "header",
@@ -1995,11 +1995,11 @@
             "explode": true,
             "schema": {
               "type": "array",
-			  "items": {
-				  "type": "string"				  
-			  }
+              "items": {
+                "type": "string"
+              }
             }
-          },	  		  
+          },
           {
             "name": "x-api-key",
             "in": "header",
@@ -2228,6 +2228,330 @@
           }
         }
       }
+    },
+    "/v1/{custid}/packages/{packageid}/orders": {
+      "get": {
+        "tags": [
+          "Package Resources"
+        ],
+        "summary": "Get Related Orders for a Package",
+        "operationId": "getOrdersByPackageUsingGET",
+        "description": "This operation retrieves a list of GOBI eBook and EBSCO Subscription Services (ESS) E-Journal and Package Subscription orders associated with a particular package for a specific customer.",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastorderid",
+            "in": "query",
+            "description": "Last Order ID.  Specifies the ID of the last order returned in the previous response. Use this parameter for pagination to retrieve the next set of orders. If not specified, the API will return the first page of orders.",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "description": "Page Size.  Specifies the number of orders to be returned per page.",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "packageid",
+            "in": "path",
+            "description": "Package ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Related orders for the requested package.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StoredOrderRetrieved"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{custid}/packages/{packageid}/events": {
+      "get": {
+        "tags": [
+          "Package Resources"
+        ],
+        "summary": "Get Order Event History for a Package",
+        "operationId": "getPackageOrderHistoryUsingGET",
+        "description": "This operation retrieves Auto-Population events related to GOBI eBook or EBSCO Subscription Services (ESS) E-Journal and Package Subscription orders for a specific package. Auto-Population automatically updates holdings information for electronic resources in a library's collection. The events returned by this operation provide information about when and how Auto-Population has updated the package holdings information.",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "packageid",
+            "in": "path",
+            "description": "Package ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order events for the requested package.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderEventRecord"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{custid}/packages/{packageid}/titles/{kbid}/orders": {
+      "get": {
+        "tags": [
+          "Title Resources"
+        ],
+        "summary": "Get Related Orders for a Title",
+        "description": "This operation retrieves a list of GOBI eBook and EBSCO Subscription Services (ESS) E-Journal and Package Subscription orders associated with a particular package-title for a specific customer.",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "kbid",
+            "in": "path",
+            "description": "Title ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "lastorderid",
+            "in": "query",
+            "description": "Last Order ID.  Specifies the ID of the last order returned in the previous response. Use this parameter for pagination to retrieve the next set of orders. If not specified, the API will return the first page of orders.",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "description": "Page Size.  Specifies the number of orders to be returned per page.",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "packageid",
+            "in": "path",
+            "description": "Package ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Related orders for the requested package-title.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StoredOrderRetrieved"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{custid}/packages/{packageid}/titles/{kbid}/events": {
+      "get": {
+        "tags": [
+          "Title Resources"
+        ],
+        "summary": "Get Order Event History for a Title",
+        "description": "This operation retrieves Auto-Population events related to GOBI eBook or EBSCO Subscription Services (ESS) E-Journal and Package Subscription orders for a specific package-title. Auto-Population automatically updates holdings information for electronic resources in a library's collection. The events returned by this operation provide information about when and how Auto-Population has updated the package-title holdings information.",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "kbid",
+            "in": "path",
+            "description": "Title ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "packageid",
+            "in": "path",
+            "description": "Package ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order events for the requested package-title.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderEventRecord"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2409,19 +2733,60 @@
         ],
         "type": "object",
         "properties": {
+          "totalResults": {
+            "type": "integer",
+            "description": "Total number of results found.",
+            "example": 5
+          },
           "titles": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/titleROP"
             }
           },
-          "totalResults": {
-            "type": "integer",
-            "description": "Total number of results found.",
-            "example": 5
+          "facets": {
+            "$ref": "#/components/schemas/Facets"
           }
         },
         "description": "List of titles regardless of package from EPKB and the total number of results found."
+      },
+      "Facets": {
+        "title": "Facets",
+        "type": "object",
+        "properties": {
+          "packages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FacetsModel"
+            },
+            "description": "List of package aggregations calculated from title search results."
+          }
+        },
+        "description": "List of data object aggregations calculated from title search results."
+      },
+      "FacetsModel": {
+        "title": "FacetsModel",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Unique package identifier.",
+            "example": 5207
+          },
+          "name": {
+            "type": "string",
+            "description": "Package Name",
+            "example": "EBSCO eBooks"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total count of search results contained in the package.",
+            "example": 1
+          }
+        },
+        "description": "List of package characteristics."
       },
       "vendor": {
         "required": [
@@ -2679,13 +3044,6 @@
             "description": "Title Name",
             "example": "A Tale of Two Cities"
           },
-          "alternateTitleList": {
-            "type": "array",
-            "description": "Alternate Titles",
-            "items": {
-              "$ref": "#/components/schemas/alternateTitle"
-            }
-          },
           "publisherName": {
             "type": "string",
             "description": "Publisher Name",
@@ -2715,6 +3073,28 @@
             "description": "Publication Type",
             "example": "Journal"
           },
+          "customerResourcesList": {
+            "type": "array",
+            "description": "Customer Resources List",
+            "items": {
+              "$ref": "#/components/schemas/customerResourcesTitleROP"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Description",
+            "example": "Description"
+          },
+          "edition": {
+            "type": "string",
+            "description": "Title Edition",
+            "example": "1"
+          },
+          "isPeerReviewed": {
+            "type": "boolean",
+            "description": "Field to indicate if title is peer reviewed.",
+            "example": false
+          },
           "contributorsList": {
             "type": "array",
             "description": "Contributor ID List",
@@ -2722,11 +3102,11 @@
               "$ref": "#/components/schemas/contributorID"
             }
           },
-          "customerResourcesList": {
+          "alternateTitleList": {
             "type": "array",
-            "description": "Customer Resources List",
+            "description": "Alternate Titles",
             "items": {
-              "$ref": "#/components/schemas/customerResourcesTitleROP"
+              "$ref": "#/components/schemas/alternateTitle"
             }
           }
         },
@@ -2844,7 +3224,7 @@
             "example": "Complete"
           },
           "proxy": {
-            "$ref": "#/components/schemas/proxyInfo"
+            "$ref": "#/components/schemas/proxyURL"
           },
           "isPackageCustom": {
             "type": "boolean",
@@ -3103,7 +3483,7 @@
             "example": "Complete"
           },
           "proxy": {
-            "$ref": "#/components/schemas/proxyInfo"
+            "$ref": "#/components/schemas/proxyURL"
           },
           "isPackageCustom": {
             "type": "boolean",
@@ -3819,6 +4199,9 @@
             "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom.",
             "example": "Complete"
           },
+          "proxy": {
+            "$ref": "#/components/schemas/proxyURL"
+          },
           "vendorId": {
             "type": "integer",
             "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
@@ -4495,6 +4878,30 @@
             "type": "string",
             "description": "URL mask",
             "example": "url"
+          }
+        },
+        "description": "Proxy"
+      },
+      "proxyURL": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Proxy ID",
+            "example": "guest"
+          },
+          "name": {
+            "type": "string",
+            "description": "Proxy Name",
+            "example": "EZ_proxy"
+          },
+          "proxiedUrl": {
+            "type": "string",
+            "description": "The URL to the provider's resource with the addition of the customer's proxy information. This enables requests to be routed through the customer's proxy server before reaching the provider's resource. The proxiedUrl property is only present in the response when the customer has assigned a proxy server.",
+            "example": "http://ezproxy.myinstitute.edu/Login?url=http://search.ebscohost.com/Login.aspx?outhtype=ip,uid&profile=ehost&defaultdb=27h"
           }
         },
         "description": "Proxy"
@@ -5308,6 +5715,139 @@
           "$ref": "#/components/schemas/proxyWithURL"
         },
         "description": "List of all customer proxies."
+      },
+      "StoredOrderRetrieved": {
+        "title": "StoredOrderRetrieved",
+        "type": "object",
+        "properties": {
+          "accessModel": {
+            "type": "string",
+            "example": "AC",
+            "description": "Access model purchased in the order."
+          },
+          "coverageEndDate": {
+            "type": "string",
+            "example": "2021-01-01",
+            "description": "Coverage End Date"
+          },
+          "coverageStartDate": {
+            "type": "string",
+            "example": "2020-01-01",
+            "description": "Coverage Start Date"
+          },
+          "custID": {
+            "type": "string",
+            "example": "n223344",
+            "description": "Customer ID"
+          },
+          "internalOrderID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 100085012561,
+            "description": "Order data record identifier."
+          },
+          "orderDate": {
+            "type": "string",
+            "example": "2020-07-01",
+            "description": "Date the order was received."
+          },
+          "orderSource": {
+            "type": "string",
+            "example": "GOBI",
+            "description": "Order Source"
+          },
+          "orderType": {
+            "type": "string",
+            "example": "Title",
+            "description": "Type of Order.  Valid values are Title or Package.",
+            "enum": [
+              "Title",
+              "Package"
+            ]
+          },
+          "recordDescription": {
+            "type": "string",
+            "example": "Journal of Combinatorial Optimization",
+            "description": "Description of the order."
+          },
+          "sourceItemID": {
+            "type": "string",
+            "example": "474228533",
+            "description": "Source Item ID"
+          },
+          "sourceOrderNumber": {
+            "type": "string",
+            "example": "M8239631",
+            "description": "Order identifier from the source (GOBI or SSD)."
+          }
+        }
+      },
+      "OrderEventRecord": {
+        "title": "OrderEventRecord",
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Journal Gold Package",
+            "description": "Order Description"
+          },
+          "eventAction": {
+            "type": "string",
+            "example": "Order mapped",
+            "description": "Action resulting from the event.",
+            "enum": [
+              "SELECTED",
+              "SELECTED AND SET TO SHOW",
+              "SET TO SHOW",
+              "DESELECTED",
+              "IGNORED",
+              "HIDDEN",
+              "PARTIALLY DESELECTED",
+              "ORDER MAPPED",
+              "ORDER UNMAPPED",
+              "COVERAGE UPDATED",
+              "COVERAGE UPDATED",
+              "SET TO SHOW"
+            ]
+          },
+          "eventType": {
+            "type": "string",
+            "example": "MAP",
+            "description": "Event Type",
+            "enum": [
+              "SELECT",
+              "HIDE",
+              "DESELECT",
+              "MAP",
+              "UN_MAP",
+              "COVERAGE_CHANGE"
+            ]
+          },
+          "orderId": {
+            "type": "string",
+            "example": "M9490000",
+            "description": "Order ID"
+          },
+          "orderSource": {
+            "type": "string",
+            "example": "SSD",
+            "description": "Indicates the order source.  Valid values are GOBI or SSD.",
+            "enum": [
+              "GOBI",
+              "SSD"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "example": "Order mapped",
+            "description": "Reason for the event action."
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "01/06/2022 19:00:23",
+            "description": "Date and time of the event."
+          }
+        }
       }
     }
   }
