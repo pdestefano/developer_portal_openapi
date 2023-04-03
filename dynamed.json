@@ -29,18 +29,26 @@
     {
       "name": "Categories",
       "description": "DynaMed Medical Specialties API"
+    },
+    {
+      "name": "User",
+      "description": "DynaMed User API"
+    },
+    {
+      "name": "DMX",
+      "description": "DynaMedex API"
     }
   ],
   "servers": [
     {
-      "url": "https://ebscois-live.apigee.net/medsapi-dynamed/v1"
+      "url": "https://apis.ebsco.com/medsapi-dynamed/v1"
     }
   ],
   "paths": {
     "/token": {
       "servers": [
         {
-          "url": "https://ebscois-live.apigee.net/medsapi-auth/v1",
+          "url": "https://apis.ebsco.com/medsapi-auth/v1",
           "description": "MedsAPI token endpoint"
         }
       ],
@@ -239,6 +247,300 @@
         "description": "The authentication endpoint for getting a token, used in all other DynaMed APIs."
       }
     },
+    "/trusted-app-token": {
+      "get": {
+        "summary": "Get a JWT token to authenticate EBSCO users.",
+        "tags": [
+          "DMX"
+        ],
+        "description": "Additional Documentation [/trusted-app-token](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-trusted-app-token) ",
+        "operationId": "getTokensUsingGET",
+        "parameters": [
+          {
+            "name": "x-eis-selected-location",
+            "in": "header",
+            "description": "Header parameter containing selected profile number to ensure the correct profile is used when a user is affiliated to multiple institutions.",
+            "example": "123456",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tokenConsumer",
+            "in": "query",
+            "description": "The consumer of token being generated, e.g., mmx",
+            "required": true,
+            "example": "mmx",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "expirationInSeconds",
+            "in": "query",
+            "description": "Token expiration time in seconds.",
+            "required": false,
+            "example": "600",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - returns existing token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT token",
+                      "example": "ey1234567890..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Error-Response",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Standardized reason phrase for this status code",
+                      "example": "Error Name"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the error",
+                      "example": "Error Description"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publishers/{publisherId}/documents/{documentId}": {
+      "get": {
+        "summary": "Endpoint for retrieving article metadata by the unique ID assigned by the publisher",
+        "tags": [
+          "DMX"
+        ],
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for this resource",
+                      "example": "1234"
+                    },
+                    "links": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "example": "self",
+                            "description": "Relation type of the associated link"
+                          },
+                          "href": {
+                            "type": "string",
+                            "example": "https://apis.ebsco.com/medsapi-dynamed/v1/publishers/mmx/documents/t123456",
+                            "description": "Absolute URL pointing to the resource"
+                          }
+                        },
+                        "description": "Hypermedia links related to this resource."
+                      }
+                    },
+                    "article": {
+                      "type": "object",
+                      "description": "Article related to this resource",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for this resource",
+                          "example": "t123456"
+                        },
+                        "productFamily": {
+                          "type": "string",
+                          "description": "Product family for this resource",
+                          "example": "nahp"
+                        },
+                        "slug": {
+                          "type": "string",
+                          "description": "Unique slug assigned to this resource",
+                          "example": "/management/heart-failure-alternative-treatments"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Display format for this resource's title",
+                          "example": "Heart Failure Alternative Treatments"
+                        },
+                        "pubType": {
+                          "type": "object",
+                          "description": "Publication type for this resource",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for this resource",
+                              "example": "drug"
+                            },
+                            "title": {
+                              "type": "string",
+                              "description": "Display format for this resource's title",
+                              "example": "Drug Monograph"
+                            }
+                          }
+                        },
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "example": "self",
+                                "description": "Relation type of the associated link"
+                              },
+                              "href": {
+                                "type": "string",
+                                "example": "https://apis.ebsco.com/medsapi-dynamed/v1/articles/t123456",
+                                "description": "Absolute URL pointing to the resource"
+                              }
+                            },
+                            "description": "Hypermedia links related to this resource."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Error-Response",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Standardized reason phrase for this status code",
+                      "example": "Error Name"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about the error",
+                      "example": "Error Description"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "topic-metadata",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "mmx"
+            },
+            "in": "path",
+            "name": "publisherId",
+            "description": "Unique identifier for the publisher of this content",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "1234"
+            },
+            "in": "path",
+            "name": "documentId",
+            "description": "Unique identifier for this content used by the publisher",
+            "required": true
+          }
+        ],
+        "description": "Additional Documentation [/publishers/{publisherId}/documents/{documentId}](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-article-metadata) "
+      }
+    },
     "/search": {
       "get": {
         "tags": [
@@ -246,21 +548,39 @@
         ],
         "operationId": "get-search",
         "summary": "Get content matching one or more query terms",
-        "description": "The Search endpoint returns items matching the caller's query with\nsummary information. Aggregations are included for all publication types that\nhave been specified.",
+        "description": "Additional Documentation [/search](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs) ",
         "parameters": [
           {
             "name": "query",
             "in": "query",
             "description": "Word or phrase to search.",
+            "example": "heart",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
+            "in": "query",
+            "name": "initiatedBy",
+            "description": "Origination of the request, passing this parameter will override the default initiatedBy value for both the response and the transaction logs.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "autocomplete",
+                "autocorrect-override-link",
+                "didyoumean-link",
+                "typed-in",
+                "voice-to-text"
+              ]
+            }
+          },
+          {
             "name": "queryLanguage",
             "in": "query",
-            "description": "Two letter language code to translate the query from.",
+            "example": "en",
+            "description": "Two letter language to translate the query from.",
             "schema": {
               "type": "string"
             }
@@ -268,15 +588,18 @@
           {
             "name": "pubTypeId",
             "in": "query",
-            "description": "Comma separated publication types to return. These values are\ndiscovered through the ''medsapi-dynamed/v1/pubtypes'' endpoint.",
+            "example": "condition",
+            "description": "This is either singular or comma separated list. Unique identifier(s) representing the publication types this search query\nshould return. e.g. 'condition', 'drug', 'Image'. These values are discovered\nthrough the 'medsapi-dynamed/v1/pubtypes' endpoint.",
             "schema": {
               "type": "string"
-            }
+            },
+            "deprecated": true
           },
           {
             "name": "page",
             "in": "query",
-            "description": "Next page of results to start from. Each page contains 10 items.",
+            "example": 1,
+            "description": "Next page of results to start from. Each page contains 10 results.",
             "schema": {
               "type": "number"
             }
@@ -284,10 +607,68 @@
           {
             "name": "pageToken",
             "in": "query",
-            "description": "Used for paginated search result.Returned in the first page of\nresults.",
+            "example": "",
+            "description": "Unique identifier for paginated search result. This value is\nused to access other pages within the same search result.",
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "id",
+                "group"
+              ],
+              "example": "id"
+            },
+            "in": "query",
+            "name": "filterType",
+            "description": "Type of filter to apply to results"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "example": "image",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "filter",
+            "description": "The fields that should be used to filter/narrow the search results.  Required if filterType is specified."
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "example": "true",
+              "default": "false"
+            },
+            "in": "query",
+            "name": "secure",
+            "description": "Return secure URLs for media links"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "imageSize",
+            "description": "Size(s) of images to return in image links"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "posterSize",
+            "description": "Size(s) of still image to return for video links"
           }
         ],
         "responses": {
@@ -296,7 +677,211 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/search_response"
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "initiatedBy",
+                        "presentedAs",
+                        "pageToken",
+                        "searchTime",
+                        "totalItems",
+                        "queryUsed",
+                        "page",
+                        "pageSize",
+                        "totalPages",
+                        "aggregations",
+                        "links"
+                      ],
+                      "properties": {
+                        "initiatedBy": {
+                          "type": "string",
+                          "description": "Indicates how the query was initiated. If any match is\nfound, this will be set to 'typed-in'. If no results were found, this\nmay be set to 'didyoumean-probe' if it was possible for the search\nengine to find something using a typo corrected term. If the caller\nis making a paging request, this will be set to 'paging'.",
+                          "example": "typed-in"
+                        },
+                        "presentedAs": {
+                          "type": "string",
+                          "description": "Format of response",
+                          "example": "result-list"
+                        },
+                        "pageToken": {
+                          "type": "string",
+                          "description": "Must be used for continuing the search when paging",
+                          "example": "id:rsid:31a98130-31ff-4a8d-a64c-88cfab477892"
+                        },
+                        "searchTime": {
+                          "type": "number",
+                          "description": "How long the search took in ms once received by the search\nengine. This does not include network latencies.",
+                          "example": 134
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "description": "Total number of items that have matched the query word\nor phrase.",
+                          "example": 2289
+                        },
+                        "queryUsed": {
+                          "type": "string",
+                          "description": "The query term that was used by the search engine. This\ncould differ from what was originally entered if (1) the user had\na typo, and zero results would be returned and an alternate word was\nfound. (2) If the original language was not English, this would be\nthe English word(s) that map from the queryLanguage",
+                          "example": "heart"
+                        },
+                        "page": {
+                          "type": "number",
+                          "description": "A page is one item in the results list. The page number\nindicates the start of the next set or results.",
+                          "example": 11
+                        },
+                        "pageSize": {
+                          "type": "number",
+                          "description": "Page size indicates how many results can be returned in\na single response.",
+                          "example": 10
+                        },
+                        "totalPages": {
+                          "type": "number",
+                          "description": "Total pages indicates how many queries would need to be\nmade to get to the end of the list. The last page not contain a full\npage size of results.",
+                          "example": 229
+                        },
+                        "aggregations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "field": {
+                                "type": "string",
+                                "description": "Indicates how many and what publication types each\nsearch match would fall into.",
+                                "example": "pubTypeId"
+                              },
+                              "counts": {
+                                "type": "object",
+                                "properties": {
+                                  "condition": {
+                                    "type": "number",
+                                    "description": "Number of publications matching the pubType condition",
+                                    "example": 1147
+                                  },
+                                  "drug": {
+                                    "type": "number",
+                                    "description": "Number of publications matching the pubType drug",
+                                    "example": 1142
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "request": {
+                          "type": "object",
+                          "description": "Contains all of the query parameters exactly as specified\nby the caller.",
+                          "properties": {
+                            "query": {
+                              "type": "string",
+                              "description": "Term(s) that were specified, in the original language\nnot corrected for typos",
+                              "example": "heart"
+                            },
+                            "pubTypeIds": {
+                              "type": "array",
+                              "example": [
+                                "condition",
+                                "drug"
+                              ],
+                              "items": {
+                                "type": "string",
+                                "description": "list available at  /medsapi-dynamed/v1/pubtypes."
+                              }
+                            },
+                            "filterType": {
+                              "type": "string",
+                              "example": "id",
+                              "enum": [
+                                "id",
+                                "group"
+                              ],
+                              "description": "Type of filter to appied to results"
+                            },
+                            "filters": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "example": "condition"
+                              }
+                            },
+                            "secure": {
+                              "type": "boolean",
+                              "description": "Media links have been returned as secure URLs"
+                            },
+                            "imageSizes": {
+                              "type": "array",
+                              "description": "Size(s) of images returned in image links",
+                              "items": {
+                                "type": "string",
+                                "example": "medium",
+                                "enum": [
+                                  "small",
+                                  "medium",
+                                  "large",
+                                  "full"
+                                ]
+                              }
+                            },
+                            "posterSizes": {
+                              "type": "array",
+                              "description": "Size(s) of still images of videos returned in video links",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "small",
+                                  "medium",
+                                  "large",
+                                  "full"
+                                ],
+                                "example": "small"
+                              }
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ]
+                        },
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "description": "Provide paging links for getting next, previous and related\nlink information.",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "description": "relationship of the link",
+                                "example": "self"
+                              },
+                              "href": {
+                                "type": "string",
+                                "description": "hyperlink reference",
+                                "example": "https://apis.ebsco.com.apigee.net/medsapi-dynamed/v1/search?query=heart&pubTypeId=condition&pubTypeId=drug"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/Search_Common_Response"
+                          },
+                          {
+                            "$ref": "#/components/schemas/Search_image_item_response"
+                          },
+                          {
+                            "$ref": "#/components/schemas/Search_video_item_response"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
                 }
               }
             }
@@ -370,7 +955,7 @@
         ],
         "operationId": "get-search-suggestion",
         "summary": "Get titles and/or terms as suggestions matching the supplied query",
-        "description": "The Search Suggestions endpoint returns suggestions matching the\ncaller's query with summary information. Aggregations are included for all\npublication types that have been specified.",
+        "description": "Additional Documentation [/search/suggestions](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/search-suggestions) ",
         "parameters": [
           {
             "name": "query",
@@ -378,8 +963,7 @@
             "description": "String of characters to search for suggestions.",
             "required": true,
             "schema": {
-              "type": "string",
-              "default": ""
+              "type": "string"
             }
           },
           {
@@ -387,21 +971,11 @@
             "in": "query",
             "description": "A comma separated list of supported ('title' and 'term') suggestion types.",
             "schema": {
-              "type": "string",
-              "default": "title,term"
+              "type": "string"
             }
           },
           {
-            "name": "queryLanguage",
-            "in": "query",
-            "description": "ISO 639.2 alpha-3 B language code. Defaults to 'eng'",
-            "schema": {
-              "type": "string",
-              "default": "eng"
-            }
-          },
-          {
-            "name": "maxItemsPerSuggestionType ",
+            "name": "maxItemsPerSuggestionType",
             "in": "query",
             "description": "The maximum number of items to return for each suggestion type, defaults to 10",
             "schema": {
@@ -490,7 +1064,7 @@
         ],
         "operationId": "get-article",
         "summary": "Get an article by ID",
-        "description": "The Articles endpoint returns the article for a provided ID.",
+        "description": "Additional Documentation [/articles/{articleId}](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-article-by-id) ",
         "parameters": [
           {
             "name": "articleId",
@@ -500,6 +1074,48 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "secure",
+            "description": "Return image links as secure URLs when true"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "full"
+              ]
+            },
+            "in": "query",
+            "name": "imageSize",
+            "description": "Size(s) of images to return in image links"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "full"
+              ]
+            },
+            "in": "query",
+            "name": "posterSize",
+            "description": "Size(s) of still image from the video to return in video links"
           }
         ],
         "responses": {
@@ -580,8 +1196,8 @@
         "tags": [
           "Publication Types"
         ],
-        "summary": "Get resource classification for the content",
-        "description": "The Pubtypes endpoint returns a list of publication types which\nare used in conjunction with the search endpoint to perform a search query.",
+        "summary": "Get resource classification for the content which\nare used in conjunction with the search endpoint to perform a search query.",
+        "description": "Additional Documentation [/pubtypes](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-pub-types) ",
         "operationId": "pubtypesUsingGET",
         "parameters": [
           
@@ -665,7 +1281,7 @@
           "Categories"
         ],
         "summary": "Get a paginated list of categories available for DynaMed content",
-        "description": "The Categories endpoint returns a paginated list of categories\navailable for DynaMed content.",
+        "description": "Additional Documentation [/categories](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-categories) ",
         "operationId": "get-categories",
         "parameters": [
           
@@ -749,7 +1365,7 @@
           "Categories"
         ],
         "summary": "Get a category matching the ID provided",
-        "description": "The Categories by ID endpoint returns the category matching the\nID provided.",
+        "description": "Additional Documentation [/categories/{categoriesId}](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-categories-id) ",
         "operationId": "get-categories-ID",
         "parameters": [
           {
@@ -833,161 +1449,106 @@
           }
         ]
       }
-    }
-  },
-  "components": {
-    "schemas": {
-      "search_response": {
-        "type": "object",
-        "properties": {
-          "_metadata": {
-            "required": [
-              "aggregations",
-              "initiatedBy",
-              "links",
-              "page",
-              "pageSize",
-              "pageToken",
-              "presentedAs",
-              "queryUsed",
-              "searchTime",
-              "totalItems",
-              "totalPages"
-            ],
-            "type": "object",
-            "properties": {
-              "initiatedBy": {
-                "type": "string",
-                "description": "One of: typed-in, paging or didyoumean-probe",
-                "example": "typed-in"
-              },
-              "presentedAs": {
-                "type": "string",
-                "description": "Format of response",
-                "example": "result-list"
-              },
-              "pageToken": {
-                "type": "string",
-                "description": "Must use for continuing the search when paging",
-                "example": "id:rsid:31a98130-31ff-4a8d-a64c-88cfab477892"
-              },
-              "searchTime": {
-                "type": "number",
-                "description": "Time in ms to execute search",
-                "example": 134
-              },
-              "totalItems": {
-                "type": "number",
-                "example": 2289
-              },
-              "queryUsed": {
-                "type": "string",
-                "description": "Term used by the search engine",
-                "example": "heart"
-              },
-              "page": {
-                "type": "number",
-                "description": "Start of next page of items to return",
-                "example": 11
-              },
-              "pageSize": {
-                "type": "number",
-                "example": 10
-              },
-              "totalPages": {
-                "type": "number",
-                "example": 229
-              },
-              "aggregations": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "field": {
-                      "type": "string",
-                      "description": "Indicates how many and what publication types each\nsearch match would fall into.",
-                      "example": "pubTypeId"
-                    },
-                    "counts": {
-                      "required": [
-                        "condition",
-                        "drug"
-                      ],
-                      "type": "object",
-                      "properties": {
-                        "condition": {
-                          "type": "number",
-                          "example": 1147
-                        },
-                        "drug": {
-                          "type": "number",
-                          "example": 1142
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "request": {
-                "required": [
-                  "pubTypeIds",
-                  "query"
-                ],
-                "type": "object",
-                "properties": {
-                  "query": {
-                    "type": "string",
-                    "description": "Term(s) that were specified, in the original language\nnot corrected for typos",
-                    "example": "heart"
-                  },
-                  "pubTypeIds": {
-                    "type": "array",
-                    "example": [
-                      "condition",
-                      "drug"
-                    ],
-                    "items": {
-                      "type": "string",
-                      "description": "list available at  /medsapi-dynamed/v1/pubtypes."
-                    }
-                  }
-                },
-                "description": "Contains all of the query parameters exactly as specified\nby the caller."
-              },
-              "links": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "rel": {
-                      "type": "string",
-                      "example": "self"
-                    },
-                    "href": {
-                      "type": "string",
-                      "example": "https://ebscois-live.apigee.net/medsapi-dynamed/v1/search?query=heart&pubTypeId=condition&pubTypeId=drug"
-                    }
-                  },
-                  "description": "Provide paging links for getting next, previous and related\nlink information."
+    },
+    "/user/detailed-claims": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Endpoint provides ability to get a list of previously claimed credits.",
+        "description": "Additional Documentation [/user/detailed-claims](https://developer.ebsco.com/medical-point-care-apis/dynamed/docs/get-detailed-claims) ",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Start Date of Date Range, format is YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "End Date of Date Range, format is YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Next page of items to return.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of items to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "operationId": "getDetailedClaimsUsingGET",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/detailedClaims"
                 }
               }
             }
           },
-          "items": {
-            "type": "array",
-            "description": "Format for all but image results. See Models section below\nfor image item details",
-            "items": {
-              "$ref": "#/components/schemas/non-image-item"
+          "400": {
+            "description": "Bad Request - Required property is missing or contains an illegal value"
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+            "content": {
+              
+            }
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+            "content": {
+              
+            }
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition which prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
             }
           }
         },
-        "description": "Search results have 2 forms for the items.  This section describes\nthe response for all but image items.  See the Search API supplemental documentation\nfor details on the items."
-      },
-      "non-image-item": {
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Search_Common_Response": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier for the item",
             "example": "T114087"
           },
           "toc": {
@@ -997,25 +1558,30 @@
               "properties": {
                 "title": {
                   "type": "string",
-                  "example": "Overview and Recommendations"
+                  "example": "Overview and Recommendations",
+                  "description": "Title of the section"
                 },
                 "anchor": {
                   "type": "string",
-                  "example": "GUID-5250DF0A-CBA8-416F-B438-11F7BBE324AF"
+                  "example": "GUID-5250DF0A-CBA8-416F-B438-11F7BBE324AF",
+                  "description": "Anchor location in the document"
                 }
               }
             }
           },
           "title": {
             "type": "string",
+            "description": "Title of the matched item",
             "example": "Carcinoid Heart Disease"
           },
           "description": {
             "type": "string",
-            "example": "Carcinoid heart disease refers to cardiac manifestations of advanced\ncarcinoid tumors and carcinoid syndrome."
+            "description": "Description of the content, which might briefly summarize\nthe content",
+            "example": "Carcinoid heart disease refers to cardiac manifestations\nof advanced carcinoid tumors and carcinoid syndrome."
           },
           "slug": {
             "type": "string",
+            "description": "Relative location of the matched item",
             "example": "/condition/carcinoid-heart-disease"
           },
           "sections": {
@@ -1025,14 +1591,17 @@
               "properties": {
                 "title": {
                   "type": "string",
+                  "description": "The title of the matching section.",
                   "example": "Cardiac"
                 },
                 "anchor": {
                   "type": "string",
+                  "description": "The anchor location of the section.",
                   "example": "CARDIAC"
                 },
                 "path": {
                   "type": "array",
+                  "description": "This is the hierarchical path to the matching text\nwithin the section.",
                   "example": [
                     "History and Physical ",
                     " Physical ",
@@ -1053,6 +1622,7 @@
             "properties": {
               "title": {
                 "type": "string",
+                "description": "Name of the publication type",
                 "example": "Condition"
               }
             }
@@ -1064,45 +1634,59 @@
               "properties": {
                 "rel": {
                   "type": "string",
+                  "description": "Relationship of the link",
                   "example": "self"
                 },
                 "href": {
                   "type": "string",
-                  "example": "https://ebscois.apigee.net/medsapi-dynamed/v1/articles/T114087"
+                  "description": "Hypertext reference link",
+                  "example": "https://apis.ebsco.com/medsapi-dynamed/v1/articles/T114087"
                 }
               }
             }
           }
-        }
+        },
+        "description": "Search results have 3 forms for the items.  This section describes the response for all but image and video items."
       },
-      "image-item": {
-        "required": [
-          "contentLocations",
-          "id",
-          "title"
-        ],
+      "Search_image_item_response": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique ID for the image",
             "example": "I509098"
           },
           "title": {
             "type": "string",
+            "description": "Title for the image",
             "example": "Apical 4 chamber view of heart."
           },
           "links": {
             "type": "array",
             "items": {
               "type": "object",
+              "description": "Expiring URL link to the image.  Will render full res in\nthe optimal format for the browser.",
               "properties": {
                 "rel": {
                   "type": "string",
+                  "description": "Relationship of the link",
                   "example": "external"
                 },
                 "href": {
                   "type": "string",
-                  "example": "http://res.cloudinary.com/eis-live/image/authenticated/f_auto/v1/EBSCOHealth/CCMS/I509101?__cld_token__=exp=1590236397~hmac=cb9faf1d1c73944bc70c2d75f"
+                  "description": "Hyper reference link",
+                  "example": "https://media.ebsco.healthcare/eis-live/image/authenticated/f_auto/v1/EBSCOHealth/CCMS/I509104?__cld_token__=exp=1589920019~hmac=318fc29d454df2a4f122307ee5"
+                },
+                "imageSize": {
+                  "type": "string",
+                  "example": "small",
+                  "enum": [
+                    "small",
+                    "medium",
+                    "large",
+                    "full"
+                  ],
+                  "description": "Size of the image returned in the link"
                 }
               }
             }
@@ -1113,30 +1697,135 @@
               "type": "object",
               "properties": {
                 "parent": {
-                  "required": [
-                    "slug",
-                    "title"
-                  ],
                   "type": "object",
                   "properties": {
                     "title": {
                       "type": "string",
+                      "description": "Title of the content containing the image",
                       "example": "Ultrasound in the Intensive Care Unit (ICU)"
                     },
                     "slug": {
                       "type": "string",
+                      "description": "Relative location of the matched content",
                       "example": "/evaluation/ultrasound-in-the-intensive-care-unit-icu"
                     }
-                  }
+                  },
+                  "required": [
+                    "title",
+                    "slug"
+                  ]
                 },
                 "anchor": {
                   "type": "string",
-                  "example": "I509100"
+                  "example": "I509100",
+                  "description": "Anchor location in the document"
                 }
               }
             }
           }
-        }
+        },
+        "required": [
+          "id",
+          "title",
+          "contentLocations"
+        ]
+      },
+      "Search_video_item_response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id of the video",
+            "example": "V1622166482467"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the video",
+            "example": "Recognizing Transfusion-Related Acute Lung Injury (TRALI)."
+          },
+          "format": {
+            "type": "string",
+            "description": "Video format",
+            "example": "mp4"
+          },
+          "description": {
+            "type": "string",
+            "description": "Information about the video",
+            "example": "This video shows..."
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Expiring URL link to the video.",
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "description": "Relationship of the link",
+                  "example": "external"
+                },
+                "href": {
+                  "type": "string",
+                  "description": "Hyper reference link",
+                  "example": "https://media.ebsco.healthcare/eis-live/image/authenticated/v1/EBSCOHealth/videos/V1622166482467?__cld_token__=exp=1589920019~hmac=318fc29d454df2a4f122307ee5"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "poster",
+                  "description": "Type of link returned"
+                },
+                "posterSize": {
+                  "type": "string",
+                  "enum": [
+                    "small",
+                    "medium",
+                    "large",
+                    "full"
+                  ],
+                  "example": "large",
+                  "description": "Size of the video poster in the link"
+                }
+              }
+            }
+          },
+          "contentLocations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "parent": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "Tite of the content containing the video",
+                      "example": "Asthma in Adults and Adolescents"
+                    },
+                    "slug": {
+                      "type": "string",
+                      "description": "Relative location of the matched content",
+                      "example": "/condition/asthma-in-adults-and-adolescents"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "slug"
+                  ]
+                },
+                "anchor": {
+                  "type": "string",
+                  "example": "V1622166355451",
+                  "description": "Anchor location in the document"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "contentLocations"
+        ]
       },
       "search_suggestions": {
         "title": "",
@@ -1281,7 +1970,7 @@
                                 "href": {
                                   "type": "string",
                                   "description": "Self link to fetch the content of the\narticle",
-                                  "example": "https://host:port/medsapi/v1/articles/T566763"
+                                  "example": "https://apis.ebsco.com/medsapi/v1/articles/T566763"
                                 }
                               }
                             }
@@ -1322,7 +2011,7 @@
                     "href": {
                       "type": "string",
                       "description": "Absolute link pointing to related resource.",
-                      "example": "https://host:port/medsapi-dynamed/v1/pubtypes"
+                      "example": "https://apis.ebsco.com/medsapi-dynamed/v1/pubtypes"
                     }
                   }
                 }
@@ -1446,7 +2135,17 @@
                       },
                       "href": {
                         "type": "string",
-                        "example": "http://res.cloudinary.com/eis-live/image/authenticated/f_auto/v1/EBSCOHealth/CCMS/I509101?__cld_token__=exp=1590236397~hmac=cb9faf1d1c73944bc70c2d75f"
+                        "example": "http://media.ebsco.healthcare/eis-live/image/authenticated/f_auto/v1/EBSCOHealth/CCMS/I509101?__cld_token__=exp=1590236397~hmac=cb9faf1d1c73944bc70c2d75f"
+                      },
+                      "imageSize": {
+                        "type": "string",
+                        "enum": [
+                          "small",
+                          "medium",
+                          "large",
+                          "full"
+                        ],
+                        "example": "full"
                       }
                     }
                   }
@@ -1476,6 +2175,106 @@
                         "type": "string",
                         "description": "The anchor of this image in the parent",
                         "example": "I508496"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "videos": {
+            "type": "array",
+            "description": "Videos for this article",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Video id",
+                  "example": "V123456"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Title of this video",
+                  "example": "Kegel exercises"
+                },
+                "format": {
+                  "type": "string",
+                  "description": "File format of this video",
+                  "example": "mp4"
+                },
+                "copyright": {
+                  "type": "string",
+                  "description": "Copyright for this video",
+                  "example": "Copyright ©2021 EBSCO Information Services."
+                },
+                "mediaProvider": {
+                  "type": "string",
+                  "description": "Provider of this video",
+                  "example": "EBSCO Information Services"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of this video",
+                  "example": "Demonstration of Kegel exercises used for behavioral interventions for Urinary Incontinence."
+                },
+                "links": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "rel": {
+                        "type": "string",
+                        "example": "external"
+                      },
+                      "href": {
+                        "type": "string",
+                        "example": "http://media.ebsco.healthcare/eis-live/video/authenticated/v1/EBSCOHealth/CCMS/Dynamed/videos/V123456"
+                      },
+                      "posterSize": {
+                        "type": "string",
+                        "enum": [
+                          "small",
+                          "medium",
+                          "large",
+                          "full"
+                        ],
+                        "description": "Size of this video still image",
+                        "example": "small"
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "poster",
+                        "description": "Type of video link"
+                      }
+                    }
+                  }
+                },
+                "contentLocations": {
+                  "type": "array",
+                  "description": "array of locations for this image",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "parent": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Title of this article",
+                            "example": "Behavioral Interventions for Urinary Incontinence"
+                          },
+                          "slug": {
+                            "type": "string",
+                            "description": "Slug for this article",
+                            "example": "/management/behavioral-interventions-for-urinary-incontinence"
+                          }
+                        }
+                      },
+                      "anchor": {
+                        "type": "string",
+                        "description": "The anchor of this video in the parent",
+                        "example": "V123456"
                       }
                     }
                   }
@@ -1567,14 +2366,14 @@
           },
           "pubType": {
             "type": "object",
+            "description": "array of pub types for this article",
             "properties": {
               "id": {
                 "type": "string",
                 "description": "pubType of the article",
                 "example": "condition"
               }
-            },
-            "description": "array of pub types for this article"
+            }
           },
           "updates": {
             "type": "array",
@@ -1605,7 +2404,16 @@
                 "updateType": {
                   "type": "string",
                   "description": "the type of this update",
-                  "example": "evidenceUpdate"
+                  "example": "evidenceUpdate",
+                  "enum": [
+                    "evidenceUpdate",
+                    "recommendationUpdate",
+                    "drugDeviceUpdate",
+                    "outbreakUpdate",
+                    "guidelineNotationUpdate",
+                    "guidelineSummaryUpdate",
+                    "reviewArticleUpdate"
+                  ]
                 },
                 "updatePriority": {
                   "type": "string",
@@ -1648,6 +2456,38 @@
                 }
               }
             }
+          },
+          "routes": {
+            "type": "array",
+            "example": [
+              "intravenous",
+              "oral",
+              "rectal"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "example": "self",
+                  "description": "relationship of the link to this article"
+                },
+                "href": {
+                  "type": "string",
+                  "description": "Link to this article"
+                }
+              },
+              "required": [
+                "rel",
+                "href"
+              ]
+            }
           }
         }
       },
@@ -1682,7 +2522,7 @@
                     },
                     "href": {
                       "type": "string",
-                      "example": "https://ebscois-live.apigee.net/medsapi-dynamed/v1/categories"
+                      "example": "https://apis.ebsco.com/medsapi-dynamed/v1/categories"
                     }
                   }
                 }
@@ -1744,7 +2584,7 @@
                       "href": {
                         "type": "string",
                         "description": "Link to the category topic",
-                        "example": "https://ebscois-live.apigee.net/medsapi-dynamed/v1/categories/allergy"
+                        "example": "https://apis.ebsco.com/medsapi-dynamed/v1/categories/allergy"
                       }
                     }
                   }
@@ -1789,7 +2629,7 @@
                 },
                 "href": {
                   "type": "string",
-                  "example": "https://ebscois-live.apigee.net/medsapi-dynamed/v1/categories/cardiology"
+                  "example": "https://apis.ebsco.com/medsapi-dynamed/v1/categories/cardiology"
                 }
               }
             }
@@ -1862,7 +2702,7 @@
                                         "href": {
                                           "type": "string",
                                           "description": "Link to this sub category",
-                                          "example": "https://ebscois-live.apigee.net/medsapi-dynamed/v1/articles/T116779"
+                                          "example": "https://apis.ebsco.com/medsapi-dynamed/v1/articles/T116779"
                                         }
                                       }
                                     }
@@ -1881,6 +2721,160 @@
           }
         },
         "description": ""
+      },
+      "detailedClaims": {
+        "type": "object",
+        "description": "First time user will get the list of detailed claims: credit type, submission date, certificate id and the associated sections.",
+        "properties": {
+          "_metadata": {
+            "properties": {
+              "totalItems": {
+                "type": "number",
+                "example": 3,
+                "description": "Total number of available items."
+              },
+              "totalPages": {
+                "type": "number",
+                "example": 3,
+                "description": "Number of Available Pages"
+              },
+              "page": {
+                "type": "number",
+                "example": 3,
+                "description": "Page of items that have been returned."
+              },
+              "pageSize": {
+                "type": "number",
+                "example": 4,
+                "description": "Total number of items to return per page."
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "href",
+                    "rel"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "rel": {
+                      "type": "string",
+                      "description": "Self link and links to all categories",
+                      "example": "self"
+                    },
+                    "href": {
+                      "type": "string",
+                      "example": "https://apis.ebsco.com/medsapi-dynamed/v1/user/detailed-claims?startDate=2020-10-23&endDate=2020-11-17&page=2&pageSize=10"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "items": {
+            "type": "array",
+            "description": "Contains list of items",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 1234
+                },
+                "certificateType": {
+                  "type": "string",
+                  "example": "ASCOFAME"
+                },
+                "degreeFullName": {
+                  "type": "string",
+                  "example": "Default degree for ASCOFAME credit type"
+                },
+                "submitDate": {
+                  "type": "string",
+                  "example": "2020-10-28T08:54:51.595Z"
+                },
+                "credits": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": "1"
+                      },
+                      "creditHours": {
+                        "type": "number",
+                        "example": 0.5
+                      },
+                      "creditType": {
+                        "type": "string",
+                        "example": "ASCOFAME"
+                      },
+                      "articles": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "T999999"
+                            },
+                            "links": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "rel": {
+                                    "type": "string",
+                                    "example": "self"
+                                  },
+                                  "href": {
+                                    "type": "string",
+                                    "example": "https://apis.ebsco.com/medsapi-dynamed/v1/articles/T999999"
+                                  }
+                                }
+                              }
+                            },
+                            "title": {
+                              "type": "string",
+                              "example": "Gadobenate"
+                            },
+                            "accessTime": {
+                              "type": "string",
+                              "example": "2020-10-28T08:54:22.785Z"
+                            },
+                            "section": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "example": "7365"
+                                  },
+                                  "title": {
+                                    "type": "string",
+                                    "example": "Dosing & Indications"
+                                  },
+                                  "accessTime": {
+                                    "type": "string",
+                                    "example": "2020-10-28T08:54:22.785Z"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "error": {
         "type": "object",
