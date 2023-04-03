@@ -1,0 +1,1072 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Consumer Health",
+    "version": "1.0",
+    "contact": {
+      "name": "EBSCO Information Services",
+      "url": "https://connect.ebsco.com/"
+    },
+    "description": "MedsAPI Consumer Health Endpoints"
+  },
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "MedsAPI Token API"
+    },
+    {
+      "name": "Consumer Health",
+      "description": "Consumer Health Content Endpoints"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://apis.ebsco.com/medsapi-consumer-health/v1"
+    }
+  ],
+  "paths": {
+    "/token": {
+      "servers": [
+        {
+          "url": "https://apis.ebsco.com/medsapi-auth/v1",
+          "description": "MedsAPI token endpoint"
+        }
+      ],
+      "post": {
+        "summary": "Get an authorization token",
+        "tags": [
+          "Authorization"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token_expires_in": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "The number of seconds remaining before the refresh token will expire.  The lifespan of refresh tokens is usually larger than Access tokens. The exact duration depends on the type of Refresh Tokens issued. The different types explained below in the document."
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "health-library",
+                      "description": "The type of token issued"
+                    },
+                    "organization_name": {
+                      "type": "string",
+                      "example": "ebscois",
+                      "description": "The issuer of the token"
+                    },
+                    "developer.email": {
+                      "type": "string",
+                      "example": "msmith@mycompany.com",
+                      "description": "Name of the owener of the token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "BearerToken",
+                      "description": "Always set to be a bearer token"
+                    },
+                    "issued_at": {
+                      "type": "string",
+                      "example": "1593011837412",
+                      "description": "Epoch time when the token was issued"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "example": "{client_id}",
+                      "description": "Client Id that the token can be used by"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "{actual bearer token to use}",
+                      "description": "Bearer token"
+                    },
+                    "application_name": {
+                      "type": "string",
+                      "example": "{id}",
+                      "description": "Id of the application that is registered for this token"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "admin:rw",
+                      "description": "Authorization scope"
+                    },
+                    "expires_in": {
+                      "type": "string",
+                      "example": "14399",
+                      "description": "Seconds until this token has expired"
+                    },
+                    "refresh_count": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "When this token can be refreshed automatically"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "approved",
+                      "description": "Indicates that the token has been approved"
+                    }
+                  },
+                  "required": [
+                    "refresh_token_expires_in",
+                    "product",
+                    "organization_name",
+                    "developer.email",
+                    "token_type",
+                    "issued_at",
+                    "client_id",
+                    "access_token",
+                    "application_name",
+                    "scope",
+                    "expires_in",
+                    "refresh_count",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials",
+                    "description": "Must be set to client_credentials"
+                  },
+                  "product": {
+                    "type": "string",
+                    "example": "health-library",
+                    "description": "Must be set to health-library"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "example": "{client_id}",
+                    "description": "The client_id to use will be provided by EBSCO"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "example": "{client secret}",
+                    "description": "This will be provided by EBSCO"
+                  }
+                }
+              },
+              "examples": {
+                "Example Body": {
+                  "value": {
+                    "grant_type": "client_credentials",
+                    "product": "health-library",
+                    "client_id": "{client id}",
+                    "client_secret": "{client secret}"
+                  }
+                }
+              }
+            },
+            "application/javascript": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          },
+          "description": "{\n  \"grant_type\": \"client_credentials\",\n  \"product\": \"health-library\",\n  \"client_id\": \"client_id\",\n  \"client_secret\": \"client secret\"\n}\n"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": ""
+          }
+        ],
+        "description": "The authentication endpoint for getting a token, used in all other Health Library APIs."
+      }
+    },
+    "/content/search": {
+      "post": {
+        "tags": [
+          "Consumer Health"
+        ],
+        "summary": "Search Consumer Health content",
+        "description": "Additional Documentation [/content/search](https://developer.ebsco.com/medical-point-care-apis/consumer-health/docs) ",
+        "operationId": "post-search-v1",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results to return per page.  Defaults to the highest value allowed: 30.  Set pageSize to 0 to retrieve a response without an items array.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of results to return. Default: 1.  No page token needed if page 1.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "A string token used by the search engine to retrieve the next set of results. Must be supplied after the first page of results are returned.  Returned in the response of the first page of results.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Search Request Specification",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A term or terms to search.",
+                    "example": "chromosomal"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "description": "Fields that should be included in the response.",
+                    "items": {
+                      "type": "string",
+                      "example": "title",
+                      "enum": [
+                        "title",
+                        "type",
+                        "description",
+                        "metadata"
+                      ]
+                    }
+                  },
+                  "sort": {
+                    "type": "string",
+                    "description": "Sort order",
+                    "example": "relevancy",
+                    "default": "relevancy",
+                    "enum": [
+                      "relevancy",
+                      "title",
+                      "categoryPath"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "pageToken",
+                        "page",
+                        "pageSize",
+                        "totalItems",
+                        "totalPages",
+                        "request",
+                        "links"
+                      ],
+                      "properties": {
+                        "pageToken": {
+                          "type": "string",
+                          "description": "A token provided by the search engine to be used to get additional results. This is not needed for the first page.",
+                          "example": "id:rsid:ba4b0b01"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "Current page of results.",
+                          "example": 2
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "description": "Maximum number of items per page.",
+                          "example": 10
+                        },
+                        "totalItems": {
+                          "type": "integer",
+                          "description": "Total number of items that match the query.",
+                          "example": 523
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Number of pages of results.",
+                          "example": 54
+                        },
+                        "request": {
+                          "type": "object",
+                          "description": "The request that can be used to reproduce the same search results.  To get the next page, add 1 to the page param.",
+                          "properties": {
+                            "query": {
+                              "type": "string",
+                              "description": "The original query term.",
+                              "example": "chromosomal"
+                            },
+                            "fields": {
+                              "type": "array",
+                              "description": "Fields that will be included in the response.",
+                              "items": {
+                                "type": "string",
+                                "example": "title",
+                                "enum": [
+                                  "title",
+                                  "type",
+                                  "description"
+                                ]
+                              }
+                            },
+                            "sort": {
+                              "type": "string",
+                              "description": "Sort order of results",
+                              "example": "relevancy",
+                              "default": "relevancy",
+                              "enum": [
+                                "relevancy",
+                                "title",
+                                "categoryPath"
+                              ]
+                            }
+                          }
+                        },
+                        "links": {
+                          "minItems": 1,
+                          "type": "array",
+                          "description": "HATEOAS links for self, previous, next, first, last as available.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "description": "Relationship of the link and the current page of results.",
+                                "example": "self"
+                              },
+                              "href": {
+                                "type": "string",
+                                "description": "Hypertext REFerence link.",
+                                "example": "https://apis.ebsco.com/medsapi-consumer-health/v1/content/search"
+                              },
+                              "method": {
+                                "type": "string",
+                                "description": "The method used to get this response.",
+                                "example": "POST"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href",
+                              "method"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "A list of all items matching the search request.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID of the article.",
+                            "example": "T1643442747660"
+                          },
+                          "links": {
+                            "minItems": 1,
+                            "type": "array",
+                            "description": "HATEOAS links.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "rel": {
+                                  "type": "string",
+                                  "description": "Relationship of the link and the current item.",
+                                  "example": "self"
+                                },
+                                "href": {
+                                  "type": "string",
+                                  "description": "Hypertext Reference link.",
+                                  "example": "https://apis.ebsco.com/medsapi-consumer-health/v1/content/articles/T913716"
+                                }
+                              }
+                            }
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Title of the article.",
+                            "example": "Chromosomal Abnormalities"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Summary of the article.",
+                            "example": "Chromosomal abnormalities are problems with one of the 23 pairs of chromosomes."
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "links"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Required property is missing or contains an illegal value",
+            "content": {
+              
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided.",
+            "content": {
+              
+            }
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource.",
+            "content": {
+              
+            }
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request.",
+            "content": {
+              
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method.",
+            "content": {
+              
+            }
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type.",
+            "content": {
+              
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request.",
+            "content": {
+              
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time.",
+            "content": {
+              
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "message",
+                    "name"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Standardized label for this error",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about this error",
+                      "example": "Error description."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ],
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/content/articles/{id}": {
+      "get": {
+        "tags": [
+          "Consumer Health"
+        ],
+        "summary": "GET Consumer Health articles",
+        "description": "Additional Documentation [/content/article](https://developer.ebsco.com/medical-point-care-apis/consumer-health/docs/topic-two) ",
+        "operationId": "get-product-content",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "secure",
+            "description": "Indicates if secure URLs should be returned for media links"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "imageSize",
+            "description": "Indicates the size(s) of images that should be returned"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "posterSize",
+            "description": "Indicates the size(s) of still image of videos that should be returned"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the article.  Can be found in search results.",
+                      "example": "t1643496602338"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Title of the article",
+                      "example": "Valproic Acid"
+                    },
+                    "links": {
+                      "type": "array",
+                      "description": "HATEOAS links.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "description": "Relationship of the link and the article",
+                            "example": "self"
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "Hypertext Reference link to this article.",
+                            "example": "https://apis.ebsco.com/medsapi-consumer-health/v1/content/articles/T12345"
+                          }
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "description": "Metadata Fields",
+                      "properties": {
+                        "DC.Type": {
+                          "type": "string",
+                          "description": "Type of article - topic",
+                          "example": "topic"
+                        },
+                        "DC.Title": {
+                          "type": "string",
+                          "description": "Title of the article",
+                          "example": "Valproic Acid"
+                        },
+                        "DC.Format": {
+                          "type": "string",
+                          "description": "Format of the article (e.g. XHTML)",
+                          "example": "XHTML"
+                        },
+                        "copyright": {
+                          "type": "string",
+                          "description": "Copyright date",
+                          "example": "(C) Copyright 2022"
+                        },
+                        "DC.Creator": {
+                          "type": "string",
+                          "description": "Creator of the content",
+                          "example": "by Julia M. Smith, MA"
+                        },
+                        "DC.Coverage": {
+                          "type": "string",
+                          "example": "/tnp/pg000419,26 11000004 12000004 13000004 14000004,Trade Names : Depakene"
+                        },
+                        "DC.Language": {
+                          "type": "string",
+                          "description": "Language of the article",
+                          "example": "en"
+                        },
+                        "DC.Identifier": {
+                          "type": "string",
+                          "description": "GUID identifier of the article",
+                          "example": "GUID-8F887103-7A62-4FA3-9AE4-BBD23310BE87"
+                        },
+                        "DC.Date.Revised": {
+                          "type": "string",
+                          "description": "Last date article was modified",
+                          "format": "date",
+                          "example": "2015-12-01T00:00:00.000Z"
+                        },
+                        "DC.rights.owner": {
+                          "type": "string",
+                          "description": "Owner of the copyright",
+                          "example": "(C) Copyright 2022"
+                        },
+                        "DC.Subject": {
+                          "type": "string",
+                          "description": "Topic of the contents of the article",
+                          "example": "Entrees, Vegetarian"
+                        },
+                        "keywords": {
+                          "type": "string",
+                          "description": "Keywords related to the article",
+                          "example": "Entrees, Vegetarian"
+                        }
+                      }
+                    },
+                    "toc": {
+                      "type": "array",
+                      "description": "Table of contents for this article",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Title of the section of the article",
+                            "example": "Overview"
+                          },
+                          "anchor": {
+                            "type": "string",
+                            "description": "The anchor location of the section.",
+                            "example": "GUID-73F94E93-8B56-47E4-A5FF-1EC898926DDD__EXPECT"
+                          },
+                          "children": {
+                            "type": "array",
+                            "description": "an array of subsections",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string",
+                                  "description": "Title of the sub section",
+                                  "example": "Details"
+                                },
+                                "anchor": {
+                                  "type": "string",
+                                  "description": "The anchor location of the subsection.",
+                                  "example": "GUID-CF51EDA8-39E0-46C5-90A3-969246792E25__AMYS"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "sections": {
+                      "type": "array",
+                      "description": "subsections of the article",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "anchor": {
+                            "type": "string",
+                            "description": "anchor of this section",
+                            "example": "GUID-73F94E93-8B56-47E4-A5FF-1EC898926DDD__EXPECT"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Title of this section of the article",
+                            "example": "Overview"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "Content for this section based on the DC.format",
+                            "example": "<html>Html content for this section.</html>"
+                          },
+                          "children": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "anchor": {
+                                  "type": "string",
+                                  "description": "The anchor location of the subsection.",
+                                  "example": "GUID-CF51EDA8-39E0-46C5-90A3-969246792E25__AMYS"
+                                },
+                                "content": {
+                                  "type": "string",
+                                  "description": "Content for this sub-section",
+                                  "example": "<html>Html content for this subsection</html>"
+                                },
+                                "title": {
+                                  "type": "string",
+                                  "description": "Title of this subsection",
+                                  "example": "Details"
+                                }
+                              }
+                            }
+                          },
+                          "references": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string",
+                                  "example": "References",
+                                  "description": "References referred to in this article"
+                                },
+                                "anchor": {
+                                  "type": "string",
+                                  "example": "REFERENCES",
+                                  "description": "anchor location"
+                                },
+                                "content": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "example": "GUID-77FE74DB-FA1A-40B5-9DFF-866561FA6CE3__P1",
+                                        "description": "Guid identifier for the refrence"
+                                      },
+                                      "data": {
+                                        "type": "string",
+                                        "example": "Tartaglia NR . A review of trisomy X. Orphanet J Rare Dis. 2010;5:8.",
+                                        "description": "The referred reference"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "ancillary": {
+                      "type": "object",
+                      "description": "Ancillary Fields",
+                      "properties": {
+                        "pubType": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "title of this pub type",
+                              "example": "Natural & Alternative Treatment"
+                            }
+                          }
+                        },
+                        "multimedia": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "content": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string",
+                                      "description": "Title of the image or video",
+                                      "example": "Delayed Growth"
+                                    },
+                                    "copyright": {
+                                      "type": "string",
+                                      "description": "Copyright date of the image or video",
+                                      "example": "Copyright ©2022, EBSCO Information Services"
+                                    },
+                                    "mediaHost": {
+                                      "type": "string",
+                                      "description": "Host for the media",
+                                      "example": "cloudinary"
+                                    },
+                                    "description": {
+                                      "type": "string",
+                                      "description": "Summary of the media content",
+                                      "example": "Steps 5-23."
+                                    },
+                                    "links": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "rel": {
+                                            "type": "string",
+                                            "description": "Relationship of the link and the media",
+                                            "example": "external"
+                                          },
+                                          "href": {
+                                            "type": "string",
+                                            "description": "Relationship of the link and the article",
+                                            "example": "http://media.ebsco.healthcare/eis-live/video/authenticated/f_mp4/v1/EBSCOHealth/CCMS/I505745.mp4?__cld_token__=exp=1625923687~hmac=c9cec2bade82036c5730ff44d05017ab47c5166753239d9391f3000efa601"
+                                          },
+                                          "imageSize": {
+                                            "type": "string",
+                                            "description": "Size of the image in the link"
+                                          },
+                                          "poster": {
+                                            "type": "string",
+                                            "description": "Indicates that this is a link to a still image of the video"
+                                          },
+                                          "posterSize": {
+                                            "type": "string",
+                                            "description": "Indicates the size of the still image of the video "
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "mediaType": {
+                                "type": "string",
+                                "description": "Hypertext Reference link.",
+                                "example": "video",
+                                "enum": [
+                                  "image",
+                                  "video"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "contributors": {
+                          "type": "array",
+                          "description": "Clinician contributing to the article.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "contributorType": {
+                                "type": "string",
+                                "description": "Type of contributor, e.g. reviewer",
+                                "example": "reviewers"
+                              },
+                              "clinician": {
+                                "type": "string",
+                                "description": "Clinician name",
+                                "example": "Nicole S. Smith, PA"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "links",
+                    "toc"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Required property is missing or contains an illegal value",
+            "content": {
+              
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided.",
+            "content": {
+              
+            }
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource.",
+            "content": {
+              
+            }
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request.",
+            "content": {
+              
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method.",
+            "content": {
+              
+            }
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type.",
+            "content": {
+              
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request.",
+            "content": {
+              
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time.",
+            "content": {
+              
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "message",
+                    "name"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Standardized label for this error",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about this error",
+                      "example": "Error description."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error-Response": {
+        "title": "Error-Response",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Standardized reason phrase for this status code",
+            "example": "Error Name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Details about the error",
+            "example": "Error Description"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
