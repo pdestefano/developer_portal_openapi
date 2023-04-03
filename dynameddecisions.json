@@ -1,0 +1,726 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MedsAPI DynaMed Decisions",
+    "version": "1.0",
+    "contact": {
+      "name": "EBSCO Information Services",
+      "url": "https://connect.ebsco.com/"
+    },
+    "description": "MedsAPI DynaMed Decisions provides endpoints to get a robust collection of shared decision-making aids that enable patients and providers to have meaningful and informed conversations that lead to improved outcomes and higher patient satisfaction. The documentation on this site covers all supported functionality of the MedsAPI suite of APIs. Any fields or parameters not represented by the documentation are unsupported and subject to change. Additional optional query parameters and fields in the response could be added in the future as a non breaking change. Any other change that could break the contract would be considered in a future version."
+  },
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "MedsAPI Token API"
+    },
+    {
+      "name": "Tools",
+      "description": "MedsAPI DynaMed Tool Endpoints"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://apis.ebsco.com/medsapi-dynamed-decisions/v1",
+      "description": "Apigee Live Server"
+    }
+  ],
+  "paths": {
+    "/token": {
+      "servers": [
+        {
+          "url": "https://apis.ebsco.com/medsapi-auth/v1",
+          "description": "MedsAPI token endpoint"
+        }
+      ],
+      "post": {
+        "summary": "Get an authorization token",
+        "tags": [
+          "Authorization"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token_expires_in": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "The number of seconds remaining before the refresh token will expire.  The lifespan of refresh tokens is usually larger than Access tokens. The exact duration depends on the type of Refresh Tokens issued. The different types explained below in the document."
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "dynamed-decisions",
+                      "description": "The type of token issued"
+                    },
+                    "organization_name": {
+                      "type": "string",
+                      "example": "ebscois",
+                      "description": "The issuer of the token"
+                    },
+                    "developer.email": {
+                      "type": "string",
+                      "example": "msmith@mycompany.com",
+                      "description": "Name of the owener of the token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "BearerToken",
+                      "description": "Always set to be a bearer token"
+                    },
+                    "issued_at": {
+                      "type": "string",
+                      "example": "1593011837412",
+                      "description": "Epoch time when the token was issued"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "example": "{client_id}",
+                      "description": "Client Id that the token can be used by"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "{actual bearer token to use}",
+                      "description": "Bearer token"
+                    },
+                    "application_name": {
+                      "type": "string",
+                      "example": "{id}",
+                      "description": "Id of the application that is registered for this token"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "admin:rw",
+                      "description": "Authorization scope"
+                    },
+                    "expires_in": {
+                      "type": "string",
+                      "example": "14399",
+                      "description": "Seconds until this token has expired"
+                    },
+                    "refresh_count": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "When this token can be refreshed automatically"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "approved",
+                      "description": "Indicates that the token has been approved"
+                    }
+                  },
+                  "required": [
+                    "refresh_token_expires_in",
+                    "product",
+                    "organization_name",
+                    "developer.email",
+                    "token_type",
+                    "issued_at",
+                    "client_id",
+                    "access_token",
+                    "application_name",
+                    "scope",
+                    "expires_in",
+                    "refresh_count",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials",
+                    "description": "Must be set to client_credentials"
+                  },
+                  "product": {
+                    "type": "string",
+                    "example": "dynamed-decisions",
+                    "description": "Must be set to dynamed-decisions"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "example": "{client_id}",
+                    "description": "The client_id to use will be provided by EBSCO"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "example": "{client secret}",
+                    "description": "This will be provided by EBSCO"
+                  }
+                }
+              },
+              "examples": {
+                "Example Body": {
+                  "value": {
+                    "grant_type": "client_credentials",
+                    "product": "dynamed-decisions",
+                    "client_id": "{client id}",
+                    "client_secret": "{client secret}"
+                  }
+                }
+              }
+            },
+            "application/javascript": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  
+                }
+              }
+            }
+          },
+          "description": "{\n  \"grant_type\": \"client_credentials\",\n  \"product\": \"dynamed-decisions\",\n  \"client_id\": \"client_id\",\n  \"client_secret\": \"client secret\"\n}\n"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": ""
+          }
+        ],
+        "description": "The authentication endpoint for getting a token, used in all other DynaMed Decisions APIs."
+      }
+    },
+    "/content/tools": {
+      "get": {
+        "summary": "Get all available tools",
+        "description": "Additional Documentation [/content/tools](https://developer.ebsco.com/medical-point-care-apis/dynamed-decisions/docs) ",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A number representing the page of the response. A page will consist of an array of items.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The maximum number of items per page of the response.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "10"
+            }
+          }
+        ],
+        "tags": [
+          "Tools"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tools"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+            "content": {
+              
+            }
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+            "content": {
+              
+            }
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching\nthis request.",
+            "content": {
+              
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
+            "content": {
+              
+            }
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media\ntype.",
+            "content": {
+              
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
+            "content": {
+              
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
+            "content": {
+              
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with\nthe server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    },
+    "/content/tools/{id}": {
+      "get": {
+        "summary": "Get Tool by Id",
+        "description": "Additional Documentation [/content/tools/{id}](https://developer.ebsco.com/medical-point-care-apis/dynamed-decisions/docs/get-tool-by-id) ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tool id. This is the unique identifier for a specific tool resource.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "shared-decision-making_hip-osteoarthritis"
+            }
+          }
+        ],
+        "tags": [
+          "Tools"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tool-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+            "content": {
+              
+            }
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+            "content": {
+              
+            }
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching\nthis request.",
+            "content": {
+              
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
+            "content": {
+              
+            }
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media\ntype.",
+            "content": {
+              
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
+            "content": {
+              
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
+            "content": {
+              
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with\nthe server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": [
+              
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "tools": {
+        "type": "object",
+        "properties": {
+          "_metadata": {
+            "properties": {
+              "totalItems": {
+                "type": "number",
+                "description": "Total count of tools in the collection regardless of pagination.",
+                "example": 2
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "The total count of pages in the collection.",
+                "example": 1
+              },
+              "page": {
+                "type": "number",
+                "description": "A number representing the page of the response. A page will consist of an array of items.",
+                "example": 1
+              },
+              "pageSize": {
+                "type": "number",
+                "description": "The maximum number of items per page of the response.",
+                "example": 10
+              },
+              "links": {
+                "type": "array",
+                "description": "An array of Link Description Objects that can be used to navigate the content pages. Links may include self, previous, next, first and last as appropriate.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rel": {
+                      "description": "Type of link",
+                      "type": "string",
+                      "example": "self"
+                    },
+                    "href": {
+                      "description": "Hyperlink reference",
+                      "type": "string",
+                      "example": "https://apis.ebsco.com/medsapi-dynamed-decisions/v1/content/tools?page=1&pageSize=10"
+                    }
+                  }
+                }
+              }
+            },
+            "type": "object"
+          },
+          "items": {
+            "type": "array",
+            "description": "An array containing the current page of the result list.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "The unique identifier for this tool.",
+                  "type": "string",
+                  "example": "shared-decision-making_hip-osteoarthritis"
+                },
+                "title": {
+                  "description": "The title of this tool.",
+                  "type": "string",
+                  "example": "Hip Osteoarthritis"
+                },
+                "slug": {
+                  "description": "An SEO-friendly string designed as a URL suffix to uniquely identify this tool in a particular context.",
+                  "type": "string",
+                  "example": "/shared-decision-making/hip-osteoarthritis"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Tool Description - Information about this particular tool",
+                  "example": "This tool is used to determine..."
+                },
+                "links": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "rel": {
+                        "type": "string",
+                        "example": "self",
+                        "description": "Relationship of the link to the tool"
+                      },
+                      "href": {
+                        "type": "string",
+                        "description": "Hyperlink reference",
+                        "example": "https://apis.ebsco.com/medsapi-dynamed-decisions/v1/content/tools/shared-decision-making_hip-osteoarthritis"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "tool-response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identifier for this tool.",
+            "type": "string",
+            "example": "shared-decision-making_hip-osteoarthritis"
+          },
+          "title": {
+            "description": "The title of this tool.",
+            "type": "string",
+            "example": "Hip Osteoarthritis"
+          },
+          "slug": {
+            "description": "An SEO-friendly string designed as a URL suffix to uniquely identify this tool in a particular context.",
+            "type": "string",
+            "example": "/shared-decision-making/hip-osteoarthritis"
+          },
+          "description": {
+            "type": "string",
+            "description": "Tool Description - Information about this particular tool.",
+            "example": "This tool is used to determine..."
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "description": "Type of link",
+                  "example": "self"
+                },
+                "href": {
+                  "description": "Hyperlink reference",
+                  "example": "https://apis.ebsco.com/medsapi-dynamed-decisions/v1/content/tools/shared-decision-making_hip-osteoarthritis"
+                }
+              }
+            }
+          },
+          "pubType": {
+            "type": "object",
+            "description": "The tool pubType.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "shared-decision-making"
+              }
+            }
+          },
+          "optionGrid": {
+            "$ref": "#/components/schemas/optionGrid"
+          }
+        }
+      },
+      "optionGrid": {
+        "type": "object",
+        "properties": {
+          "polarDecisionTool": {
+            "type": "boolean",
+            "description": "Single column presentation of a “polar decision”. True means the tool has 2 options. False means it has more than 2 options.  Some polar decision aids have a single answer that crosses both options.<br/><br/>Multiple column presentation of the most common options for the healthcare decision presented in the decision aid (Ex: Self-Care vs. Exercise vs. Surgery)",
+            "example": "true"
+          },
+          "options": {
+            "$ref": "#/components/schemas/options"
+          },
+          "questions": {
+            "$ref": "#/components/schemas/questions"
+          },
+          "references": {
+            "type": "string",
+            "description": "List of references for resources used to create the content for the decision aid.",
+            "example": "<ol><li><p>Akman T, Binbay M, Tekinarslan E, Tepeler A, Akcay M, Ozgor F.</p></li></ol>"
+          },
+          "contributors": {
+            "type": "string",
+            "description": "List of editors responsible for the creation or review of the content for the decision aid.",
+            "example": "<h2><p>Clinical Review</p></h2><p>Kevin Loughlin, MD, MBA</p>"
+          },
+          "certifications": {
+            "type": "string",
+            "description": "Tool certification of a specific decision aid, when applicable.",
+            "example": "<p>This product has been certified by the Washington State Health Care Authority pursuant to RCW 7.70.060.</p>"
+          },
+          "competingInterests": {
+            "type": "string",
+            "description": "Declaration of no conflicts of interest for editorial staff and reviewers involved in creation of the decision aid.",
+            "example": "<p>The editors and reviewers on this EBSCO Health Option Grid decision aid have declared no conflicts of interest, as of Apr 2, 2019.</p>"
+          },
+          "definitions": {
+            "$ref": "#/components/schemas/definitions"
+          },
+          "supplementalInformation": {
+            "type": "string",
+            "description": "Additional background information for specific content within the decision aid, when applicable.",
+            "example": "<p><data base=\"name\">Enlarged Prostate (Benign Prostatic Hypertrophy) Treatment Options </data></p>"
+          }
+        }
+      },
+      "options": {
+        "type": "array",
+        "description": "Most common treatment or decision options for the healthcare decision presented in the decision aid.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "optionKey": {
+              "type": "string",
+              "description": "Unique key to represent medicine or remedy option.",
+              "example": "warfarin"
+            },
+            "name": {
+              "type": "string",
+              "description": "Represents the name of medicine or remedy.",
+              "example": "Warfarin"
+            }
+          }
+        }
+      },
+      "questions": {
+        "type": "array",
+        "description": "Most frequently asked questions for the healthcare decision presented in the decision aid.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "answers": {
+              "type": "array",
+              "description": "Answers for questions related to available options for a disease/treatments.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "optionKey": {
+                    "type": "string",
+                    "description": "Unique key to represent answer for disease/treatment.",
+                    "example": "notreatment"
+                  },
+                  "answer": {
+                    "type": "string",
+                    "description": "Answer for question for particular disease/treatments.",
+                    "example": "<p>You will have no tests or treatments now. Ask for advice if you notice new symptoms.</p>"
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string",
+              "description": "Question related to available options for a disease/treatments.",
+              "example": "What does the option involve?"
+            }
+          }
+        }
+      },
+      "definitions": {
+        "type": "array",
+        "description": "Definitions and additional explanation of complex terms used within the decision aid",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of medicine.",
+              "example": "<p>BPH</p>"
+            },
+            "text": {
+              "type": "string",
+              "description": "Description/Definition of medicine.",
+              "example": "<p>BPH is another name for benign prostatic hypertrophy.</p>"
+            }
+          }
+        }
+      },
+      "Error-Response": {
+        "title": "Error-Response",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Standardized reason phrase for this status code",
+            "example": "Error Name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Details about the error",
+            "example": "Error Description"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
