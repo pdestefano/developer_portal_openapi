@@ -133,7 +133,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "404": {
             "description": "Customer not found.",
@@ -456,7 +458,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -1077,7 +1081,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -1744,7 +1750,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -2144,7 +2152,9 @@
         "responses": {
           "202": {
             "description": "The request to populate holdings has been accepted for processing, but the processing has not been completed.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "409": {
             "description": "Snapshot is currently in progress.",
@@ -2291,8 +2301,7 @@
                   "items": {
                     "$ref": "#/components/schemas/Export"
                   }
-                },
-                "examples": {}
+                }
               }
             }
           },
@@ -2619,8 +2628,7 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Export"
-                },
-                "examples": {}
+                }
               }
             }
           },
@@ -2677,7 +2685,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the DELETE request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -3876,7 +3886,9 @@
           },
           "managedEmbargoPeriod": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              
+            },
             "description": "Null Managed Embargo Period"
           },
           "customEmbargoPeriod": {
@@ -6314,7 +6326,9 @@
         "title": "Export",
         "type": "object",
         "description": "Export",
-        "x-examples": {},
+        "x-examples": {
+          
+        },
         "properties": {
           "costDownload": {
             "$ref": "#/components/schemas/CostDownload"
