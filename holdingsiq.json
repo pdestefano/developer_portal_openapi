@@ -133,9 +133,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "404": {
             "description": "Customer not found.",
@@ -458,9 +456,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -1081,9 +1077,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -1750,9 +1744,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -2040,7 +2032,7 @@
           "Holdings Resources"
         ],
         "summary": "Download Holdings",
-        "description": "This operation allows you to download customer holdings in KBART2 (JSON) format.  Before using this resource, you need to perform a Holdings Resource POST to populate holdings data to a staging area.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to download customer holdings in KBART2 (JSON) format.  Before using this resource, you need to perform a Holdings Resource POST to populate holdings data to a staging area.\n\n**Deprecation Notice:** Please use GET /{custid}/exports/{exportid}. Use the links array of objects that specify a presigned URL to download the export file.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -2112,14 +2104,15 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       },
       "post": {
         "tags": [
           "Holdings Resources"
         ],
         "summary": "Stage Holdings",
-        "description": "This operation populates holdings data to a staging area.  You must perform this operation before using the GET holdings resources.  Customer holdings will be refreshed each time a POST is complete.  Hidden titles and packages are excluded from the holdings download.  If the customer has made changes since the last POST, another POST needs to be performed before using a GET holdings resource in order to download all of the changes.  If any metadata has changed since the last POST, you do not need to perform another POST in order to see the metadata changes in the GET holdings.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation populates holdings data to a staging area.  You must perform this operation before using the GET holdings resources.  Customer holdings will be refreshed each time a POST is complete.  Hidden titles and packages are excluded from the holdings download.  If the customer has made changes since the last POST, another POST needs to be performed before using a GET holdings resource in order to download all of the changes.  If any metadata has changed since the last POST, you do not need to perform another POST in order to see the metadata changes in the GET holdings. \n\n**Deprecation Notice:** Please use POST /{custid}/exports.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -2151,9 +2144,7 @@
         "responses": {
           "202": {
             "description": "The request to populate holdings has been accepted for processing, but the processing has not been completed.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "409": {
             "description": "Snapshot is currently in progress.",
@@ -2175,7 +2166,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/{custid}/holdings/status": {
@@ -2184,7 +2176,7 @@
           "Holdings Resources"
         ],
         "summary": "Get Snapshot Status",
-        "description": "This operation allows you to retrieve the status of a holdings snapshot.  The response reveals if the holdings snapshot is in progress, completed, not staged (none) or has failed.  The status enables you to decide when to download customer holdings (upon completion).  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve the status of a holdings snapshot.  The response reveals if the holdings snapshot is in progress, completed, not staged (none) or has failed.  The status enables you to decide when to download customer holdings (upon completion).  \n\n**Deprecation Notice:** Please use GET /{custid}/exports/{exportid}.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -2215,6 +2207,477 @@
                 }
               }
             }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/{custid}/exports": {
+      "get": {
+        "tags": [
+          "Holdings Resources"
+        ],
+        "summary": "Get Exports",
+        "description": "This endpoint allows customers to retrieve details about all export requests of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. While the status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "operationId": "getCustidExports",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "p",
+            "in": "query",
+            "description": "Page Offset.  Starts at 1.",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "maximum": 100,
+              "exclusiveMaximum": false,
+              "minimum": 1,
+              "exclusiveMinimum": false,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ps",
+            "in": "query",
+            "description": "Page Size",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "maximum": 500,
+              "exclusiveMaximum": false,
+              "minimum": 1,
+              "exclusiveMinimum": false,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Export objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Export"
+                  }
+                },
+                "examples": {}
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Holdings Resources"
+        ],
+        "summary": "Create Export Request",
+        "description": "This operation enables customers to request an export file of their holdings in one of four formats: \"COST\", \"HoldingsEvent\", \"KBART2\" or \"STANDARD\". Export files will be generated with the most up-to-date holdings information available; however, any changes made to holdings after the request is made may not be reflected in the export. Export files will be deleted after 365 days. Customers are limited to a maximum of 500 export files.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "operationId": "postCustidExports",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Export"
+              },
+              "examples": {
+                "standard-nofilter": {
+                  "summary": "JSON payload standard",
+                  "value": {
+                    "fileName": "testExport_standard_csv",
+                    "format": "CSV",
+                    "type": "STANDARD"
+                  }
+                },
+                "standard-filter": {
+                  "summary": "JSON payload with limiters",
+                  "value": {
+                    "fileName": "testExport_standardWithLimiters_csv",
+                    "format": "CSV",
+                    "type": "STANDARD",
+                    "managedOrCustom": "MANAGED",
+                    "packageContentTypes": [
+                      "AGGREGATEDFULLTEXT"
+                    ],
+                    "resourceTypes": [
+                      "JOURNAL"
+                    ]
+                  }
+                },
+                "kbart2-filter": {
+                  "summary": "JSON payload KBART2",
+                  "value": {
+                    "fileName": "testExport_KBART2WithLimiters_tsv",
+                    "format": "TSV",
+                    "type": "KBART2",
+                    "managedOrCustom": "MANAGED",
+                    "packageContentTypes": [
+                      "AGGREGATEDFULLTEXT"
+                    ],
+                    "resourceTypes": [
+                      "JOURNAL"
+                    ]
+                  }
+                },
+                "holdingsevent-filter": {
+                  "summary": "JSON payload holdings event",
+                  "value": {
+                    "fileName": "testExport_HoldingsEvent_xlsx",
+                    "format": "XLSX",
+                    "type": "HoldingsEvent",
+                    "holdingsEvent": {
+                      "endDate": "08-15-2022",
+                      "eventActions": [
+                        "IGNORED"
+                      ],
+                      "eventSource": [
+                        "SSD"
+                      ],
+                      "startDate": "08-01-2022"
+                    }
+                  }
+                },
+                "cost-filter": {
+                  "summary": "JSON payload Cost",
+                  "value": {
+                    "fileName": "testExport_cost_xlsx",
+                    "format": "XLSX",
+                    "type": "COST",
+                    "costDownload": {
+                      "currency": "USD",
+                      "fromFiscalYear": 2021,
+                      "toFiscalYear": 2021
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Export Request for a given type and format with a provided filename followed by optional parameters associated to the particular export type requested."
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Export"
+                },
+                "examples": {
+                  "responseholdingsevent": {
+                    "summary": "JSON response holdings event",
+                    "value": {
+                      "custId": "ns253365",
+                      "id": "16066a30-47aa-40de-9ea4-8009d2899389",
+                      "type": "HoldingsEvent",
+                      "fileName": "testExport_HoldingsEvent_xlsx",
+                      "status": "QUEUED",
+                      "created": "2023-01-19T20:58:00.805993Z",
+                      "format": "XLSX",
+                      "holdingsEvent": {
+                        "startDate": "08-01-2022",
+                        "endDate": "08-15-2022",
+                        "eventSource": [
+                          "SSD"
+                        ],
+                        "eventActions": [
+                          "IGNORED"
+                        ]
+                      }
+                    }
+                  },
+                  "responsecost": {
+                    "summary": "JSON response cost",
+                    "value": {
+                      "custId": "ns253365",
+                      "id": "07ca08c3-2bf5-440c-aa17-9f7235ffed4b",
+                      "type": "COST",
+                      "fileName": "testExport_cost_xlsx",
+                      "status": "QUEUED",
+                      "created": "2023-01-19T21:05:01.428456Z",
+                      "format": "xlsx",
+                      "costDownload": {
+                        "currency": "usd",
+                        "fromFiscalYear": 2021,
+                        "toFiscalYear": 2021
+                      }
+                    }
+                  },
+                  "standard-nofilter": {
+                    "value": {
+                      "created": "2023-02-01T22:32:33.653Z",
+                      "custId": "ns334455",
+                      "fileName": "FileName",
+                      "format": "TSV",
+                      "id": "9cc047c6-605f-40f5-be64-7f638124bcfd",
+                      "status": "QUEUED",
+                      "type": "STANDARD"
+                    }
+                  },
+                  "standard-filter": {
+                    "value": {
+                      "created": "2023-02-01T22:32:33.653Z",
+                      "custId": "ns334455",
+                      "fileName": "FileName",
+                      "format": "TSV",
+                      "id": "9cc047c6-605f-40f5-be64-7f638124bcfd",
+                      "managedOrCustom": "MANAGED_AND_CUSTOM",
+                      "orderedThroughEbsco": false,
+                      "packageContentTypes": [
+                        "PRINT"
+                      ],
+                      "packageIds": [
+                        "43"
+                      ],
+                      "resourceTypes": [
+                        "BOOK"
+                      ],
+                      "status": "QUEUED",
+                      "type": "STANDARD"
+                    }
+                  },
+                  "kbart2-filter": {
+                    "value": {
+                      "created": "2023-02-01T22:32:33.653Z",
+                      "custId": "ns334455",
+                      "fileName": "FileName",
+                      "format": "TSV",
+                      "id": "9cc047c6-605f-40f5-be64-7f638124bcfd",
+                      "managedOrCustom": "MANAGED_AND_CUSTOM",
+                      "noteIds": [
+                        "1123"
+                      ],
+                      "orderedThroughEbsco": false,
+                      "packageContentTypes": [
+                        "PRINT"
+                      ],
+                      "packageIds": [
+                        "43"
+                      ],
+                      "resourceTypes": [
+                        "BOOK"
+                      ],
+                      "status": "QUEUED",
+                      "type": "KBART2"
+                    }
+                  },
+                  "holdingsevent-filter": {
+                    "value": {
+                      "created": "2023-02-01T22:32:33.653Z",
+                      "custId": "ns334455",
+                      "fileName": "FileName",
+                      "format": "TSV",
+                      "holdingsEvent": {
+                        "endDate": "09-01-2022",
+                        "eventActions": "[\"IGNORED\"]",
+                        "eventSource": "[\"SSD\"]",
+                        "startDate": "08-31-2022"
+                      },
+                      "id": "9cc047c6-605f-40f5-be64-7f638124bcfd",
+                      "status": "QUEUED",
+                      "type": "HoldingsEvent"
+                    }
+                  },
+                  "cost-filter": {
+                    "value": {
+                      "costDownload": {
+                        "currency": "USD",
+                        "fromFiscalYear": 2020,
+                        "toFiscalYear": 2022
+                      },
+                      "created": "2023-02-01T22:32:33.653Z",
+                      "custId": "ns334455",
+                      "fileName": "FileName",
+                      "format": "TSV",
+                      "id": "9cc047c6-605f-40f5-be64-7f638124bcfd",
+                      "status": "QUEUED",
+                      "type": "COST"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{custid}/exports/{exportid}": {
+      "get": {
+        "tags": [
+          "Holdings Resources"
+        ],
+        "summary": "Get Export Export Id",
+        "description": "This endpoint allows customers to retrieve details about a specific export request of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. The status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "operationId": "getV0CustidCustidExportidExportid",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exportid",
+            "in": "path",
+            "description": "Export ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Export Object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Export"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Holdings Resources"
+        ],
+        "summary": "Delete Export by Export Id",
+        "description": "This operation allows you to delete a previously created holdings export request by the export ID value. When an export is deleted via this method, the export request record and the file containing the holdings export data will be deleted; this action cannot be undone so use with caution.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "operationId": "deleteV0CustidCustidExportidExportid",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exportid",
+            "in": "path",
+            "description": "Export ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The server has successfully fulfilled the DELETE request.",
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -3413,9 +3876,7 @@
           },
           "managedEmbargoPeriod": {
             "type": "object",
-            "properties": {
-              
-            },
+            "properties": {},
             "description": "Null Managed Embargo Period"
           },
           "customEmbargoPeriod": {
@@ -5848,6 +6309,319 @@
             "description": "Date and time of the event."
           }
         }
+      },
+      "Export": {
+        "title": "Export",
+        "type": "object",
+        "description": "Export",
+        "x-examples": {},
+        "properties": {
+          "costDownload": {
+            "$ref": "#/components/schemas/CostDownload"
+          },
+          "created": {
+            "type": "string",
+            "description": "Date export was created",
+            "format": "date-time",
+            "example": "2023-02-01T22:32:33.653Z",
+            "readOnly": true
+          },
+          "custId": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "example": "ns334455",
+            "readOnly": true
+          },
+          "customerHoldingsCounts": {
+            "$ref": "#/components/schemas/CustomerHoldingsCounts"
+          },
+          "fileName": {
+            "type": "string",
+            "description": "The filename of the export when downloaded.",
+            "example": "FileName"
+          },
+          "format": {
+            "type": "string",
+            "description": "Format type.  Valid values are TSV, CSV or XLSX.",
+            "example": "TSV",
+            "enum": [
+              "TSV",
+              "CSV",
+              "XLSX"
+            ]
+          },
+          "holdingsEvent": {
+            "$ref": "#/components/schemas/HoldingsEvent"
+          },
+          "id": {
+            "type": "string",
+            "description": "A unique export identifier generated server-side to identify a particular export.",
+            "example": "9cc047c6-605f-40f5-be64-7f638124bcfd",
+            "readOnly": true
+          },
+          "links": {
+            "type": "array",
+            "description": "Links associated with the export request, most commonly the link the download the export file.",
+            "items": {
+              "$ref": "#/components/schemas/ExportLinks"
+            },
+            "readOnly": true
+          },
+          "managedOrCustom": {
+            "type": "string",
+            "description": "Limiter to managed holdings, custom holdings or both. (MANAGED_AND_CUSTOM, MANAGED, CUSTOM)",
+            "example": "MANAGED_AND_CUSTOM",
+            "enum": [
+              "MANAGED_AND_CUSTOM",
+              "MANAGED",
+              "CUSTOM"
+            ]
+          },
+          "noteIds": {
+            "type": "array",
+            "description": "Export file note id.",
+            "uniqueItems": false,
+            "items": {
+              "type": "string",
+              "example": "1123"
+            }
+          },
+          "orderedThroughEbsco": {
+            "type": "boolean",
+            "example": false,
+            "description": "Limiter to include only records associated with an EBSCO order."
+          },
+          "packageContentTypes": {
+            "type": "array",
+            "description": "List of package content types.",
+            "items": {
+              "type": "string",
+              "description": "Package Content Type",
+              "enum": [
+                "AGGREGATEDFULLTEXT",
+                "ABSTRACTANDINDEX",
+                "EBOOK",
+                "EJOURNAL",
+                "PRINT",
+                "UNKNOWN",
+                "ONE_TO_ONE",
+                "STREAMING_MEDIA",
+                "MIXED_CONTENT"
+              ],
+              "example": "PRINT"
+            }
+          },
+          "packageIds": {
+            "type": "array",
+            "description": "List of package ids used as limiters in the export file.",
+            "items": {
+              "type": "string",
+              "description": "Package ID",
+              "example": "43"
+            }
+          },
+          "resourceTypes": {
+            "type": "array",
+            "description": "List of resource types used as limiters for records in the export file. (JOURNALS, NEWSLETTERS, REPORTS, PROCEEDINGS, WEB_SITES, NEWSPAPER, UNSPECIFIED, BOOK,BOOK_SERIES, DATABASE, THESIS_DISSERTATION, STREAMING_AUDIO, STREAMING_VIDEO, AUDIO_BOOK)",
+            "items": {
+              "type": "string",
+              "description": "Resource Type",
+              "enum": [
+                "JOURNALS",
+                "NEWSLETTERS",
+                "REPORTS",
+                "PROCEEDINGS",
+                "WEB_SITES",
+                "NEWSPAPER",
+                "UNSPECIFIED",
+                "BOOK",
+                "BOOK_SERIES",
+                "DATABASE",
+                "THESIS_DISSERTATION",
+                "STREAMING_AUDIO",
+                "STREAMING_VIDEO",
+                "AUDIO_BOOK"
+              ],
+              "example": "BOOK"
+            }
+          },
+          "size": {
+            "type": "integer",
+            "description": "File size in bytes",
+            "format": "int64",
+            "example": 125,
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "description": "Status Allowed Values (QUEUED, INPROGRESS, COMPLETED)",
+            "example": "QUEUED",
+            "enum": [
+              "QUEUED",
+              "INPROGRESS",
+              "COMPLETED"
+            ],
+            "readOnly": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "Total Count",
+            "format": "int32",
+            "example": 12,
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "File format of the holdings snapshot. Allowed values (STANDARD, KBART2, HoldingsEvent, COST)",
+            "example": "KBART2",
+            "enum": [
+              "STANDARD",
+              "KBART2",
+              "HoldingsEvent",
+              "COST"
+            ]
+          }
+        }
+      },
+      "CostDownload": {
+        "title": "CostDownload",
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency applied to the records for the cost download.",
+            "example": "USD"
+          },
+          "fromFiscalYear": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Start of the fiscal year.",
+            "example": 2020
+          },
+          "toFiscalYear": {
+            "type": "integer",
+            "format": "int32",
+            "description": "End of the fiscal year.",
+            "example": 2022
+          }
+        },
+        "description": "Cost Download Request Parameters"
+      },
+      "CustomerHoldingsCounts": {
+        "type": "object",
+        "title": "CustomerHoldingsCounts",
+        "description": "Customer Holdings Counts",
+        "properties": {
+          "customResourceCount": {
+            "type": "string",
+            "description": "Custom Resource Count",
+            "example": "10",
+            "readOnly": true
+          },
+          "managedResourceCount": {
+            "type": "string",
+            "description": "Managed Resource Count",
+            "example": "3002",
+            "readOnly": true
+          },
+          "totalCustomPackageCount": {
+            "type": "string",
+            "description": "Total Custom Package Count",
+            "example": "24",
+            "readOnly": true
+          },
+          "totalManagedPackageCount": {
+            "type": "string",
+            "description": "Total Managed Package Count",
+            "example": "5",
+            "readOnly": true
+          },
+          "totalResourceCount": {
+            "type": "string",
+            "description": "Total Resource Count",
+            "example": "4672",
+            "readOnly": true
+          },
+          "uniqueCustomResourceCount": {
+            "type": "string",
+            "description": "Unique Custom Resource Count",
+            "example": "6",
+            "readOnly": true
+          },
+          "uniqueManagedResourceCount": {
+            "type": "string",
+            "description": "Unique Managed Resource Count",
+            "example": "3",
+            "readOnly": true
+          },
+          "uniqueResourceCount": {
+            "type": "string",
+            "description": "Unique Resource Count",
+            "example": "4",
+            "readOnly": true
+          }
+        },
+        "readOnly": true
+      },
+      "HoldingsEvent": {
+        "title": "HoldingsEvent",
+        "type": "object",
+        "description": "Holdings Event Request Parameters",
+        "properties": {
+          "endDate": {
+            "type": "string",
+            "description": "Holdings Event End Date",
+            "example": "09-01-2022"
+          },
+          "eventActions": {
+            "type": "array",
+            "description": "Event Actions.  Valid value is IGNORED.",
+            "example": "[\"IGNORED\"]",
+            "items": {
+              "type": "string",
+              "enum": [
+                "IGNORED"
+              ],
+              "example": "IGNORED"
+            }
+          },
+          "eventSource": {
+            "type": "array",
+            "description": "Event Source.  Valid values are GOBI or SSD.",
+            "example": "[\"SSD\"]",
+            "items": {
+              "type": "string",
+              "enum": [
+                "GOBI",
+                "SSD"
+              ],
+              "example": "GOBI"
+            }
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Holdings Event Start Date",
+            "example": "08-31-2022"
+          }
+        }
+      },
+      "ExportLinks": {
+        "type": "object",
+        "title": "ExportLinks",
+        "description": "Link associated with the export request, most commonly the link the download the export file.",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "A URI template used to determine the target URL of the related resource.",
+            "example": "https://s3amazonaws.com/link"
+          },
+          "rel": {
+            "type": "string",
+            "description": "Indicates the name of the relation relative to the target resource.",
+            "example": "download"
+          }
+        },
+        "readOnly": true
       }
     }
   }
