@@ -3409,6 +3409,11 @@
             "type": "string",
             "description": "Package Type.  Valid values are Selectable, Complete, Variable and Custom.",
             "example": "Complete"
+          },
+		  "availableForSelection": {
+            "type": "boolean",
+            "description": "availableForSelection is true if the package is available for full selection.  Otherwise, it returns false.",
+            "example": true
           }
         },
         "description": "This object represents data elements that describe a vendor package."
@@ -3663,6 +3668,11 @@
           },
           "packageToken": {
             "$ref": "#/components/schemas/tokenInfo"
+          },
+          "availableForSelection": {
+            "type": "boolean",
+            "description": "availableForSelection is true if the package is available for full selection.  Otherwise, it returns false.",
+            "example": true
           }
         },
         "description": "Package details from EPKB for a specific package ID."
