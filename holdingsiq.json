@@ -3035,31 +3035,6 @@
           "$ref": "#/components/schemas/errorModel"
         }
       },
-      "202error": {
-        "required": [
-          "code",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "The request has been accepted for processing, but the processing has not been completed.",
-            "example": "Request is in Progress"
-          },
-          "code": {
-            "type": "integer",
-            "description": "Error Number",
-            "format": "int32",
-            "example": 1010
-          },
-          "subcode": {
-            "type": "integer",
-            "description": "Error number specific to the underlying API.",
-            "format": "int32"
-          }
-        }
-      },
       "409error": {
         "required": [
           "code",
@@ -3410,7 +3385,7 @@
             "description": "Package Type.  Valid values are Selectable, Complete, Variable and Custom.",
             "example": "Complete"
           },
-		  "availableForSelection": {
+          "availableForSelection": {
             "type": "boolean",
             "description": "availableForSelection is true if the package is available for full selection.  Otherwise, it returns false.",
             "example": true
