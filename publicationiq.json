@@ -10,7 +10,7 @@
       "url": "https://www.ebsco.com/terms-of-use"
     }
   },
-  "host": "sandbox.ebsco.io",
+  "host": "sandbox.ebsco.ioo",
   "basePath": "/pf/pfaccount",
   "schemes": [
     "https"
