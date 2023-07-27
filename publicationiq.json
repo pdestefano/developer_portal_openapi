@@ -11,7 +11,6 @@
     }
   },
   "host": "sandbox.ebsco.io",
-  "basePath": "/pf/pfaccount",
   "schemes": [
     "https"
   ],
@@ -27,7 +26,7 @@
     }
   ],
   "paths": {
-    "/{profile}/allpackages": {
+    "/pf/pfaccount/{profile}/allpackages": {
       "get": {
         "tags": [
           "Package Resources"
@@ -104,9 +103,17 @@
             "description": "Service Unavailable"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
-    "/{profile}/alphabrowser/menu/{localeid}": {
+    "/pf/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
       "get": {
         "tags": [
           "Alpha Browser Resource"
@@ -191,9 +198,23 @@
             "description": "Service Unavailable"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "localeid",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
-    "/{profile}/packages": {
+    "/pf/pfaccount/{profile}/packages": {
       "get": {
         "tags": [
           "Package Resources"
@@ -306,9 +327,17 @@
             "description": "Service Unavailable"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
-    "/{profile}/packages/{packageid}/titles/{kbid}": {
+    "/pf/pfaccount/{profile}/packages/{packageid}/titles/{kbid}": {
       "get": {
         "tags": [
           "Title Resources"
@@ -382,28 +411,35 @@
             "description": "Service Unavailable"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "packageid",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "kbid",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
-    "/{profile}/publications": {
+    "/pf/pfaccount/{profile}/publications": {
       "get": {
         "tags": [
           "Title Resources"
         ],
         "summary": "Get Publications by Specified Title Attributes",
-        "description": "This resource allows you to search for publications and returns a list of publications.  The list is limited to a single customer ID.  The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.<p>&nbsp;&nbsp;</p><p>**Please Note:**  When creating logic to interpret the response coverage details, we recommend that you use the following pseudocode example as a guide:
-		<p>&nbsp;&nbsp;</p><p>
-		  &nbsp;&nbsp;If Coverage Statement is NOT Null THEN (Note: empty string, \"\", should be treated as a valid coverage statement)<br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show Coverage Statement <br>
-		  &nbsp;&nbsp;ELSE IF Custom Coverage Dates exist THEN<br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF Custom Coverage Date = \"01/01/0001\" THEN <br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do not display any coverage<br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE <br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show Custom Coverage<br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END IF <br>
-		  &nbsp;&nbsp;ELSE <br>
-		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show Managed Coverage<br>
-		  &nbsp;&nbsp;END IF
-		",
+        "description": "This resource allows you to search for publications and returns a list of publications.  The list is limited to a single customer ID.  The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "operationId": "findPublicationsUsingGET",
         "consumes": [
           "application/json"
@@ -650,6 +686,710 @@
             "description": "Service Unavailable"
           }
         }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/pf/v1/pfaccount/{profile}/title/{kbid}": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true,
+          "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'"
+        },
+        {
+          "type": "string",
+          "name": "kbid",
+          "in": "path",
+          "required": true,
+          "description": "Title ID. e.g. '1385382'"
+        }
+      ],
+      "get": {
+        "summary": "Retrieves singular title details for a customer",
+        "tags": [
+          "Title Resources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK, Title details for a given KBID",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "titleId": {
+                  "type": "string"
+                },
+                "titleName": {
+                  "type": "string"
+                },
+                "edition": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "peerReviewed": {
+                  "type": "boolean"
+                },
+                "publisherName": {
+                  "type": "string"
+                },
+                "identifiersList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "integer"
+                      },
+                      "subtype": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "subjectsList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "titleCustom": {
+                  "type": "boolean"
+                },
+                "pubType": {
+                  "type": "string"
+                },
+                "contributorsList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "contributor": {
+                        "type": "string"
+                      },
+                      "displayOrder": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "customerResourcesList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "titleId": {
+                        "type": "integer"
+                      },
+                      "packageId": {
+                        "type": "integer"
+                      },
+                      "packageName": {
+                        "type": "string"
+                      },
+                      "packageType": {
+                        "type": "string"
+                      },
+                      "isPackageCustom": {
+                        "type": "boolean"
+                      },
+                      "vendorId": {
+                        "type": "integer"
+                      },
+                      "vendorName": {
+                        "type": "string"
+                      },
+                      "locationId": {
+                        "type": "integer"
+                      },
+                      "isSelected": {
+                        "type": "boolean"
+                      },
+                      "isTokenNeeded": {
+                        "type": "boolean"
+                      },
+                      "managedCoverageList": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "beginCoverage": {
+                              "type": "string"
+                            },
+                            "endCoverage": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "customCoverageList": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "beginCoverage": {
+                              "type": "string"
+                            },
+                            "endCoverage": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "coverageStatement": {
+                        "type": "string"
+                      },
+                      "managedEmbargoPeriod": {
+                        "type": "object",
+                        "properties": {
+                          "embargoUnit": {
+                            "type": "string"
+                          },
+                          "embargoValue": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "customEmbargoPeriod": {
+                        "type": "object",
+                        "properties": {
+                          "embargoUnit": {
+                            "type": "string"
+                          },
+                          "embargoValue": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "url": {
+                        "type": "string"
+                      },
+                      "linkOutTargetUrl": {
+                        "type": "string"
+                      },
+                      "vendorToken": {
+                        "type": "object",
+                        "properties": {
+                          "factName": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "packageToken": {
+                        "type": "object",
+                        "properties": {
+                          "factName": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "targetUrl": {
+                        "type": "string"
+                      },
+                      "proxy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "inherited": {
+                            "type": "boolean"
+                          },
+                          "proxyName": {
+                            "type": "string"
+                          },
+                          "urlMask": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "note": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "custId": {
+                              "type": "integer"
+                            },
+                            "noteName": {
+                              "type": "string"
+                            },
+                            "rank": {
+                              "type": "integer"
+                            },
+                            "noteText": {
+                              "type": "string"
+                            },
+                            "showOnFlags": {
+                              "type": "object",
+                              "properties": {}
+                            },
+                            "iconUrl": {
+                              "type": "string"
+                            },
+                            "iconId": {
+                              "type": "integer"
+                            },
+                            "altText": {
+                              "type": "string"
+                            },
+                            "hoverText": {
+                              "type": "string"
+                            },
+                            "linkUrl": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "userDefinedFields": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            },
+                            "displayOnPublicationFinder": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      },
+                      "visibilityData": {
+                        "type": "object",
+                        "properties": {
+                          "isHidden": {
+                            "type": "boolean"
+                          },
+                          "reason": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "customerId": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "duration": {
+                  "type": "string"
+                },
+                "frequency": {
+                  "type": "string"
+                },
+                "alternateTitleList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "alternateTitle": {
+                        "type": "string"
+                      },
+                      "titleType": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "imageLink": {
+                  "type": "string"
+                },
+                "licenseTerms": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "noteLabel": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "titleId": "string",
+                  "titleName": "string",
+                  "edition": "string",
+                  "description": "string",
+                  "peerReviewed": true,
+                  "publisherName": "string",
+                  "identifiersList": [
+                    {
+                      "id": "string",
+                      "source": "string",
+                      "type": 0,
+                      "subtype": 0
+                    }
+                  ],
+                  "subjectsList": [
+                    {
+                      "type": "string",
+                      "name": "string"
+                    }
+                  ],
+                  "titleCustom": true,
+                  "pubType": "string",
+                  "contributorsList": [
+                    {
+                      "type": "string",
+                      "contributor": "string",
+                      "displayOrder": 0
+                    }
+                  ],
+                  "customerResourcesList": [
+                    {
+                      "titleId": 0,
+                      "packageId": 0,
+                      "packageName": "string",
+                      "packageType": "string",
+                      "isPackageCustom": true,
+                      "vendorId": 0,
+                      "vendorName": "string",
+                      "locationId": 0,
+                      "isSelected": true,
+                      "isTokenNeeded": true,
+                      "managedCoverageList": [
+                        {
+                          "beginCoverage": "2003-01-01",
+                          "endCoverage": "2003-12-12"
+                        }
+                      ],
+                      "customCoverageList": [
+                        {
+                          "beginCoverage": "2003-01-01",
+                          "endCoverage": "2003-12-12"
+                        }
+                      ],
+                      "coverageStatement": "string",
+                      "managedEmbargoPeriod": {
+                        "embargoUnit": "string",
+                        "embargoValue": 0
+                      },
+                      "customEmbargoPeriod": {
+                        "embargoUnit": "string",
+                        "embargoValue": 0
+                      },
+                      "url": "string",
+                      "linkOutTargetUrl": "string",
+                      "vendorToken": {
+                        "factName": "string",
+                        "value": "string"
+                      },
+                      "packageToken": {
+                        "factName": "string",
+                        "value": "string"
+                      },
+                      "targetUrl": "string",
+                      "proxy": {
+                        "id": "string",
+                        "inherited": true,
+                        "proxyName": "string",
+                        "urlMask": "string"
+                      },
+                      "note": [
+                        {
+                          "id": 0,
+                          "custId": 0,
+                          "noteName": "string",
+                          "rank": 0,
+                          "noteText": "string",
+                          "showOnFlags": {},
+                          "iconUrl": "string",
+                          "iconId": 0,
+                          "altText": "string",
+                          "hoverText": "string",
+                          "linkUrl": "string"
+                        }
+                      ],
+                      "userDefinedFields": [
+                        {
+                          "id": 0,
+                          "label": "string",
+                          "value": "string",
+                          "displayOnPublicationFinder": true
+                        }
+                      ],
+                      "visibilityData": {
+                        "isHidden": true,
+                        "reason": "Hidden by Customer"
+                      },
+                      "customerId": 0
+                    }
+                  ],
+                  "duration": "string",
+                  "frequency": "string",
+                  "alternateTitleList": [
+                    {
+                      "alternateTitle": "string",
+                      "titleType": "string"
+                    }
+                  ],
+                  "imageLink": "string",
+                  "licenseTerms": {
+                    "enabled": false,
+                    "noteLabel": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "get-pf-v1-pfaccount-profile-title-kbid",
+        "description": "This operation allows you to search with an individual title and returns a details associated with that individual title. The title is limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "sessionid",
+            "description": "Already existing SessionId can be provided to improve experience of using the publications search. Example format -> '-2689046726050171609'"
+          },
+          {
+            "type": "boolean",
+            "in": "query",
+            "name": "returnrelativeimagelinks",
+            "description": "Return relative links or direct links to cover images"
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "password",
+            "description": "Profile Password (optional).  If a password is supplied, it must be a valid password assigned to the customer profile.  If omitted, the request will only be honored if the customer profile allows guest access."
+          }
+        ]
+      }
+    },
+    "/pf/v1/pfaccount/{profile}/vendor/{vendorid}/package/{packageid}/title/{kbid}/licenseterms": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true,
+          "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'"
+        },
+        {
+          "type": "string",
+          "name": "vendorid",
+          "in": "path",
+          "required": true,
+          "description": "Vendor ID. e.g. '134386'"
+        },
+        {
+          "type": "string",
+          "name": "packageid",
+          "in": "path",
+          "required": true,
+          "description": "Package ID. e.g. '4077736'"
+        },
+        {
+          "type": "string",
+          "name": "kbid",
+          "in": "path",
+          "required": true,
+          "description": "Title ID. e.g. '1385382'"
+        }
+      ],
+      "get": {
+        "summary": "Returns ILS data by VendorId, PackageId (List Id) and TitleId",
+        "tags": [
+          "Title Resources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK, License terms data",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "weight": {
+                    "type": "integer"
+                  },
+                  "publicNote": {
+                    "type": "string"
+                  },
+                  "primary": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": [
+                  {
+                    "label": "string",
+                    "value": [
+                      "string"
+                    ],
+                    "weight": 0,
+                    "publicNote": "string",
+                    "primary": true
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "get-pf-v1-pfaccount-profile-vendor-vendorid-package-packageid-title-kbid-licenseterms",
+        "description": "Retrieves license term data of from ILS API",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "header",
+            "name": "password",
+            "description": "Profile Password (optional).  If a password is supplied, it must be a valid password assigned to the customer profile.  If omitted, the request will only be honored if the customer profile allows guest access."
+          }
+        ]
       }
     }
   },
@@ -784,7 +1524,7 @@
         "embargoValue": {
           "type": "integer",
           "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo.",
-          "example": "1"
+          "example": 1
         }
       }
     },
@@ -860,7 +1600,7 @@
           "type": "integer",
           "format": "int64",
           "description": "Customer ID",
-          "example": "1123"
+          "example": 1123
         }
       }
     },
@@ -1373,7 +2113,7 @@
           "type": "integer",
           "format": "int64",
           "description": "Unique identifier for the note",
-          "example": "309"
+          "example": 309
         },
         "custId": {
           "type": "integer",
@@ -1461,6 +2201,14 @@
         }
       }
     },
+    "QueriesWithAction": {
+      "type": "object",
+      "properties": {
+        "Query": {
+          "$ref": "#/definitions/Query"
+        }
+      }
+    },
     "PackageFacet": {
       "type": "object",
       "properties": {
@@ -1482,21 +2230,13 @@
         }
       }
     },
-    "QueriesWithAction": {
-      "type": "object",
-      "properties": {
-        "Query": {
-          "$ref": "#/definitions/Query"
-        }
-      }
-    },
     "IdentifiersList": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string",
           "description": "Identifier Value",
-          "example": 1
+          "example": "1"
         },
         "source": {
           "type": "string",
@@ -1537,7 +2277,7 @@
           "type": "integer",
           "format": "int64",
           "description": "ID",
-          "example": "a123"
+          "example": 123
         },
         "label": {
           "type": "string",
