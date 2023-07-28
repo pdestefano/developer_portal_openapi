@@ -723,6 +723,132 @@
             "description": "OK, Title details for a given KBID",
             "schema": {
               "type": "object",
+              "x-examples": {
+                "Example 1": {
+                  "titleId": "string",
+                  "titleName": "string",
+                  "edition": "string",
+                  "description": "string",
+                  "peerReviewed": true,
+                  "publisherName": "string",
+                  "identifiersList": [
+                    {
+                      "id": "string",
+                      "source": "string",
+                      "type": 0,
+                      "subtype": 0
+                    }
+                  ],
+                  "subjectsList": [
+                    {
+                      "type": "string",
+                      "name": "string"
+                    }
+                  ],
+                  "titleCustom": true,
+                  "pubType": "string",
+                  "contributorsList": [
+                    {
+                      "type": "string",
+                      "contributor": "string",
+                      "displayOrder": 0
+                    }
+                  ],
+                  "customerResourcesList": [
+                    {
+                      "titleId": 0,
+                      "packageId": 0,
+                      "packageName": "string",
+                      "packageType": "string",
+                      "isPackageCustom": true,
+                      "vendorId": 0,
+                      "vendorName": "string",
+                      "locationId": 0,
+                      "isSelected": true,
+                      "isTokenNeeded": true,
+                      "managedCoverageList": [
+                        {
+                          "beginCoverage": "2003-01-01",
+                          "endCoverage": "2003-12-12"
+                        }
+                      ],
+                      "customCoverageList": [
+                        {
+                          "beginCoverage": "2003-01-01",
+                          "endCoverage": "2003-12-12"
+                        }
+                      ],
+                      "coverageStatement": "string",
+                      "managedEmbargoPeriod": {
+                        "embargoUnit": "string",
+                        "embargoValue": 0
+                      },
+                      "customEmbargoPeriod": {
+                        "embargoUnit": "string",
+                        "embargoValue": 0
+                      },
+                      "url": "string",
+                      "linkOutTargetUrl": "string",
+                      "vendorToken": {
+                        "factName": "string",
+                        "value": "string"
+                      },
+                      "packageToken": {
+                        "factName": "string",
+                        "value": "string"
+                      },
+                      "targetUrl": "string",
+                      "proxy": {
+                        "id": "string",
+                        "inherited": true,
+                        "proxyName": "string",
+                        "urlMask": "string"
+                      },
+                      "note": [
+                        {
+                          "id": 0,
+                          "custId": 0,
+                          "noteName": "string",
+                          "rank": 0,
+                          "noteText": "string",
+                          "showOnFlags": {},
+                          "iconUrl": "string",
+                          "iconId": 0,
+                          "altText": "string",
+                          "hoverText": "string",
+                          "linkUrl": "string"
+                        }
+                      ],
+                      "userDefinedFields": [
+                        {
+                          "id": 0,
+                          "label": "string",
+                          "value": "string",
+                          "displayOnPublicationFinder": true
+                        }
+                      ],
+                      "visibilityData": {
+                        "isHidden": true,
+                        "reason": "Hidden by Customer"
+                      },
+                      "customerId": 0
+                    }
+                  ],
+                  "duration": "string",
+                  "frequency": "string",
+                  "alternateTitleList": [
+                    {
+                      "alternateTitle": "string",
+                      "titleType": "string"
+                    }
+                  ],
+                  "imageLink": "string",
+                  "licenseTerms": {
+                    "enabled": false,
+                    "noteLabel": "string"
+                  }
+                }
+              },
               "properties": {
                 "titleId": {
                   "type": "string"
@@ -956,8 +1082,10 @@
                               "type": "string"
                             },
                             "showOnFlags": {
-                              "type": "object",
-                              "properties": {}
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
                             },
                             "iconUrl": {
                               "type": "string"
@@ -1048,131 +1176,363 @@
                     }
                   }
                 }
-              },
-              "x-examples": {
-                "Example 1": {
-                  "titleId": "string",
-                  "titleName": "string",
-                  "edition": "string",
-                  "description": "string",
-                  "peerReviewed": true,
-                  "publisherName": "string",
-                  "identifiersList": [
-                    {
-                      "id": "string",
-                      "source": "string",
-                      "type": 0,
-                      "subtype": 0
-                    }
-                  ],
-                  "subjectsList": [
-                    {
-                      "type": "string",
-                      "name": "string"
-                    }
-                  ],
-                  "titleCustom": true,
-                  "pubType": "string",
-                  "contributorsList": [
-                    {
-                      "type": "string",
-                      "contributor": "string",
-                      "displayOrder": 0
-                    }
-                  ],
-                  "customerResourcesList": [
-                    {
-                      "titleId": 0,
-                      "packageId": 0,
-                      "packageName": "string",
-                      "packageType": "string",
-                      "isPackageCustom": true,
-                      "vendorId": 0,
-                      "vendorName": "string",
-                      "locationId": 0,
-                      "isSelected": true,
-                      "isTokenNeeded": true,
-                      "managedCoverageList": [
-                        {
-                          "beginCoverage": "2003-01-01",
-                          "endCoverage": "2003-12-12"
-                        }
-                      ],
-                      "customCoverageList": [
-                        {
-                          "beginCoverage": "2003-01-01",
-                          "endCoverage": "2003-12-12"
-                        }
-                      ],
-                      "coverageStatement": "string",
-                      "managedEmbargoPeriod": {
-                        "embargoUnit": "string",
-                        "embargoValue": 0
-                      },
-                      "customEmbargoPeriod": {
-                        "embargoUnit": "string",
-                        "embargoValue": 0
-                      },
-                      "url": "string",
-                      "linkOutTargetUrl": "string",
-                      "vendorToken": {
-                        "factName": "string",
-                        "value": "string"
-                      },
-                      "packageToken": {
-                        "factName": "string",
-                        "value": "string"
-                      },
-                      "targetUrl": "string",
-                      "proxy": {
-                        "id": "string",
-                        "inherited": true,
-                        "proxyName": "string",
-                        "urlMask": "string"
-                      },
-                      "note": [
-                        {
-                          "id": 0,
-                          "custId": 0,
-                          "noteName": "string",
-                          "rank": 0,
-                          "noteText": "string",
-                          "showOnFlags": {},
-                          "iconUrl": "string",
-                          "iconId": 0,
-                          "altText": "string",
-                          "hoverText": "string",
-                          "linkUrl": "string"
-                        }
-                      ],
-                      "userDefinedFields": [
-                        {
-                          "id": 0,
-                          "label": "string",
-                          "value": "string",
-                          "displayOnPublicationFinder": true
-                        }
-                      ],
-                      "visibilityData": {
-                        "isHidden": true,
-                        "reason": "Hidden by Customer"
-                      },
-                      "customerId": 0
-                    }
-                  ],
-                  "duration": "string",
-                  "frequency": "string",
-                  "alternateTitleList": [
-                    {
-                      "alternateTitle": "string",
-                      "titleType": "string"
-                    }
-                  ],
-                  "imageLink": "string",
-                  "licenseTerms": {
-                    "enabled": false,
-                    "noteLabel": "string"
+              }
+            },
+            "examples": {
+              "Title details": {
+                "titleId": "640633",
+                "titleName": "Nature Communications",
+                "edition": "",
+                "peerReviewed": true,
+                "publisherName": "Nature Publishing Group",
+                "identifiersList": [
+                  {
+                    "id": "2041-1723",
+                    "source": "Online ISSN",
+                    "type": 0,
+                    "subtype": 2
+                  },
+                  {
+                    "id": "616939100",
+                    "source": "SPID",
+                    "type": 3,
+                    "subtype": 0
+                  },
+                  {
+                    "id": "720546",
+                    "source": "EJS JournalID",
+                    "type": 4,
+                    "subtype": 0
+                  },
+                  {
+                    "id": "BNLI",
+                    "source": "MID",
+                    "type": 8,
+                    "subtype": 0
+                  },
+                  {
+                    "id": "2553671-0",
+                    "source": "ZDB-ID",
+                    "type": 6,
+                    "subtype": 0
+                  },
+                  {
+                    "id": "101528555",
+                    "source": "MID",
+                    "type": 8,
+                    "subtype": 0
                   }
+                ],
+                "subjectsList": [
+                  {
+                    "type": "Library of Congress",
+                    "name": "Science"
+                  },
+                  {
+                    "type": "Medical",
+                    "name": "Sciences"
+                  },
+                  {
+                    "type": "TLI",
+                    "name": "Science (General)"
+                  }
+                ],
+                "titleCustom": false,
+                "pubType": "Journal",
+                "contributorsList": [],
+                "customerResourcesList": [
+                  {
+                    "titleId": 640633,
+                    "packageId": 863,
+                    "packageName": "PubMed Central (PMC) Open Access",
+                    "packageType": "Variable",
+                    "isPackageCustom": false,
+                    "vendorId": 83,
+                    "vendorName": "PubMed Central/National Library of Medicine",
+                    "locationId": 13482249,
+                    "isSelected": true,
+                    "isTokenNeeded": false,
+                    "managedCoverageList": [
+                      {
+                        "beginCoverage": "2012-01-01",
+                        "endCoverage": "9999-12-31"
+                      }
+                    ],
+                    "customCoverageList": [],
+                    "managedEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "customEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "url": "https://www.ncbi.nlm.nih.gov/pmc/?term=%22Nat+Commun%22%5Bjournal%5D",
+                    "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/5f9e2285-c57b-4716-8cfa-017bdbef16fd",
+                    "vendorToken": {
+                      "value": ""
+                    },
+                    "packageToken": {},
+                    "note": [
+                      {
+                        "id": 43138,
+                        "custId": 1123,
+                        "noteName": "domain",
+                        "rank": 1,
+                        "noteText": "domain note 03.20.20\n",
+                        "showOnFlags": [
+                          "PubDetails"
+                        ],
+                        "iconUrl": "",
+                        "altText": "",
+                        "hoverText": "",
+                        "linkUrl": ""
+                      }
+                    ],
+                    "userDefinedFields": [],
+                    "visibilityData": {
+                      "isHidden": true,
+                      "reason": ""
+                    },
+                    "customerId": 1123
+                  },
+                  {
+                    "titleId": 640633,
+                    "packageId": 2432142,
+                    "packageName": "Nature (MINCYT)",
+                    "packageType": "Complete",
+                    "isPackageCustom": false,
+                    "vendorId": 36,
+                    "vendorName": "Springer Nature",
+                    "locationId": 17016224,
+                    "isSelected": true,
+                    "isTokenNeeded": false,
+                    "managedCoverageList": [
+                      {
+                        "beginCoverage": "2010-04-01",
+                        "endCoverage": "9999-12-31"
+                      }
+                    ],
+                    "customCoverageList": [],
+                    "managedEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "customEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "url": "https://www.nature.com/ncomms/articles",
+                    "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/55e1ae14-61f5-42d9-a280-dd0ffee1276d",
+                    "vendorToken": {
+                      "value": ""
+                    },
+                    "packageToken": {},
+                    "note": [
+                      {
+                        "id": 43138,
+                        "custId": 1123,
+                        "noteName": "domain",
+                        "rank": 1,
+                        "noteText": "domain note 03.20.20\n",
+                        "showOnFlags": [
+                          "PubDetails"
+                        ],
+                        "iconUrl": "",
+                        "altText": "",
+                        "hoverText": "",
+                        "linkUrl": ""
+                      }
+                    ],
+                    "userDefinedFields": [],
+                    "visibilityData": {
+                      "isHidden": true,
+                      "reason": ""
+                    },
+                    "customerId": 1123
+                  },
+                  {
+                    "titleId": 640633,
+                    "packageId": 1616,
+                    "packageName": "Nature Journals Online (Open Access)",
+                    "packageType": "Variable",
+                    "isPackageCustom": false,
+                    "vendorId": 36,
+                    "vendorName": "Springer Nature",
+                    "locationId": 4165844,
+                    "isSelected": true,
+                    "isTokenNeeded": false,
+                    "managedCoverageList": [
+                      {
+                        "beginCoverage": "2010-12-01",
+                        "endCoverage": "9999-12-31"
+                      }
+                    ],
+                    "customCoverageList": [
+                      {
+                        "beginCoverage": "2010-04-01",
+                        "endCoverage": "9999-12-31"
+                      }
+                    ],
+                    "managedEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "customEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "url": "https://www.nature.com/ncomms/volumes",
+                    "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/9125d898-1430-43ff-8767-dce19cf2f562",
+                    "vendorToken": {
+                      "value": ""
+                    },
+                    "packageToken": {},
+                    "note": [
+                      {
+                        "id": 43138,
+                        "custId": 1123,
+                        "noteName": "domain",
+                        "rank": 1,
+                        "noteText": "domain note 03.20.20\n",
+                        "showOnFlags": [
+                          "PubDetails"
+                        ],
+                        "iconUrl": "",
+                        "altText": "",
+                        "hoverText": "",
+                        "linkUrl": ""
+                      }
+                    ],
+                    "userDefinedFields": [],
+                    "visibilityData": {
+                      "isHidden": true,
+                      "reason": ""
+                    },
+                    "customerId": 1123
+                  },
+                  {
+                    "titleId": 640633,
+                    "packageId": 5604,
+                    "packageName": "MEDLINE Complete",
+                    "packageType": "Complete",
+                    "isPackageCustom": false,
+                    "vendorId": 19,
+                    "vendorName": "EBSCO",
+                    "locationId": 9198764,
+                    "isSelected": true,
+                    "isTokenNeeded": false,
+                    "managedCoverageList": [
+                      {
+                        "beginCoverage": "2012-11-01",
+                        "endCoverage": "9999-12-31"
+                      }
+                    ],
+                    "customCoverageList": [],
+                    "managedEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "customEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "url": "https://search.ebscohost.com/direct.asp?db=mdc&jid=101528555&scope=site",
+                    "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/f93f34e7-24e5-4a3b-a25e-4e2290120a52",
+                    "vendorToken": {
+                      "value": ""
+                    },
+                    "packageToken": {},
+                    "note": [
+                      {
+                        "id": 43138,
+                        "custId": 1123,
+                        "noteName": "domain",
+                        "rank": 1,
+                        "noteText": "domain note 03.20.20\n",
+                        "showOnFlags": [
+                          "PubDetails"
+                        ],
+                        "iconUrl": "",
+                        "altText": "",
+                        "hoverText": "",
+                        "linkUrl": ""
+                      },
+                      {
+                        "id": 34599,
+                        "custId": 1123,
+                        "noteName": "Derek Note 2- set to show for PF UI",
+                        "rank": 1,
+                        "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                        "showOnFlags": [
+                          "LinkSource",
+                          "PubDetails"
+                        ],
+                        "iconUrl": "",
+                        "altText": "",
+                        "hoverText": "hover text",
+                        "linkUrl": ""
+                      }
+                    ],
+                    "userDefinedFields": [],
+                    "visibilityData": {
+                      "isHidden": true,
+                      "reason": ""
+                    },
+                    "customerId": 1123
+                  },
+                  {
+                    "titleId": 640633,
+                    "packageId": 1157839,
+                    "packageName": "Nature Journals Online (NESLi2)",
+                    "packageType": "Complete",
+                    "isPackageCustom": false,
+                    "vendorId": 36,
+                    "vendorName": "Springer Nature",
+                    "locationId": 9710251,
+                    "isSelected": true,
+                    "isTokenNeeded": false,
+                    "managedCoverageList": [
+                      {
+                        "beginCoverage": "2010-01-01",
+                        "endCoverage": "9999-12-31"
+                      }
+                    ],
+                    "customCoverageList": [],
+                    "managedEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "customEmbargoPeriod": {
+                      "embargoValue": 0
+                    },
+                    "url": "https://www.nature.com/ncomms/articles",
+                    "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/794fdad8-94db-49d3-a0d9-bbef032b8160",
+                    "vendorToken": {
+                      "value": ""
+                    },
+                    "packageToken": {},
+                    "note": [
+                      {
+                        "id": 43138,
+                        "custId": 1123,
+                        "noteName": "domain",
+                        "rank": 1,
+                        "noteText": "domain note 03.20.20\n",
+                        "showOnFlags": [
+                          "PubDetails"
+                        ],
+                        "iconUrl": "",
+                        "altText": "",
+                        "hoverText": "",
+                        "linkUrl": ""
+                      }
+                    ],
+                    "userDefinedFields": [],
+                    "visibilityData": {
+                      "isHidden": true,
+                      "reason": ""
+                    },
+                    "customerId": 1123
+                  }
+                ],
+                "duration": "0",
+                "frequency": "1",
+                "alternateTitleList": [],
+                "licenseTerms": {
+                  "enabled": true,
+                  "noteLabel": "Public Note:"
                 }
               }
             }
@@ -1328,6 +1688,120 @@
                   }
                 ]
               }
+            },
+            "examples": {
+              "License terms data": [
+                {
+                  "label": "Definition of authorised user",
+                  "primary": true,
+                  "publicNote": "Walk-Ins must register for temporary UN/PW at circ desk on level 1",
+                  "value": [
+                    "Faculty, Student, Staff and Walk-Ins"
+                  ],
+                  "weight": -1
+                },
+                {
+                  "label": "Access restricted to on-campus/campus network?",
+                  "primary": true,
+                  "value": [
+                    "No"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Making digital copies",
+                  "primary": true,
+                  "value": [
+                    "Permitted (explicit)"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Number of concurrent users allowed",
+                  "primary": true,
+                  "publicNote": "If 40 users are already in the database, a concurrent user error will appear",
+                  "value": [
+                    "40"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Secure Electronic ILL",
+                  "primary": true,
+                  "value": [
+                    "Prohibited (interpreted)"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Use in electronic coursepacks",
+                  "primary": true,
+                  "value": [
+                    "Permitted (explicit)"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Use in print course packs",
+                  "primary": true,
+                  "value": [
+                    "Permitted (explicit)"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Walk-in access permitted?",
+                  "primary": true,
+                  "value": [
+                    "Yes"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Example Decimal",
+                  "primary": true,
+                  "publicNote": "test testing",
+                  "value": [
+                    "2.7"
+                  ],
+                  "weight": 2
+                },
+                {
+                  "label": "test multi select",
+                  "primary": true,
+                  "value": [
+                    "Implicit",
+                    "negotiated"
+                  ],
+                  "weight": 2
+                },
+                {
+                  "label": "Low weight Additional Non-Primary",
+                  "primary": false,
+                  "publicNote": "whoooo!",
+                  "value": [
+                    "Alliance"
+                  ],
+                  "weight": 0
+                },
+                {
+                  "label": "Additional Non-Primary",
+                  "primary": false,
+                  "publicNote": "wheeeee!",
+                  "value": [
+                    "Alliance"
+                  ],
+                  "weight": 3
+                },
+                {
+                  "label": "Trial expires",
+                  "primary": false,
+                  "value": [
+                    "2023-09-30"
+                  ],
+                  "weight": 5
+                }
+              ]
             }
           },
           "400": {
