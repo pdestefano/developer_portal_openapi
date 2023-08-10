@@ -527,14 +527,16 @@
           {
             "name": "searchfield",
             "in": "query",
-            "description": "Field to search. Valid values are titlename, subject, isxn or publisher.",
+            "description": "Field to search. Valid values are titlename, subject, isxn, keyword, contributor, or publisher.",
             "required": true,
             "type": "string",
             "enum": [
               "titlename",
               "subject",
               "isxn",
-              "publisher"
+              "publisher",
+              "keyword",
+              "contributor"
             ]
           },
           {
