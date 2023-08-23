@@ -3152,6 +3152,14 @@
                 "tli"
               ]
             }
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "includerelationships",
+            "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false. The default behavior when this parameter is not present is to not return relationship informant."
           }
         ],
         "responses": {
@@ -3264,6 +3272,14 @@
                 "tli"
               ]
             }
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "includerelationships",
+            "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false. The default behavior when this parameter is not present is to not return relationship informant."
           }
         ],
         "responses": {
@@ -7537,21 +7553,21 @@
         },
         "type": "object",
         "properties": {
-            "category": {
-                "type": "string",
-                "description": "Visibility category (PF, FTF, or Marc)",
-                "example": "PF"
-            },
-            "hidden": {
-                "type": "boolean",
-                "description": "Hidden status",
-                "example": false
-            },
-            "reason": {
-                "type": "string",
-                "description": "Reason the resource was hidden",
-                "example": "Hidden by customer"
-            }
+          "category": {
+            "type": "string",
+            "description": "Visibility category (PF, FTF, or Marc)",
+            "example": "PF"
+          },
+          "hidden": {
+            "type": "boolean",
+            "description": "Hidden status",
+            "example": false
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason the resource was hidden",
+            "example": "Hidden by customer"
+          }
         }
       }
     }
