@@ -3017,7 +3017,7 @@
         }
       }
     },
-    "/v1/customers/{custid}/titles/{kbid}/relationships": {
+    "/v1/{custid}/titles/{kbid}/relationships": {
       "parameters": [
         {
           "schema": {
