@@ -133,9 +133,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "404": {
             "description": "Customer not found.",
@@ -458,9 +456,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -1081,9 +1077,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -1363,7 +1357,7 @@
           "Package Resources"
         ],
         "summary": "Get Package-Title Details",
-        "description": "This operation allows you to retrieve details for a particular package-title from EPKB.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve details for a particular package-title from EPKB.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.\n  \n  **Please Note** This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}/titles/{kbid}",
         "parameters": [
           {
             "name": "vendorid",
@@ -1446,14 +1440,15 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       },
       "put": {
         "tags": [
           "Package Resources"
         ],
         "summary": "Update a Title in a Package",
-        "description": "This operation allows you to update selection status, proxy value or coverage customizations for a title within a package in a customer EPKB account.  A title with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the title proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title update payload.  For both managed and custom titles, removing a title with isSelected set to false in the payload will result in a loss of customization made previously at the title level.  Removing a custom title with isSelected set to false in the payload will result in the deletion (hard delete) of the custom title from the custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to update selection status, proxy value or coverage customizations for a title within a package in a customer EPKB account.  A title with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the title proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title update payload.  For both managed and custom titles, removing a title with isSelected set to false in the payload will result in a loss of customization made previously at the title level.  Removing a custom title with isSelected set to false in the payload will result in the deletion (hard delete) of the custom title from the custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.\n  \n  **Please Note** This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}/titles/{kbid}",
         "parameters": [
           {
             "name": "vendorid",
@@ -1544,7 +1539,7 @@
                     "coverageStatement": "2009 - 2009",
                     "customEmbargoPeriod": {
                       "embargoUnit": "Days",
-                      "embargoValue": "1"
+                      "embargoValue": 1
                     }
                   }
                 },
@@ -1603,7 +1598,7 @@
                     "coverageStatement": "2009 - 2009",
                     "customEmbargoPeriod": {
                       "embargoUnit": "Days",
-                      "embargoValue": "1"
+                      "embargoValue": 1
                     }
                   }
                 },
@@ -1629,7 +1624,7 @@
                     "coverageStatement": "Issues on or after 6/1/1992",
                     "customEmbargoPeriod": {
                       "embargoUnit": "Days",
-                      "embargoValue": "1"
+                      "embargoValue": 1
                     },
                     "userDefinedField1": "String1",
                     "userDefinedField2": "String2",
@@ -1660,7 +1655,7 @@
                     "coverageStatement": "Issues on or after 6/1/1992",
                     "customEmbargoPeriod": {
                       "embargoUnit": "Days",
-                      "embargoValue": "1"
+                      "embargoValue": 1
                     },
                     "userDefinedField1": "String1",
                     "userDefinedField2": "String2",
@@ -1694,7 +1689,7 @@
                     "coverageStatement": "Issues on or after 6/1/1992",
                     "customEmbargoPeriod": {
                       "embargoUnit": "Days",
-                      "embargoValue": "1"
+                      "embargoValue": 1
                     },
                     "userDefinedField1": "String1",
                     "userDefinedField2": "String2",
@@ -1729,7 +1724,7 @@
                     "coverageStatement": "Issues on or after 6/1/1992",
                     "customEmbargoPeriod": {
                       "embargoUnit": "Days",
-                      "embargoValue": "1"
+                      "embargoValue": 1
                     },
                     "userDefinedField1": "String1",
                     "userDefinedField2": "String2",
@@ -1750,9 +1745,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -1764,7 +1757,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/{custid}/titles": {
@@ -1966,7 +1960,7 @@
           "Title Resources"
         ],
         "summary": "Get Title Details Regardless of Package",
-        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.\n  \n  **Please Note:**  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles/{kbid}",
         "parameters": [
           {
             "name": "custid",
@@ -2031,7 +2025,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/{custid}/holdings": {
@@ -2152,9 +2147,7 @@
         "responses": {
           "202": {
             "description": "The request to populate holdings has been accepted for processing, but the processing has not been completed.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "409": {
             "description": "Snapshot is currently in progress.",
@@ -2685,9 +2678,7 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the DELETE request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "default": {
             "description": "Unexpected Error",
@@ -3022,6 +3013,456 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/v1/{custid}/titles/{kbid}/relationships": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "kbid",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "custid",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Title Relationships for a KBID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitleRelationship"
+                },
+                "examples": {
+                  "Get Title Relationships Response": {
+                    "value": {
+                      "titleRelationships": [
+                        {
+                          "resourceRelationshipId": 0,
+                          "source": {
+                            "kbid": 100000000,
+                            "resourceId": 100000000,
+                            "name": "string"
+                          },
+                          "target": {
+                            "kbid": 100000000,
+                            "resourceId": 100000000,
+                            "name": "string"
+                          },
+                          "type": "ABSORBED_BY",
+                          "date": "2019-08-24T14:15:22Z"
+                        }
+                      ],
+                      "total": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-title-relationships",
+        "description": "This operation retrieves the title relationships for a given title identified via kbid. Currently it returns the first degree parents, spouse, siblings, and children of the given title. Parameters include the kbid of the desired title and the string version of the customer id. The output is an array of related title objects and a count of the total related titles in the array. The related title objects include both the source and target kbid, the date the relationship was established, the type of relationship, and the identifier of the relationship."
+      }
+    },
+    "/v2/{custid}/titles/{kbid}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "custid",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "kbid",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "title-search-controller"
+        ],
+        "summary": "Retrieve title details regardless of package",
+        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of. The response will reflect the context of the EBSCO customer ID included in the request.",
+        "operationId": "getTitleDetailsRegardlessOfPackageV2UsingGET",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "kbid",
+            "in": "path",
+            "description": "KBID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjects",
+            "in": "query",
+            "description": "Type of subject to be returned. By default returns tli, bisac. Valid values are: bisac, tli, libraryofcongress, medical. It is also valid to use 0 for bisac, 1 for tli, 2 for libraryofcongress, 3 for medical",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "bisac",
+                "libraryofcongress",
+                "medical",
+                "tli"
+              ]
+            }
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "includerelationships",
+            "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false. The default behavior when this parameter is not present is to not return relationship informant."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TitlesResponseV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR"
+          }
+        }
+      }
+    },
+    "/v2/{custid}/lists/{listid}/titles/{kbid}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "custid",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "listid",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "kbid",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "title-search-controller"
+        ],
+        "summary": "Retrieve title details by package",
+        "description": "This operation allows you to search and retrieve a list of titles from EPKB respective of the package(s) that the titles are a part of. The response will reflect the context of the EBSCO customer ID included in the request.",
+        "operationId": "getTitleDetailsByPackageV2UsingGET",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "listid",
+            "in": "path",
+            "description": "List ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "kbid",
+            "in": "path",
+            "description": "KBID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjects",
+            "in": "query",
+            "description": "Type of subject to be returned. By default returns tli, bisac. Valid values are: bisac, tli, libraryofcongress, medical. It is also valid to use 0 for bisac, 1 for tli, 2 for libraryofcongress, 3 for medical",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "bisac",
+                "libraryofcongress",
+                "medical",
+                "tli"
+              ]
+            }
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "includerelationships",
+            "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false. The default behavior when this parameter is not present is to not return relationship informant."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "title-search-controller"
+        ],
+        "summary": "Update a Title v2",
+        "description": "Provides the ability to update any title details for a customer given a unique listid/kbid pair",
+        "operationId": "updateTitleV2UsingPUT",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "listid",
+            "in": "path",
+            "description": "List ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "kbid",
+            "in": "path",
+            "description": "KBID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationV2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "ACCEPTED",
+                    "ALREADY_REPORTED",
+                    "BAD_GATEWAY",
+                    "BAD_REQUEST",
+                    "BANDWIDTH_LIMIT_EXCEEDED",
+                    "CHECKPOINT",
+                    "CONFLICT",
+                    "CONTINUE",
+                    "CREATED",
+                    "DESTINATION_LOCKED",
+                    "EXPECTATION_FAILED",
+                    "FAILED_DEPENDENCY",
+                    "FORBIDDEN",
+                    "FOUND",
+                    "GATEWAY_TIMEOUT",
+                    "GONE",
+                    "HTTP_VERSION_NOT_SUPPORTED",
+                    "IM_USED",
+                    "INSUFFICIENT_SPACE_ON_RESOURCE",
+                    "INSUFFICIENT_STORAGE",
+                    "INTERNAL_SERVER_ERROR",
+                    "I_AM_A_TEAPOT",
+                    "LENGTH_REQUIRED",
+                    "LOCKED",
+                    "LOOP_DETECTED",
+                    "METHOD_FAILURE",
+                    "METHOD_NOT_ALLOWED",
+                    "MOVED_PERMANENTLY",
+                    "MOVED_TEMPORARILY",
+                    "MULTIPLE_CHOICES",
+                    "MULTI_STATUS",
+                    "NETWORK_AUTHENTICATION_REQUIRED",
+                    "NON_AUTHORITATIVE_INFORMATION",
+                    "NOT_ACCEPTABLE",
+                    "NOT_EXTENDED",
+                    "NOT_FOUND",
+                    "NOT_IMPLEMENTED",
+                    "NOT_MODIFIED",
+                    "NO_CONTENT",
+                    "OK",
+                    "PARTIAL_CONTENT",
+                    "PAYLOAD_TOO_LARGE",
+                    "PAYMENT_REQUIRED",
+                    "PERMANENT_REDIRECT",
+                    "PRECONDITION_FAILED",
+                    "PRECONDITION_REQUIRED",
+                    "PROCESSING",
+                    "PROXY_AUTHENTICATION_REQUIRED",
+                    "REQUESTED_RANGE_NOT_SATISFIABLE",
+                    "REQUEST_ENTITY_TOO_LARGE",
+                    "REQUEST_HEADER_FIELDS_TOO_LARGE",
+                    "REQUEST_TIMEOUT",
+                    "REQUEST_URI_TOO_LONG",
+                    "RESET_CONTENT",
+                    "SEE_OTHER",
+                    "SERVICE_UNAVAILABLE",
+                    "SWITCHING_PROTOCOLS",
+                    "TEMPORARY_REDIRECT",
+                    "TOO_EARLY",
+                    "TOO_MANY_REQUESTS",
+                    "UNAUTHORIZED",
+                    "UNAVAILABLE_FOR_LEGAL_REASONS",
+                    "UNPROCESSABLE_ENTITY",
+                    "UNSUPPORTED_MEDIA_TYPE",
+                    "UPGRADE_REQUIRED",
+                    "URI_TOO_LONG",
+                    "USE_PROXY",
+                    "VARIANT_ALSO_NEGOTIATES"
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -3871,9 +4312,7 @@
           },
           "managedEmbargoPeriod": {
             "type": "object",
-            "properties": {
-              
-            },
+            "properties": {},
             "description": "Null Managed Embargo Period"
           },
           "customEmbargoPeriod": {
@@ -6311,9 +6750,7 @@
         "title": "Export",
         "type": "object",
         "description": "Export",
-        "x-examples": {
-          
-        },
+        "x-examples": {},
         "properties": {
           "costDownload": {
             "$ref": "#/components/schemas/CostDownload"
@@ -6621,6 +7058,517 @@
           }
         },
         "readOnly": true
+      },
+      "ResourceId": {
+        "title": "ResourceId",
+        "x-stoplight": {
+          "id": "3z6h2448ygr0s"
+        },
+        "type": "object",
+        "description": "Identifier for a title assigned by GKB database upon entry",
+        "properties": {
+          "resourceId": {
+            "type": "integer",
+            "maximum": 100000000,
+            "description": "Identifier for a title assigned by GKB database upon entry"
+          }
+        }
+      },
+      "Kbid": {
+        "title": "Kbid",
+        "x-stoplight": {
+          "id": "j26yc9is867zi"
+        },
+        "type": "object",
+        "description": "Identifier for a title assigned by the EPKB database upon entry",
+        "properties": {
+          "kbid": {
+            "type": "integer",
+            "maximum": 100000000,
+            "description": "Identifier for a title assigned by the EPKB database upon entry"
+          }
+        }
+      },
+      "RelatedTitle": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Kbid"
+          },
+          {
+            "$ref": "#/components/schemas/ResourceId"
+          },
+          {
+            "type": "object",
+            "description": "Title name",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Title name"
+              }
+            }
+          }
+        ],
+        "description": "Includes the resourceId, kbid, and name of the given title"
+      },
+      "RelationshipRecord": {
+        "title": "RelationshipRecord",
+        "x-stoplight": {
+          "id": "wqg5jtsqsn0ly"
+        },
+        "type": "object",
+        "description": "Represents the fields needed to describe a relationship between two titles",
+        "properties": {
+          "resourceRelationshipId": {
+            "type": "integer",
+            "description": "Identifier for the relationship assigned in GKB"
+          },
+          "source": {
+            "$ref": "#/components/schemas/RelatedTitle"
+          },
+          "target": {
+            "$ref": "#/components/schemas/RelatedTitle"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ABSORBED_BY",
+              "CONTINUED_BY",
+              "CONTINUED_IN_PART_BY",
+              "MERGED_WITH_TO_FORM",
+              "PARENT_OF",
+              "SPLIT_INTO"
+            ],
+            "description": "Resource relationship type as determined by the available options in the ResourceRelationshipTypes table in GKB"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date the relationship was created"
+          }
+        }
+      },
+      "TitleRelationship": {
+        "allOf": [
+          {
+            "type": "object",
+            "description": "Array of found title relationships within one degree of the given title",
+            "properties": {
+              "titleRelationships": {
+                "type": "array",
+                "description": "Array of found title relationships within one degree of the given title",
+                "items": {
+                  "$ref": "#/components/schemas/RelationshipRecord"
+                }
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        ],
+        "description": "Represents an array of all found relationships for a given title and the total number of relationships in the array"
+      },
+      "Pagination": {
+        "title": "Pagination",
+        "x-stoplight": {
+          "id": "zv9q91t3cgwkr"
+        },
+        "type": "object",
+        "description": "Represents the number of results returned in the response",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Represents the number of results returned in the response"
+          }
+        }
+      },
+      "TitlesResponseV2": {
+        "title": "TitlesResponseV2",
+        "x-stoplight": {
+          "id": "btv1yilaqm71j"
+        },
+        "type": "object",
+        "properties": {
+          "titles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocationV2"
+            }
+          }
+        }
+      },
+      "LocationV2": {
+        "title": "LocationV2",
+        "x-stoplight": {
+          "id": "9480wnajdonum"
+        },
+        "type": "object",
+        "properties": {
+          "alternateTitleList": {
+            "type": "array",
+            "description": "A list of alternate titles",
+            "items": {
+              "$ref": "#/components/schemas/LocalAlternateTitle"
+            }
+          },
+          "contributorsList": {
+            "type": "array",
+            "description": "A list of relevant contributors",
+            "items": {
+              "$ref": "#/components/schemas/LocalContributor"
+            }
+          },
+          "coverageStatement": {
+            "type": "string",
+            "description": "Coverage Statement",
+            "example": "Issues on or after 6/1/1992"
+          },
+          "customCoverageList": {
+            "type": "array",
+            "description": "Custom Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/CoverageList"
+            }
+          },
+          "customCoverageOwnership": {
+            "type": "string",
+            "description": "Custom Coverage Ownership. Valid values are Set By Customer or Set By EP"
+          },
+          "customEmbargoPeriod": {
+            "$ref": "#/components/schemas/EmbargoPeriod"
+          },
+          "description": {
+            "type": "string",
+            "description": "Title Description",
+            "example": "Some description of a title"
+          },
+          "edition": {
+            "type": "string",
+            "description": "Title Edition",
+            "example": "1st"
+          },
+          "identifiersList": {
+            "type": "array",
+            "description": "A list of the identifiers associated with the title",
+            "items": {
+              "$ref": "#/components/schemas/LocalIdentifier"
+            }
+          },
+          "isPackageCustom": {
+            "type": "boolean",
+            "description": "Is the Package Custom?",
+            "example": false
+          },
+          "isPeerReviewed": {
+            "type": "boolean",
+            "description": "Is this title peer reviewed",
+            "example": false
+          },
+          "isSelected": {
+            "type": "boolean",
+            "description": "Indicates if selected in a customer's account",
+            "example": true
+          },
+          "isTitleCustom": {
+            "type": "boolean",
+            "description": "Is this a custom title owned by the customer",
+            "example": false
+          },
+          "isTokenNeeded": {
+            "type": "boolean",
+            "description": "Field to indicate if a token is needed",
+            "example": false
+          },
+          "kbid": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the title",
+            "format": "int64",
+            "example": 1106847
+          },
+          "listId": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the package",
+            "format": "int64",
+            "example": 1117849
+          },
+          "locationId": {
+            "type": "integer",
+            "description": "Location ID",
+            "format": "int64",
+            "example": 123
+          },
+          "managedCoverageList": {
+            "type": "array",
+            "description": "Managed Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/CoverageList"
+            }
+          },
+          "managedEmbargoPeriod": {
+            "$ref": "#/components/schemas/EmbargoPeriod"
+          },
+          "packageName": {
+            "type": "string",
+            "description": "Name of the Package",
+            "example": "Health & Wellness Resource Center (w/alt health module)"
+          },
+          "packageType": {
+            "type": "string",
+            "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom",
+            "example": "Selected"
+          },
+          "proxy": {
+            "$ref": "#/components/schemas/ProxyDto"
+          },
+          "pubType": {
+            "type": "string",
+            "description": "Publication Type",
+            "example": "AudioBook"
+          },
+          "publisherName": {
+            "type": "string",
+            "description": "Publisher Name",
+            "example": "EBSCO"
+          },
+          "subjectsList": {
+            "type": "array",
+            "description": "A list of relevant subjects",
+            "items": {
+              "$ref": "#/components/schemas/LocalSubject"
+            }
+          },
+          "titleName": {
+            "type": "string",
+            "description": "Title Name",
+            "example": "A Tale of Two Cities"
+          },
+          "url": {
+            "type": "string",
+            "description": "Package URL",
+            "example": "http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
+          },
+          "userDefinedField1": {
+            "type": "string",
+            "description": "User Defined Field 1",
+            "example": "Sample Text 1"
+          },
+          "userDefinedField2": {
+            "type": "string",
+            "description": "User Defined Field 2",
+            "example": "Sample Text 2"
+          },
+          "userDefinedField3": {
+            "type": "string",
+            "description": "User Defined Field 3",
+            "example": "Sample Text 3"
+          },
+          "userDefinedField4": {
+            "type": "string",
+            "description": "User Defined Field 4",
+            "example": "Sample Text 4"
+          },
+          "userDefinedField5": {
+            "type": "string",
+            "description": "User Defined Field 5",
+            "example": "Sample Text 5"
+          },
+          "vendorId": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the provider",
+            "format": "int64",
+            "example": 19
+          },
+          "vendorName": {
+            "type": "string",
+            "description": "Provider name",
+            "example": "EBSCO"
+          },
+          "visibility": {
+            "type": "array",
+            "description": "Visibility details for pf,ftf and marc",
+            "items": {
+              "$ref": "#/components/schemas/VisibilityDataV1"
+            }
+          }
+        }
+      },
+      "EmbargoPeriod": {
+        "title": "EmbargoPeriod",
+        "x-stoplight": {
+          "id": "ho3l0auyzuppf"
+        },
+        "type": "object",
+        "properties": {
+          "embargoUnit": {
+            "type": "object",
+            "description": "Unit of measure: days, weeks, months, quarters, or years"
+          },
+          "embargoValue": {
+            "type": "integer",
+            "description": "A count of the specified time increment for which an embargo should apply",
+            "format": "int32",
+            "example": 1
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "embargoUnit": {},
+            "embargoValue": 1
+          }
+        }
+      },
+      "LocalAlternateTitle": {
+        "title": "LocalAlternateTitle",
+        "x-stoplight": {
+          "id": "pxr3vn7ewsrh6"
+        },
+        "type": "object",
+        "properties": {
+          "alternateTitle": {
+            "type": "string",
+            "description": "Alternate Title name",
+            "example": "Sample Alternate Title"
+          },
+          "titleType": {
+            "type": "string",
+            "description": "Title Type",
+            "example": "Book"
+          }
+        }
+      },
+      "LocalContributor": {
+        "title": "LocalContributor",
+        "x-stoplight": {
+          "id": "u4ce4nfpimzjn"
+        },
+        "type": "object",
+        "properties": {
+          "contributor": {
+            "type": "string",
+            "description": "Label assigned to the contributor",
+            "example": "EBSCO"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of contributor (Author, Illustrator, Editor, etc.)",
+            "example": "Author"
+          }
+        }
+      },
+      "CoverageList": {
+        "title": "CoverageList",
+        "x-stoplight": {
+          "id": "o2y8y21kgrbqn"
+        },
+        "type": "object",
+        "properties": {
+          "beginCoverage": {
+            "type": "string",
+            "description": "Start date",
+            "example": "2003-01-01"
+          },
+          "endCoverage": {
+            "type": "string",
+            "description": "End date",
+            "example": "2003-12-12"
+          }
+        }
+      },
+      "LocalIdentifier": {
+        "title": "LocalIdentifier",
+        "x-stoplight": {
+          "id": "jfxcqu5kohong"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id for the identifier",
+            "example": "1"
+          },
+          "source": {
+            "type": "string",
+            "description": "Identifier source",
+            "example": "ResourceIdentifier"
+          },
+          "subtype": {
+            "type": "integer",
+            "description": "Specific type of identifier",
+            "format": "int32",
+            "example": 1
+          },
+          "type": {
+            "type": "integer",
+            "description": "Generic type of identifier",
+            "format": "int32",
+            "example": 0
+          }
+        }
+      },
+      "ProxyDto": {
+        "title": "ProxyDto",
+        "x-stoplight": {
+          "id": "mxv2n6uymetd1"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "object",
+            "description": "Proxy unique id"
+          },
+          "inherited": {
+            "type": "object",
+            "description": "Is the proxy inherited?"
+          },
+          "proxiedUrl": {
+            "type": "string",
+            "description": "URL with proxy applied",
+            "example": "http://ezproxy.myinstitute.edu/login?url=http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
+          }
+        }
+      },
+      "LocalSubject": {
+        "title": "LocalSubject",
+        "x-stoplight": {
+          "id": "tryihwhh40018"
+        },
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "Value of subject",
+            "example": "Africa"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of subject",
+            "example": "General"
+          }
+        }
+      },
+      "VisibilityDataV1": {
+        "title": "VisibilityDataV1",
+        "x-stoplight": {
+          "id": "2dmb4bklaikri"
+        },
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Visibility category (PF, FTF, or Marc)",
+            "example": "PF"
+          },
+          "hidden": {
+            "type": "boolean",
+            "description": "Hidden status",
+            "example": false
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason the resource was hidden",
+            "example": "Hidden by customer"
+          }
+        }
       }
     }
   }
