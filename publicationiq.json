@@ -723,7 +723,7 @@
                 "titleId": {
                   "type": "string",
                   "description": "Title ID",
-                  "example": "1157191"				  
+                  "example": "1157191"
                 },
                 "titleName": {
                   "type": "string",
@@ -5058,6 +5058,9 @@
           },
           {
             "type": "array",
+            "items": {
+              "type": "string"
+            },
             "in": "query",
             "name": "packagefacet",
             "description": "Package Type Facet filtration option. Required in order to access specific titles via refined results. e.g. '4077736'"
@@ -5108,6 +5111,9 @@
           },
           {
             "type": "array",
+            "items": {
+              "type": "string"
+            },
             "in": "query",
             "name": "resourcetypefacet",
             "description": "Resource Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'JOURNAL'"
@@ -5246,6 +5252,9 @@
           },
           {
             "type": "array",
+            "items": {
+              "type": "string"
+            },
             "in": "query",
             "name": "subjectfacet",
             "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'"
