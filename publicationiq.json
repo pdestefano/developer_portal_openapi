@@ -699,11 +699,7 @@
     "/pf/v1/pfaccount/{profile}/title/{kbid}": {
       "parameters": [
         {
-          "type": "string",
-          "name": "profile",
-          "in": "path",
-          "required": true,
-          "description": "A valid EBSCO customer profile in the form of customerid.groupid.profileid."
+          "$ref": "#/parameters/Profile"
         },
         {
           "type": "string",
@@ -727,7 +723,7 @@
                 "titleId": {
                   "type": "string",
                   "description": "Title ID",
-                  "example": "1157191"				  
+                  "example": "1157191"
                 },
                 "titleName": {
                   "type": "string",
@@ -1397,10 +1393,7 @@
             "description": "Return relative links or direct links to cover images"
           },
           {
-            "type": "string",
-            "in": "header",
-            "name": "password",
-            "description": "Profile Password (optional).  If a password is supplied, it must be a valid password assigned to the customer profile.  If omitted, the request will only be honored if the customer profile allows guest access."
+            "$ref": "#/parameters/Password"
           }
         ]
       }
@@ -1408,11 +1401,7 @@
     "/pf/v1/pfaccount/{profile}/vendor/{vendorid}/package/{packageid}/title/{kbid}/licenseterms": {
       "parameters": [
         {
-          "type": "string",
-          "name": "profile",
-          "in": "path",
-          "required": true,
-          "description": "A valid EBSCO customer profile in the form of customerid.groupid.profileid."
+          "$ref": "#/parameters/Profile"
         },
         {
           "type": "string",
@@ -1509,10 +1498,3549 @@
 		"description": "This operation allows you to get ILS Data by VendorId, PackageId (List Id) and TitleId.",
         "parameters": [
           {
+            "$ref": "#/parameters/Password"
+          }
+        ]
+      }
+    },
+    "/pf/v1/pfaccount/{profile}/publications": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/Profile"
+        }
+      ],
+      "get": {
+        "summary": "Returns publications by specified title attribute",
+        "tags": [
+          "Title Resources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK, Wrapper encompassing details returned from publication finder service call",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "searchRequestGet": {
+                  "type": "object",
+                  "properties": {
+                    "requestParams": {
+                      "type": "object",
+                      "properties": {
+                        "sessionid": {
+                          "type": "string"
+                        },
+                        "customerId": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "facets": {
+                  "type": "object",
+                  "properties": {
+                    "subjects": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "parentId": {
+                            "type": "string"
+                          },
+                          "subjectName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "resourceTypes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer"
+                          },
+                          "resourceTypes": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "packages": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "packageName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "alphamenus": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer"
+                          },
+                          "alphaMenuName": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "isPeerReviewed": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer"
+                          },
+                          "peerReviewed": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "searchResult": {
+                  "type": "object",
+                  "properties": {
+                    "sessionDetails": {
+                      "type": "object",
+                      "properties": {
+                        "sessionid": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "statistics": {
+                      "type": "object",
+                      "properties": {
+                        "totalHits": {
+                          "type": "integer"
+                        },
+                        "totalSearchTime": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "pfData": {
+                      "type": "object",
+                      "properties": {
+                        "recordFormat": {
+                          "type": "string"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "titleId": {
+                                "type": "string"
+                              },
+                              "titleName": {
+                                "type": "string"
+                              },
+                              "edition": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "peerReviewed": {
+                                "type": "boolean"
+                              },
+                              "publisherName": {
+                                "type": "string"
+                              },
+                              "identifiersList": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "source": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "integer"
+                                    },
+                                    "subtype": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                }
+                              },
+                              "subjectsList": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "titleCustom": {
+                                "type": "boolean"
+                              },
+                              "pubType": {
+                                "type": "string"
+                              },
+                              "contributorsList": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "contributor": {
+                                      "type": "string"
+                                    },
+                                    "displayOrder": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                }
+                              },
+                              "customerResourcesList": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "titleId": {
+                                      "type": "integer"
+                                    },
+                                    "packageId": {
+                                      "type": "integer"
+                                    },
+                                    "packageName": {
+                                      "type": "string"
+                                    },
+                                    "packageType": {
+                                      "type": "string"
+                                    },
+                                    "isPackageCustom": {
+                                      "type": "boolean"
+                                    },
+                                    "vendorId": {
+                                      "type": "integer"
+                                    },
+                                    "vendorName": {
+                                      "type": "string"
+                                    },
+                                    "locationId": {
+                                      "type": "integer"
+                                    },
+                                    "isSelected": {
+                                      "type": "boolean"
+                                    },
+                                    "isTokenNeeded": {
+                                      "type": "boolean"
+                                    },
+                                    "managedCoverageList": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "beginCoverage": {
+                                            "type": "string"
+                                          },
+                                          "endCoverage": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "customCoverageList": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "beginCoverage": {
+                                            "type": "string"
+                                          },
+                                          "endCoverage": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "coverageStatement": {
+                                      "type": "string"
+                                    },
+                                    "managedEmbargoPeriod": {
+                                      "type": "object",
+                                      "properties": {
+                                        "embargoUnit": {
+                                          "type": "string"
+                                        },
+                                        "embargoValue": {
+                                          "type": "integer"
+                                        }
+                                      }
+                                    },
+                                    "customEmbargoPeriod": {
+                                      "type": "object",
+                                      "properties": {
+                                        "embargoUnit": {
+                                          "type": "string"
+                                        },
+                                        "embargoValue": {
+                                          "type": "integer"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    },
+                                    "linkOutTargetUrl": {
+                                      "type": "string"
+                                    },
+                                    "vendorToken": {
+                                      "type": "object",
+                                      "properties": {
+                                        "factName": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "packageToken": {
+                                      "type": "object",
+                                      "properties": {
+                                        "factName": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "targetUrl": {
+                                      "type": "string"
+                                    },
+                                    "proxy": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "inherited": {
+                                          "type": "boolean"
+                                        },
+                                        "proxyName": {
+                                          "type": "string"
+                                        },
+                                        "urlMask": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "note": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "integer"
+                                          },
+                                          "custId": {
+                                            "type": "integer"
+                                          },
+                                          "noteName": {
+                                            "type": "string"
+                                          },
+                                          "rank": {
+                                            "type": "integer"
+                                          },
+                                          "noteText": {
+                                            "type": "string"
+                                          },
+                                          "showOnFlags": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "iconUrl": {
+                                            "type": "string"
+                                          },
+                                          "iconId": {
+                                            "type": "integer"
+                                          },
+                                          "altText": {
+                                            "type": "string"
+                                          },
+                                          "hoverText": {
+                                            "type": "string"
+                                          },
+                                          "linkUrl": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "userDefinedFields": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "integer"
+                                          },
+                                          "label": {
+                                            "type": "string"
+                                          },
+                                          "value": {
+                                            "type": "string"
+                                          },
+                                          "displayOnPublicationFinder": {
+                                            "type": "boolean"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "visibilityData": {
+                                      "type": "object",
+                                      "properties": {
+                                        "isHidden": {
+                                          "type": "boolean"
+                                        },
+                                        "reason": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "customerId": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                }
+                              },
+                              "duration": {
+                                "type": "string"
+                              },
+                              "frequency": {
+                                "type": "string"
+                              },
+                              "alternateTitleList": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "alternateTitle": {
+                                      "type": "string"
+                                    },
+                                    "titleType": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "imageLink": {
+                                "type": "string"
+                              },
+                              "licenseTerms": {
+                                "type": "object",
+                                "properties": {
+                                  "enabled": {
+                                    "type": "boolean"
+                                  },
+                                  "noteLabel": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": {
+                "searchRequestGet": {
+                  "requestParams": {
+                    "customerId": 1123
+                  }
+                },
+                "facets": {
+                  "subjects": [
+                    {
+                      "count": 2,
+                      "id": "28090",
+                      "parentId": "27902",
+                      "subjectName": "1900-1960"
+                    },
+                    {
+                      "count": 2,
+                      "id": "28091",
+                      "parentId": "27902",
+                      "subjectName": "1961-2000"
+                    },
+                    {
+                      "count": 6,
+                      "id": "28092",
+                      "parentId": "27902",
+                      "subjectName": "19th century, 1770/1800-1890/1900"
+                    },
+                    {
+                      "count": 1,
+                      "id": "28093",
+                      "parentId": "27902",
+                      "subjectName": "2001-"
+                    },
+                    {
+                      "count": 1,
+                      "id": "27632",
+                      "parentId": "27124",
+                      "subjectName": "21st century"
+                    },
+                    {
+                      "count": 1,
+                      "id": "30959",
+                      "subjectName": "Acoustics & Sound"
+                    }
+                  ]
+                },
+                "searchResult": {
+                  "sessionDetails": {
+                    "sessionid": "-8516467154617895686"
+                  },
+                  "statistics": {
+                    "totalHits": 5388,
+                    "totalSearchTime": 2493
+                  },
+                  "pfData": {
+                    "records": [
+                      {
+                        "titleId": "50974",
+                        "titleName": "Nature",
+                        "edition": "",
+                        "peerReviewed": true,
+                        "publisherName": "Nature Publishing Group",
+                        "identifiersList": [
+                          {
+                            "id": "0028-0836",
+                            "source": "Print ISSN",
+                            "type": 0,
+                            "subtype": 1
+                          },
+                          {
+                            "id": "1476-4687",
+                            "source": "Online ISSN",
+                            "type": 0,
+                            "subtype": 2
+                          },
+                          {
+                            "id": "01586310",
+                            "source": "TSDID",
+                            "type": 2,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616894002",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911509",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911608",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "101802",
+                            "source": "EJS JournalID",
+                            "type": 4,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911621",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "NAE",
+                            "source": "MID",
+                            "type": 8,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911459",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911702",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616898030",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911550",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "120714-3",
+                            "source": "ZDB-ID",
+                            "type": 6,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911620",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "0410462",
+                            "source": "MID",
+                            "type": 8,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911554",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          },
+                          {
+                            "id": "616911469",
+                            "source": "SPID",
+                            "type": 3,
+                            "subtype": 0
+                          }
+                        ],
+                        "subjectsList": [
+                          {
+                            "type": "Library of Congress",
+                            "name": "Science -- Science (General) -- General"
+                          },
+                          {
+                            "type": "Medical",
+                            "name": "Sciences"
+                          },
+                          {
+                            "type": "TLI",
+                            "name": "Science"
+                          }
+                        ],
+                        "titleCustom": false,
+                        "pubType": "Journal",
+                        "contributorsList": [],
+                        "customerResourcesList": [
+                          {
+                            "titleId": 50974,
+                            "packageId": 38,
+                            "packageName": "Gale Academic OneFile Select",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 18,
+                            "vendorName": "Gale | Cengage",
+                            "locationId": 1662280,
+                            "isSelected": true,
+                            "isTokenNeeded": true,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2000-01-06",
+                                "endCoverage": "2021-12-23"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://link.gale.com/apps/pub/0359/EAIM?u=[[galesiteid]]",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/4cd2ad15-8114-4410-9ee2-3b40ee5de4dd",
+                            "vendorToken": {
+                              "factName": "[[galesiteid]]",
+                              "value": "ebsco 1231555554"
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 309,
+                                "custId": 1123,
+                                "noteName": "Sample Note",
+                                "rank": 1,
+                                "noteText": "<strong>Sample NOTE</strong> <strong>ISBN and ISSN (removed ISSN fact and keeping only isbn) :</strong><strong></strong>\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "OnlyToAuthenticatedUsers",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34598,
+                                "custId": 1123,
+                                "noteName": "Today is lucky day",
+                                "rank": 1,
+                                "noteText": "<strong>Contact Type:</strong>Sales<br />\n<strong>Name:</strong>Mary Sue Hoyle<br />\n<strong>Email:</strong>mhoyle@ebsco.com<br />\n<strong>Phone:</strong>555-1212\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "iconId": 45,
+                                "altText": "forbidden",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 50,
+                            "packageName": "Gale OneFile: Health and Medicine",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 18,
+                            "vendorName": "Gale | Cengage",
+                            "locationId": 1664674,
+                            "isSelected": true,
+                            "isTokenNeeded": true,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2000-01-06",
+                                "endCoverage": "2021-12-23"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://link.gale.com/apps/pub/0359/HRCA?u=[[galesiteid]]",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/b6b8eeca-e5eb-4190-995d-87c876ae5c84",
+                            "vendorToken": {
+                              "factName": "[[galesiteid]]",
+                              "value": "ebsco 1231555554"
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 309,
+                                "custId": 1123,
+                                "noteName": "Sample Note",
+                                "rank": 1,
+                                "noteText": "<strong>Sample NOTE</strong> <strong>ISBN and ISSN (removed ISSN fact and keeping only isbn) :</strong><strong></strong>\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "OnlyToAuthenticatedUsers",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34598,
+                                "custId": 1123,
+                                "noteName": "Today is lucky day",
+                                "rank": 1,
+                                "noteText": "<strong>Contact Type:</strong>Sales<br />\n<strong>Name:</strong>Mary Sue Hoyle<br />\n<strong>Email:</strong>mhoyle@ebsco.com<br />\n<strong>Phone:</strong>555-1212\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "iconId": 45,
+                                "altText": "forbidden",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 159,
+                            "packageName": "Australia/New Zealand Reference Centre",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 916079,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=anh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/2eef10aa-cf53-4739-913d-69375cee7b8d",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 167,
+                            "packageName": "Biomedical Reference Collection: Comprehensive",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 567095,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=byh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/baf13dcb-5c7a-4143-96ca-a86b1ef6fefc",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 172,
+                            "packageName": "MasterFILE Premier",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 172727,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=f5h&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/cbd4df10-0630-4a74-8cca-796841d69189",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 189,
+                            "packageName": "Psychology & Behavioral Sciences Collection",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 334661,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-19"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=pbh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/fda19bb6-dea0-4fb3-b9e9-06db8804dff7",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 191,
+                            "packageName": "Canadian Reference Centre",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 928761,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=rch&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/582128b7-45af-42ac-8830-77da232cb587",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 196,
+                            "packageName": "MAS Ultra - School Edition",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 722829,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=ulh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/1d6d7796-1c09-45da-95f5-7eadc6392c4e",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 328,
+                            "packageName": "Biomedical Reference Collection: Corporate",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 567240,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=cxh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/9272b0e1-ec36-4f54-a23b-d99e448eea40",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 530,
+                            "packageName": "Business Source Corporate",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 720630,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=bch&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/cc04126c-9842-4d35-abd3-3506261a6b2a",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 667,
+                            "packageName": "Nature Journals Online",
+                            "packageType": "Variable",
+                            "isPackageCustom": false,
+                            "vendorId": 36,
+                            "vendorName": "Springer Nature",
+                            "locationId": 646402,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1869-11-01",
+                                "endCoverage": "9999-12-31"
+                              }
+                            ],
+                            "customCoverageList": [
+                              {
+                                "beginCoverage": "1869-01-01",
+                                "endCoverage": "9999-12-31"
+                              }
+                            ],
+                            "coverageStatement": "testing statement",
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoUnit": "years",
+                              "embargoValue": 1
+                            },
+                            "url": "https://www.nature.com/nature/index.html",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/6931d22e-12d7-4e07-b5cb-6bf4ac5323d3",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 803,
+                            "packageName": "Nature Publishing Group Collection (Ovid)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 16,
+                            "vendorName": "Ovid Technologies",
+                            "locationId": 2101469,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1995-01-01",
+                                "endCoverage": "2018-01-31"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://ovidsp.ovid.com/ovidweb.cgi?T=JS&NEWS=n&CSC=Y&PAGE=toc&D=ovft&AN=00006056-000000000-00000",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/a5291941-39dc-4561-b8a1-51696292d230",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1073,
+                            "packageName": "Academic Search Alumni Edition",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 927093,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=a2h&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/b9e15db2-2f82-47c9-89cc-982c9238a6ad",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1153,
+                            "packageName": "Advanced Placement Source",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 947042,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=aqh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/0f62faac-a128-4632-964d-a91868c37b49",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1336,
+                            "packageName": "MEDLINE with Full Text (EBSCO)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2101468,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-26"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=mnh&jid=0410462&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/344b9647-1f63-4b30-8978-03f869b9a440",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1357,
+                            "packageName": "Gale Academic OneFile",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 18,
+                            "vendorName": "Gale | Cengage",
+                            "locationId": 1640676,
+                            "isSelected": true,
+                            "isTokenNeeded": true,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2000-01-06",
+                                "endCoverage": "2021-12-23"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://link.gale.com/apps/pub/0359/AONE?u=[[galesiteid]]",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/0f69d9c7-ccc8-45d1-8654-8a4854cae02b",
+                            "vendorToken": {
+                              "factName": "[[galesiteid]]",
+                              "value": "ebsco 1231555554"
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 309,
+                                "custId": 1123,
+                                "noteName": "Sample Note",
+                                "rank": 1,
+                                "noteText": "<strong>Sample NOTE</strong> <strong>ISBN and ISSN (removed ISSN fact and keeping only isbn) :</strong><strong></strong>\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "OnlyToAuthenticatedUsers",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34598,
+                                "custId": 1123,
+                                "noteName": "Today is lucky day",
+                                "rank": 1,
+                                "noteText": "<strong>Contact Type:</strong>Sales<br />\n<strong>Name:</strong>Mary Sue Hoyle<br />\n<strong>Email:</strong>mhoyle@ebsco.com<br />\n<strong>Phone:</strong>555-1212\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "iconId": 45,
+                                "altText": "forbidden",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1401,
+                            "packageName": "Science Reference Center",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 1129006,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=sch&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/3d5103b8-a6ca-4d5e-bb82-1248b584b5e7",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1615,
+                            "packageName": "Academic Search Complete",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 1263442,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=a9h&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/2d2859bf-d9ba-43da-bc53-758e27fb813a",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 2830,
+                            "packageName": "STM Source",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 1750605,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=asr&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/09e0ab60-5a31-41f2-85ab-a64c61d8a61d",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 3627,
+                            "packageName": "Food Science Source",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 5222038,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=fsr&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/05d4a4ed-bd0b-4d25-95d8-976f25cd9646",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 3950,
+                            "packageName": "EBSCO MegaFILE",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2300369,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=keh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/2b3ed32d-5633-484d-800b-acda70bc3bc6",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 4065,
+                            "packageName": "Academic Search Main Edition ",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2434674,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=asm&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/e564d0c0-c872-474d-a890-e90f4f174e28",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 4077,
+                            "packageName": "MasterFILE Main Edition",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2446731,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=mfm&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/2fbc5121-0ab6-4cb5-bdc6-ecb5d1a7af1d",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 4243,
+                            "packageName": "MasterFILE Complete",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2620271,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=f6h&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/416c8cb5-df5c-4fb3-a010-7c51c3f8353f",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 4286,
+                            "packageName": "Canadian Reference Centre Main Edition",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2713556,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=crm&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/5fd9b999-268a-4606-a724-06c2fae20ed8",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 4337,
+                            "packageName": "MAS Complete",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 2794687,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=mat&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/fdd01b02-0db3-48f9-ba8b-7dc94005b922",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 5374,
+                            "packageName": "Business Source Corporate Plus",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 3506284,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=plh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/dcc4a0f4-1569-40d9-84ef-8b4b39e113b2",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 5604,
+                            "packageName": "MEDLINE Complete",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 3960634,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-26"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=mdc&jid=0410462&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/0ce2e3aa-78c9-4e09-904f-6567bdfd9fd4",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 6718,
+                            "packageName": "Nature (CINCEL)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 36,
+                            "vendorName": "Springer Nature",
+                            "locationId": 19153078,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2017-01-01",
+                                "endCoverage": "9999-12-31"
+                              }
+                            ],
+                            "customCoverageList": [
+                              {
+                                "beginCoverage": "2018-01-01",
+                                "endCoverage": "2019-12-31"
+                              }
+                            ],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://www.nature.com/nature/index.html",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/1cd57b73-8df7-4231-ae43-578995ffdd86",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 7680,
+                            "packageName": "Nature Archives 1869 - 2009 (DFG Nationallizenz)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 36,
+                            "vendorName": "Springer Nature",
+                            "locationId": 6150051,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1869-01-01",
+                                "endCoverage": "2009-12-31"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://www.nature.com/nature/index.html",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/a3a85404-fded-48da-b715-40d19d7e820c",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 18785,
+                            "packageName": "Engineering Source",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 7199454,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=egs&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/32f509bf-3c17-46e8-8fb6-4bd0ca636090",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1157839,
+                            "packageName": "Nature Journals Online (NESLi2)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 36,
+                            "vendorName": "Springer Nature",
+                            "locationId": 9710283,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2010-01-01",
+                                "endCoverage": "9999-12-31"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://www.nature.com/nature/index.html",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/4b392b44-3b74-4c4b-972b-a7bfcd815d9a",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 1283436,
+                            "packageName": "Australia/New Zealand Reference Centre Plus",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 10605243,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=azh&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/387eada5-dc73-4da9-bb2a-eac42bae0105",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 2333054,
+                            "packageName": "Academic Search Ultimate",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 19,
+                            "vendorName": "EBSCO",
+                            "locationId": 15931914,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1997-06-05",
+                                "endCoverage": "2015-11-27"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://search.ebscohost.com/direct.asp?db=asn&jid=NAE&scope=site",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/efc675ae-0bcb-45b5-b9a1-87f1dae1d39e",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              },
+                              {
+                                "id": 34599,
+                                "custId": 1123,
+                                "noteName": "Derek Note 2- set to show for PF UI",
+                                "rank": 1,
+                                "noteText": "<strong>Derek Note 2</strong>- set to show for PF UI\n",
+                                "showOnFlags": [
+                                  "LinkSource",
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "hover text",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 2432142,
+                            "packageName": "Nature (MINCYT)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 36,
+                            "vendorName": "Springer Nature",
+                            "locationId": 17016214,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2009-01-01",
+                                "endCoverage": "9999-12-31"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://www.nature.com/nature/index.html",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/3f3845af-3ffd-4435-9a87-8aca55f95b1d",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 2593134,
+                            "packageName": "외국학술지지원센터(FRIC) – 무료문헌복사(KERIS)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 123205,
+                            "vendorName": "Korea Education Research Information Service (KERIS)",
+                            "locationId": 19722271,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "1930-01-01",
+                                "endCoverage": "1933-12-31"
+                              },
+                              {
+                                "beginCoverage": "1939-01-01",
+                                "endCoverage": "1941-12-31"
+                              },
+                              {
+                                "beginCoverage": "1953-01-01",
+                                "endCoverage": "2019-12-31"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "http://www.riss.kr/link?id=S6626",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/856e6c74-2525-46c0-a754-a5ca19a82c51",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 2720842,
+                            "packageName": "Nature (CONRICYT)",
+                            "packageType": "Complete",
+                            "isPackageCustom": false,
+                            "vendorId": 36,
+                            "vendorName": "Springer Nature",
+                            "locationId": 23095470,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [
+                              {
+                                "beginCoverage": "2012-01-01",
+                                "endCoverage": "2016-12-31"
+                              }
+                            ],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "https://www.nature.com/nature/index.html",
+                            "linkOutTargetUrl": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/594d5034-1287-4df2-ad34-8537d6ab7d4c/46218e3f-645b-4e7a-bd43-d8b3f86117bd",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 3602292,
+                            "packageName": "스콜라 (Scholar)-Mohan",
+                            "packageType": "Custom",
+                            "isPackageCustom": true,
+                            "vendorId": 1123,
+                            "vendorName": "Demonstration Customer",
+                            "locationId": 1034357824,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          },
+                          {
+                            "titleId": 50974,
+                            "packageId": 3602295,
+                            "packageName": "한국학술정보 (KISS)-Mohan",
+                            "packageType": "Custom",
+                            "isPackageCustom": true,
+                            "vendorId": 1123,
+                            "vendorName": "Demonstration Customer",
+                            "locationId": 1034357825,
+                            "isSelected": true,
+                            "isTokenNeeded": false,
+                            "managedCoverageList": [],
+                            "customCoverageList": [],
+                            "managedEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "customEmbargoPeriod": {
+                              "embargoValue": 0
+                            },
+                            "url": "",
+                            "vendorToken": {
+                              "value": ""
+                            },
+                            "packageToken": {},
+                            "note": [
+                              {
+                                "id": 43138,
+                                "custId": 1123,
+                                "noteName": "domain",
+                                "rank": 1,
+                                "noteText": "domain note 03.20.20\n",
+                                "showOnFlags": [
+                                  "PubDetails"
+                                ],
+                                "iconUrl": "",
+                                "altText": "",
+                                "hoverText": "",
+                                "linkUrl": ""
+                              }
+                            ],
+                            "userDefinedFields": [],
+                            "visibilityData": {
+                              "isHidden": true,
+                              "reason": ""
+                            },
+                            "customerId": 1123
+                          }
+                        ],
+                        "duration": "0",
+                        "frequency": "1",
+                        "alternateTitleList": [
+                          {
+                            "alternateTitle": "Nature: A Weekly Illustrated Journal of Science",
+                            "titleType": "Variant"
+                          },
+                          {
+                            "alternateTitle": "Nature : International Weekly Journal of Science",
+                            "titleType": "Variant"
+                          }
+                        ],
+                        "imageLink": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/cover-image?opid=lxwtpt&isxn=1476-4687&isxntype=issn&size=thumb"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "get-pf-v1-pfaccount-profile-publications",
+        "description": "This operation allows you to search for publications and returns a list of publications. The list is limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Password"
+          },
+          {
+            "type": "integer",
+            "in": "query",
+            "name": "alphamenufacetcount",
+            "description": "Max count for alphamenu facets to be returned. e.g. '10'",
+            "pattern": "^[0-9]+$",
+            "minimum": 0
+          },
+          {
             "type": "string",
-            "in": "header",
-            "name": "password",
-            "description": "Profile Password (optional).  If a password is supplied, it must be a valid password assigned to the customer profile.  If omitted, the request will only be honored if the customer profile allows guest access."
+            "in": "query",
+            "name": "highlighttag",
+            "description": "HTML tag that determines styling of the item. e.g. 'mark'"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "linkfrom",
+            "description": "Where external links are displayed on a web page. e.g. 'PublicationResultList'"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "packagefacet",
+            "description": "Package Type Facet filtration option. Required in order to access specific titles via refined results. e.g. '4077736'"
+          },
+          {
+            "type": "integer",
+            "in": "query",
+            "name": "packagefacetcount",
+            "description": "Max count for package facets to be returned. e.g. '10'",
+            "pattern": "^[0-9]+$",
+            "minLength": 1,
+            "maxLength": 6,
+            "minimum": 0
+          },
+          {
+            "type": "boolean",
+            "in": "query",
+            "name": "peerreviewed",
+            "description": "Specify true if search is required to include facet information for \"PeerReviewed\" title metadata, false otherwise."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "platform",
+            "description": "Platform search is made from. e.g. 'AWS'"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "resourcetype",
+            "description": "Type of resource. e.g. 'JOURNAL'",
+            "enum": [
+              "JOURNAL",
+              "NEWSLETTER",
+              "REPORT",
+              "PROCEEDINGS",
+              "WEBSITE",
+              "NEWSPAPER",
+              "UNSPECIFIED",
+              "BOOK",
+              "BOOK_SERIES",
+              "DATABASE",
+              "THESIS/DISSERTATION",
+              "STREAMING_AUDIO",
+              "STREAMING_VIDEO",
+              "AUDIO_BOOK"
+            ]
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "resourcetypefacet",
+            "description": "Resource Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'JOURNAL'"
+          },
+          {
+            "type": "integer",
+            "in": "query",
+            "name": "resourcetypefacetcount",
+            "description": "Max count for resource type facets to be returned. e.g. '10'",
+            "minimum": 0
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "search",
+            "description": "Required to bound search result to specific search value. e.g. 'nature'"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "searchtype",
+            "description": "Type of search. e.g. 'ANY'",
+            "default": "CONTAINS",
+            "enum": [
+              "ANY",
+              "CONTAINS",
+              "EXACT_MATCH",
+              "BEGINS_WITH",
+              "PROXIMITY",
+              "EXACT_PHRASE",
+              "ADVANCED"
+            ]
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "sessionid",
+            "description": "Already existing SessionId can be provided to improve experience of using the publications search. Example format -> '-2689046726050171609'"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "source",
+            "description": "Source of the request. e.g. 'pfi'"
+          },
+          {
+            "type": "integer",
+            "in": "query",
+            "name": "subjectfacetcount",
+            "description": "Max count for subject facets to be returned. e.g. '10'",
+            "minimum": 0
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "subjectfacetschemafilter",
+            "description": "Specify the schema to filter the schema of the subjects facet. e.g. 'TLI'",
+            "enum": [
+              "TIL",
+              "BISAC",
+              "MEDICAL",
+              "LIBRARY_OF_CONGRESS"
+            ]
+          },
+          {
+            "type": "integer",
+            "in": "query",
+            "name": "count",
+            "description": "The maximum number of results to return in the response. Maximum allowed count value is 100. e.g. '10'",
+            "minimum": 1,
+            "maximum": 100,
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "in": "query",
+            "name": "includefacets",
+            "description": "Specify true if search is required to include facet information, false otherwise.",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "in": "query",
+            "name": "offset",
+            "description": "Page number. Starts from 1. e.g. '1'",
+            "minimum": 1,
+            "required": true
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "orderby",
+            "description": "Order in which the publications will be returned. e.g. 'RELEVANCE'",
+            "required": true,
+            "enum": [
+              "RELEVANCE",
+              "TITLENAME"
+            ]
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "searchfield",
+            "required": true,
+            "description": "Field to search. e.g. 'TITLENAME'. The 'Contributor' search field is equivalent to the 'Author' search field in the EBSCO Publication Finder User Interface",
+            "enum": [
+              "SUBJECT",
+              "ISXN",
+              "TITLENAME",
+              "PUBLISHER",
+              "CONTRIBUTOR",
+              "KEYWORD"
+            ]
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "alphamenufacet",
+            "description": "Alpha Menu Facet filtration option. Required in order to access specific titles via refined results. Only 1 Alpha Menu Facet value supported in query. e.g. 'A'"
+          },
+          {
+            "type": "boolean",
+            "in": "query",
+            "name": "returnrelativeimagelinks",
+            "description": "Return relative links or direct links to cover images"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "size",
+            "description": "Cover image size. e.g. thumb",
+            "enum": [
+              "THUMB",
+              "MEDIUM"
+            ]
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "subjectfacet",
+            "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'"
           }
         ]
       }
@@ -2436,6 +5964,22 @@
           "example": "EBook"
         }
       }
+    }
+  },
+  "parameters": {
+    "Password": {
+      "name": "password",
+      "in": "header",
+      "required": false,
+      "type": "string",
+      "description": "Profile Password (optional).  If a password is supplied, it must be a valid password assigned to the customer profile.  If omitted, the request will only be honored if the customer profile allows guest access."
+    },
+    "Profile": {
+      "name": "profile",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'"
     }
   }
 }
