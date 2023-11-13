@@ -1533,30 +1533,6 @@
                           "type": "integer"
                         }
                       }
-                    },
-                    "searchCriteriaWithActions": {
-                      "type": "object",
-                      "properties": {
-                        "queriesWithAction": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "query": {
-                                "type": "object",
-                                "properties": {
-                                  "booleanOperator": {
-                                    "type": "string"
-                                  },
-                                  "term": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
                     }
                   }
                 },
