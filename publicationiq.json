@@ -1522,15 +1522,18 @@
               "properties": {
                 "searchRequestGet": {
                   "type": "object",
+				  "description": "Search Request",
                   "properties": {
                     "requestParams": {
                       "type": "object",
                       "properties": {
                         "sessionid": {
-                          "type": "string"
+                          "type": "string",
+						  "description": "Session ID"
                         },
                         "customerId": {
-                          "type": "integer"
+                          "type": "integer",
+						  "description": "Customer ID"
                         }
                       }
                     }
@@ -1538,68 +1541,84 @@
                 },
                 "facets": {
                   "type": "object",
+				  "description": "Facets",
                   "properties": {
                     "subjects": {
                       "type": "array",
+					  "description": "Subjects",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
-                            "type": "integer"
+                            "type": "integer",
+							"description": "Count"
                           },
                           "id": {
-                            "type": "string"
+                            "type": "string",
+							"description": "ID"
                           },
                           "parentId": {
-                            "type": "string"
+                            "type": "string",
+							"description": "Parent ID"
                           },
                           "subjectName": {
-                            "type": "string"
+                            "type": "string",
+							"description": "Subject"
                           }
                         }
                       }
                     },
                     "resourceTypes": {
                       "type": "array",
+					  "description": "Resource Types",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
-                            "type": "integer"
+                            "type": "integer",
+							"description": "Count"
                           },
                           "resourceTypes": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "Resource Type.  Valid values are all, journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook."							
                           }
                         }
                       }
                     },
                     "packages": {
                       "type": "array",
+					  "description": "Packages",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
-                            "type": "integer"
+                            "type": "integer",
+							"description": "Count"
                           },
                           "id": {
-                            "type": "string"
+                            "type": "string",
+							"description": "Package Identifier"
                           },
                           "packageName": {
-                            "type": "string"
+                            "type": "string",
+							"description": "Package Name"
                           }
                         }
                       }
                     },
                     "alphamenus": {
                       "type": "array",
+					  "description": "Alpha Menus",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
-                            "type": "integer"
+                            "type": "integer",
+							"description": "Count"
                           },
                           "alphaMenuName": {
-                            "type": "string"
+                            "type": "string",
+							"description": "Alpha Menu Name"
                           }
                         }
                       }
@@ -1610,10 +1629,12 @@
                         "type": "object",
                         "properties": {
                           "count": {
-                            "type": "integer"
+                            "type": "integer",
+							"description": "Count"
                           },
                           "peerReviewed": {
-                            "type": "boolean"
+                            "type": "boolean",
+							"description": "Is it Peer Reviewed"
                           }
                         }
                       }
@@ -1625,20 +1646,25 @@
                   "properties": {
                     "sessionDetails": {
                       "type": "object",
+					  "description": "Session Details",
                       "properties": {
                         "sessionid": {
-                          "type": "string"
+                          "type": "string",
+						  "description": "Session ID"
                         }
                       }
                     },
                     "statistics": {
                       "type": "object",
+					  "description": "Statistics",
                       "properties": {
                         "totalHits": {
-                          "type": "integer"
+                          "type": "integer",
+						  "description": "Total Hits"
                         },
                         "totalSearchTime": {
-                          "type": "integer"
+                          "type": "integer",
+						  "description": "Total Search Time"
                         }
                       }
                     },
@@ -1646,30 +1672,38 @@
                       "type": "object",
                       "properties": {
                         "recordFormat": {
-                          "type": "string"
+                          "type": "string",
+						  "description": "Record Format.  The format of the record (e.g., HTML, PDF, Video, etc.)"
                         },
                         "records": {
                           "type": "array",
+						  "description": "Records",
                           "items": {
                             "type": "object",
                             "properties": {
                               "titleId": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Title ID"
                               },
                               "titleName": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Title Name"
                               },
                               "edition": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Title Edition"
                               },
                               "description": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Title Description"
                               },
                               "peerReviewed": {
-                                "type": "boolean"
+                                "type": "boolean",
+								"description": "Is this title peer reviewed."
                               },
                               "publisherName": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Publisher Name"
                               },
                               "identifiersList": {
                                 "type": "array",
@@ -1677,16 +1711,20 @@
                                   "type": "object",
                                   "properties": {
                                     "id": {
-                                      "type": "string"
+                                      "type": "string",
+									  "source": "Identifier Value"
                                     },
                                     "source": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Resource Identifier"
                                     },
                                     "type": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "Type"
                                     },
                                     "subtype": {
-                                      "type": "integer"
+                                      "type": "integer",
+	                                  "description": "Sub-type for the identifier.  This is used by only some identifiers to designate Print, Online, etc.  Empty=0, Print=1, Online=2, Preceding=3, Succeeding=4, Regional=5, Linking=6 and Invalid=7"
                                     }
                                   }
                                 }
@@ -1697,276 +1735,349 @@
                                   "type": "object",
                                   "properties": {
                                     "type": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "The type of subject.  Valid values are BISAC and TLI."
                                     },
                                     "name": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Subject Name"
                                     }
                                   }
                                 }
                               },
                               "titleCustom": {
-                                "type": "boolean"
+                                "type": "boolean",
+								"description": "Custom Title"
                               },
                               "pubType": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Type of publication. Valid values are journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook."
                               },
                               "contributorsList": {
                                 "type": "array",
+								"description": "Contributors List",
                                 "items": {
                                   "type": "object",
                                   "properties": {
                                     "type": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Type of contributor. Valid values are Author, Illustrator, and Editor."
                                     },
                                     "contributor": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Contributor Name"
                                     },
                                     "displayOrder": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "Display order in results."
                                     }
                                   }
                                 }
                               },
                               "customerResourcesList": {
                                 "type": "array",
+								"description": "Customer Resources List",
                                 "items": {
                                   "type": "object",
                                   "properties": {
                                     "titleId": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "Title ID"
                                     },
                                     "packageId": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "Package ID"
                                     },
                                     "packageName": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description", "Package Name"
                                     },
                                     "packageType": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom."
                                     },
                                     "isPackageCustom": {
-                                      "type": "boolean"
+                                      "type": "boolean",
+									  "description": "Is the Package Custom."
                                     },
                                     "vendorId": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'."
                                     },
                                     "vendorName": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Provider Name"
                                     },
                                     "locationId": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "Location ID"
                                     },
                                     "isSelected": {
-                                      "type": "boolean"
+                                      "type": "boolean",
+									  "description": "Indicates if selected in a customer's account."
                                     },
                                     "isTokenNeeded": {
-                                      "type": "boolean"
+                                      "type": "boolean",
+									  "description": "Field to indicate if a token is needed"
                                     },
                                     "managedCoverageList": {
                                       "type": "array",
                                       "items": {
                                         "type": "object",
+										"description": "Dates of Coverage",
                                         "properties": {
                                           "beginCoverage": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Coverage Start Date"
                                           },
                                           "endCoverage": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Coverage End Date"
                                           }
                                         }
                                       }
                                     },
                                     "customCoverageList": {
                                       "type": "array",
+									  "description": "Dates of Coverage",
                                       "items": {
                                         "type": "object",
                                         "properties": {
                                           "beginCoverage": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Coverage Start Date"
                                           },
                                           "endCoverage": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Coverage End Date"
                                           }
                                         }
                                       }
                                     },
                                     "coverageStatement": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Coverage Statement"
                                     },
                                     "managedEmbargoPeriod": {
                                       "type": "object",
+									  "description": "Embargo Period",
                                       "properties": {
                                         "embargoUnit": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "The unit of time to use for the embargo - Days, Weeks, Months or Years."
                                         },
                                         "embargoValue": {
-                                          "type": "integer"
+                                          "type": "integer",
+										  "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo."
                                         }
                                       }
                                     },
                                     "customEmbargoPeriod": {
                                       "type": "object",
+									  "description": "Embargo Period",
                                       "properties": {
                                         "embargoUnit": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "The unit of time to use for the embargo - Days, Weeks, Months or Years."
                                         },
                                         "embargoValue": {
-                                          "type": "integer"
+                                          "type": "integer",
+										  "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo."
                                         }
                                       }
                                     },
                                     "url": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "url"
                                     },
                                     "linkOutTargetUrl": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Target url for linkout."
                                     },
                                     "vendorToken": {
                                       "type": "object",
+									  "description": "Vendor Token",
                                       "properties": {
                                         "factName": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Fact Name"
                                         },
                                         "value": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Value"
                                         }
                                       }
                                     },
                                     "packageToken": {
                                       "type": "object",
+									  "description": "Package Token",
                                       "properties": {
                                         "factName": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Fact Name"
                                         },
                                         "value": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Value"
                                         }
                                       }
                                     },
                                     "targetUrl": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Target URL"
                                     },
                                     "proxy": {
                                       "type": "object",
+									  "description": "Proxy",
                                       "properties": {
                                         "id": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Proxy ID"
                                         },
                                         "inherited": {
-                                          "type": "boolean"
+                                          "type": "boolean",
+										   "description": "Field to indicate if the proxy is inherited."
                                         },
                                         "proxyName": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Proxy Name"
                                         },
                                         "urlMask": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "URL mask"
                                         }
                                       }
                                     },
                                     "note": {
                                       "type": "array",
+									  "description": "Note",
                                       "items": {
                                         "type": "object",
                                         "properties": {
                                           "id": {
-                                            "type": "integer"
+                                            "type": "integer",
+											"description": "Unique identifier for the note"
                                           },
                                           "custId": {
-                                            "type": "integer"
+                                            "type": "integer",
+											"description": "Customer ID"
                                           },
                                           "noteName": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Customer ID"
                                           },
                                           "rank": {
-                                            "type": "integer"
+                                            "type": "integer",
+											"description": "Rank"
                                           },
                                           "noteText": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Note text to be displayed on the menu"
                                           },
                                           "showOnFlags": {
                                             "type": "array",
                                             "items": {
-                                              "type": "string"
+                                              "type": "string",
+											  "description": "Show on Flags"
                                             }
                                           },
                                           "iconUrl": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "If customer uses own icon for a note, this is its URL.  Null if no icon or using standard icon"
                                           },
                                           "iconId": {
-                                            "type": "integer"
+                                            "type": "integer",
+											"description": "Unique identifier for the icon"
                                           },
                                           "altText": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Text to show on mouse-over."
                                           },
                                           "hoverText": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Hover text to show on mouse-over for the note"
                                           },
                                           "linkUrl": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "Hover text to show on mouse-over for the note"
                                           }
                                         }
                                       }
                                     },
                                     "userDefinedFields": {
                                       "type": "array",
+									  "description": "User Defined Fields",
                                       "items": {
                                         "type": "object",
                                         "properties": {
                                           "id": {
-                                            "type": "integer"
+                                            "type": "integer",
+											"description": "ID"
                                           },
                                           "label": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "User Defined Field Label"
                                           },
                                           "value": {
-                                            "type": "string"
+                                            "type": "string",
+											"description": "User Defined Field Value"
                                           },
                                           "displayOnPublicationFinder": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+											"description": "Is displayed on the Publication Finder"
                                           }
                                         }
                                       }
                                     },
                                     "visibilityData": {
                                       "type": "object",
+									  "description": "Visibility Data",
                                       "properties": {
                                         "isHidden": {
-                                          "type": "boolean"
+                                          "type": "boolean",
+										  "description": "Is Hidden"
                                         },
                                         "reason": {
-                                          "type": "string"
+                                          "type": "string",
+										  "description": "Visibility reason"
                                         }
                                       }
                                     },
                                     "customerId": {
-                                      "type": "integer"
+                                      "type": "integer",
+									  "description": "Customer ID"
                                     }
                                   }
                                 }
                               },
                               "duration": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Duration"
                               },
                               "frequency": {
-                                "type": "string"
+                                "type": "string",
+								"description": "Frequency"
                               },
                               "alternateTitleList": {
                                 "type": "array",
+								"description": "Alternate Titles",
                                 "items": {
                                   "type": "object",
                                   "properties": {
                                     "alternateTitle": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Alternate Title"
                                     },
                                     "titleType": {
-                                      "type": "string"
+                                      "type": "string",
+									  "description": "Title Type"
                                     }
                                   }
                                 }
                               },
                               "imageLink": {
-                                "type": "string"
+                                "type": "string",
+								"description": "ImageLink"
                               },
                               "licenseTerms": {
                                 "type": "object",
@@ -4764,53 +4875,25 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Internal Server Error"
           },
           "502": {
-            "description": "Bad Gateway",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Bad Gateway"
           },
           "503": {
-            "description": "Service Unavailable",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Service Unavailable"
           }
         },
         "operationId": "get-pf-v1-pfaccount-profile-publications",
