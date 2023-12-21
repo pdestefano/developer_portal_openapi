@@ -13,10 +13,10 @@
   "servers": [
     {
       "url": "https://sandbox.ebsco.io/rm/rmaccounts"
-    }
+    },
     {
       "url": "https://api.ebsco.io/rm/rmaccounts"
-    }
+    }	
   ],
   "tags": [
     {
@@ -42,7 +42,7 @@
           "Label and Proxy Resources"
         ],
         "summary": "Get Labels and Root Proxy",
-        "description": "This operation allows you to retrieve the list of all custom field labels and the root proxy.\n\n  **Please Note:**  The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve the list of all custom field labels and the root proxy.\n\n  **Please Note:**  The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -56,7 +56,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -101,7 +101,7 @@
           "Label and Proxy Resources"
         ],
         "summary": "Create and Label Custom Fields",
-        "description": "This operation allows you to create and label up to five custom fields for your Title Details. Specify the field label ID, Display Label Name and indicate whether you’d like the information to display on Publication Finder and/or Full Text Finder. Once the Custom Label field(s) have been created, one can verify it in  Title Details REST end point. Not specifying the Custom labels details  for a given custom label ID in the payload will result in setting displayLabel to empty string.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:** The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to create and label up to five custom fields for your Title Details. Specify the field label ID, Display Label Name and indicate whether you’d like the information to display on Publication Finder and/or Full Text Finder. Once the Custom Label field(s) have been created, one can verify it in  Title Details REST end point. Not specifying the Custom labels details  for a given custom label ID in the payload will result in setting displayLabel to empty string.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:** The last forward slash in the url for this resource is only needed when using the sandbox.  Do not use the last forward slash in the url for the live api.  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -115,7 +115,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -136,7 +136,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "404": {
             "description": "Customer not found.",
@@ -167,7 +169,7 @@
           "Label and Proxy Resources"
         ],
         "summary": "Get Customer Proxies",
-        "description": "This operation allows you to retrieve the list of all available customer proxies.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve the list of all available customer proxies.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -181,7 +183,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -228,7 +230,7 @@
           "Vendor Resources"
         ],
         "summary": "Get Vendors",
-        "description": "This operation allows you to search EPKB by vendor.  It returns a list of vendors that includes customer context and the total number of results.  When searching for vendors without a search parameter, sort options will be by vendor name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to search EPKB by vendor.  It returns a list of vendors that includes customer context and the total number of results.  When searching for vendors without a search parameter, sort options will be by vendor name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -284,9 +286,18 @@
             }
           },
           {
+            "name": "show",
+            "in": "query",
+            "description": "Valid values are All, Selected and Unselected.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -323,7 +334,7 @@
           "Vendor Resources"
         ],
         "summary": "Get Vendor Details",
-        "description": "This operation allows you to retrieve vendor details from EPKB for a specific vendor ID.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve vendor details from EPKB for a specific vendor ID.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require a sandbox API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "vendorid",
@@ -346,7 +357,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -381,7 +392,7 @@
           "Vendor Resources"
         ],
         "summary": "Update Vendor Proxy and Token Values",
-        "description": "This operation allows you to update vendor proxy and token values for a specific vendor ID.  If a vendor does not have a token set up, the JSON payload should have an empty token with a proxy value.  A vendor with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the vendor proxy with the root proxy if the root proxy is set.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:** Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to update vendor proxy and token values for a specific vendor ID.  If a vendor does not have a token set up, the JSON payload should have an empty token with a proxy value.  A vendor with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the vendor proxy with the root proxy if the root proxy is set.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:** You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "vendorid",
@@ -404,7 +415,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -459,7 +470,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -480,7 +493,7 @@
           "Vendor Resources"
         ],
         "summary": "Get List of Packages for a Vendor",
-        "description": "This operation allows you to retrieve a list of packages from EPKB for a vendor including customer context.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve a list of packages from EPKB for a vendor including customer context.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "vendorid",
@@ -594,7 +607,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API.  Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API.  You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -629,7 +642,7 @@
           "Package Resources"
         ],
         "summary": "Create Custom Packages",
-        "description": "This operation allows you to create custom packages.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to create custom packages.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -652,7 +665,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -700,7 +713,7 @@
           "Package Resources"
         ],
         "summary": "Get List of Packages",
-        "description": "This operation allows you to search for packages and returns a list of packages from EPKB.  The list is not limited to a single vendor ID.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for packages without a search parameter, the sort options will be by package name.  When the search parameter is not null, then the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to search for packages and returns a list of packages from EPKB.  The list is not limited to a single vendor ID.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for packages without a search parameter, the sort options will be by package name.  When the search parameter is not null, then the default sort is by relevance.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -806,7 +819,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -843,7 +856,7 @@
           "Package Resources"
         ],
         "summary": "Get Package Details",
-        "description": "This operation allows you to retrieve EPKB information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve EPKB information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "vendorid",
@@ -875,7 +888,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -910,7 +923,7 @@
           "Package Resources"
         ],
         "summary": "Update a Package",
-        "description": "This operation allows you to update selection and customizations to a package in a customer EPKB account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to update selection and customizations to a package in a customer EPKB account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -942,7 +955,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1080,7 +1093,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -1101,7 +1116,7 @@
           "Package Resources"
         ],
         "summary": "Get Titles that are Part of a Package",
-        "description": "This operation allows you to search and retrieve a list of titles from EPKB that are part of a specified package.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for titles without a search parameter, the sort options will be by title name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to search and retrieve a list of titles from EPKB that are part of a specified package.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for titles without a search parameter, the sort options will be by title name.  When the search parameter is not null, the default sort is by relevance.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "vendorid",
@@ -1245,7 +1260,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1280,7 +1295,7 @@
           "Title Resources"
         ],
         "summary": "Create Custom Titles",
-        "description": "This operation allows you to create custom titles.  The titleName and pubType elements are required in the custom title payload.  If your JSON POST payload contains multiple coverage dates, the dates must be in descending order.   \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to create custom titles.  The titleName and pubType elements are required in the custom title payload.  If your JSON POST payload contains multiple coverage dates, the dates must be in descending order.   \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -1312,7 +1327,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1360,7 +1375,7 @@
           "Package Resources"
         ],
         "summary": "Get Package-Title Details",
-        "description": "This operation allows you to retrieve details for a particular package-title from EPKB.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.\n  \n  **Please Note** This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}/titles/{kbid}",
+        "description": "This operation allows you to retrieve details for a particular package-title from EPKB.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}/titles/{kbid}",
         "parameters": [
           {
             "name": "vendorid",
@@ -1415,7 +1430,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1451,7 +1466,7 @@
           "Package Resources"
         ],
         "summary": "Update a Title in a Package",
-        "description": "This operation allows you to update selection status, proxy value or coverage customizations for a title within a package in a customer EPKB account.  A title with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the title proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title update payload.  For both managed and custom titles, removing a title with isSelected set to false in the payload will result in a loss of customization made previously at the title level.  Removing a custom title with isSelected set to false in the payload will result in the deletion (hard delete) of the custom title from the custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.\n  \n  **Please Note** This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}/titles/{kbid}",
+        "description": "This operation allows you to update selection status, proxy value or coverage customizations for a title within a package in a customer EPKB account.  A title with **inherited** set to true inherits its proxy from the root proxy.  So, a JSON payload with **inherited** set to true updates the title proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom titles.  The titleName and pubType payload elements are mandatory for the custom title update payload.  For both managed and custom titles, removing a title with isSelected set to false in the payload will result in a loss of customization made previously at the title level.  Removing a custom title with isSelected set to false in the payload will result in the deletion (hard delete) of the custom title from the custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**   You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}/titles/{kbid}",
         "parameters": [
           {
             "name": "vendorid",
@@ -1492,7 +1507,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API.  You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1748,7 +1763,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the PUT request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -1770,7 +1787,7 @@
           "Title Resources"
         ],
         "summary": "Get List of Titles Regardless of Package",
-        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -1926,7 +1943,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1963,7 +1980,7 @@
           "Title Resources"
         ],
         "summary": "Get Title Details Regardless of Package",
-        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.\n  \n  **Please Note:**  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles/{kbid}",
+        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles/{kbid}",
         "parameters": [
           {
             "name": "custid",
@@ -2000,7 +2017,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2038,7 +2055,7 @@
           "Holdings Resources"
         ],
         "summary": "Download Holdings",
-        "description": "This operation allows you to download customer holdings in KBART2 (JSON) format.  Before using this resource, you need to perform a Holdings Resource POST to populate holdings data to a staging area.\n\n**Deprecation Notice:** Please use GET /{custid}/exports/{exportid}. Use the links array of objects that specify a presigned URL to download the export file.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to download customer holdings in KBART2 (JSON) format.  Before using this resource, you need to perform a Holdings Resource POST to populate holdings data to a staging area.\n\n**Deprecation Notice:** Please use GET /{custid}/exports/{exportid}. Use the links array of objects that specify a presigned URL to download the export file.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -2082,7 +2099,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2118,7 +2135,7 @@
           "Holdings Resources"
         ],
         "summary": "Stage Holdings",
-        "description": "This operation populates holdings data to a staging area.  You must perform this operation before using the GET holdings resources.  Customer holdings will be refreshed each time a POST is complete.  Hidden titles and packages are excluded from the holdings download.  If the customer has made changes since the last POST, another POST needs to be performed before using a GET holdings resource in order to download all of the changes.  If any metadata has changed since the last POST, you do not need to perform another POST in order to see the metadata changes in the GET holdings. \n\n**Deprecation Notice:** Please use POST /{custid}/exports.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation populates holdings data to a staging area.  You must perform this operation before using the GET holdings resources.  Customer holdings will be refreshed each time a POST is complete.  Hidden titles and packages are excluded from the holdings download.  If the customer has made changes since the last POST, another POST needs to be performed before using a GET holdings resource in order to download all of the changes.  If any metadata has changed since the last POST, you do not need to perform another POST in order to see the metadata changes in the GET holdings. \n\n**Deprecation Notice:** Please use POST /{custid}/exports.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -2140,7 +2157,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API.  Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API.  You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2150,7 +2167,9 @@
         "responses": {
           "202": {
             "description": "The request to populate holdings has been accepted for processing, but the processing has not been completed.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "409": {
             "description": "Snapshot is currently in progress.",
@@ -2182,7 +2201,7 @@
           "Holdings Resources"
         ],
         "summary": "Get Snapshot Status",
-        "description": "This operation allows you to retrieve the status of a holdings snapshot.  The response reveals if the holdings snapshot is in progress, completed, not staged (none) or has failed.  The status enables you to decide when to download customer holdings (upon completion).  \n\n**Deprecation Notice:** Please use GET /{custid}/exports/{exportid}.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve the status of a holdings snapshot.  The response reveals if the holdings snapshot is in progress, completed, not staged (none) or has failed.  The status enables you to decide when to download customer holdings (upon completion).  \n\n**Deprecation Notice:** Please use GET /{custid}/exports/{exportid}.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -2196,7 +2215,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2234,7 +2253,7 @@
           "Holdings Resources"
         ],
         "summary": "Get Exports",
-        "description": "This endpoint allows customers to retrieve details about all export requests of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. While the status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This endpoint allows customers to retrieve details about all export requests of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. While the status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "getCustidExports",
         "parameters": [
           {
@@ -2280,7 +2299,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2318,7 +2337,7 @@
           "Holdings Resources"
         ],
         "summary": "Create Export Request",
-        "description": "This operation enables customers to request an export file of their holdings in one of four formats: \"COST\", \"HoldingsEvent\", \"KBART2\" or \"STANDARD\". Export files will be generated with the most up-to-date holdings information available; however, any changes made to holdings after the request is made may not be reflected in the export. Export files will be deleted after 365 days. Customers are limited to a maximum of 500 export files.\n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation enables customers to request an export file of their holdings in one of four formats: \"COST\", \"HoldingsEvent\", \"KBART2\" or \"STANDARD\". Export files will be generated with the most up-to-date holdings information available; however, any changes made to holdings after the request is made may not be reflected in the export. Export files will be deleted after 365 days. Customers are limited to a maximum of 500 export files.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "postCustidExports",
         "parameters": [
           {
@@ -2334,7 +2353,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2584,7 +2603,7 @@
           "Holdings Resources"
         ],
         "summary": "Get Export Export Id",
-        "description": "This endpoint allows customers to retrieve details about a specific export request of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. The status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This endpoint allows customers to retrieve details about a specific export request of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. The status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "getV0CustidCustidExportidExportid",
         "parameters": [
           {
@@ -2610,7 +2629,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2645,7 +2664,7 @@
           "Holdings Resources"
         ],
         "summary": "Delete Export by Export Id",
-        "description": "This operation allows you to delete a previously created holdings export request by the export ID value. When an export is deleted via this method, the export request record and the file containing the holdings export data will be deleted; this action cannot be undone so use with caution.  \n\n  **Please Note:**  Your production API key to access HoldingsIQ will not give you access to our sandbox. Therefore, your production API key will not give you access to the API through our interactive documentation. You will need a sandbox API key to gain access to the API through our interactive documentation or to use the sandbox directly. If you require a sandbox API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to delete a previously created holdings export request by the export ID value. When an export is deleted via this method, the export request record and the file containing the holdings export data will be deleted; this action cannot be undone so use with caution.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "deleteV0CustidCustidExportidExportid",
         "parameters": [
           {
@@ -2671,7 +2690,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2681,7 +2700,9 @@
         "responses": {
           "204": {
             "description": "The server has successfully fulfilled the DELETE request.",
-            "content": {}
+            "content": {
+              
+            }
           },
           "default": {
             "description": "Unexpected Error",
@@ -2750,7 +2771,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2816,7 +2837,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2912,7 +2933,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2986,7 +3007,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. Your production API key will not grant you access to the API through the interactive documentation. You will need a sandbox API key to use the interactive documentation.  If you require a sandbox API key, please contact EBSCO customer support.",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
             "required": true,
             "schema": {
               "type": "string"
@@ -3028,6 +3049,7 @@
           },
           "name": "kbid",
           "in": "path",
+          "description": "Title ID",
           "required": true
         },
         {
@@ -3035,13 +3057,25 @@
             "type": "string"
           },
           "name": "custid",
+          "description": "EBSCO Customer ID",
           "in": "path",
           "required": true
+        },
+        {
+          "name": "x-api-key",
+          "in": "header",
+          "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
         }
       ],
       "get": {
         "summary": "Get Title Relationships for a KBID",
-        "tags": [],
+        "tags": [
+          "Title Resources"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3089,7 +3123,7 @@
           }
         },
         "operationId": "get-title-relationships",
-        "description": "This operation retrieves the title relationships for a given title identified via kbid. Currently it returns the first degree parents, spouse, siblings, and children of the given title. Parameters include the kbid of the desired title and the string version of the customer id. The output is an array of related title objects and a count of the total related titles in the array. The related title objects include both the source and target kbid, the date the relationship was established, the type of relationship, and the identifier of the relationship."
+        "description": "This operation retrieves the title relationships for a given title identified via kbid. Currently, it returns the first degree parents, spouse, siblings, and children of the given title. Parameters include the kbid of the desired title and the string version of the customer id. The output is an array of related title objects and a count of the total related titles in the array. The related title objects include both the source and target kbid, the date the relationship was established, the type of relationship, and the identifier of the relationship."
       }
     },
     "/v2/{custid}/titles/{kbid}": {
@@ -3113,9 +3147,9 @@
       ],
       "get": {
         "tags": [
-          "title-search-controller"
+          "Title Resources"
         ],
-        "summary": "Retrieve title details regardless of package",
+        "summary": "Get Title Details Regardless of Package",
         "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of. The response will reflect the context of the EBSCO customer ID included in the request.",
         "operationId": "getTitleDetailsRegardlessOfPackageV2UsingGET",
         "parameters": [
@@ -3163,6 +3197,15 @@
             "in": "query",
             "name": "includerelationships",
             "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false. The default behavior when this parameter is not present is to not return relationship informant."
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3176,20 +3219,15 @@
               }
             }
           },
-          "400": {
-            "description": "BAD_REQUEST"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "NOT_FOUND"
-          },
-          "500": {
-            "description": "INTERNAL SERVER ERROR"
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
           }
         }
       }
@@ -3223,9 +3261,9 @@
       ],
       "get": {
         "tags": [
-          "title-search-controller"
+          "Title Resources"
         ],
-        "summary": "Retrieve title details by package",
+        "summary": "Get Title Details by Package",
         "description": "This operation allows you to search and retrieve a list of titles from EPKB respective of the package(s) that the titles are a part of. The response will reflect the context of the EBSCO customer ID included in the request.",
         "operationId": "getTitleDetailsByPackageV2UsingGET",
         "parameters": [
@@ -3252,7 +3290,7 @@
           {
             "name": "kbid",
             "in": "path",
-            "description": "KBID",
+            "description": "Title ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -3282,7 +3320,16 @@
             },
             "in": "query",
             "name": "includerelationships",
-            "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false. The default behavior when this parameter is not present is to not return relationship informant."
+            "description": "Determines whether or not title relationship information will be returned. The possible values are 'true' or 'false'. The default behavior when this parameter is not present is to not return relationship information."
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3296,29 +3343,24 @@
               }
             }
           },
-          "400": {
-            "description": "BAD_REQUEST"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "NOT_FOUND"
-          },
-          "500": {
-            "description": "INTERNAL SERVER ERROR"
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
           }
         }
       },
       "put": {
         "tags": [
-          "title-search-controller"
+          "Title Resources"
         ],
-        "summary": "Update a Title v2",
-        "description": "Provides the ability to update any title details for a customer given a unique listid/kbid pair",
+        "summary": "Update a Title",
+        "description": "This operation allows you to update title details for a unique listid/kbid pair.",
         "operationId": "updateTitleV2UsingPUT",
         "parameters": [
           {
@@ -3344,9 +3386,18 @@
           {
             "name": "kbid",
             "in": "path",
-            "description": "KBID",
+            "description": "Title ID",
             "required": true,
             "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
             "schema": {
               "type": "string"
             }
@@ -4315,7 +4366,9 @@
           },
           "managedEmbargoPeriod": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              
+            },
             "description": "Null Managed Embargo Period"
           },
           "customEmbargoPeriod": {
@@ -6753,7 +6806,9 @@
         "title": "Export",
         "type": "object",
         "description": "Export",
-        "x-examples": {},
+        "x-examples": {
+          
+        },
         "properties": {
           "costDownload": {
             "$ref": "#/components/schemas/CostDownload"
@@ -7404,7 +7459,8 @@
         "properties": {
           "embargoUnit": {
             "type": "object",
-            "description": "Unit of measure: days, weeks, months, quarters, or years"
+            "description": "Unit of measure: days, weeks, months, quarters, or years",
+            "example": "days"
           },
           "embargoValue": {
             "type": "integer",
@@ -7415,7 +7471,9 @@
         },
         "x-examples": {
           "Example 1": {
-            "embargoUnit": {},
+            "embargoUnit": {
+              
+            },
             "embargoValue": 1
           }
         }
@@ -7517,7 +7575,8 @@
         "properties": {
           "id": {
             "type": "object",
-            "description": "Proxy unique id"
+            "description": "Proxy unique id",
+            "example": "EZ_proxy"
           },
           "inherited": {
             "type": "object",
