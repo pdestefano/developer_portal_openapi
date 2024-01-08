@@ -3854,6 +3854,11 @@
             "description": "Indicates if the packages is selected in a customer's account.",
             "example": true
           },
+          "isOrderedThroughEbsco": {
+            "type": "boolean",
+            "example": false,
+            "description": "Limiter to include only records associated with an EBSCO order."
+          },		  
           "visibilityData": {
             "$ref": "#/components/schemas/visibilityInfo"
           },
