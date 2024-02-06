@@ -3558,7 +3558,7 @@
           {
             "name": "searchfield",
             "in": "query",
-            "description": "Field to search.  Both integer and string are supported.  Valid values are packagename and keyword.  It is also valid to use 0 for package name or 1 for keyword.",
+            "description": "Field to search.  Both integer and string are supported.  Valid values are packagename and keyword.  It is also valid to use 0 for package name or 1 for keyword.  Keyword searches search on Package Name and Vendor Name.",
             "required": false,
             "schema": {
               "type": "string",
@@ -3718,7 +3718,7 @@
           {
             "name": "searchfield",
             "in": "query",
-            "description": "Field to search.  Both integer and string are supported.  Valid values are packagename and keyword.  It is also valid to use 0 for package name or 1 for keyword.",
+            "description": "Field to search.  Both integer and string are supported.  Valid values are packagename and keyword.  It is also valid to use 0 for package name or 1 for keyword.  Keyword searches search on Package Name and Vendor Name.",
             "required": false,
             "schema": {
               "type": "string",
