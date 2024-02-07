@@ -3602,6 +3602,24 @@
             }
           },
           {
+            "name": "visibilityType",
+            "in": "query",
+            "description": "Limits the results based on customer visibility status per product category.  Only functions when selection=selected is included in the request.  Valid values are visibleSomewhere, visibleInPF, visibleInFTF, includedInMARC, hiddenSomewhere, hiddenInPF, hiddenInFTF, excludedFromMARC.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "visibleSomewhere",
+                "visibleInPF",
+                "visibleInFTF",
+                "includedInMARC",
+                "hiddenSomewhere",
+                "hiddenInPF",
+                "hiddenInFTF", 
+                "excludedFromMARC"
+              ]
+            }
+          },
+          {
             "name": "contenttype",
             "in": "query",
             "description": "Limit by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
@@ -3758,6 +3776,24 @@
                 "selected",
                 "notselected",
                 "orderedthroughebsco"
+              ]
+            }
+          },
+          {
+            "name": "visibilityType",
+            "in": "query",
+            "description": "Limits the results based on customer visibility status per product category.  Only functions when selection=selected is included in the request.  Valid values are visibleSomewhere, visibleInPF, visibleInFTF, includedInMARC, hiddenSomewhere, hiddenInPF, hiddenInFTF, excludedFromMARC.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "visibleSomewhere",
+                "visibleInPF",
+                "visibleInFTF",
+                "includedInMARC",
+                "hiddenSomewhere",
+                "hiddenInPF",
+                "hiddenInFTF", 
+                "excludedFromMARC"
               ]
             }
           },
