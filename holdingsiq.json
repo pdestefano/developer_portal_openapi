@@ -3588,7 +3588,7 @@
           {
             "name": "selection",
             "in": "query",
-            "description": "Limits the results.  Default is 'all'.  Valid values are all, selected, notselected, and orderedthroughebsco.  It is also valid to use 0 for all, 1 for selected, 2 for not selected or 3 for ordered through EBSCO.  When you filter by all(0), the total results count takes selected and not selected into consideration.",
+            "description": "Limits the results.  Default is all.  Valid values are all, selected, notselected, and orderedthroughebsco.  It is also valid to use 0 for all, 1 for selected, 2 for not selected or 3 for ordered through EBSCO.  When you filter by all(0), the total results count takes selected and not selected into consideration.",
             "schema": {
               "type": "string",
               "enum": [
@@ -3620,7 +3620,7 @@
           {
             "name": "contenttype",
             "in": "query",
-            "description": "Limits the results by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
+            "description": "Limits the results by type of package content.  Default is all.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "schema": {
               "type": "string",
               "enum": [
@@ -3768,7 +3768,7 @@
           {
             "name": "selection",
             "in": "query",
-            "description": "Limits the results.  Default is 'all'.  Valid values are all, selected, notselected, and orderedthroughebsco.  It is also valid to use 0 for all, 1 for selected, 2 for not selected or 3 for ordered through EBSCO.  When you filter by all(0), the total results count takes selected and not selected into consideration.",
+            "description": "Limits the results.  Default is all.  Valid values are all, selected, notselected, and orderedthroughebsco.  It is also valid to use 0 for all, 1 for selected, 2 for not selected or 3 for ordered through EBSCO.  When you filter by all(0), the total results count takes selected and not selected into consideration.",
             "schema": {
               "type": "string",
               "enum": [
@@ -3800,7 +3800,7 @@
           {
             "name": "contenttype",
             "in": "query",
-            "description": "Limits the results by type of package content.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
+            "description": "Limits the results by type of package content.  Default is all.  Both integer and string are supported.  Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown, onlinereference, streamingmedia or mixedcontent.  It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "schema": {
               "type": "string",
               "enum": [
