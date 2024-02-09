@@ -3600,7 +3600,7 @@
             }
           },
           {
-            "name": "visibilityType",
+            "name": "visibilitytype",
             "in": "query",
             "description": "Limits the results based on customer visibility status per product category.  Only functions when selection=selected is included in the request.  Valid values are visibleSomewhere, visibleInPF, visibleInFTF, includedInMARC, hiddenSomewhere, hiddenInPF, hiddenInFTF, excludedFromMARC.",
             "schema": {
@@ -3671,7 +3671,7 @@
             }
           },
           {
-            "name": "highlightTag",
+            "name": "highlighttag",
             "in": "query",
             "description": "Passing in any value will enable Hit Highlighting, which will highlight which parts of the Package result were matched on during searching. The string passed in is the tag highlighted results will be wrapped in. For example, a highlight tag of 'h' will return < h >The Package Hit < /h > in the response.",
             "schema": {
@@ -3780,7 +3780,7 @@
             }
           },
           {
-            "name": "visibilityType",
+            "name": "visibilitytype",
             "in": "query",
             "description": "Limits the results based on customer visibility status per product category.  Only functions when selection=selected is included in the request.  Valid values are visibleSomewhere, visibleInPF, visibleInFTF, includedInMARC, hiddenSomewhere, hiddenInPF, hiddenInFTF, excludedFromMARC.",
             "schema": {
@@ -3851,7 +3851,7 @@
             }
           },
           {
-            "name": "highlightTag",
+            "name": "highlighttag",
             "in": "query",
             "description": "Passing in any value will enable Hit Highlighting, which will highlight which parts of the Package result were matched on during searching. The string passed in is the tag highlighted results will be wrapped in. For example, a highlight tag of 'h' will return < h >The Package Hit < /h > in the response.",
             "schema": {
