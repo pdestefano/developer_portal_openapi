@@ -337,6 +337,82 @@
         }
       ]
     },
+    "/pf/pfaccount/{profile}/package/{packageid}": {
+      "get": {
+        "tags": [
+          "Title Resources"
+        ],
+        "summary": "Get Package by package ID",
+        "description": "This resource allows you to retrieve a package by package ID.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
+        "operationId": "getPackageUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "packageid",
+            "in": "path",
+            "description": "Package ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "profile",
+            "in": "path",
+            "description": "A valid EBSCO customer profile in the form of customerid.groupid.profileid.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "header",
+            "description": "Profile Password (optional). If a password is supplied, it must be a valid password assigned to the customer profile. If omitted, the request will only be honored if the customer profile allows guest access.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK, Package",
+            "schema": {
+              "$ref": "#/definitions/PackageDetail"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "packageid",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
     "/pf/pfaccount/{profile}/packages/{packageid}/titles/{kbid}": {
       "get": {
         "tags": [
