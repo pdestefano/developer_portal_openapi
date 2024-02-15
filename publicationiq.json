@@ -340,7 +340,7 @@
     "/pf/pfaccount/{profile}/package/{packageid}": {
       "get": {
         "tags": [
-          "Title Resources"
+          "Package Resources"
         ],
         "summary": "Get Package by package ID",
         "description": "This resource allows you to retrieve a package by package ID.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
@@ -1740,7 +1740,7 @@
                                     },
                                     "packageName": {
                                       "type": "string",
-									  "description", "Package Name"
+									  "description": "Package Name"
                                     },
                                     "packageType": {
                                       "type": "string",
@@ -5578,6 +5578,86 @@
           "type": "string",
           "description": "Target URL",
           "example": "http://target.url.io"
+        }
+      }
+    },
+    "PackageDetail": {
+      "type": "object",
+      "properties": {
+        "packageId": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string"
+        },
+        "packageCoverage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Dates of Coverage",
+            "properties": {
+              "beginCoverage": {
+                "type": "string",
+                "description": "Coverage Start Date",
+                "example": "2003-01-01"
+              },
+              "endCoverage": {
+                "type": "string",
+                "description": "Coverage End Date",
+                "example": "2003-12-12"
+              }
+            }
+          }
+        },
+        "vendorName": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PfNote"
+          }
+        },
+        "licenseTerms": {
+          "type": "array",
+          "description": "License terms data array.",
+          "items": {
+            "type": "object",
+            "description": "License terms data",
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Label",
+                "example": "Definition of authorised user"
+              },
+              "value": {
+                "type": "array",
+                "description": "Value",
+                "items": {
+                  "type": "string"
+                },
+                "example": "Faculty, Student, Staff and Walk-Ins"
+              },
+              "weight": {
+                "type": "integer",
+                "description": "Weight",
+                "example": -1
+              },
+              "publicNote": {
+                "type": "string",
+                "description": "Public Note",
+                "example": "Faculty, Student, Staff and Walk-Ins"
+              },
+              "primary": {
+                "type": "boolean",
+                "description": "Primary",
+                "example": true
+              }
+            }
+          }
+        },
+        "hasSelectedAndVisibleTitles": {
+          "type": "boolean"
         }
       }
     },
