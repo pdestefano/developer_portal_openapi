@@ -3729,7 +3729,7 @@
           {
             "name": "searchfield",
             "in": "query",
-            "description": "Field to search.  Default is name.  Both integer and string are supported.  Valid values are name and keyword.  It is also valid to use 0 for name or 1 for keyword.  Keyword searches search on Package Name and Vendor Name.",
+            "description": "Field to search.  Default is name.  Both integer and string are supported.  Valid values are name and keyword.  It is also valid to use 0 for name or 1 for keyword. Name - Searches on Package Names and Alternative Names.  Keyword - Searches on Package Name, Alternative Name, Vendor Name, Managed Description and Custom Description.",
             "schema": {
               "type": "string",
               "enum": [
