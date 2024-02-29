@@ -8029,6 +8029,24 @@
             "description": "Name of the Package.",
             "example": "Health & Wellness Resource Center (w/alt health module)"
           },
+          "altPackageNames": {
+            "type": "array",
+            "description": "List of Alternative names of package",
+            "items": {
+              "type": "string",
+              "example": "Health & Wellness Resource Center Alternative"
+            }
+          },
+          "managedPackageDescription": {
+            "type": "string",
+            "description": "Description of the package",
+            "example": "Health & Wellness Resource Description example"
+          },
+          "customPackageDescription": {
+            "type": "string",
+            "description": "Description of the package which is customized by a customer",
+            "example": "Custom Health & Wellness Resource Description example that's modified by a customer"
+          },
           "isCustom": {
             "type": "boolean",
             "description": "isCustom is true if a customer is the vendor.  The customer vendor is used for custom packages.",
@@ -8093,6 +8111,16 @@
             "type": "boolean",
             "description": "availableForSelection is true if the package is available for full selection.  Otherwise, it returns false.",
             "example": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Package URL",
+            "example": "http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
+          },
+          "proxiedUrl": {
+            "type": "string",
+            "description": "URL with proxy applied",
+            "example": "http://ezproxy.myinstitute.edu/login?url=http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
           }
         },
         "description": "This object represents data elements that describe a vendor package."
