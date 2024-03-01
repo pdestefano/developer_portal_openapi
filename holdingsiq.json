@@ -1898,11 +1898,9 @@
             "in": "query",
             "description": "A comma-separated list of package ID(s).  Limits the results by package ID(s).  The packageidfilter is an optional parameter.",
             "required": false,
-            "type": "array",
-            "items": {
+			"schema": {
               "type": "string"
-            },
-            "collectionFormat": "multi"
+			}
           },
           {
             "name": "orderby",
