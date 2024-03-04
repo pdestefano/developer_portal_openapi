@@ -1082,6 +1082,20 @@
                       "value": "myValue"
                     }
                   }
+                },
+                "bodyoptionk": {
+                    "summary": "JSON payload to update a package custom description",
+                    "value": {
+                      "isSelected": true,
+                      "customDescription": "myPackageCustomDescription"
+                    }
+                },
+                "bodyoptionl": {
+                    "summary": "JSON payload to update a custom package url",
+                    "value": {
+                      "isSelected": true,
+                      "url": "myUrl"
+                    }
                 }
               }
             }
@@ -2596,7 +2610,7 @@
           "Holdings Resources"
         ],
         "summary": "Get Export Export Id",
-        "description": "This endpoint allows customers to retrieve details about a specific export request of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. The status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This endpoint allows customers to retrieve details about a specific export request of their holdings, including an array of objects that represent metadata about the single export. Parameters include a creation date, export ID, status, type, size, and links. The type of export can be one of KBART2, STANDARD, COST, or HOLDINGSEVENT. The status can be one of QUEUED, INPROGRESS, or COMPLETED. The links array contains objects that specify a presigned URL to download the export file from. The URL is valid for 30 minutes. If the URL expires, a new URL can be requested from the API. \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "getV0CustidCustidExportidExportid",
         "parameters": [
           {
@@ -4483,9 +4497,26 @@
           "customCoverage": {
             "$ref": "#/components/schemas/coverageDates"
           },
+          "managedDescription": {
+            "type": "string",
+            "description": "The managed description of the package.",
+            "example": "Package of medicinal journals"
+          },
+          "customDescription": {
+            "type": "string",
+            "description": "The custom description of the package.",
+            "example": "Package of medicinal journals (custom)"
+          },
+          "managedAltName": {
+            "type": "array",
+            "description": "The list of managed alternate names for the package.",
+            "items": {
+              "$ref": "#/components/schemas/managedAltName"
+            }
+          },
           "isTokenNeeded": {
             "type": "boolean",
-            "description": "Field to indicate if a token is needed",
+            "description": "Field to indicate if a token is needed.",
             "example": true
           },
           "allowEbscoToAddTitles": {
@@ -4503,6 +4534,11 @@
           },
           "packageToken": {
             "$ref": "#/components/schemas/tokenInfo"
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the package.",
+            "example": "https://link.gale.com/apps/CDB?u=[[galesiteid]]"
           },
           "availableForSelection": {
             "type": "boolean",
@@ -6154,10 +6190,31 @@
         },
         "description": "Holdings Details"
       },
+      "managedAltName": {
+        "required": [
+          "id",
+          "altName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The id of the managed alternate name of the package.",
+            "example": "1"
+          },
+          "altName": {
+            "type": "string",
+            "description": "The managed alternate name of the package.",
+            "example": "Managed Alternate Name"
+          }
+        },
+        "description": "Proxy"
+      },
       "proxyInfoIn": {
         "required": [
           "id",
-          "inherited"
+          "inherited",
+          "proxiedUrl"
         ],
         "type": "object",
         "properties": {
@@ -6170,6 +6227,11 @@
             "type": "boolean",
             "description": "Field to indicate if the proxy is inherited.",
             "example": true
+          },
+          "proxiedUrl": {
+            "type": "string",
+            "description": "The proxied URL of the package.",
+            "example": ""
           }
         },
         "description": "Proxy"
@@ -6766,6 +6828,16 @@
             "type": "boolean",
             "description": "Field to indicate if title is hidden.",
             "example": false
+          },
+          "customDescription": {
+            "type": "string",
+            "description": "Field to set the custom description of the package.",
+            "example": "Custom description for package"
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the package.",
+            "example": "https://link.gale.com/apps/IFME?u=[[galesiteid]]"
           },
           "isFullPackage": {
             "type": "boolean",
