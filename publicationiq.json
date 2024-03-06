@@ -1586,7 +1586,7 @@
                                   "properties": {
                                     "id": {
                                       "type": "string",
-									  "source": "Identifier Value"
+									  "description": "Identifier Value"
                                     },
                                     "source": {
                                       "type": "string",
@@ -1664,7 +1664,7 @@
                                     },
                                     "packageName": {
                                       "type": "string",
-									  "description", "Package Name"
+									  "description": "Package Name"
                                     },
                                     "packageType": {
                                       "type": "string",
