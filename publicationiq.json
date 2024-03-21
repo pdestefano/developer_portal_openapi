@@ -5661,7 +5661,10 @@
         },
         "hasSelectedAndVisibleTitles": {
           "type": "boolean"
-        }
+        },
+	"licenseTermNoteLabel": {
+  	  "type": "string"
+	}
       }
     },
     "Record": {
