@@ -3531,7 +3531,7 @@
         "tags": [
           "Vendor Resources"
         ],
-        "summary": "Get List of Packages for a Vendor",
+        "summary": "Search Packages by Vendor",
         "description": "This operation allows you to retrieve a list of packages from EPKB for a vendor including customer context.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -3720,7 +3720,7 @@
         "tags": [
           "Package Resources"
         ],
-        "summary": "Get List of Packages",
+        "summary": "Advanced Package Search",
         "description": "This operation allows you to search for packages and returns a list of packages from EPKB.  The list is not limited to a single vendor ID.  The response will reflect the context of the EBSCO customer ID included in the request.  When searching for packages without a search parameter, the sort options will be by package name.  When the search parameter is not null, then the default sort is by relevance.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
@@ -8101,7 +8101,7 @@
             "description": "Name of the Package.",
             "example": "Health & Wellness Resource Center (w/alt health module)"
           },
-          "altPackageNames": {
+          "managedAltNames": {
             "type": "array",
             "description": "List of Alternative names of package",
             "items": {
@@ -8109,12 +8109,12 @@
               "example": "Health & Wellness Resource Center Alternative"
             }
           },
-          "managedPackageDescription": {
+          "managedDescription": {
             "type": "string",
             "description": "Description of the package",
             "example": "Health & Wellness Resource Description example"
           },
-          "customPackageDescription": {
+          "customDescription": {
             "type": "string",
             "description": "Description of the package which is customized by a customer",
             "example": "Custom Health & Wellness Resource Description example that's modified by a customer"
