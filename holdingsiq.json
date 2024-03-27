@@ -854,7 +854,7 @@
           "Package Resources"
         ],
         "summary": "Get Package Details",
-        "description": "This operation allows you to retrieve EPKB information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "vendorid",
@@ -895,7 +895,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Package details from EPKB for a specific package ID.",
+            "description": "Package details for a specific package ID.",
             "content": {
               "application/json": {
                 "schema": {
@@ -921,7 +921,7 @@
           "Package Resources"
         ],
         "summary": "Update a Package",
-        "description": "This operation allows you to update selection and customizations to a package in a customer EPKB account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to update selection and customizations to a package in a customer account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "name": "custid",
@@ -1084,18 +1084,30 @@
                   }
                 },
                 "bodyoptionk": {
-                    "summary": "JSON payload to update a package custom description",
-                    "value": {
-                      "isSelected": true,
-                      "customDescription": "myPackageCustomDescription"
-                    }
+                  "summary": "JSON payload to update a package custom description",
+                  "value": {
+                    "isSelected": true,
+                    "customDescription": "myPackageCustomDescription"
+                  }
                 },
                 "bodyoptionl": {
-                    "summary": "JSON payload to update a custom package url",
-                    "value": {
-                      "isSelected": true,
-                      "url": "myUrl"
-                    }
+                  "summary": "JSON payload to update a custom package url",
+                  "value": {
+                    "isSelected": true,
+                    "url": "myUrl"
+                  }
+                },
+                "bodyoptionm": {
+                  "value": {
+                    "isSelected": true,
+                    "customAltNames": [
+                      {
+                        "id": "1",
+                        "altName": "Managed Alternate Name"
+                      }
+                    ],
+                    "customDisplayName": "string"
+                  }
                 }
               }
             }
@@ -4440,11 +4452,8 @@
         "description": "This object represents data elements that describe a title."
       },
       "packageIdDetails": {
-        "required": [
-          "packageId",
-          "packageName"
-        ],
         "type": "object",
+        "description": "Package details for a specific package ID.",
         "properties": {
           "packageId": {
             "type": "integer",
@@ -4507,11 +4516,13 @@
             "description": "The custom description of the package.",
             "example": "Package of medicinal journals (custom)"
           },
-          "managedAltName": {
+          "managedAltNames": {
             "type": "array",
             "description": "The list of managed alternate names for the package.",
+            "minItems": 0,
+            "maxItems": 10,
             "items": {
-              "$ref": "#/components/schemas/managedAltName"
+              "$ref": "#/components/schemas/altName"
             }
           },
           "isTokenNeeded": {
@@ -4544,9 +4555,25 @@
             "type": "boolean",
             "description": "availableForSelection is true if the package is available for full selection.  Otherwise, it returns false.",
             "example": true
+          },
+          "customAltNames": {
+            "type": "array",
+            "description": "The list of custom alternate names for the package",
+            "minItems": 0,
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/altName"
+            }
+          },
+          "customDisplayName": {
+            "type": "string",
+            "description": "The customized display name for a package."
           }
         },
-        "description": "Package details from EPKB for a specific package ID."
+        "required": [
+          "packageId",
+          "packageName"
+        ]
       },
       "customerResources": {
         "required": [
@@ -6190,12 +6217,12 @@
         },
         "description": "Holdings Details"
       },
-      "managedAltName": {
-        "required": [
-          "id",
-          "altName"
-        ],
+      "altName": {
         "type": "object",
+        "description": "Alternate names and their corresponding ids for a package, can be managed or custom.",
+        "x-stoplight": {
+          "id": "459c9558e14b8"
+        },
         "properties": {
           "id": {
             "type": "integer",
@@ -6204,11 +6231,14 @@
           },
           "altName": {
             "type": "string",
-            "description": "The managed alternate name of the package.",
+            "description": "The alternate name of the package.",
             "example": "Managed Alternate Name"
           }
         },
-        "description": "Proxy"
+        "required": [
+          "id",
+          "altName"
+        ]
       },
       "proxyInfoIn": {
         "required": [
@@ -6804,10 +6834,8 @@
         "description": "This object represents data elements to update a proxy value for a title."
       },
       "setPackagePayload": {
-        "required": [
-          "isSelected"
-        ],
         "type": "object",
+        "description": "This object represents data elements that describe the payload to update values for a package.",
         "properties": {
           "packageName": {
             "type": "string",
@@ -6857,9 +6885,24 @@
           },
           "packageToken": {
             "$ref": "#/components/schemas/tokenDetails"
+          },
+          "customAltNames": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 10,
+            "description": "Set a list of custom alternate names for the package",
+            "items": {
+              "$ref": "#/components/schemas/altName"
+            }
+          },
+          "customDisplayName": {
+            "type": "string",
+            "description": "Set the custom display name for the package"
           }
         },
-        "description": "This object represents data elements that describe the payload to update values for a package."
+        "required": [
+          "isSelected"
+        ]
       },
       "setManagedPackagePayload": {
         "required": [
@@ -7239,8 +7282,7 @@
         "title": "Export",
         "type": "object",
         "description": "Export",
-        "x-examples": {
-        },
+        "x-examples": {},
         "properties": {
           "costDownload": {
             "$ref": "#/components/schemas/CostDownload"
@@ -7903,8 +7945,7 @@
         },
         "x-examples": {
           "Example 1": {
-            "embargoUnit": {
-            },
+            "embargoUnit": {},
             "embargoValue": 1
           }
         }
