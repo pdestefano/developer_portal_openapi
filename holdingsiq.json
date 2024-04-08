@@ -1366,6 +1366,7 @@
                   }
                 },
                 "bodyoptionm": {
+                  "summary": "JSON payload to update a custom alt name and display name",
                   "value": {
                     "isSelected": true,
                     "customAltNames": [
