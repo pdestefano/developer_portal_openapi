@@ -1152,9 +1152,9 @@
             }
           },
           {
-            "name": "packageid",
+            "name": "listid",
             "in": "path",
-            "description": "Package ID",
+            "description": "List ID",
             "required": true,
             "schema": {
               "type": "integer"
@@ -1210,9 +1210,9 @@
             }
           },
           {
-            "name": "packageid",
+            "name": "listid",
             "in": "path",
-            "description": "Package ID",
+            "description": "List ID",
             "required": true,
             "schema": {
               "type": "integer"
