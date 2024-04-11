@@ -675,6 +675,72 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/customPackagePayload"
+              },
+              "examples": {
+                "bodyoptiona": {
+                  "summary": "JSON payload to create a custom package (required fields only)",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3
+                  }
+                },
+                "bodyoptionb": {
+                  "summary": "JSON payload to create a custom package with custom coverage",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3,
+                    "customCoverage": {
+                      "beginCoverage": "2024-01-01",
+                      "endCoverage": "2024-12-31"
+                    }
+                  }
+                },
+                "bodyoptionc": {
+                  "summary": "JSON payload to create a custom package with custom description, custom display name, and url",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3,
+                    "customDescription": "Custom Package Description",
+                    "customDisplayName": "Custom Display Name",
+                    "url": "www.yourlibrary.com/medical"              
+                },
+                "bodyoptiond": {
+                  "summary": "JSON payload to create a custom package with alternate package neames",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3,
+                    "customAltNames": [
+                      {
+                        "altName": "Custom Alt Name 1",
+                        "id": null
+                      }
+                    ]
+                  }
+                },
+                "bodyoptione": {
+                  "summary": "JSON payload to create a custom package with all fields",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3,
+                    "customCoverage": {
+                      "beginCoverage": "2024-01-01",
+                      "endCoverage": "2024-12-31"
+                    },
+                    "proxy": {
+                      "id": null,
+                      "inherited": true
+                    },
+                    "customDescription": "Custom Package Description",
+                    "customDisplayName": "Custom Display Name",
+                    "url": "www.yourlibrary.com/medical",
+                    "customAltNames": [
+                      {
+                        "altName": "Custom Alt Name 1",
+                        "id": null
+                      }
+                    ]
+                  }
+                }
               }
             }
           },
