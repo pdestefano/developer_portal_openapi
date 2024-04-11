@@ -5714,6 +5714,24 @@
           },
           "proxy": {
             "$ref": "#/components/schemas/proxyInfo"
+          },
+          "customDescription": {
+            "type": "string",
+            "description": "A description of the custom package",
+            "example": "This custom package focuses on medical science"
+          },
+          "customDisplayName": {
+            "type": "string",
+            "description": "A display name for the custom package",
+            "example": "Medical Science Package"
+          },
+          "url": {
+            "type": "string",
+            "description": "A url for the custom the package",
+            "example": "www.yourlibrary.com/medicalsciencepackage"
+          },
+          "customAltNames": {
+            "$ref": "#/components/schemas/altName"
           }
         },
         "description": "Custom Package Payload"
