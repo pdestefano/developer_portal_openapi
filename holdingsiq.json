@@ -5772,7 +5772,7 @@
           },
           "contentType": {
             "type": "integer",
-            "description": "Content Type.  Valid values are 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
+            "description": "Content Type.  Valid values are 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
             "example": 3
           },
           "customCoverage": {
