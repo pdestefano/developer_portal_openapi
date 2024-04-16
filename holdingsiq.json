@@ -702,7 +702,8 @@
                     "contentType": 3,
                     "customDescription": "Custom Package Description",
                     "customDisplayName": "Custom Display Name",
-                    "url": "www.yourlibrary.com/medical"              
+                    "url": "www.yourlibrary.com/medical" 
+                  }             
                 },
                 "bodyoptiond": {
                   "summary": "JSON payload to create a custom package with alternate package neames",
