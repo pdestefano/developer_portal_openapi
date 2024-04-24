@@ -3694,7 +3694,7 @@
             }
           },
           {
-            "name": "isPatron",
+            "name": "patron",
             "in": "query",
             "description": "If true (patron search - used in PF), searches will treat custom data as an override to managed data. If null or false (admin search - used in HLM), searches will treat custom data as a supplement to managed data. \" +\n        \"This applies to the package name and package description fields.",
             "schema": {
@@ -3882,7 +3882,7 @@
             }
           },
           {
-            "name": "isPatron",
+            "name": "patron",
             "in": "query",
             "description": "If true (patron search - used in PF), searches will treat custom data as an override to managed data. If null or false (admin search - used in HLM), searches will treat custom data as a supplement to managed data. \" +\n        \"This applies to the package name and package description fields.",
             "schema": {
