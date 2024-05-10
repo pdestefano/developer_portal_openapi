@@ -6195,28 +6195,11 @@
         "vendorName": {
           "type": "string"
         },
-        "visibility": {
-          "$ref": "#/definitions/Visibility"
-        },
         "visibilityData": {
           "$ref": "#/definitions/VisibilityData"
         }
       }
     },
-    "Visibility": {
-      "type": "array",
-      "properties": {
-        "category": {
-          "type": "string"
-        },
-        "hidden": {
-          "type": "boolean"
-        },
-        "reason": {
-          "type": "string"
-        }
-      }
-    }
   },
   "parameters": {
     "Password": {
