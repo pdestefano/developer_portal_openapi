@@ -5805,6 +5805,10 @@
         "totalResults": {
           "type": "integer",
           "format": "int64"
+        },
+        "totalSearchTime": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -6097,10 +6101,6 @@
         },
         "customDisplayName": {
           "type": "string"
-        },
-        "customerId": {
-          "type": "integer",
-          "format": "int64"
         },
         "isCustom": {
           "type": "boolean"
