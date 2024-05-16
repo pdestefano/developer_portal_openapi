@@ -8194,7 +8194,7 @@
         "title": "PackageSubjectResponse",
         "type": "object",
         "properties": {
-          "subjectId": {
+          "id": {
             "type": "integer",
             "description": "Id of a subject",
             "example": 35408
