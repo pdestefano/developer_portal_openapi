@@ -2271,7 +2271,7 @@
           "Title Resources"
         ],
         "summary": "Get Title Details Regardless of Package",
-        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support. This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles/{kbid}",
         "parameters": [
           {
             "name": "custid",
@@ -2336,7 +2336,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/{custid}/holdings": {
