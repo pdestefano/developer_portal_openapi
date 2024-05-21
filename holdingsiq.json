@@ -921,7 +921,7 @@
           "Package Resources"
         ],
         "summary": "Get Package Details",
-        "description": "This operation allows you to retrieve information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}",
         "parameters": [
           {
             "name": "vendorid",
@@ -981,14 +981,15 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       },
       "put": {
         "tags": [
           "Package Resources"
         ],
         "summary": "Update a Package",
-        "description": "This operation allows you to update selection and customizations to a package in a customer account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to update selection and customizations to a package in a customer account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/lists/{listid}",
         "parameters": [
           {
             "name": "custid",
@@ -1165,6 +1166,274 @@
                   }
                 },
                 "bodyoptionm": {
+                  "value": {
+                    "isSelected": true,
+                    "customAltNames": [
+                      {
+                        "id": "1",
+                        "altName": "Managed Alternate Name"
+                      }
+                    ],
+                    "customDisplayName": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "204": {
+            "description": "The server has successfully fulfilled the PUT request.",
+            "content": {}
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v2/{custid}/lists/{listid}": {
+      "get": {
+        "tags": [
+          "Package Resources"
+        ],
+        "summary": "Get Package Details",
+        "description": "This operation allows you to retrieve information for a specific package.  It returns details in the context of a customer.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "listid",
+            "in": "path",
+            "description": "List ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Package details for a specific package ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/packageIdDetailsV1"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Package Resources"
+        ],
+        "summary": "Update a Package",
+        "description": "This operation allows you to update selection and customizations to a package in a customer account.  A package with inherited set to true inherits its proxy from the root proxy. So, a JSON payload with inherited set to true updates the package proxy with the root proxy if the root proxy is set.  The isSelected payload element is mandatory for managed and custom packages. isSelected, packageName and contentType payload elements are mandatory for the custom package update payload. For both managed and custom packages, removing a package with isSelected set to false in the payload will result in a loss of customization made previously at the package level. Removing a custom package with isSelected set to false in the payload will result in the deletion (hard delete) of the custom package and all associated titles from this custom package.  If the payload contains ONLY isSelected set to true with no other customization fields, the system will remove all previously set customization.  If you do not provide a JSON payload, the JSON payload will be set to the default values and customizations made previously will be lost.  If you wish to keep your current customizations, please be sure to set the JSON payload accordingly.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "listid",
+            "in": "path",
+            "description": "List ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "JSON payload to update selection and customizations to a package.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/setPackagePayloadV1"
+              },
+              "examples": {
+                "bodyoptiona": {
+                  "summary": "JSON payload to select the entire package",
+                  "value": {
+                    "isSelected": true
+                  }
+                },
+                "bodyoptionb": {
+                  "summary": "JSON payload to set custom coverage including hiding titles",
+                  "value": {
+                    "isSelected": true,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "isHidden": true
+                  }
+                },
+                "bodyoptionc": {
+                  "summary": "JSON payload to hide a package",
+                  "value": {
+                    "isSelected": true,
+                    "isHidden": true
+                  }
+                },
+                "bodyoptiond": {
+                  "summary": "JSON payload to set custom coverage excluding hiding titles",
+                  "value": {
+                    "isSelected": true,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "isHidden": false
+                  }
+                },
+                "bodyoptione": {
+                  "summary": "JSON payload to unselect the entire package",
+                  "value": {
+                    "isSelected": false
+                  }
+                },
+                "bodyoptionf": {
+                  "summary": "JSON payload to set custom coverage to a partially selected package",
+                  "value": {
+                    "isSelected": true,
+                    "isFullPackage": false,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    }
+                  }
+                },
+                "bodyoptiong": {
+                  "summary": "JSON payload to set values in a managed package",
+                  "description": "JSON payload to set values in a managed package.  isSelected is required for a managed package.",
+                  "value": {
+                    "isSelected": true,
+                    "isHidden": false,
+                    "allowEbscoToAddTitles": true,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "proxy": {
+                      "id": "EZ_proxy",
+                      "inherited": false
+                    },
+                    "packageToken": {
+                      "value": "myValue"
+                    }
+                  }
+                },
+                "bodyoptionh": {
+                  "summary": "JSON payload to set values in a custom package",
+                  "description": "JSON payload to set values in a custom package. isSelected, contentType, and packageName are required for a custom package.",
+                  "value": {
+                    "packageName": "Library Package 1",
+                    "contentType": 3,
+                    "isSelected": true,
+                    "isHidden": false,
+                    "customCoverage": {
+                      "beginCoverage": "2003-01-01",
+                      "endCoverage": "2003-12-12"
+                    },
+                    "proxy": {
+                      "id": "EZ_proxy",
+                      "inherited": false
+                    }
+                  }
+                },
+                "bodyoptioni": {
+                  "summary": "JSON payload to update a package with a proxy",
+                  "value": {
+                    "isSelected": true,
+                    "proxy": {
+                      "id": "EZ_proxy"
+                    },
+                    "packageToken": {
+                      "value": "myValue"
+                    }
+                  }
+                },
+                "bodyoptionj": {
+                  "summary": "JSON payload to update a package with an inherited proxy",
+                  "value": {
+                    "isSelected": true,
+                    "proxy": {
+                      "id": "",
+                      "inherited": true
+                    },
+                    "packageToken": {
+                      "value": "myValue"
+                    }
+                  }
+                },
+                "bodyoptionk": {
+                  "summary": "JSON payload to update a package custom description",
+                  "value": {
+                    "isSelected": true,
+                    "customDescription": "myPackageCustomDescription"
+                  }
+                },
+                "bodyoptionl": {
+                  "summary": "JSON payload to update a custom package url",
+                  "value": {
+                    "isSelected": true,
+                    "url": "myUrl"
+                  }
+                },
+                "bodyoptionm": {
+                  "summary": "JSON payload to update a custom alt name and display name",
                   "value": {
                     "isSelected": true,
                     "customAltNames": [
@@ -1874,7 +2143,202 @@
           "Title Resources"
         ],
         "summary": "Get List of Titles Regardless of Package",
-        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles",
+        "parameters": [
+          {
+            "name": "custid",
+            "in": "path",
+            "description": "EBSCO Customer ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search Term.  Keyword search that is applied to limit the results to titles that have the search term in the search field.  Special characters in the search term need to be URL encoded.  Ex: A&G encodes to A%26G.  The Swagger Explorer performs the search parameter encoding for the **Try it out!**.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "searchfield",
+            "in": "query",
+            "description": "Field to search.  Both integer and string are supported.  Valid values are titlename, publisher, isxn, subject and zdbid.  It is also valid to use 0 for title name, 1 for publisher, 2 for isxn, 3 for subject or 4 for zdbid.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "titlename",
+                "publisher",
+                "isxn",
+                "subject",
+                "zdbid"
+              ]
+            }
+          },
+          {
+            "name": "selection",
+            "in": "query",
+            "description": "Limits the results.  Valid values are all, selected, notselected and orderedthroughebsco.  It is also valid to use 0 for all, 1 for selected, 2 for notselected, or 3 for ordered through EBSCO.  When you filter by all(0), the total results count takes selected and not selected into consideration.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "selected",
+                "notselected",
+                "orderedthroughebsco"
+              ]
+            }
+          },
+          {
+            "name": "resourcetype",
+            "in": "query",
+            "description": "Type of resource. Valid values are all, journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook.  It is also valid to use 0 for all, 1 for journal, 2 for newsletter, 3 for report, 4 for proceedings, 5 for website, 6 for newspaper, 7 for unspecified, 8 for book, 9 for book series, 10 for database, 11 for thesis dissertation, 12 for streaming audio, 13 for streaming video, or 14 for audio book.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "journal",
+                "newsletter",
+                "report",
+                "proceedings",
+                "website",
+                "newspaper",
+                "unspecified",
+                "book",
+                "bookseries",
+                "database",
+                "thesisdissertation",
+                "streamingaudio",
+                "streamingvideo",
+                "audiobook"
+              ]
+            }
+          },
+          {
+            "name": "searchtype",
+            "in": "query",
+            "description": "Type of search. Search types are any, contains, exactmatch, beginswith, proximity, exactphrase and advanced. It is also valid to use 0 for any, 1 for contains, 2 for exactmatch, 3 for beginswith, 4 for proximity, 5 for exactphrase or 6 for advanced.  searchtype is an optional parameter and defaults to contains if not provided.  For more information on the search types, see [Using Search Types](https://developer.ebsco.com/knowledge-services/holdingsiq/docs/search-types).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "any",
+                "contains",
+                "exactmatch",
+                "beginswith",
+                "proximity",
+                "exactphrase",
+                "advanced"
+              ]
+            }
+          },
+          {
+            "name": "packageidfilter",
+            "in": "query",
+            "description": "A comma-separated list of package ID(s). Limits the results by package ID(s). The packageidfilter is an optional parameter.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "orderby",
+            "in": "query",
+            "description": "Valid values are relevance or titlename.  Default is relevance.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "relevance",
+                "titlename"
+              ]
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The maximum number of results to return in the response.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                5,
+                10,
+                20
+              ]
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Page Offset.  Starts at 1.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "subjects",
+            "in": "query",
+            "description": "Types of subjects to be returned. By default returns tli and bisac. Valid values are: bisac, tli, libraryofcongress and medical.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of titles that are part of a specified package.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/titles"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/v2/{custid}/titles": {
+      "get": {
+        "tags": [
+          "Title Resources"
+        ],
+        "summary": "Get List of Titles Regardless of Package",
+        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of.  The response will reflect the context of the EBSCO customer ID included in the request.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated.",
         "parameters": [
           {
             "name": "custid",
@@ -2068,7 +2532,7 @@
           "Title Resources"
         ],
         "summary": "Get Title Details Regardless of Package",
-        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.  This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles/{kbid}",
+        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  \n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support. This endpoint has been deprecated. Please use this endpoint instead: /v2/{custid}/titles/{kbid}",
         "parameters": [
           {
             "name": "custid",
@@ -4642,6 +5106,134 @@
           "packageName"
         ]
       },
+      "packageIdDetailsV1": {
+        "type": "object",
+        "description": "Package details for a specific package ID.",
+        "properties": {
+          "listId": {
+            "type": "integer",
+            "description": "Unique identifier for a list.",
+            "example": 1117849
+          },
+          "packageName": {
+            "type": "string",
+            "description": "Name of the Package. In EPKB, this is 'PkgName'.",
+            "example": "Health & Wellness Resource Center (w/alt health module)"
+          },
+          "vendorId": {
+            "type": "integer",
+            "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
+            "example": 19
+          },
+          "vendorName": {
+            "type": "string",
+            "description": "Provider name.  In EPKB, this is the 'VendorName'.",
+            "example": "EBSCO"
+          },
+          "isCustom": {
+            "type": "boolean",
+            "description": "IsCustom is true if a customer is the vendor.  The customer vendor is used for custom packages.",
+            "example": true
+          },
+          "titleCount": {
+            "type": "integer",
+            "description": "Numeric value indicating the title count of the package.",
+            "example": 1
+          },
+          "isSelected": {
+            "type": "boolean",
+            "description": "Indicates if the packages is selected in a customer's account.",
+            "example": true
+          },
+          "selectedCount": {
+            "type": "integer",
+            "description": "Numeric value indicating the number of titles in packages selected in the customer account.",
+            "example": 1
+          },
+          "contentType": {
+            "type": "string",
+            "description": "Indicates the content type of the package.",
+            "example": "aggregatedfulltext"
+          },
+          "visibility": {
+            "type": "array",
+            "description": "Visibility details for pf,ftf and marc",
+            "items": {
+              "$ref": "#/components/schemas/VisibilityDataV1"
+            }
+          },
+          "customCoverage": {
+            "$ref": "#/components/schemas/coverageDates"
+          },
+          "managedDescription": {
+            "type": "string",
+            "description": "The managed description of the package.",
+            "example": "Package of medicinal journals"
+          },
+          "customDescription": {
+            "type": "string",
+            "description": "The custom description of the package.",
+            "example": "Package of medicinal journals (custom)"
+          },
+          "managedAltNames": {
+            "type": "array",
+            "description": "The list of managed alternate names for the package.",
+            "minItems": 0,
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/altName"
+            }
+          },
+          "isTokenNeeded": {
+            "type": "boolean",
+            "description": "Field to indicate if a token is needed.",
+            "example": true
+          },
+          "allowEbscoToAddTitles": {
+            "type": "boolean",
+            "description": "Indicates if EBSCO is allowed to add titles.  If the package type is custom, then allowEbscoToAddTitles will always be set to false.",
+            "example": true
+          },
+          "packageType": {
+            "type": "string",
+            "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom.",
+            "example": "Complete"
+          },
+          "proxy": {
+            "$ref": "#/components/schemas/proxyInfoIn"
+          },
+          "packageToken": {
+            "$ref": "#/components/schemas/tokenInfo"
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the package.",
+            "example": "https://link.gale.com/apps/CDB?u=[[galesiteid]]"
+          },
+          "availableForSelection": {
+            "type": "boolean",
+            "description": "availableForSelection is true if the package is available for full selection.  Otherwise, it returns false.",
+            "example": true
+          },
+          "customAltNames": {
+            "type": "array",
+            "description": "The list of custom alternate names for the package",
+            "minItems": 0,
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/altName"
+            }
+          },
+          "customDisplayName": {
+            "type": "string",
+            "description": "The customized display name for a package."
+          }
+        },
+        "required": [
+          "packageId",
+          "packageName"
+        ]
+      },
       "customerResources": {
         "required": [
           "packageId",
@@ -6941,6 +7533,79 @@
             "type": "boolean",
             "description": "Field to indicate if title is hidden.",
             "example": false
+          },
+          "customDescription": {
+            "type": "string",
+            "description": "Field to set the custom description of the package.",
+            "example": "Custom description for package"
+          },
+          "url": {
+            "type": "string",
+            "description": "The url of the package.",
+            "example": "https://link.gale.com/apps/IFME?u=[[galesiteid]]"
+          },
+          "isFullPackage": {
+            "type": "boolean",
+            "description": "Field to indicate if a full package.",
+            "example": false
+          },
+          "allowEbscoToAddTitles": {
+            "type": "boolean",
+            "description": "Indicates if EBSCO is allowed to add titles.  If the package type is custom, then allowEbscoToAddTitles will always be set to false.",
+            "example": true
+          },
+          "customCoverage": {
+            "$ref": "#/components/schemas/coverageDates"
+          },
+          "proxy": {
+            "$ref": "#/components/schemas/proxyInfo"
+          },
+          "packageToken": {
+            "$ref": "#/components/schemas/tokenDetails"
+          },
+          "customAltNames": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 10,
+            "description": "Set a list of custom alternate names for the package",
+            "items": {
+              "$ref": "#/components/schemas/altName"
+            }
+          },
+          "customDisplayName": {
+            "type": "string",
+            "description": "Set the custom display name for the package"
+          }
+        },
+        "required": [
+          "isSelected"
+        ]
+      },
+      "setPackagePayloadV1": {
+        "type": "object",
+        "description": "This object represents data elements that describe the payload to update values for a package.",
+        "properties": {
+          "packageName": {
+            "type": "string",
+            "description": "Package Name",
+            "example": "Library Package 1"
+          },
+          "contentType": {
+            "type": "integer",
+            "description": "Content Type. Valid values are 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown, 7 for online reference, 8 for streaming media or 9 for mixed content.",
+            "example": 3
+          },
+          "isSelected": {
+            "type": "boolean",
+            "description": "Indicates if the packages is selected in a customer's account.",
+            "example": true
+          },
+          "visibility": {
+            "type": "array",
+            "description": "Visibility details for pf,ftf and marc",
+            "items": {
+              "$ref": "#/components/schemas/VisibilityDataV1"
+            }
           },
           "customDescription": {
             "type": "string",
