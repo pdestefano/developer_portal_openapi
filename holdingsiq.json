@@ -702,8 +702,8 @@
                     "contentType": 3,
                     "customDescription": "Custom Package Description",
                     "customDisplayName": "Custom Display Name",
-                    "url": "www.yourlibrary.com/medical" 
-                  }             
+                    "url": "www.yourlibrary.com/medical"
+                  }
                 },
                 "bodyoptiond": {
                   "summary": "JSON payload to create a custom package with alternate package neames",
@@ -4588,10 +4588,8 @@
         "description": "List of packages from EPKB - not limited to a single vendor id - and the total number of results found."
       },
       "titles": {
-        "required": [
-          "totalResults"
-        ],
         "type": "object",
+        "description": "List of titles regardless of package from EPKB and the total number of results found.",
         "properties": {
           "totalResults": {
             "type": "integer",
@@ -4601,14 +4599,16 @@
           "titles": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/titleROP"
+              "$ref": "#/components/schemas/TitlesV2"
             }
           },
           "facets": {
             "$ref": "#/components/schemas/Facets"
           }
         },
-        "description": "List of titles regardless of package from EPKB and the total number of results found."
+        "required": [
+          "totalResults"
+        ]
       },
       "Facets": {
         "title": "Facets",
@@ -4897,12 +4897,8 @@
         "description": "This object represents data elements that describe a title."
       },
       "titleROP": {
-        "required": [
-          "pubType",
-          "titleId",
-          "titleName"
-        ],
         "type": "object",
+        "description": "This object represents data elements that describe a title.",
         "properties": {
           "titleId": {
             "type": "integer",
@@ -4980,7 +4976,11 @@
             }
           }
         },
-        "description": "This object represents data elements that describe a title."
+        "required": [
+          "titleId",
+          "titleName",
+          "pubType"
+        ]
       },
       "packageIdDetails": {
         "type": "object",
@@ -5662,6 +5662,9 @@
       },
       "subj": {
         "type": "object",
+        "x-stoplight": {
+          "id": "79cf682da0c2b"
+        },
         "properties": {
           "type": {
             "type": "string",
@@ -8987,6 +8990,218 @@
           }
         },
         "description": "This object represents data elements that describe a vendor package."
+      },
+      "TitlesV2": {
+        "type": "object",
+        "title": "TitlesV2",
+        "description": "This object represents data that describes a title.",
+        "properties": {
+          "kbid": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "9yq20u6jx7qgp"
+            },
+            "description": "KBID"
+          },
+          "titleName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "hmz89dx0bw50z"
+            },
+            "description": "Title Name"
+          },
+          "publisherName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "oib1n6wdhlzgo"
+            },
+            "description": "Publisher Name"
+          },
+          "identifiersList": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "g3x4blvhe2adx"
+            },
+            "description": "Identifiers",
+            "items": {
+              "$ref": "#/components/schemas/LocalIdentifier"
+            }
+          },
+          "subjectsList": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "09p16x9ipl3qp"
+            },
+            "description": "Subjects",
+            "items": {
+              "$ref": "#/components/schemas/LocalSubject"
+            }
+          },
+          "isTitleCustom": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "1bmdbzx2nhjv7"
+            },
+            "description": "Indicates if title is a custom title."
+          },
+          "pubType": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "01rdmzmggsrnk"
+            },
+            "description": "Publication Type"
+          },
+          "edition": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ypv625pwn7kbm"
+            },
+            "description": "Edition"
+          },
+          "isPeerReviewed": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "8rkqu2i97ww3u"
+            },
+            "description": "Indicates if the title is peer reviewed."
+          },
+          "contributorsList": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "5nmuw45wevwpi"
+            },
+            "description": "Contributors",
+            "items": {
+              "$ref": "#/components/schemas/LocalContributor"
+            }
+          },
+          "alternateTitleList": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "jd34scn70cznc"
+            },
+            "description": "Alternate Titles",
+            "items": {
+              "$ref": "#/components/schemas/LocalAlternateTitle"
+            }
+          },
+          "listId": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "ua7kn5au36klj"
+            },
+            "description": "List ID"
+          },
+          "packageName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "165epejs4lkbq"
+            },
+            "description": "Package Name"
+          },
+          "packageType": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "x4qvzrcxix427"
+            },
+            "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom."
+          },
+          "proxy": {
+            "$ref": "#/components/schemas/ProxyDto"
+          },
+          "isPackageCustom": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "g6qemg6c6904h"
+            },
+            "description": "Indicates if the package is custom."
+          },
+          "vendorId": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "n9g6gq8mylgaf"
+            },
+            "description": "Vendor Id"
+          },
+          "vendorName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "lcwtp3vpeouxi"
+            },
+            "description": "Vendor Name"
+          },
+          "locationId": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "1en7s9s42rmwa"
+            },
+            "description": "Location ID"
+          },
+          "isSelected": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "9f4yllgxi59b6"
+            },
+            "description": "Indicates if the title is selected."
+          },
+          "isOrderedThroughEbsco": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "xkqd8r65l0gqm"
+            },
+            "description": "Indicates if the title is orered through Ebsco."
+          },
+          "isTokenNeeded": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "m37z5soag5p6x"
+            },
+            "description": "Indicates if token is needed."
+          },
+          "visibility": {
+            "x-stoplight": {
+              "id": "e1bq0asfkt5az"
+            },
+            "type": "array",
+            "description": "Visibility data for PF, FTF, and MARC.",
+            "items": {
+              "$ref": "#/components/schemas/VisibilityDataV1"
+            }
+          },
+          "managedCoverageList": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "zh11nebov7qf4"
+            },
+            "description": "Managed Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/coverageDates"
+            }
+          },
+          "customCoverageList": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "zh11nebov7qf4"
+            },
+            "description": "Custom Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/coverageDates"
+            }
+          },
+          "managedEmbargoPeriod": {
+            "$ref": "#/components/schemas/EmbargoPeriod"
+          },
+          "customEmbargoPeriod": {
+            "$ref": "#/components/schemas/EmbargoPeriod"
+          },
+          "url": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "kil0ixw75hfwa"
+            },
+            "description": "URL"
+          }
+        }
       }
     }
   }
