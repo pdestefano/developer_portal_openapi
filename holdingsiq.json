@@ -5227,10 +5227,19 @@
           "customDisplayName": {
             "type": "string",
             "description": "The customized display name for a package."
+          },
+          "subjectAssociations": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "fhpwdwn7552zz"
+            },
+            "description": "Subjects associated with the package",
+            "items": {
+              "$ref": "#/components/schemas/PackageSubjectAssociation"
+            }
           }
         },
         "required": [
-          "packageId",
           "packageName"
         ]
       },
@@ -9200,6 +9209,58 @@
               "id": "kil0ixw75hfwa"
             },
             "description": "URL"
+          }
+        }
+      },
+      "PackageSubjectAssociation": {
+        "title": "PackageSubjectAssociation",
+        "x-stoplight": {
+          "id": "zdcqij2m9xbvx"
+        },
+        "type": "object",
+        "description": "A Subject associated to a Package",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "8d2mmjug5u9dh"
+            },
+            "description": "The name of the subject."
+          },
+          "parentId": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "zxj8agw14kty2"
+            },
+            "description": "The parent id of the subject (will not be displayed if the associated subject is a root subject)."
+          },
+          "id": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "rhw7ng0ujernu"
+            },
+            "description": "Subject ID"
+          },
+          "schemaId": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "qslmaxuc7ws0a"
+            },
+            "description": "Schema ID"
+          },
+          "isCustom": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "zv1ou4prs6xik"
+            },
+            "description": "Indicates if the package subject association is custom."
+          },
+          "subjectHierarchy": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "63rohloekzgy2"
+            },
+            "description": "The subject hierarchy in string format."
           }
         }
       }
