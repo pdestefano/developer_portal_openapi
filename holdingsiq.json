@@ -4170,18 +4170,18 @@
           "id": {
             "type": "integer",
             "format": "int32",
-            "description": "Unique package identifier.",
+            "description": "Id of a Facet",
             "example": 5207
           },
           "name": {
             "type": "string",
-            "description": "Package Name",
+            "description": "Name of a Facet",
             "example": "EBSCO eBooks"
           },
           "count": {
             "type": "integer",
             "format": "int32",
-            "description": "Total count of search results contained in the package.",
+            "description": "Count of results matching the Facet",
             "example": 1
           }
         },
