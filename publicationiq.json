@@ -6198,6 +6198,9 @@
         },
         "visibilityData": {
           "$ref": "#/definitions/VisibilityData"
+        },
+        "url": {
+          "type": "string"
         }
       }
     },
