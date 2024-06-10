@@ -3925,7 +3925,7 @@
           {
             "name": "subjectfacetcount",
             "in": "query",
-            "description": "Count of subject facets to return in the response. Default is 0.",
+            "description": "Count of subject facets to return in the response. Default is 1000 when facetstoinclude contains subject, otherwise default is 0.",,
             "schema": {
               "type": "integer"
             }
@@ -3939,6 +3939,14 @@
               "items": {
                 "type": "string"
               }
+            }
+          },
+          {
+            "name": "facetstoinclude",
+            "in": "query",
+            "description": "Select facets to include in response. Allowed value is 'subject'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
+            "schema": {
+              "type": "string"
             }
           },
           {
