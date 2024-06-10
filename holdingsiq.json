@@ -3944,7 +3944,7 @@
           {
             "name": "subjectfacetcount",
             "in": "query",
-            "description": "Count of subject facets to return in the response. Default is 1000 when facetstoinclude contains subject, otherwise default is 0.",,
+            "description": "Count of subject facets to return in the response. Default is 1000 when facetstoinclude contains subject, otherwise default is 0.",
             "schema": {
               "type": "integer"
             }
