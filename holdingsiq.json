@@ -3694,6 +3694,14 @@
             }
           },
           {
+            "name": "patron",
+            "in": "query",
+            "description": "If true (patron search - used in PF), searches will treat custom data as an override to managed data. If null or false (admin search - used in HLM), searches will treat custom data as a supplement to managed data. \" +\n        \"This applies to the package name and package description fields.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "x-api-key",
             "in": "header",
             "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
@@ -3871,6 +3879,14 @@
             "description": "Passing in any value will enable Hit Highlighting, which will highlight which parts of the Package result were matched on during searching. The string passed in is the tag highlighted results will be wrapped in. For example, a highlight tag of 'h' will return < h >The Package Hit < /h > in the response.",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "patron",
+            "in": "query",
+            "description": "If true (patron search - used in PF), searches will treat custom data as an override to managed data. If null or false (admin search - used in HLM), searches will treat custom data as a supplement to managed data. \" +\n        \"This applies to the package name and package description fields.",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -8142,9 +8158,22 @@
             "description": "Name of the Package.",
             "example": "Health & Wellness Resource Center (w/alt health module)"
           },
+          "customDisplayName": {
+            "type": "string",
+            "description": "Custom name for the Package.",
+            "example": "Health & Wellness"
+          },
           "managedAltNames": {
             "type": "array",
             "description": "List of Alternative names of package",
+            "items": {
+              "type": "string",
+              "example": "Health & Wellness Resource Center Alternative"
+            }
+          },
+          "customAltNames": {
+            "type": "array",
+            "description": "List of Custom Alternative names of package",
             "items": {
               "type": "string",
               "example": "Health & Wellness Resource Center Alternative"
