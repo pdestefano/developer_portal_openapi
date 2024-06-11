@@ -4225,6 +4225,44 @@
             }
           },
           {
+            "name": "subjectschema",
+            "in": "query",
+            "description": "List of subject facet schema's to filter facets on",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "subjectfilter",
+            "in": "query",
+            "description": "Filters package search by given subjects. Accepts subject id or name. If multiple subjects are given, documents containing any of the given subjects will be returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "facetstoinclude",
+            "in": "query",
+            "description": "Select facets to include in response. Allowed value is 'subject'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectfacetcount",
+            "in": "query",
+            "description": "Count of subject facets to return in the response. Default is 1000 when facetstoinclude contains subject, otherwise default is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "patron",
             "in": "query",
             "description": "If true (patron search - used in PF), searches will treat custom data as an override to managed data. If null or false (admin search - used in HLM), searches will treat custom data as a supplement to managed data. \" +\n        \"This applies to the package name and package description fields.",
@@ -4410,6 +4448,44 @@
             "description": "Passing in any value will enable Hit Highlighting, which will highlight which parts of the Package result were matched on during searching. The string passed in is the tag highlighted results will be wrapped in. For example, a highlight tag of 'h' will return < h >The Package Hit < /h > in the response.",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "subjectschema",
+            "in": "query",
+            "description": "List of subject facet schema's to filter facets on",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "subjectfilter",
+            "in": "query",
+            "description": "Filters package search by given subjects. Accepts subject id or name. If multiple subjects are given, documents containing any of the given subjects will be returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "facetstoinclude",
+            "in": "query",
+            "description": "Select facets to include in response. Allowed value is 'subject'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectfacetcount",
+            "in": "query",
+            "description": "Count of subject facets to return in the response. Default is 1000 when facetstoinclude contains subject, otherwise default is 0.",
+            "schema": {
+              "type": "integer"
             }
           },
           {
@@ -4644,21 +4720,31 @@
         "title": "FacetsModel",
         "type": "object",
         "properties": {
+          "parentId": {
+            "type": "integer",
+            "description": "Id of a Subject's Parent",
+            "example": "35407"
+          },
+          "schema": {
+            "type": "string",
+            "description": "Schema of a Subject",
+            "example": "Library of Congress"
+          },
           "id": {
             "type": "integer",
             "format": "int32",
-            "description": "Unique package identifier.",
+            "description": "Id of a Facet",
             "example": 5207
           },
           "name": {
             "type": "string",
-            "description": "Package Name",
+            "description": "Name of a Facet",
             "example": "EBSCO eBooks"
           },
           "count": {
             "type": "integer",
             "format": "int32",
-            "description": "Total count of search results contained in the package.",
+            "description": "Count of results matching the Facet",
             "example": 1
           }
         },
@@ -8882,10 +8968,58 @@
           }
         }
       },
+      "PackageFacets": {
+        "title": "PackageFacets",
+        "type": "object",
+        "properties": {
+          "subjects": {
+            "type": "array",
+            "description": "List of subject facets",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FacetsModel"
+              }
+            }
+          }
+        }
+      },
+      "PackageSubjectResponse": {
+        "title": "PackageSubjectResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of a subject",
+            "example": 35408
+          },
+          "parentId": {
+            "type": "integer",
+            "description": "Id of Subject's Parent",
+            "example": 35407
+          },
+          "schemaId": {
+            "type": "integer",
+            "description": "SchemaId of a Subject",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of a Subject",
+            "example": "Technology"
+          },
+          "isCustom": {
+            "type": "boolean",
+            "description": "Indicates if the subject has been custom selected by the customer",
+            "example": false
+          }
+        }
+      },
       "PackagesResultV2": {
         "required": [
           "packagesList",
-          "totalResults"
+          "totalResults",
+          "facets"
         ],
         "type": "object",
         "properties": {
@@ -8899,6 +9033,9 @@
             "type": "integer",
             "description": "Total number of results found.",
             "example": 5
+          },
+          "facets": {
+            "$ref": "#/components/schemas/PackageFacets"
           }
         },
         "description": "List of packages from EPKB - not limited to a single vendor id - and the total number of results found."
@@ -9025,6 +9162,13 @@
             "type": "string",
             "description": "URL with proxy applied",
             "example": "http://ezproxy.myinstitute.edu/login?url=http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
+          },
+          "subjectAssociations": {
+            "type": "array",
+            "description": "List of subject associations",
+            "items": {
+              "$ref": "#/components/schemas/PackageSubjectResponse"
+            }
           }
         },
         "description": "This object represents data elements that describe a vendor package."
