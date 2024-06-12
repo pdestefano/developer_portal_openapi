@@ -739,6 +739,9 @@
                         "altName": "Custom Alt Name 1",
                         "id": null
                       }
+                    ],
+                    "subjects": [
+                      10293
                     ]
                   }
                 }
@@ -1443,6 +1446,17 @@
                       }
                     ],
                     "customDisplayName": "string"
+                  }
+                },
+                "bodyoptionn": {
+                  "summary": "JSON payload to update a package with a subject association",
+                  "value": {
+                    "isSelected": true,
+                    "subjectAssociations": [
+                      {
+                        "subjectId": 10293
+                      }
+                    ]
                   }
                 }
               }
@@ -6505,6 +6519,13 @@
           },
           "customAltNames": {
             "$ref": "#/components/schemas/altName"
+          },
+          "subjects": {
+            "type": "array",
+            "description": "List of subject Ids to associate with the package",
+            "items": {
+              "type": "integer"
+            }
           }
         },
         "description": "Custom Package Payload"
@@ -7762,6 +7783,13 @@
           "customDisplayName": {
             "type": "string",
             "description": "Set the custom display name for the package"
+          },
+          "subjectAssociations":  {
+            "type": "array",
+            "description": "The list of subjects to associate with the package.",
+            "items": {
+              "$ref": "#/components/schemas/UpdateSubjectAssociation"
+            }
           }
         },
         "required": [
@@ -9436,6 +9464,16 @@
             "description": "The subject hierarchy in string format."
           }
         }
+      },
+      "UpdateSubjectAssociation": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "description": "The ID of the subject being associated."
+          }
+        },
+        "description": "A Subject to be associated with a Package"
       }
     }
   }
