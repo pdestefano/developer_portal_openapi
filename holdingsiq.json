@@ -741,7 +741,7 @@
                       }
                     ],
                     "subjects": [
-                      10293
+                      35408
                     ]
                   }
                 }
@@ -1454,7 +1454,7 @@
                     "isSelected": true,
                     "subjectAssociations": [
                       {
-                        "subjectId": 10293
+                        "subjectId": 35408
                       }
                     ]
                   }
@@ -6524,7 +6524,8 @@
             "type": "array",
             "description": "List of subject Ids to associate with the package",
             "items": {
-              "type": "integer"
+              "type": "integer",
+              "example": 35408
             }
           }
         },
@@ -9470,7 +9471,8 @@
         "properties": {
           "subjectId": {
             "type": "integer",
-            "description": "The ID of the subject being associated."
+            "description": "The ID of the subject being associated.",
+            "example": 35408
           }
         },
         "description": "A Subject to be associated with a Package"
