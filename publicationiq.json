@@ -5664,7 +5664,31 @@
         },
 	"licenseTermNoteLabel": {
   	  "type": "string"
-	}
+	},
+	"customDescription": {
+	  "type": "string"
+	},
+	"managedDescription": {
+	  "type": "string"
+	},
+	"url": {
+	  "type": "string"
+	},
+	"managedAltNames": {
+	  "type": "array"
+	  "items": {
+            "type": "string" 
+	  }
+	},
+	"customAltNames": {
+	  "type": "array"
+	  "items": {
+            "type": "string" 
+	  }
+	},
+	"proxiedUrl": {
+	  "type": "string"
+	},
       }
     },
     "Record": {
