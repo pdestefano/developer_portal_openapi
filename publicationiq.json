@@ -5688,7 +5688,7 @@
 	},
 	"proxiedUrl": {
 	  "type": "string"
-	},
+	}
       }
     },
     "Record": {
