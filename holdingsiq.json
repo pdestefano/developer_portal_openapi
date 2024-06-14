@@ -4533,16 +4533,25 @@
         }
       }
     },
-    "/v1/subjects/{schemaId}": {
+    "/v1/{custid}/subjects/{schemaid}": {
       "get": {
         "tags": [
           "Subject Resources"
         ],
         "summary": "Get Available Subjects By Schema Id",
-        "description": "This operation retrieves all available subjects within a specified subject schema. The parameter includes the schema id. If 0 is used for the input parameter, subjects for all subject schemas will be returned. In the response, the properties for each item in the list includes the subject name, parent id, subject id, schema id, schema name, and subject hierarchy.",
+        "description": "This operation retrieves all available subjects within a specified subject schema. If 0 is used for the schema id parameter, subjects for all subject schemas will be returned. In the response, the properties for each item in the list includes the subject name, parent id, subject id, schema id, schema name, and subject hierarchy.",
         "parameters": [
           {
-            "name": "schemaId",
+            "schema": {
+              "type": "string"
+            },
+            "name": "custid",
+            "description": "EBSCO Customer ID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "schemaid",
             "in": "path",
             "description": "The schema id used to filter results (0 = all schemas, 1 = General, 3 = Library of Congress, 4 = Medical, 5 = TLI, 6 = BISAC)",
             "required": true,
@@ -9532,7 +9541,7 @@
           },
           "parentId": {
             "type": "integer",
-            "description": "The id of the parent subject",
+            "description": "The id of the parent subject. If this is a root level package subject association this property will not be in the response.",
             "example": 35407
           },
           "schemaId": {
