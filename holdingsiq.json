@@ -33,6 +33,9 @@
     },
     {
       "name": "Label and Proxy Resources"
+    },
+    {
+      "name": "Subject Resources"
     }
   ],
   "paths": {
@@ -4527,6 +4530,96 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PackagesResultV2"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{custid}/subjects/{schemaid}": {
+      "get": {
+        "tags": [
+          "Subject Resources"
+        ],
+        "summary": "Get Available Subjects By Schema Id",
+        "description": "This operation retrieves all available subjects within a specified subject schema. If 0 is used for the schema id parameter, subjects for all subject schemas will be returned. In the response, the properties for each item in the list includes the subject name, parent id, subject id, schema id, schema name, and subject hierarchy.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "custid",
+            "description": "EBSCO Customer ID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "schemaid",
+            "in": "path",
+            "description": "The schema id used to filter results (0 = all schemas, 1 = General, 3 = Library of Congress, 4 = Medical, 5 = TLI, 6 = BISAC)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to grant you access to this API.  The API key needs to be a header parameter for every operation in order to access this API. You will need an API key to use the interactive documentation.  If you require an API key, please contact EBSCO customer support.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of available subjects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvailableSubjectResponse"
+                },
+                "examples": {
+                  "Get Available Subjects By Schema Id Response": {
+                    "value": 
+                      [
+                        {
+                          "subjectName": "Agriculture (General)",
+                          "subjectId": 28451,
+                          "schemaId": 3,
+                          "schemaName": "Library of Congress",
+                          "subjectHierarchy": "Agriculture (General)"
+                        },
+                        {
+                          "subjectName": "Agricultural chemistry.  Agricultural chemicals",
+                          "parentId": 28451,
+                          "subjectId": 28457,
+                          "schemaId": 3,
+                          "schemaName": "Library of Congress",
+                          "subjectHierarchy": "Agriculture (General) -- Agricultural chemistry.  Agricultural chemicals"
+                        },
+                        {
+                          "subjectName": "Agricultural conservation",
+                          "parentId": 28451,
+                          "subjectId": 28458,
+                          "schemaId": 3,
+                          "schemaName": "Library of Congress",
+                          "subjectHierarchy": "Agriculture (General) -- Agricultural conservation"
+                        }
+                      ]
+                  }
                 }
               }
             }
@@ -9463,6 +9556,42 @@
               "id": "63rohloekzgy2"
             },
             "description": "The subject hierarchy in string format."
+          }
+        }
+      },
+      "AvailableSubjectResponse": {
+        "title": "AvailableSubjectResponse",
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "description": "The id of the subject",
+            "example": 35408
+          },
+          "parentId": {
+            "type": "integer",
+            "description": "The id of the parent subject. If this is a root level package subject association this property will not be in the response.",
+            "example": 35407
+          },
+          "schemaId": {
+            "type": "integer",
+            "description": "The id of the subject schema",
+            "example": 3
+          },
+          "schemaName": {
+            "type": "string",
+            "description": "The name of the subject schema",
+            "example": "Library of Congress"
+          },
+          "subjectName": {
+            "type": "string",
+            "description": "The name of the subject",
+            "example": "Agricultural chemistry.  Agricultural chemicals"
+          },
+          "subjectHierarchy": {
+            "type": "string ",
+            "description": "Agriculture (General) -- Agricultural chemistry.  Agricultural chemicals",
+            "example": false
           }
         }
       },
