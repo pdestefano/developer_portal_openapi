@@ -742,6 +742,9 @@
                         "altName": "Custom Alt Name 1",
                         "id": null
                       }
+                    ],
+                    "subjects": [
+                      35408
                     ]
                   }
                 }
@@ -1446,6 +1449,17 @@
                       }
                     ],
                     "customDisplayName": "string"
+                  }
+                },
+                "bodyoptionn": {
+                  "summary": "JSON payload to update a package with a subject association",
+                  "value": {
+                    "isSelected": true,
+                    "subjectAssociations": [
+                      {
+                        "subjectId": 35408
+                      }
+                    ]
                   }
                 }
               }
@@ -6598,6 +6612,14 @@
           },
           "customAltNames": {
             "$ref": "#/components/schemas/altName"
+          },
+          "subjects": {
+            "type": "array",
+            "description": "List of subject Ids to associate with the package",
+            "items": {
+              "type": "integer",
+              "example": 35408
+            }
           }
         },
         "description": "Custom Package Payload"
@@ -7855,6 +7877,13 @@
           "customDisplayName": {
             "type": "string",
             "description": "Set the custom display name for the package"
+          },
+          "subjectAssociations":  {
+            "type": "array",
+            "description": "The list of subjects to associate with the package.",
+            "items": {
+              "$ref": "#/components/schemas/UpdateSubjectAssociation"
+            }
           }
         },
         "required": [
@@ -9565,6 +9594,17 @@
             "example": false
           }
         }
+      },
+      "UpdateSubjectAssociation": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "description": "The ID of the subject being associated.",
+            "example": 35408
+          }
+        },
+        "description": "A Subject to be associated with a Package"
       }
     }
   }
