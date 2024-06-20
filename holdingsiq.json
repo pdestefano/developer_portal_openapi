@@ -5439,9 +5439,6 @@
           },
           "subjectAssociations": {
             "type": "array",
-            "x-stoplight": {
-              "id": "fhpwdwn7552zz"
-            },
             "description": "Subjects associated with the package",
             "items": {
               "$ref": "#/components/schemas/PackageSubjectAssociation"
@@ -5880,9 +5877,6 @@
       },
       "subj": {
         "type": "object",
-        "x-stoplight": {
-          "id": "79cf682da0c2b"
-        },
         "properties": {
           "type": {
             "type": "string",
@@ -7126,9 +7120,6 @@
       "altName": {
         "type": "object",
         "description": "Alternate names and their corresponding ids for a package, can be managed or custom.",
-        "x-stoplight": {
-          "id": "459c9558e14b8"
-        },
         "properties": {
           "id": {
             "type": "integer",
@@ -8579,9 +8570,6 @@
       },
       "ResourceId": {
         "title": "ResourceId",
-        "x-stoplight": {
-          "id": "3z6h2448ygr0s"
-        },
         "type": "object",
         "description": "Identifier for a title assigned by GKB database upon entry",
         "properties": {
@@ -8594,9 +8582,6 @@
       },
       "Kbid": {
         "title": "Kbid",
-        "x-stoplight": {
-          "id": "j26yc9is867zi"
-        },
         "type": "object",
         "description": "Identifier for a title assigned by the EPKB database upon entry",
         "properties": {
@@ -8630,9 +8615,6 @@
       },
       "RelationshipRecord": {
         "title": "RelationshipRecord",
-        "x-stoplight": {
-          "id": "wqg5jtsqsn0ly"
-        },
         "type": "object",
         "description": "Represents the fields needed to describe a relationship between two titles",
         "properties": {
@@ -8688,9 +8670,6 @@
       },
       "Pagination": {
         "title": "Pagination",
-        "x-stoplight": {
-          "id": "zv9q91t3cgwkr"
-        },
         "type": "object",
         "description": "Represents the number of results returned in the response",
         "properties": {
@@ -8702,9 +8681,6 @@
       },
       "TitlesResponseV2": {
         "title": "TitlesResponseV2",
-        "x-stoplight": {
-          "id": "btv1yilaqm71j"
-        },
         "type": "object",
         "properties": {
           "titles": {
@@ -8717,9 +8693,6 @@
       },
       "LocationV2": {
         "title": "LocationV2",
-        "x-stoplight": {
-          "id": "9480wnajdonum"
-        },
         "type": "object",
         "properties": {
           "alternateTitleList": {
@@ -8912,9 +8885,6 @@
       },
       "EmbargoPeriod": {
         "title": "EmbargoPeriod",
-        "x-stoplight": {
-          "id": "ho3l0auyzuppf"
-        },
         "type": "object",
         "properties": {
           "embargoUnit": {
@@ -8938,9 +8908,6 @@
       },
       "LocalAlternateTitle": {
         "title": "LocalAlternateTitle",
-        "x-stoplight": {
-          "id": "pxr3vn7ewsrh6"
-        },
         "type": "object",
         "properties": {
           "alternateTitle": {
@@ -8957,9 +8924,6 @@
       },
       "LocalContributor": {
         "title": "LocalContributor",
-        "x-stoplight": {
-          "id": "u4ce4nfpimzjn"
-        },
         "type": "object",
         "properties": {
           "contributor": {
@@ -8976,9 +8940,6 @@
       },
       "CoverageList": {
         "title": "CoverageList",
-        "x-stoplight": {
-          "id": "o2y8y21kgrbqn"
-        },
         "type": "object",
         "properties": {
           "beginCoverage": {
@@ -8995,9 +8956,6 @@
       },
       "LocalIdentifier": {
         "title": "LocalIdentifier",
-        "x-stoplight": {
-          "id": "jfxcqu5kohong"
-        },
         "type": "object",
         "properties": {
           "id": {
@@ -9026,9 +8984,6 @@
       },
       "ProxyDto": {
         "title": "ProxyDto",
-        "x-stoplight": {
-          "id": "mxv2n6uymetd1"
-        },
         "type": "object",
         "properties": {
           "id": {
@@ -9049,9 +9004,6 @@
       },
       "LocalSubject": {
         "title": "LocalSubject",
-        "x-stoplight": {
-          "id": "tryihwhh40018"
-        },
         "type": "object",
         "properties": {
           "subject": {
@@ -9068,9 +9020,6 @@
       },
       "VisibilityDataV1": {
         "title": "VisibilityDataV1",
-        "x-stoplight": {
-          "id": "2dmb4bklaikri"
-        },
         "type": "object",
         "properties": {
           "category": {
@@ -9302,30 +9251,18 @@
         "properties": {
           "kbid": {
             "type": "integer",
-            "x-stoplight": {
-              "id": "9yq20u6jx7qgp"
-            },
             "description": "KBID"
           },
           "titleName": {
             "type": "string",
-            "x-stoplight": {
-              "id": "hmz89dx0bw50z"
-            },
             "description": "Title Name"
           },
           "publisherName": {
             "type": "string",
-            "x-stoplight": {
-              "id": "oib1n6wdhlzgo"
-            },
             "description": "Publisher Name"
           },
           "identifiersList": {
             "type": "array",
-            "x-stoplight": {
-              "id": "g3x4blvhe2adx"
-            },
             "description": "Identifiers",
             "items": {
               "$ref": "#/components/schemas/LocalIdentifier"
@@ -9333,9 +9270,6 @@
           },
           "subjectsList": {
             "type": "array",
-            "x-stoplight": {
-              "id": "09p16x9ipl3qp"
-            },
             "description": "Subjects",
             "items": {
               "$ref": "#/components/schemas/LocalSubject"
@@ -9343,37 +9277,22 @@
           },
           "isTitleCustom": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "1bmdbzx2nhjv7"
-            },
             "description": "Indicates if title is a custom title."
           },
           "pubType": {
             "type": "string",
-            "x-stoplight": {
-              "id": "01rdmzmggsrnk"
-            },
             "description": "Publication Type"
           },
           "edition": {
             "type": "string",
-            "x-stoplight": {
-              "id": "ypv625pwn7kbm"
-            },
             "description": "Edition"
           },
           "isPeerReviewed": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "8rkqu2i97ww3u"
-            },
             "description": "Indicates if the title is peer reviewed."
           },
           "contributorsList": {
             "type": "array",
-            "x-stoplight": {
-              "id": "5nmuw45wevwpi"
-            },
             "description": "Contributors",
             "items": {
               "$ref": "#/components/schemas/LocalContributor"
@@ -9381,9 +9300,6 @@
           },
           "alternateTitleList": {
             "type": "array",
-            "x-stoplight": {
-              "id": "jd34scn70cznc"
-            },
             "description": "Alternate Titles",
             "items": {
               "$ref": "#/components/schemas/LocalAlternateTitle"
@@ -9391,23 +9307,14 @@
           },
           "listId": {
             "type": "integer",
-            "x-stoplight": {
-              "id": "ua7kn5au36klj"
-            },
             "description": "List ID"
           },
           "packageName": {
             "type": "string",
-            "x-stoplight": {
-              "id": "165epejs4lkbq"
-            },
             "description": "Package Name"
           },
           "packageType": {
             "type": "string",
-            "x-stoplight": {
-              "id": "x4qvzrcxix427"
-            },
             "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom."
           },
           "proxy": {
@@ -9415,57 +9322,33 @@
           },
           "isPackageCustom": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "g6qemg6c6904h"
-            },
             "description": "Indicates if the package is custom."
           },
           "vendorId": {
             "type": "integer",
-            "x-stoplight": {
-              "id": "n9g6gq8mylgaf"
-            },
             "description": "Vendor Id"
           },
           "vendorName": {
             "type": "string",
-            "x-stoplight": {
-              "id": "lcwtp3vpeouxi"
-            },
             "description": "Vendor Name"
           },
           "locationId": {
             "type": "integer",
-            "x-stoplight": {
-              "id": "1en7s9s42rmwa"
-            },
             "description": "Location ID"
           },
           "isSelected": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "9f4yllgxi59b6"
-            },
             "description": "Indicates if the title is selected."
           },
           "isOrderedThroughEbsco": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "xkqd8r65l0gqm"
-            },
             "description": "Indicates if the title is orered through Ebsco."
           },
           "isTokenNeeded": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "m37z5soag5p6x"
-            },
             "description": "Indicates if token is needed."
           },
           "visibility": {
-            "x-stoplight": {
-              "id": "e1bq0asfkt5az"
-            },
             "type": "array",
             "description": "Visibility data for PF, FTF, and MARC.",
             "items": {
@@ -9474,9 +9357,6 @@
           },
           "managedCoverageList": {
             "type": "array",
-            "x-stoplight": {
-              "id": "zh11nebov7qf4"
-            },
             "description": "Managed Coverage List",
             "items": {
               "$ref": "#/components/schemas/coverageDates"
@@ -9484,9 +9364,6 @@
           },
           "customCoverageList": {
             "type": "array",
-            "x-stoplight": {
-              "id": "zh11nebov7qf4"
-            },
             "description": "Custom Coverage List",
             "items": {
               "$ref": "#/components/schemas/coverageDates"
@@ -9500,61 +9377,37 @@
           },
           "url": {
             "type": "string",
-            "x-stoplight": {
-              "id": "kil0ixw75hfwa"
-            },
             "description": "URL"
           }
         }
       },
       "PackageSubjectAssociation": {
         "title": "PackageSubjectAssociation",
-        "x-stoplight": {
-          "id": "zdcqij2m9xbvx"
-        },
         "type": "object",
         "description": "A Subject associated to a Package",
         "properties": {
           "name": {
             "type": "string",
-            "x-stoplight": {
-              "id": "8d2mmjug5u9dh"
-            },
             "description": "The name of the subject."
           },
           "parentId": {
             "type": "string",
-            "x-stoplight": {
-              "id": "zxj8agw14kty2"
-            },
             "description": "The parent id of the subject (will not be displayed if the associated subject is a root subject)."
           },
           "id": {
             "type": "integer",
-            "x-stoplight": {
-              "id": "rhw7ng0ujernu"
-            },
             "description": "Subject ID"
           },
           "schemaId": {
             "type": "integer",
-            "x-stoplight": {
-              "id": "qslmaxuc7ws0a"
-            },
             "description": "Schema ID"
           },
           "isCustom": {
             "type": "boolean",
-            "x-stoplight": {
-              "id": "zv1ou4prs6xik"
-            },
             "description": "Indicates if the package subject association is custom."
           },
           "subjectHierarchy": {
             "type": "string",
-            "x-stoplight": {
-              "id": "63rohloekzgy2"
-            },
             "description": "The subject hierarchy in string format."
           }
         }
@@ -9589,7 +9442,7 @@
             "example": "Agricultural chemistry.  Agricultural chemicals"
           },
           "subjectHierarchy": {
-            "type": "string ",
+            "type": "string",
             "description": "Agriculture (General) -- Agricultural chemistry.  Agricultural chemicals",
             "example": false
           }
