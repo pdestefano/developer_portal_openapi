@@ -5642,6 +5642,11 @@
           "type": "string",
           "description": "Target URL",
           "example": "http://target.url.io"
+        },
+        "displayname": {
+          "type": "string",
+          "description": "Display Name",
+          "example": "Display Name"
         }
       }
     },
