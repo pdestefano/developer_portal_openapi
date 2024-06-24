@@ -1178,6 +1178,11 @@
                         "format": "int64",
                         "description": "Customer ID",
                         "example": "1123"
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display Name",
+                        "example": "Boston Pilot"
                       }
                     }
                   }
@@ -1920,6 +1925,10 @@
                                     "customerId": {
                                       "type": "integer",
 									  "description": "Customer ID"
+                                    },
+                                    "displayName": {
+                                      "type": "string",
+                                        "description": "Display Name"
                                     }
                                   }
                                 }
@@ -2247,7 +2256,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2333,7 +2343,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2401,7 +2412,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2469,7 +2481,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2537,7 +2550,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
