@@ -5675,19 +5675,22 @@
 	  "type": "string"
 	},
 	"managedAltNames": {
-	  "type": "array"
+	  "type": "array",
 	  "items": {
             "type": "string" 
 	  }
 	},
 	"customAltNames": {
-	  "type": "array"
+	  "type": "array",
 	  "items": {
             "type": "string" 
 	  }
 	},
 	"proxiedUrl": {
 	  "type": "string"
+	},
+	"displayName": {
+  	  "type": "string"
 	}
       }
     },
