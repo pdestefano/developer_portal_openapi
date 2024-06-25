@@ -337,7 +337,7 @@
         }
       ]
     },
-    "/pf/pfaccount/{profile}/package/{packageid}": {
+    "/pf/v1/pfaccount/{profile}/package/{packageid}": {
       "get": {
         "tags": [
           "Package Resources"
