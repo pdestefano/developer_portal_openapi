@@ -9422,7 +9422,7 @@
           "freeAccess": {
             "type": "boolean",
             "example": false,
-            "description": "Limits the results based on Package Free Access."
+            "description": "Indicates whether the package has free access designation or not."
           },
           "visibility": {
             "type": "array",
