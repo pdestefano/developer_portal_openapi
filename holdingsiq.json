@@ -3815,8 +3815,8 @@
         "tags": [
           "Title Resources"
         ],
-        "summary": "Search Titles within a List",
-        "description": "Perform advanced search on titles within a list by search term with various filtering options and search strategies.",
+        "summary": "Search Titles Within a List",
+        "description": "This operation allows you to perform an advanced search on titles within a list by search term with various filtering options and search strategies.",
         "operationId": "get-v2-listid-titles",
         "parameters": [
           {
