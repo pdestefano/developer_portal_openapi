@@ -2496,7 +2496,7 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
             "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
             "schema": {
@@ -3866,7 +3866,7 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
             "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
             "schema": {
@@ -4492,7 +4492,7 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
             "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
             "schema": {
@@ -4731,7 +4731,7 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
             "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
             "schema": {
@@ -9419,7 +9419,7 @@
             "example": false,
             "description": "Limiter to include only records associated with an EBSCO order."
           },
-          "freeAccess": {
+          "packageFreeAccess": {
             "type": "boolean",
             "example": false,
             "description": "Indicates whether the package has free access designation or not."
