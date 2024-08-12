@@ -722,6 +722,14 @@
                   }
                 },
                 "bodyoptione": {
+                  "summary": "JSON payload to create a custom package with package free access",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3,
+                    "packageFreeAccess": true
+                  }
+                },
+                "bodyoptionf": {
                   "summary": "JSON payload to create a custom package with all fields",
                   "value": {
                     "packageName": "New Custom Package",
@@ -745,7 +753,8 @@
                     ],
                     "subjects": [
                       35408
-                    ]
+                    ],
+                    "packageFreeAccess": true
                   }
                 }
               }
@@ -1460,6 +1469,13 @@
                         "subjectId": 35408
                       }
                     ]
+                  }
+                },
+                "bodyoptiono": {
+                  "summary": "JSON payload to update package free access for a custom package",
+                  "value": {
+                    "isSelected": true,
+                    "packageFreeAccess": true
                   }
                 }
               }
@@ -5673,6 +5689,10 @@
             "items": {
               "$ref": "#/components/schemas/PackageSubjectAssociation"
             }
+          },
+          "packageFreeAccess": {
+            "type": "boolean",
+            "description": "Indicates if the package is freely available."
           }
         },
         "required": [
@@ -6844,6 +6864,11 @@
               "type": "integer",
               "example": 35408
             }
+          },
+          "packageFreeAccess": {
+            "type": "string",
+            "description": "Indicates if the package is freely accessible.",
+            "example": true
           }
         },
         "description": "Custom Package Payload"
@@ -8105,6 +8130,11 @@
             "items": {
               "$ref": "#/components/schemas/UpdateSubjectAssociation"
             }
+          },
+          "packageFreeAccess": {
+            "type": "boolean",
+            "description": "Indicates if the package is freely available.",
+            "example": true
           }
         },
         "required": [
