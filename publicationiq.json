@@ -293,7 +293,7 @@
             "name": "includeFacets",
             "in":"query",
             "description":"Specify **true** if search is required to include facet information, **false** otherwise.",
-            "required":true,
+            "required":false,
             "type":"boolean"
           },
           {
@@ -576,7 +576,7 @@
             "name": "includefacets",
             "in": "query",
             "description": "Specify **true** if search is required to include facet information, **false** otherwise.",
-            "required": true,
+            "required": false,
             "type": "string",
             "enum": [
               "true",
