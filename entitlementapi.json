@@ -109,7 +109,8 @@
           {
             "OAuth2": []
           }
-        ]
+        ],
+        "deprecated": true
       }
     },
     "/v3/{profile}/discovery": {
