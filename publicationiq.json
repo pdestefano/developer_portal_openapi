@@ -279,6 +279,13 @@
             ]
           },
           {
+            "name": "alphaMenuFacet",
+            "in": "query",
+            "description": "Alpha Menu Facet filtration option. Required in order to access specific titles via refined results. Only 1 Alpha Menu Facet value supported in query. e.g. 'A'",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "orderby",
             "in": "query",
             "description": "Valid values are packagename and relevance.",
@@ -694,6 +701,158 @@
           "in": "path",
           "required": true
         }
+      ]
+    },
+    "/v1/pf/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
+      "get": {
+        "summary": "Returns alpha browser menu by locale ID and resource type",
+        "tags": [
+          "V1AlphaBrowser"
+        ],
+        "operationId": "get-v1-pf-pfaccount-profile-alphabrowser-menu-localeid",
+        "description": "Returns alpha browser menu by locale Id and resource type",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AlphaBrowserMenuResult"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "profile",
+            "in": "path",
+            "required": true,
+            "description": "Locale identifier. e.g. '1033'",
+            "type": "string"
+          },
+          {
+            "name": "localeid",
+            "in": "path",
+            "required": true,
+            "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'",
+            "type": "string"
+          },
+          {
+            "name": "sessionid",
+            "in": "query",
+            "description": "Already existing SessionId can be provided to improve experience of using the publications search. Example format -> '-2689046726050171609'",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourcetype",
+            "in": "query",
+            "required": false,
+            "description": "Resource type filter for alpha browser response. e.g. 'JOURNAL' only applies to title search type",
+            "type": "string",
+            "enum": [
+              "book",
+              "journal"
+            ]
+          },
+          {
+            "name": "searchType",
+            "in": "query",
+            "required": false,
+            "description": "Search type filter for alpha browser response. e.g. 'PACKAGE'",
+            "type": "string",
+            "enum": [
+              "TITLE",
+              "PACKAGE"
+            ]
+          },
+          {
+            "name": "menuid",
+            "in": "query",
+            "description": "Menu id. Used for filtering menus in position 1. Should be a positive number. e.g. '65'",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "header",
+            "description": "authentication header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "authorization header",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "parameters" : [
+          {
+            "name": "profile",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "localeid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
       ]
     },
     "/pf/v1/pfaccount/{profile}/title/{kbid}": {
