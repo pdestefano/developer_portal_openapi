@@ -2503,8 +2503,8 @@
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -3873,8 +3873,8 @@
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -4499,8 +4499,8 @@
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -4738,8 +4738,8 @@
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
