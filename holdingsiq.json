@@ -2498,7 +2498,7 @@
           {
             "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
@@ -3868,7 +3868,7 @@
           {
             "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
@@ -4494,7 +4494,7 @@
           {
             "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
@@ -4733,7 +4733,7 @@
           {
             "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
