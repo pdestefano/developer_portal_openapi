@@ -830,13 +830,6 @@
             "description": "authentication header",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "authorization header",
-            "required": false,
-            "type": "string"
           }
         ]
       },
