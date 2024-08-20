@@ -2512,15 +2512,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -3882,15 +3882,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -4508,15 +4508,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -4747,15 +4747,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -9449,7 +9449,7 @@
             "example": false,
             "description": "Limiter to include only records associated with an EBSCO order."
           },
-          "freeAccess": {
+          "packageFreeAccess": {
             "type": "boolean",
             "example": false,
             "description": "Indicates whether the package has free access designation or not."
