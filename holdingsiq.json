@@ -9671,6 +9671,10 @@
             "type": "boolean",
             "description": "Indicates if the package subject association is custom."
           },
+          "explicitAssignment": {
+            "type": "boolean",
+            "description": "Indicates if the package subject association is explicit (true) or implicit (false)."
+          },
           "subjectHierarchy": {
             "type": "string",
             "description": "The subject hierarchy in string format."
