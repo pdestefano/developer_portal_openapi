@@ -9653,7 +9653,8 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "The name of the subject."
+            "description": "The name of the subject.",
+			"example": "General Works"
           },
           "parentId": {
             "type": "string",
@@ -9661,23 +9662,28 @@
           },
           "id": {
             "type": "integer",
-            "description": "Subject ID"
+            "description": "Subject ID",
+			"example": 26211
           },
           "schemaId": {
             "type": "integer",
-            "description": "Schema ID"
+            "description": "Schema ID",
+			"example": 3
           },
           "isCustom": {
             "type": "boolean",
-            "description": "Indicates if the package subject association is custom."
+            "description": "Indicates if the package subject association is custom.",
+			"example": false
           },
           "explicitAssignment": {
             "type": "boolean",
-            "description": "Indicates if the package subject association is explicit (true) or implicit (false)."
+            "description": "Indicates if the package subject association is explicit (true) or implicit (false).",
+			"example": true
           },
           "subjectHierarchy": {
             "type": "string",
-            "description": "The subject hierarchy in string format."
+            "description": "The subject hierarchy in string format.",
+			"example": "General Works"
           }
         }
       },
