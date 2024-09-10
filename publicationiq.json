@@ -290,6 +290,41 @@
             ]
           },
           {
+            "name": "includeFacets",
+            "in":"query",
+            "description":"Specify **true** if search is required to include facet information, **false** otherwise.",
+            "required":false,
+            "type":"boolean"
+          },
+          {
+            "name": "subjectFacetSchemaFilter",
+            "in":"query",
+            "description":"Specify the schema to filter the schema of the subjects facet.",
+            "required":false,
+            "type":"string",
+            "enum": [
+              "LIBRARY_OF_CONGRESS"
+            ]
+          },
+          {
+            "name":"subjectFacetCount",
+            "in":"query",
+            "description":"Max count for subject facets to be returned. e.g. '10'",
+            "required":false,
+            "type":"string"
+          },
+          {
+            "name": "subjectFacet",
+            "in":"query",
+            "description":"Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'",
+            "required":false,
+            "type":"array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
             "name": "profile",
             "in": "path",
             "description": "A valid EBSCO customer profile in the form of custid.groupid.profileid.",
@@ -541,7 +576,7 @@
             "name": "includefacets",
             "in": "query",
             "description": "Specify **true** if search is required to include facet information, **false** otherwise.",
-            "required": true,
+            "required": false,
             "type": "string",
             "enum": [
               "true",
@@ -5112,6 +5147,17 @@
         }
       }
     },
+    "PfSubjectV1" : {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "name" : {
+          "type": "string"
+        }
+      }
+    },
     "PFEmbargoPeriod": {
       "type": "object",
       "required": [
@@ -5229,7 +5275,7 @@
         }
       }
     },
-    "PsmPackage": {
+    "PackageSearchDetails": {
       "type": "object",
       "properties": {
         "contentType": {
@@ -5296,9 +5342,15 @@
         },
         "visibilityData": {
           "$ref": "#/definitions/VisibilityData"
+        },
+        "subjectsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PfSubjectV1"
+          }
         }
-      }
-    },
+        }
+      },
     "GetAllPackagesResult": {
       "type": "object",
       "properties": {
@@ -5642,7 +5694,7 @@
         "packagesList": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/PsmPackage"
+            "$ref": "#/definitions/PackageSearchDetails"
           }
         },
         "totalResults": {
@@ -5650,6 +5702,9 @@
           "format": "int64",
           "description": "Total Results",
           "example": 323
+        },
+        "facets": {
+          "$ref": "#/definitions/HSMPackageFacets"
         }
       }
     },
@@ -5840,6 +5895,48 @@
         }
       }
     },
+    "HSMPackageFacet": {
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "type": "string",
+          "description": "Parent ID",
+          "example": "1615"
+        },
+        "id": {
+          "type": "string",
+          "description": "Package ID",
+          "example": "1615"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": { 
+          "type": "string",
+          "description": "Package Name",
+          "example": "Academic Search Complete"
+        },
+        "subjectName" :{
+          "type": "string",
+          "description": "Subject Name",
+          "example": "Medical"
+        }
+      }
+    },
+    "HSMPackageFacets":{
+      "type": "object",
+      "properties": {
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HSMPackageFacet"
+          }
+        }
+      }
+    },
     "IdentifiersList": {
       "type": "object",
       "properties": {
@@ -5921,7 +6018,6 @@
           "example": "EBook"
         }
       }
-    }
   },
   "parameters": {
     "Password": {
@@ -5939,4 +6035,5 @@
       "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'"
     }
   }
+}
 }
