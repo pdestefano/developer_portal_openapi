@@ -5001,6 +5001,17 @@
             "in": "query",
             "name": "subjectfacet",
             "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'"
+          },
+          {
+            "name": "packagefreeaccess",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "all",
+              "true",
+              "false"
+            ]
           }
         ]
       }
