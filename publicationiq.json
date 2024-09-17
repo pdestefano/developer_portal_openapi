@@ -5116,6 +5116,17 @@
           "in": "query",
           "required": false,
           "type": "string"
+        },
+        {
+          "name": "packagefreeaccess",
+          "in": "query",
+          "required": false,
+          "type": "string",
+          "enum": [
+            "all",
+            "true",
+            "false"
+          ]
         }
       ],
       "get": {
@@ -6220,9 +6231,12 @@
         },
         "url": {
           "type": "string"
+        },
+        "packageFreeAccess": {
+          "type": "boolean"
         }
       }
-    },
+    }
   },
   "parameters": {
     "Password": {
