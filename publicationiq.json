@@ -5047,7 +5047,6 @@
           "enum": [
             "relevance",
             "packagename"
-
           ]
         },
         {
@@ -5101,7 +5100,7 @@
           ]
         },
         {
-          "name": "searchField",
+          "name": "searchfield",
           "in": "query",
           "description": "Field to search. e.g. 'KEYWORKD'.",
           "required": false,
@@ -5114,6 +5113,48 @@
         {
           "name": "highlighttag",
           "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "subjectfacetcount",
+          "in": "query",
+          "description": "Max count for subject facets to be returned. e.g. '10'",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "subjectfacetschemafilter",
+          "in":"query",
+          "description":"Specify the schema to filter the schema of the subjects facet.",
+          "required":false,
+          "type":"string",
+          "enum": [
+            "LIBRARY_OF_CONGRESS"
+          ]
+        },
+        {
+          "name": "includefacets",
+          "in": "query",
+          "description": "Specify **true** if search is required to include facet information, **false** otherwise.",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "subjectfacet",
+          "in": "query",
+          "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "collectionFormat": "multi"
+        },
+        {
+          "name": "alphamenufacet",
+          "in": "query",
+          "description": "Alpha Menu Facet filtration option. Required in order to access specific titles via refined results. Only 1 Alpha Menu Facet value supported in query. e.g. 'A'",
           "required": false,
           "type": "string"
         },
@@ -5274,6 +5315,17 @@
           "type": "string",
           "description": "Subject Name",
           "example": "Subject Name"
+        }
+      }
+    },
+    "PfSubjectV1" : {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "name" : {
+          "type": "string"
         }
       }
     },
@@ -5839,6 +5891,9 @@
         "totalSearchTime": {
           "type": "integer",
           "format": "int64"
+        },
+        "facets": {
+          "$ref": "#/definitions/HSMPackageFacets"
         }
       }
     },
@@ -6029,6 +6084,48 @@
         }
       }
     },
+    "HSMPackageFacet": {
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "type": "string",
+          "description": "Parent ID",
+          "example": "1615"
+        },
+        "id": {
+          "type": "string",
+          "description": "Package ID",
+          "example": "1615"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "string",
+          "description": "Package Name",
+          "example": "Academic Search Complete"
+        },
+        "subjectName" :{
+          "type": "string",
+          "description": "Subject Name",
+          "example": "Medical"
+        }
+      }
+    },
+    "HSMPackageFacets":{
+      "type": "object",
+      "properties": {
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HSMPackageFacet"
+          }
+        }
+      }
+    },
     "IdentifiersList": {
       "type": "object",
       "properties": {
@@ -6115,13 +6212,16 @@
       "type": "object",
       "properties": {
         "contentType": {
-          "type": "string"
+          "type": "string",
+          "description": "Content type. Valid values are All, AggregatedFullText, AbstractandIndex, EBook, EJournal, Print, Unknown and OnlineReference.",
+          "example": "EBook"
         },
         "customCoverage": {
           "$ref": "#/definitions/CustomCoverage"
         },
         "customAltNames": {
           "type": "array",
+          "description": "isCustom is true if a customer is the vendor.  The customer vendor is used for custom packages.",
           "items": {
             "type": "string"
           }
@@ -6133,13 +6233,19 @@
           "type": "string"
         },
         "isCustom": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "isCustom is true if a customer is the vendor.  The customer vendor is used for custom packages.",
+          "example": true
         },
         "isSelected": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Indicates if the packages is selected in a customer's account.",
+          "example": true
         },
         "isTokenNeeded": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Field to indicate if a token is needed",
+          "example": true
         },
         "managedAltNames": {
           "type": "array",
@@ -6200,37 +6306,57 @@
         },
         "packageId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Package Identifier",
+          "example": 175
         },
         "packageName": {
-          "type": "string"
+          "type": "string",
+          "description": "Package Name",
+          "example": "Health Source: Nursing/Academic Edition"
         },
         "packageType": {
-          "type": "string"
+          "type": "string",
+          "description": "Package Type.  Valid values are Selectable, Complete, Variable and Custom.",
+          "example": "Complete"
         },
         "proxiedUrl": {
           "type": "string"
         },
         "selectedCount": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Numeric value indicating the number of titles in packages selected in the customer account.",
+          "example": 328
         },
         "titleCount": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Numeric value indicating the title count of the package.",
+          "example": 328
         },
         "vendorId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
+          "example": 19
         },
         "vendorName": {
-          "type": "string"
+          "type": "string",
+          "description": "Provider name.  In EPKB, this is the 'VendorName'.",
+          "example": "EBSCO"
         },
         "visibilityData": {
           "$ref": "#/definitions/VisibilityData"
         },
         "url": {
           "type": "string"
+        },
+        "subjectsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PfSubjectV1"
+          }
         },
         "packageFreeAccess": {
           "type": "boolean"
