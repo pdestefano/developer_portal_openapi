@@ -5691,7 +5691,11 @@
 	},
 	"displayName": {
   	  "type": "string"
-	}
+	},
+                            "packageFreeAccess": {
+                              "type": "boolean"
+                            }
+
       }
     },
     "Record": {
