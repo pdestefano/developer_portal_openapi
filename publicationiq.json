@@ -5692,9 +5692,10 @@
 	"displayName": {
   	  "type": "string"
 	},
-   "packageFreeAccess": {
-     "type": "boolean"
-   }
+        "packageFreeAccess": {
+          "type": "boolean"
+        }
+
 
 
       }
