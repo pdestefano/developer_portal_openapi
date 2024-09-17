@@ -5695,9 +5695,6 @@
         "packageFreeAccess": {
           "type": "boolean"
         }
-
-
-
       }
     },
     "Record": {
