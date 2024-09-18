@@ -5002,7 +5002,8 @@
         ]
       }
     },
-    "/pf/v1/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
+    "/v1/pf/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
+
       "get": {
         "summary": "Returns alpha browser menu by locale ID and resource type",
         "tags": [
