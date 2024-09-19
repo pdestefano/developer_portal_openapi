@@ -1454,7 +1454,7 @@
                           },
                           "resourceTypes": {
                             "type": "string",
-                            "description": "Resource Type.  Valid values are all, journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook."							
+                            "description": "Resource Type.  Valid values are all, journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook."
                           }
                         }
                       }
@@ -4946,7 +4946,7 @@
             "type": "string",
             "in": "query",
             "name": "orderby",
-            "description": "Order in which the publications will be returned. e.g. 'RELEVANCE'",
+            "description": "Order in which the publications will be returned. e.g. 'RELEVANCE'. Note that orderby will always be treated as 'TITLENAME' when the search term is blank.",
             "required": true,
             "enum": [
               "RELEVANCE",
