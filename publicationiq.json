@@ -5041,7 +5041,7 @@
         {
           "name": "orderby",
           "in": "query",
-          "description": "Valid values are packagename and relevance.",
+          "description": "Valid values are packagename and relevance. Note that orderby will always be treated as 'packagename' when the search term is blank.",
           "required": true,
           "type": "string",
           "enum": [
