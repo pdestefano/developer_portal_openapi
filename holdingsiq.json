@@ -722,6 +722,14 @@
                   }
                 },
                 "bodyoptione": {
+                  "summary": "JSON payload to create a custom package with package free access",
+                  "value": {
+                    "packageName": "New Custom Package",
+                    "contentType": 3,
+                    "packageFreeAccess": true
+                  }
+                },
+                "bodyoptionf": {
                   "summary": "JSON payload to create a custom package with all fields",
                   "value": {
                     "packageName": "New Custom Package",
@@ -745,7 +753,8 @@
                     ],
                     "subjects": [
                       35408
-                    ]
+                    ],
+                    "packageFreeAccess": true
                   }
                 }
               }
@@ -1460,6 +1469,13 @@
                         "subjectId": 35408
                       }
                     ]
+                  }
+                },
+                "bodyoptiono": {
+                  "summary": "JSON payload to update package free access for a custom package",
+                  "value": {
+                    "isSelected": true,
+                    "packageFreeAccess": true
                   }
                 }
               }
@@ -2496,15 +2512,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -3866,15 +3882,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -4492,15 +4508,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -4731,15 +4747,15 @@
             }
           },
           {
-            "name": "freeaccess",
+            "name": "packagefreeaccess",
             "in": "query",
-            "description": "Limits the results based on Package Free Access. The filter options are (free, notfree, all), and the default is all.",
+            "description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "free",
-                "notfree"
+                "true",
+                "false"
               ]
             }
           },
@@ -5673,6 +5689,10 @@
             "items": {
               "$ref": "#/components/schemas/PackageSubjectAssociation"
             }
+          },
+          "packageFreeAccess": {
+            "type": "boolean",
+            "description": "Indicates if the package is freely available."
           }
         },
         "required": [
@@ -6844,6 +6864,11 @@
               "type": "integer",
               "example": 35408
             }
+          },
+          "packageFreeAccess": {
+            "type": "string",
+            "description": "Indicates if the package is freely accessible.",
+            "example": true
           }
         },
         "description": "Custom Package Payload"
@@ -8105,6 +8130,11 @@
             "items": {
               "$ref": "#/components/schemas/UpdateSubjectAssociation"
             }
+          },
+          "packageFreeAccess": {
+            "type": "boolean",
+            "description": "Indicates if the package is freely available.",
+            "example": true
           }
         },
         "required": [
@@ -9419,7 +9449,7 @@
             "example": false,
             "description": "Limiter to include only records associated with an EBSCO order."
           },
-          "freeAccess": {
+          "packageFreeAccess": {
             "type": "boolean",
             "example": false,
             "description": "Indicates whether the package has free access designation or not."
@@ -9623,7 +9653,8 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "The name of the subject."
+            "description": "The name of the subject.",
+			"example": "General Works"
           },
           "parentId": {
             "type": "string",
@@ -9631,19 +9662,28 @@
           },
           "id": {
             "type": "integer",
-            "description": "Subject ID"
+            "description": "Subject ID",
+			"example": 26211
           },
           "schemaId": {
             "type": "integer",
-            "description": "Schema ID"
+            "description": "Schema ID",
+			"example": 3
           },
           "isCustom": {
             "type": "boolean",
-            "description": "Indicates if the package subject association is custom."
+            "description": "Indicates if the package subject association is custom.",
+			"example": false
+          },
+          "explicitAssignment": {
+            "type": "boolean",
+            "description": "Indicates if the package subject association is explicit (true) or implicit (false).",
+			"example": true
           },
           "subjectHierarchy": {
             "type": "string",
-            "description": "The subject hierarchy in string format."
+            "description": "The subject hierarchy in string format.",
+			"example": "General Works"
           }
         }
       },
