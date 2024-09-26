@@ -5104,6 +5104,7 @@
             "name": "packagefreeaccess",
             "in": "query",
             "required": false,
+			"description": "Limits the results based on Package Free Access. The filter options are (true, false, all), and the default is all.",
             "type": "string",
             "enum": [
               "all",
