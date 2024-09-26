@@ -337,6 +337,85 @@
         }
       ]
     },
+    "/pf/v1/pfaccount/{profile}/package/{packageid}": {
+      "get": {
+        "tags": [
+          "Package Resources"
+        ],
+        "summary": "Get Package by package ID",
+        "description": "This resource allows you to retrieve a package by package ID.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
+        "operationId": "getPackageUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "packageid",
+            "in": "path",
+            "description": "Package ID ex: 1073",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "profile",
+            "in": "path",
+            "description": "A valid EBSCO customer profile in the form of customerid.groupid.profileid.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "header",
+            "description": "Profile Password (optional). If a password is supplied, it must be a valid password assigned to the customer profile. If omitted, the request will only be honored if the customer profile allows guest access.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK, Package",
+            "schema": {
+              "$ref": "#/definitions/PackageDetail"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Package is hidden or not selected"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "profile",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "packageid",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
     "/pf/pfaccount/{profile}/packages/{packageid}/titles/{kbid}": {
       "get": {
         "tags": [
@@ -837,8 +916,8 @@
                       },
                       "displayOrder": {
                         "type": "integer",
-						"description": "Display order in results.",
-						"example": 4
+                        "description": "Display order in results.",
+                        "example": 4
                       }
                     }
                   }
@@ -895,7 +974,7 @@
                       "isSelected": {
                         "type": "boolean",
                         "description": "Indicates if selected in a customer's account.",
-                         "example": false
+                        "example": false
                       },
                       "isTokenNeeded": {
                         "type": "boolean",
@@ -906,7 +985,7 @@
                         "type": "array",
                         "items": {
                           "type": "object",
-						  "description": "Dates of Coverage",
+                          "description": "Dates of Coverage",
                           "properties": {
                             "beginCoverage": {
                               "type": "string",
@@ -925,7 +1004,7 @@
                         "type": "array",
                         "items": {
                           "type": "object",
-						  "description": "Dates of Coverage",
+                          "description": "Dates of Coverage",
                           "properties": {
                             "beginCoverage": {
                               "type": "string",
@@ -947,7 +1026,7 @@
                       },
                       "managedEmbargoPeriod": {
                         "type": "object",
-						"description": "Embargo Period",
+                        "description": "Embargo Period",
                         "properties": {
                           "embargoUnit": {
                             "type": "string",
@@ -969,7 +1048,7 @@
                       },
                       "customEmbargoPeriod": {
                         "type": "object",
-						"description": "Embargo Period",
+                        "description": "Embargo Period",
                         "properties": {
                           "embargoUnit": {
                             "type": "string",
@@ -996,8 +1075,8 @@
                       },
                       "linkOutTargetUrl": {
                         "type": "string",
-						"description": "Target url for linkout.",
-						"example": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/5f9e2285-c57b-4716-8cfa-017bdbef16fd"
+                        "description": "Target url for linkout.",
+                        "example": "https://ebscois-staging.apigee.net/public/rma-pfapi/v1/pf/external-link/674d2081-1b68-4442-9e9b-ff6c3176dc61/5f9e2285-c57b-4716-8cfa-017bdbef16fd"
                       },
                       "vendorToken": {
                         "type": "object",
@@ -1168,8 +1247,8 @@
                           },
                           "reason": {
                             "type": "string",
-							"description": "Visibility reason",
-							"example": "Visibility reason"
+                            "description": "Visibility reason",
+                            "example": "Visibility reason"
                           }
                         }
                       },
@@ -1178,6 +1257,11 @@
                         "format": "int64",
                         "description": "Customer ID",
                         "example": "1123"
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display Name",
+                        "example": "Boston Pilot"
                       }
                     }
                   }
@@ -1212,8 +1296,8 @@
                 },
                 "imageLink": {
                   "type": "string",
-				  "description": "ImageLink",
-				  "example": "imageLink"
+                  "description": "ImageLink",
+                  "example": "imageLink"
                 },
                 "licenseTerms": {
                   "type": "object",
@@ -1309,38 +1393,38 @@
             "description": "OK, License terms data",
             "schema": {
               "type": "array",
-			  "description": "License terms data array.",
+              "description": "License terms data array.",
               "items": {
                 "type": "object",
-				"description": "License terms data",
+                "description": "License terms data",
                 "properties": {
                   "label": {
                     "type": "string",
-					"description": "Label",
-					"example": "Definition of authorised user"
+                    "description": "Label",
+                    "example": "Definition of authorised user"
                   },
                   "value": {
                     "type": "array",
-					"description": "Value",
+                    "description": "Value",
                     "items": {
                       "type": "string"
                     },
-					"example": "Faculty, Student, Staff and Walk-Ins"
+                    "example": "Faculty, Student, Staff and Walk-Ins"
                   },
                   "weight": {
                     "type": "integer",
-					"description": "Weight",
-					"example": -1
+                    "description": "Weight",
+                    "example": -1
                   },
                   "publicNote": {
                     "type": "string",
-					"description": "Public Note",
-					"example": "Faculty, Student, Staff and Walk-Ins"
+                    "description": "Public Note",
+                    "example": "Faculty, Student, Staff and Walk-Ins"
                   },
                   "primary": {
                     "type": "boolean",
-					"description": "Primary",
-					"example": true
+                    "description": "Primary",
+                    "example": true
                   }
                 }
               }
@@ -1369,7 +1453,7 @@
           }
         },
         "operationId": "get-pf-v1-pfaccount-profile-vendor-vendorid-package-packageid-title-kbid-licenseterms",
-		"description": "This operation allows you to get ILS Data by VendorId, PackageId (List Id) and TitleId.",
+        "description": "This operation allows you to get ILS Data by VendorId, PackageId (List Id) and TitleId.",
         "parameters": [
           {
             "$ref": "#/parameters/Password"
@@ -1396,18 +1480,18 @@
               "properties": {
                 "searchRequestGet": {
                   "type": "object",
-				  "description": "Search Request",
+                  "description": "Search Request",
                   "properties": {
                     "requestParams": {
                       "type": "object",
                       "properties": {
                         "sessionid": {
                           "type": "string",
-						  "description": "Session ID"
+                          "description": "Session ID"
                         },
                         "customerId": {
                           "type": "integer",
-						  "description": "Customer ID"
+                          "description": "Customer ID"
                         }
                       }
                     }
@@ -1415,84 +1499,88 @@
                 },
                 "facets": {
                   "type": "object",
-				  "description": "Facets",
+                  "description": "Facets",
                   "properties": {
                     "subjects": {
                       "type": "array",
-					  "description": "Subjects",
+                      "description": "Subjects",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
                             "type": "integer",
-							"description": "Count"
+                            "description": "Count"
                           },
                           "id": {
                             "type": "string",
-							"description": "ID"
+                            "description": "ID"
                           },
                           "parentId": {
                             "type": "string",
-							"description": "Parent ID"
+                            "description": "Parent ID"
                           },
                           "subjectName": {
                             "type": "string",
-							"description": "Subject"
+                            "description": "Subject"
                           }
                         }
                       }
                     },
                     "resourceTypes": {
                       "type": "array",
-					  "description": "Resource Types",
+                      "description": "Resource Types",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
                             "type": "integer",
-							"description": "Count"
+                            "description": "Count"
                           },
                           "resourceTypes": {
                             "type": "string",
-                            "description": "Resource Type.  Valid values are all, journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook."							
+                            "description": "Resource Type.  Valid values are all, journal, newsletter, report, proceedings, website, newspaper, unspecified, book, bookseries, database, thesisdissertation, streamingaudio, streamingvideo, and audiobook."
                           }
                         }
                       }
                     },
                     "packages": {
                       "type": "array",
-					  "description": "Packages",
+                      "description": "Packages",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
                             "type": "integer",
-							"description": "Count"
+                            "description": "Count"
                           },
                           "id": {
                             "type": "string",
-							"description": "Package Identifier"
+                            "description": "Package Identifier"
                           },
                           "packageName": {
                             "type": "string",
-							"description": "Package Name"
+                            "description": "Package Name"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "The display name of the package, if one exists"
                           }
                         }
                       }
                     },
                     "alphamenus": {
                       "type": "array",
-					  "description": "Alpha Menus",
+                      "description": "Alpha Menus",
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
                             "type": "integer",
-							"description": "Count"
+                            "description": "Count"
                           },
                           "alphaMenuName": {
                             "type": "string",
-							"description": "Alpha Menu Name"
+                            "description": "Alpha Menu Name"
                           }
                         }
                       }
@@ -1504,11 +1592,11 @@
                         "properties": {
                           "count": {
                             "type": "integer",
-							"description": "Count"
+                            "description": "Count"
                           },
                           "peerReviewed": {
                             "type": "boolean",
-							"description": "Is it Peer Reviewed"
+                            "description": "Is it Peer Reviewed"
                           }
                         }
                       }
@@ -1520,25 +1608,25 @@
                   "properties": {
                     "sessionDetails": {
                       "type": "object",
-					  "description": "Session Details",
+                      "description": "Session Details",
                       "properties": {
                         "sessionid": {
                           "type": "string",
-						  "description": "Session ID"
+                          "description": "Session ID"
                         }
                       }
                     },
                     "statistics": {
                       "type": "object",
-					  "description": "Statistics",
+                      "description": "Statistics",
                       "properties": {
                         "totalHits": {
                           "type": "integer",
-						  "description": "Total Hits"
+                          "description": "Total Hits"
                         },
                         "totalSearchTime": {
                           "type": "integer",
-						  "description": "Total Search Time"
+                          "description": "Total Search Time"
                         }
                       }
                     },
@@ -1547,37 +1635,37 @@
                       "properties": {
                         "recordFormat": {
                           "type": "string",
-						  "description": "Record Format.  The format of the record (e.g., HTML, PDF, Video, etc.)"
+                          "description": "Record Format.  The format of the record (e.g., HTML, PDF, Video, etc.)"
                         },
                         "records": {
                           "type": "array",
-						  "description": "Records",
+                          "description": "Records",
                           "items": {
                             "type": "object",
                             "properties": {
                               "titleId": {
                                 "type": "string",
-								"description": "Title ID"
+                                "description": "Title ID"
                               },
                               "titleName": {
                                 "type": "string",
-								"description": "Title Name"
+                                "description": "Title Name"
                               },
                               "edition": {
                                 "type": "string",
-								"description": "Title Edition"
+                                "description": "Title Edition"
                               },
                               "description": {
                                 "type": "string",
-								"description": "Title Description"
+                                "description": "Title Description"
                               },
                               "peerReviewed": {
                                 "type": "boolean",
-								"description": "Is this title peer reviewed."
+                                "description": "Is this title peer reviewed."
                               },
                               "publisherName": {
                                 "type": "string",
-								"description": "Publisher Name"
+                                "description": "Publisher Name"
                               },
                               "identifiersList": {
                                 "type": "array",
@@ -1586,19 +1674,19 @@
                                   "properties": {
                                     "id": {
                                       "type": "string",
-									  "description": "Identifier Value"
+                                      "description": "Identifier Value"
                                     },
                                     "source": {
                                       "type": "string",
-									  "description": "Resource Identifier"
+                                      "description": "Resource Identifier"
                                     },
                                     "type": {
                                       "type": "integer",
-									  "description": "Type"
+                                      "description": "Type"
                                     },
                                     "subtype": {
                                       "type": "integer",
-	                                  "description": "Sub-type for the identifier.  This is used by only some identifiers to designate Print, Online, etc.  Empty=0, Print=1, Online=2, Preceding=3, Succeeding=4, Regional=5, Linking=6 and Invalid=7"
+                                      "description": "Sub-type for the identifier.  This is used by only some identifiers to designate Print, Online, etc.  Empty=0, Print=1, Online=2, Preceding=3, Succeeding=4, Regional=5, Linking=6 and Invalid=7"
                                     }
                                   }
                                 }
@@ -1610,18 +1698,18 @@
                                   "properties": {
                                     "type": {
                                       "type": "string",
-									  "description": "The type of subject.  Valid values are BISAC and TLI."
+                                      "description": "The type of subject.  Valid values are BISAC and TLI."
                                     },
                                     "name": {
                                       "type": "string",
-									  "description": "Subject Name"
+                                      "description": "Subject Name"
                                     }
                                   }
                                 }
                               },
                               "titleCustom": {
                                 "type": "boolean",
-								"description": "Custom Title"
+                                "description": "Custom Title"
                               },
                               "pubType": {
                                 "type": "string",
@@ -1629,332 +1717,337 @@
                               },
                               "contributorsList": {
                                 "type": "array",
-								"description": "Contributors List",
+                                "description": "Contributors List",
                                 "items": {
                                   "type": "object",
                                   "properties": {
                                     "type": {
                                       "type": "string",
-									  "description": "Type of contributor. Valid values are Author, Illustrator, and Editor."
+                                      "description": "Type of contributor. Valid values are Author, Illustrator, and Editor."
                                     },
                                     "contributor": {
                                       "type": "string",
-									  "description": "Contributor Name"
+                                      "description": "Contributor Name"
                                     },
                                     "displayOrder": {
                                       "type": "integer",
-									  "description": "Display order in results."
+                                      "description": "Display order in results."
                                     }
                                   }
                                 }
                               },
                               "customerResourcesList": {
                                 "type": "array",
-								"description": "Customer Resources List",
+                                "description": "Customer Resources List",
                                 "items": {
                                   "type": "object",
                                   "properties": {
                                     "titleId": {
                                       "type": "integer",
-									  "description": "Title ID"
+                                      "description": "Title ID"
                                     },
                                     "packageId": {
                                       "type": "integer",
-									  "description": "Package ID"
+                                      "description": "Package ID"
                                     },
                                     "packageName": {
                                       "type": "string",
-									  "description": "Package Name"
+                                      "description": "Package Name"
                                     },
                                     "packageType": {
                                       "type": "string",
-									  "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom."
+                                      "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom."
                                     },
                                     "isPackageCustom": {
                                       "type": "boolean",
-									  "description": "Is the Package Custom."
+                                      "description": "Is the Package Custom."
                                     },
                                     "vendorId": {
                                       "type": "integer",
-									  "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'."
+                                      "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'."
                                     },
                                     "vendorName": {
                                       "type": "string",
-									  "description": "Provider Name"
+                                      "description": "Provider Name"
                                     },
                                     "locationId": {
                                       "type": "integer",
-									  "description": "Location ID"
+                                      "description": "Location ID"
                                     },
                                     "isSelected": {
                                       "type": "boolean",
-									  "description": "Indicates if selected in a customer's account."
+                                      "description": "Indicates if selected in a customer's account."
                                     },
                                     "isTokenNeeded": {
                                       "type": "boolean",
-									  "description": "Field to indicate if a token is needed"
+                                      "description": "Field to indicate if a token is needed"
                                     },
                                     "managedCoverageList": {
                                       "type": "array",
                                       "items": {
                                         "type": "object",
-										"description": "Dates of Coverage",
+                                        "description": "Dates of Coverage",
                                         "properties": {
                                           "beginCoverage": {
                                             "type": "string",
-											"description": "Coverage Start Date"
+                                            "description": "Coverage Start Date"
                                           },
                                           "endCoverage": {
                                             "type": "string",
-											"description": "Coverage End Date"
+                                            "description": "Coverage End Date"
                                           }
                                         }
                                       }
                                     },
                                     "customCoverageList": {
                                       "type": "array",
-									  "description": "Dates of Coverage",
+                                      "description": "Dates of Coverage",
                                       "items": {
                                         "type": "object",
                                         "properties": {
                                           "beginCoverage": {
                                             "type": "string",
-											"description": "Coverage Start Date"
+                                            "description": "Coverage Start Date"
                                           },
                                           "endCoverage": {
                                             "type": "string",
-											"description": "Coverage End Date"
+                                            "description": "Coverage End Date"
                                           }
                                         }
                                       }
                                     },
                                     "coverageStatement": {
                                       "type": "string",
-									  "description": "Coverage Statement"
+                                      "description": "Coverage Statement"
                                     },
                                     "managedEmbargoPeriod": {
                                       "type": "object",
-									  "description": "Embargo Period",
+                                      "description": "Embargo Period",
                                       "properties": {
                                         "embargoUnit": {
                                           "type": "string",
-										  "description": "The unit of time to use for the embargo - Days, Weeks, Months or Years."
+                                          "description": "The unit of time to use for the embargo - Days, Weeks, Months or Years."
                                         },
                                         "embargoValue": {
                                           "type": "integer",
-										  "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo."
+                                          "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo."
                                         }
                                       }
                                     },
                                     "customEmbargoPeriod": {
                                       "type": "object",
-									  "description": "Embargo Period",
+                                      "description": "Embargo Period",
                                       "properties": {
                                         "embargoUnit": {
                                           "type": "string",
-										  "description": "The unit of time to use for the embargo - Days, Weeks, Months or Years."
+                                          "description": "The unit of time to use for the embargo - Days, Weeks, Months or Years."
                                         },
                                         "embargoValue": {
                                           "type": "integer",
-										  "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo."
+                                          "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo."
                                         }
                                       }
                                     },
                                     "url": {
                                       "type": "string",
-									  "description": "url"
+                                      "description": "url"
                                     },
                                     "linkOutTargetUrl": {
                                       "type": "string",
-									  "description": "Target url for linkout."
+                                      "description": "Target url for linkout."
                                     },
                                     "vendorToken": {
                                       "type": "object",
-									  "description": "Vendor Token",
+                                      "description": "Vendor Token",
                                       "properties": {
                                         "factName": {
                                           "type": "string",
-										  "description": "Fact Name"
+                                          "description": "Fact Name"
                                         },
                                         "value": {
                                           "type": "string",
-										  "description": "Value"
+                                          "description": "Value"
                                         }
                                       }
                                     },
                                     "packageToken": {
                                       "type": "object",
-									  "description": "Package Token",
+                                      "description": "Package Token",
                                       "properties": {
                                         "factName": {
                                           "type": "string",
-										  "description": "Fact Name"
+                                          "description": "Fact Name"
                                         },
                                         "value": {
                                           "type": "string",
-										  "description": "Value"
+                                          "description": "Value"
                                         }
                                       }
                                     },
                                     "targetUrl": {
                                       "type": "string",
-									  "description": "Target URL"
+                                      "description": "Target URL"
                                     },
                                     "proxy": {
                                       "type": "object",
-									  "description": "Proxy",
+                                      "description": "Proxy",
                                       "properties": {
                                         "id": {
                                           "type": "string",
-										  "description": "Proxy ID"
+                                          "description": "Proxy ID"
                                         },
                                         "inherited": {
                                           "type": "boolean",
-										   "description": "Field to indicate if the proxy is inherited."
+                                          "description": "Field to indicate if the proxy is inherited."
                                         },
                                         "proxyName": {
                                           "type": "string",
-										  "description": "Proxy Name"
+                                          "description": "Proxy Name"
                                         },
                                         "urlMask": {
                                           "type": "string",
-										  "description": "URL mask"
+                                          "description": "URL mask"
                                         }
                                       }
                                     },
                                     "note": {
                                       "type": "array",
-									  "description": "Note",
+                                      "description": "Note",
                                       "items": {
                                         "type": "object",
                                         "properties": {
                                           "id": {
                                             "type": "integer",
-											"description": "Unique identifier for the note"
+                                            "description": "Unique identifier for the note"
                                           },
                                           "custId": {
                                             "type": "integer",
-											"description": "Customer ID"
+                                            "description": "Customer ID"
                                           },
                                           "noteName": {
                                             "type": "string",
-											"description": "Customer ID"
+                                            "description": "Customer ID"
                                           },
                                           "rank": {
                                             "type": "integer",
-											"description": "Rank"
+                                            "description": "Rank"
                                           },
                                           "noteText": {
                                             "type": "string",
-											"description": "Note text to be displayed on the menu"
+                                            "description": "Note text to be displayed on the menu"
                                           },
                                           "showOnFlags": {
                                             "type": "array",
                                             "items": {
                                               "type": "string",
-											  "description": "Show on Flags"
+                                              "description": "Show on Flags"
                                             }
                                           },
                                           "iconUrl": {
                                             "type": "string",
-											"description": "If customer uses own icon for a note, this is its URL.  Null if no icon or using standard icon"
+                                            "description": "If customer uses own icon for a note, this is its URL.  Null if no icon or using standard icon"
                                           },
                                           "iconId": {
                                             "type": "integer",
-											"description": "Unique identifier for the icon"
+                                            "description": "Unique identifier for the icon"
                                           },
                                           "altText": {
                                             "type": "string",
-											"description": "Text to show on mouse-over."
+                                            "description": "Text to show on mouse-over."
                                           },
                                           "hoverText": {
                                             "type": "string",
-											"description": "Hover text to show on mouse-over for the note"
+                                            "description": "Hover text to show on mouse-over for the note"
                                           },
                                           "linkUrl": {
                                             "type": "string",
-											"description": "Hover text to show on mouse-over for the note"
+                                            "description": "Hover text to show on mouse-over for the note"
                                           }
                                         }
                                       }
                                     },
                                     "userDefinedFields": {
                                       "type": "array",
-									  "description": "User Defined Fields",
+                                      "description": "User Defined Fields",
                                       "items": {
                                         "type": "object",
                                         "properties": {
                                           "id": {
                                             "type": "integer",
-											"description": "ID"
+                                            "description": "ID"
                                           },
                                           "label": {
                                             "type": "string",
-											"description": "User Defined Field Label"
+                                            "description": "User Defined Field Label"
                                           },
                                           "value": {
                                             "type": "string",
-											"description": "User Defined Field Value"
+                                            "description": "User Defined Field Value"
                                           },
                                           "displayOnPublicationFinder": {
                                             "type": "boolean",
-											"description": "Is displayed on the Publication Finder"
+                                            "description": "Is displayed on the Publication Finder"
                                           }
                                         }
                                       }
                                     },
                                     "visibilityData": {
                                       "type": "object",
-									  "description": "Visibility Data",
+                                      "description": "Visibility Data",
                                       "properties": {
                                         "isHidden": {
                                           "type": "boolean",
-										  "description": "Is Hidden"
+                                          "description": "Is Hidden"
                                         },
                                         "reason": {
                                           "type": "string",
-										  "description": "Visibility reason"
+                                          "description": "Visibility reason"
                                         }
                                       }
                                     },
                                     "customerId": {
                                       "type": "integer",
-									  "description": "Customer ID"
+									                    "description": "Customer ID"
                                     },
                                     "packageFreeAccess": {
-                                      "type": "boolean"
+                                      "type": "boolean",
+                                      "description": "Package Free Access"
+                                    },
+                                    "displayName": {
+                                      "type": "string",
+                                      "description": "Display Name"
                                     }
                                   }
                                 }
                               },
                               "duration": {
                                 "type": "string",
-								"description": "Duration"
+                                "description": "Duration"
                               },
                               "frequency": {
                                 "type": "string",
-								"description": "Frequency"
+                                "description": "Frequency"
                               },
                               "alternateTitleList": {
                                 "type": "array",
-								"description": "Alternate Titles",
+                                "description": "Alternate Titles",
                                 "items": {
                                   "type": "object",
                                   "properties": {
                                     "alternateTitle": {
                                       "type": "string",
-									  "description": "Alternate Title"
+                                      "description": "Alternate Title"
                                     },
                                     "titleType": {
                                       "type": "string",
-									  "description": "Title Type"
+                                      "description": "Title Type"
                                     }
                                   }
                                 }
                               },
                               "imageLink": {
                                 "type": "string",
-								"description": "ImageLink"
+                                "description": "ImageLink"
                               },
                               "licenseTerms": {
                                 "type": "object",
@@ -2250,7 +2343,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2336,7 +2430,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2404,7 +2499,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2472,7 +2568,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -2540,7 +2637,8 @@
                               "isHidden": true,
                               "reason": ""
                             },
-                            "customerId": 1123
+                            "customerId": 1123,
+                            "displayName": "Boston Pilot"
                           },
                           {
                             "titleId": 50974,
@@ -4949,7 +5047,7 @@
             "type": "string",
             "in": "query",
             "name": "orderby",
-            "description": "Order in which the publications will be returned. e.g. 'RELEVANCE'",
+            "description": "Order in which the publications will be returned. e.g. 'RELEVANCE'. Note that orderby will always be treated as 'TITLENAME' when the search term is blank.",
             "required": true,
             "enum": [
               "RELEVANCE",
@@ -5014,6 +5112,198 @@
             ]
           }
         ]
+      }
+    },
+    "/pf/v1/pfaccount/{profile}/packages": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/Profile"
+        },
+        {
+          "$ref": "#/parameters/Password"
+        },
+        {
+          "name": "sessionid",
+          "in": "query",
+          "description": "If provided, improves the experience of using the publications search. Sessionid is an optional parameter.",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "description": "Keyword search that is applied to limit the results to packages that have the search term in the package name.",
+          "in": "query",
+          "required": true
+        },
+        {
+          "name": "orderby",
+          "in": "query",
+          "description": "Valid values are packagename and relevance. Note that orderby will always be treated as 'packagename' when the search term is blank.",
+          "required": true,
+          "type": "string",
+          "enum": [
+            "relevance",
+            "packagename"
+          ]
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "description": "Page Offset. Starts at 1.",
+          "required": true,
+          "type": "string",
+          "default": "1"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "description": "The maximum number of results to return in the response. Maximum count value is 100.",
+          "required": true,
+          "type": "string",
+          "default": "10"
+        },
+        {
+          "name": "contenttype",
+          "in": "query",
+          "description": "Limits the results by type of package content. Valid values are all, aggregatedfulltext, abstractandindex, ebook, ejournal, print, unknown and onlinereference. It is also valid to use 0 for all, 1 for aggregated full text, 2 for abstract and index, 3 for ebook, 4 for ejournal, 5 for print, 6 for unknown or 7 for online reference.",
+          "required": false,
+          "type": "string",
+          "enum": [
+            "all",
+            "aggregatedfulltext",
+            "abstractandindex",
+            "ebook",
+            "ejournal",
+            "print",
+            "unknown",
+            "onlinereference",
+            "streamingmedia",
+            "mixedcontent"
+          ]
+        },
+        {
+          "name": "searchtype",
+          "in": "query",
+          "description": "Type of search. Search types are any, contains, exactmatch, beginswith, exactphrase and advanced. Searchtype is an optional parameter and defaults to contains if not provided.",
+          "required": false,
+          "type": "string",
+          "enum": [
+            "any",
+            "contains",
+            "advanced",
+            "exactmatch",
+            "beginswith",
+            "exactphrase"
+          ]
+        },
+        {
+          "name": "searchfield",
+          "in": "query",
+          "description": "Field to search. e.g. 'KEYWORKD'.",
+          "required": false,
+          "type": "string",
+          "enum": [
+            "name",
+            "keyword"
+          ]
+        },
+        {
+          "name": "highlighttag",
+          "in": "query",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "subjectfacetcount",
+          "in": "query",
+          "description": "Max count for subject facets to be returned. e.g. '10'",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "subjectfacetschemafilter",
+          "in":"query",
+          "description":"Specify the schema to filter the schema of the subjects facet.",
+          "required":false,
+          "type":"string",
+          "enum": [
+            "LIBRARY_OF_CONGRESS"
+          ]
+        },
+        {
+          "name": "includefacets",
+          "in": "query",
+          "description": "Specify **true** if search is required to include facet information, **false** otherwise.",
+          "required": false,
+          "type": "boolean"
+        },
+        {
+          "name": "subjectfacet",
+          "in": "query",
+          "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "collectionFormat": "multi"
+        },
+        {
+          "name": "alphamenufacet",
+          "in": "query",
+          "description": "Alpha Menu Facet filtration option. Required in order to access specific titles via refined results. Only 1 Alpha Menu Facet value supported in query. e.g. 'A'",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "packagefreeaccess",
+          "in": "query",
+          "required": false,
+          "type": "string",
+          "enum": [
+            "all",
+            "true",
+            "false"
+          ]
+        }
+      ],
+      "get": {
+        "tags": [
+          "Package Resources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetPackagesResultV2"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          }
+        },
+        "operationId": "get-v1-pfaccount-packages",
+        "description": "This resource allows you to search for packages and returns a list of packages from EPKB. The list is limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
+        "summary": "Get Packages by Package Name"
       }
     }
   },
@@ -5123,6 +5413,17 @@
           "type": "string",
           "description": "Subject Name",
           "example": "Subject Name"
+        }
+      }
+    },
+    "PfSubjectV1" : {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "name" : {
+          "type": "string"
         }
       }
     },
@@ -5516,6 +5817,124 @@
           "type": "string",
           "description": "Target URL",
           "example": "http://target.url.io"
+        },
+        "displayname": {
+          "type": "string",
+          "description": "Display Name",
+          "example": "Display Name"
+        }
+      }
+    },
+    "PackageDetail": {
+      "type": "object",
+      "properties": {
+        "packageId": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string"
+        },
+        "packageCoverage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Dates of Coverage",
+            "properties": {
+              "beginCoverage": {
+                "type": "string",
+                "description": "Coverage Start Date",
+                "example": "2003-01-01"
+              },
+              "endCoverage": {
+                "type": "string",
+                "description": "Coverage End Date",
+                "example": "2003-12-12"
+              }
+            }
+          }
+        },
+        "vendorName": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PfNote"
+          }
+        },
+        "licenseTerms": {
+          "type": "array",
+          "description": "License terms data array.",
+          "items": {
+            "type": "object",
+            "description": "License terms data",
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Label",
+                "example": "Definition of authorised user"
+              },
+              "value": {
+                "type": "array",
+                "description": "Value",
+                "items": {
+                  "type": "string"
+                },
+                "example": "Faculty, Student, Staff and Walk-Ins"
+              },
+              "weight": {
+                "type": "integer",
+                "description": "Weight",
+                "example": -1
+              },
+              "publicNote": {
+                "type": "string",
+                "description": "Public Note",
+                "example": "Faculty, Student, Staff and Walk-Ins"
+              },
+              "primary": {
+                "type": "boolean",
+                "description": "Primary",
+                "example": true
+              }
+            }
+          }
+        },
+        "hasSelectedAndVisibleTitles": {
+          "type": "boolean"
+        },
+	"licenseTermNoteLabel": {
+  	  "type": "string"
+	},
+	"customDescription": {
+	  "type": "string"
+	},
+	"managedDescription": {
+	  "type": "string"
+	},
+	"url": {
+	  "type": "string"
+	},
+	"managedAltNames": {
+	  "type": "array",
+	  "items": {
+            "type": "string" 
+	  }
+	},
+	"customAltNames": {
+	  "type": "array",
+	  "items": {
+            "type": "string" 
+	  }
+	},
+	"proxiedUrl": {
+	  "type": "string"
+	},
+	"displayName": {
+  	  "type": "string"
+	},
+        "packageFreeAccess": {
+          "type": "boolean"
         }
       }
     },
@@ -5664,6 +6083,28 @@
           "format": "int64",
           "description": "Total Results",
           "example": 323
+        }
+      }
+    },
+    "GetPackagesResultV2": {
+      "type": "object",
+      "properties": {
+        "packagesList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PackageSearchDetails"
+          }
+        },
+        "totalResults": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalSearchTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "facets": {
+          "$ref": "#/definitions/HSMPackageFacets"
         }
       }
     },
@@ -5854,6 +6295,48 @@
         }
       }
     },
+    "HSMPackageFacet": {
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "type": "string",
+          "description": "Parent ID",
+          "example": "1615"
+        },
+        "id": {
+          "type": "string",
+          "description": "Package ID",
+          "example": "1615"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "string",
+          "description": "Package Name",
+          "example": "Academic Search Complete"
+        },
+        "subjectName" :{
+          "type": "string",
+          "description": "Subject Name",
+          "example": "Medical"
+        }
+      }
+    },
+    "HSMPackageFacets":{
+      "type": "object",
+      "properties": {
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HSMPackageFacet"
+          }
+        }
+      }
+    },
     "IdentifiersList": {
       "type": "object",
       "properties": {
@@ -5933,6 +6416,161 @@
           "type": "string",
           "description": "Content type. Valid values are All, AggregatedFullText, AbstractandIndex, EBook, EJournal, Print, Unknown and OnlineReference.",
           "example": "EBook"
+        }
+      }
+    },
+    "PackageSearchDetails": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "Content type. Valid values are All, AggregatedFullText, AbstractandIndex, EBook, EJournal, Print, Unknown and OnlineReference.",
+          "example": "EBook"
+        },
+        "customCoverage": {
+          "$ref": "#/definitions/CustomCoverage"
+        },
+        "customAltNames": {
+          "type": "array",
+          "description": "isCustom is true if a customer is the vendor.  The customer vendor is used for custom packages.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "customDescription": {
+          "type": "string"
+        },
+        "customDisplayName": {
+          "type": "string"
+        },
+        "isCustom": {
+          "type": "boolean",
+          "description": "isCustom is true if a customer is the vendor.  The customer vendor is used for custom packages.",
+          "example": true
+        },
+        "isSelected": {
+          "type": "boolean",
+          "description": "Indicates if the packages is selected in a customer's account.",
+          "example": true
+        },
+        "isTokenNeeded": {
+          "type": "boolean",
+          "description": "Field to indicate if a token is needed",
+          "example": true
+        },
+        "managedAltNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "managedDescription": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "custId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "noteName": {
+                "type": "string"
+              },
+              "rank": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "noteText": {
+                "type": "string"
+              },
+              "showOnFlags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "iconUrl": {
+                "type": "string"
+              },
+              "iconId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "altText": {
+                "type": "string"
+              },
+              "hoverText": {
+                "type": "string"
+              },
+              "linkUrl": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "packageId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Package Identifier",
+          "example": 175
+        },
+        "packageName": {
+          "type": "string",
+          "description": "Package Name",
+          "example": "Health Source: Nursing/Academic Edition"
+        },
+        "packageType": {
+          "type": "string",
+          "description": "Package Type.  Valid values are Selectable, Complete, Variable and Custom.",
+          "example": "Complete"
+        },
+        "proxiedUrl": {
+          "type": "string"
+        },
+        "selectedCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Numeric value indicating the number of titles in packages selected in the customer account.",
+          "example": 328
+        },
+        "titleCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Numeric value indicating the title count of the package.",
+          "example": 328
+        },
+        "vendorId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
+          "example": 19
+        },
+        "vendorName": {
+          "type": "string",
+          "description": "Provider name.  In EPKB, this is the 'VendorName'.",
+          "example": "EBSCO"
+        },
+        "visibilityData": {
+          "$ref": "#/definitions/VisibilityData"
+        },
+        "url": {
+          "type": "string"
+        },
+        "subjectsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PfSubjectV1"
+          }
+        },
+        "packageFreeAccess": {
+          "type": "boolean"
         }
       }
     }
