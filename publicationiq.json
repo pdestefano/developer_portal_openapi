@@ -5115,7 +5115,7 @@
         ]
       }
     },
-    "/v1/pf/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
+    "/pf/v1/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
 
       "get": {
         "summary": "Returns alpha browser menu by locale ID and resource type",
@@ -5191,14 +5191,14 @@
             "name": "profile",
             "in": "path",
             "required": true,
-            "description": "Locale identifier. e.g. '1033'",
+            "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'",
             "type": "string"
           },
           {
             "name": "localeid",
             "in": "path",
             "required": true,
-            "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'",
+            "description": "Locale identifier. e.g. '1033'",
             "type": "string"
           },
           {
