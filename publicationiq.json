@@ -5115,6 +5115,152 @@
         ]
       }
     },
+    "/v1/pf/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
+
+      "get": {
+        "summary": "Returns alpha browser menu by locale ID and resource type",
+        "tags": [
+          "V1AlphaBrowser"
+        ],
+        "operationId": "get-v1-pf-pfaccount-profile-alphabrowser-menu-localeid",
+        "description": "Returns alpha browser menu by locale Id and resource type",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AlphaBrowserMenuResult"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "profile",
+            "in": "path",
+            "required": true,
+            "description": "Locale identifier. e.g. '1033'",
+            "type": "string"
+          },
+          {
+            "name": "localeid",
+            "in": "path",
+            "required": true,
+            "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'",
+            "type": "string"
+          },
+          {
+            "name": "sessionid",
+            "in": "query",
+            "description": "Already existing SessionId can be provided to improve experience of using the publications search. Example format -> '-2689046726050171609'",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourcetype",
+            "in": "query",
+            "required": false,
+            "description": "Resource type filter for alpha browser response. e.g. 'JOURNAL' only applies to title search type",
+            "type": "string",
+            "enum": [
+              "book",
+              "journal"
+            ]
+          },
+          {
+            "name": "searchtype",
+            "in": "query",
+            "required": false,
+            "description": "Search type filter for alpha browser response. e.g. 'PACKAGE'",
+            "type": "string",
+            "enum": [
+              "TITLE",
+              "PACKAGE"
+            ]
+          },
+          {
+            "name": "menuid",
+            "in": "query",
+            "description": "Menu id. Used for filtering menus in position 1. Should be a positive number. e.g. '65'",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "header",
+            "description": "authentication header",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "parameters" : [
+        {
+          "name": "profile",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "localeid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
     "/pf/v1/pfaccount/{profile}/packages": {
       "parameters": [
         {
@@ -5306,7 +5452,7 @@
         "description": "This resource allows you to search for packages and returns a list of packages from EPKB. The list is limited to a single customer ID. The response will reflect the context of the EBSCO customer ID included in the request.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "summary": "Get Packages by Package Name"
       }
-    }
+    }    
   },
   "definitions": {
     "Facets": {
