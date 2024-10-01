@@ -120,6 +120,12 @@
         ],
         "summary": "Get Alpha Browser Menu",
         "operationId": "getAlphaBrowserMenuUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "description": "This resource allows you to retrieve an Alpha Browser menu by locale ID and resource type.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",
         "parameters": [
           {
