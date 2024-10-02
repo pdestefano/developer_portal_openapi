@@ -5240,20 +5240,6 @@
           }
         ]
       },
-      "parameters" : [
-        {
-          "name": "profile",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "localeid",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ]
     },
     "/pf/v1/pfaccount/{profile}/packages": {
       "parameters": [
