@@ -6481,6 +6481,12 @@
           "items": {
             "$ref": "#/definitions/HSMPackageFacet"
           }
+        },
+        "packageFreeAccessFacets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HSMPackageFacet"
+          }
         }
       }
     },
