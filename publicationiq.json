@@ -6540,7 +6540,7 @@
         }
       }
     },
-    "HSMPackageFacet": {
+    "packageSubjectFacet": {
       "type": "object",
       "properties": {
         "parentId": {
@@ -6571,19 +6571,35 @@
         }
       }
     },
-    "HSMPackageFacets":{
+    "packageFreeAccessFacet": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "boolean",
+          "description": "Package Free Access",
+          "example": true
+        }
+      }
+    },
+    "hsmPackageFacets":{
       "type": "object",
       "properties": {
         "subjects": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HSMPackageFacet"
+            "$ref": "#/definitions/packageSubjectFacet"
           }
         },
         "packageFreeAccessFacets": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HSMPackageFacet"
+            "$ref": "#/definitions/packageFreeAccessFacet"
           }
         }
       }
