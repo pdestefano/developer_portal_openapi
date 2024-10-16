@@ -6349,7 +6349,7 @@
           "format": "int64"
         },
         "facets": {
-          "$ref": "#/definitions/HSMPackageFacets"
+          "$ref": "#/definitions/hsmPackageFacets"
         }
       }
     },
@@ -6544,12 +6544,12 @@
       "type": "object",
       "properties": {
         "parentId": {
-          "type": "string",
+          "type": "integer",
           "description": "Parent ID",
           "example": "1615"
         },
         "id": {
-          "type": "string",
+          "type": "integer",
           "description": "Package ID",
           "example": "1615"
         },
