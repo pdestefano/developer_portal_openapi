@@ -5115,25 +5115,19 @@
         ]
       }
     },
-    "/v1/pf/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
-
+    "/pf/v1/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
       "get": {
-        "summary": "Returns alpha browser menu by locale ID and resource type",
         "tags": [
           "V1AlphaBrowser"
         ],
-        "operationId": "get-v1-pf-pfaccount-profile-alphabrowser-menu-localeid",
+        "summary": "Returns alpha browser menu by locale ID and resource type",
+        "operationId": "get-pf-v1-pfaccount-profile-alphabrowser-menu-localeid",
         "description": "Returns alpha browser menu by locale Id and resource type",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/AlphaBrowserMenuResult"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
             }
           },
           "400": {
@@ -5191,14 +5185,14 @@
             "name": "profile",
             "in": "path",
             "required": true,
-            "description": "Locale identifier. e.g. '1033'",
+            "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'",
             "type": "string"
           },
           {
             "name": "localeid",
             "in": "path",
             "required": true,
-            "description": "EBSCO customer profile. e.g. 'demo.main.pfiguest'",
+            "description": "Locale identifier. e.g. '1033'",
             "type": "string"
           },
           {
@@ -5246,20 +5240,6 @@
           }
         ]
       },
-      "parameters" : [
-        {
-          "name": "profile",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "localeid",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ]
     },
     "/pf/v1/pfaccount/{profile}/packages": {
       "parameters": [
