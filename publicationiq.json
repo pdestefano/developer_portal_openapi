@@ -131,7 +131,7 @@
           {
             "name": "localeid",
             "in": "path",
-            "description": "Locale Identifier.  For more information on locale identifiers, see [Get Alpha Browser Menu](/knowledge-services/publicationiq/docs/get-alpha-browser-menu).",
+            "description": "Locale Identifier.",
             "required": true,
             "type": "integer"
           },
@@ -5118,11 +5118,17 @@
     "/pf/v1/pfaccount/{profile}/alphabrowser/menu/{localeid}": {
       "get": {
         "tags": [
-          "V1AlphaBrowser"
+          "Alpha Browser Resource"
         ],
-        "summary": "Returns alpha browser menu by locale ID and resource type",
+        "summary": "Get Alpha Browser Menu",
         "operationId": "get-pf-v1-pfaccount-profile-alphabrowser-menu-localeid",
-        "description": "Returns alpha browser menu by locale Id and resource type",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],		
+        "description": "This resource allows you to retrieve an Alpha Browser menu by locale ID and resource type.  Access to PublicationIQ requires a Publication Finder customer profile.  A profile password is optional.  If a password is supplied, it must be a valid password assigned to the Publication Finder customer profile.  If the password is omitted, the request will only be honored if the Publication Finder customer profile allows guest access in the environment where you are making the request.  For example, if you would like to make a request to PublicationIQ in the sandbox environment without a password, guest access must be enabled for the Publication Finder customer profile in the sandbox environment.  The same is true in the production environment.  This documentation uses the sandbox environment.  In order to gain access to the PublicationIQ sandbox environment, please contact EBSCO customer support.",		
         "responses": {
           "200": {
             "description": "OK",
@@ -5131,53 +5137,25 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Internal Server Error"
           },
           "502": {
-            "description": "Bad Gateway",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Bad Gateway"
           },
           "503": {
-            "description": "Service Unavailable",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "description": "Service Unavailable"
           }
         },
         "parameters": [
@@ -5198,7 +5176,7 @@
           {
             "name": "sessionid",
             "in": "query",
-            "description": "Already existing SessionId can be provided to improve experience of using the publications search. Example format -> '-2689046726050171609'",
+            "description": "Already existing SessionId can be provided to improve experience of using the publications search. Example format '-2689046726050171609'",
             "required": false,
             "type": "string"
           },
@@ -5234,12 +5212,12 @@
           {
             "name": "password",
             "in": "header",
-            "description": "authentication header",
+            "description": "Profile Password (optional). If a password is supplied, it must be a valid password assigned to the customer profile. If omitted, the request will only be honored if the customer profile allows guest access.",
             "required": false,
             "type": "string"
           }
         ]
-      },
+      }
     },
     "/pf/v1/pfaccount/{profile}/packages": {
       "parameters": [
