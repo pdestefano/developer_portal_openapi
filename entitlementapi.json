@@ -107,12 +107,107 @@
         },
         "security": [
           {
-            "OAuth2": [
-              
-            ]
+            "OAuth2": []
+          }
+        ],
+        "deprecated": true
+      }
+    },
+    "/v3/{profile}/discovery": {
+      "get": {
+        "tags": [
+          "Full Text Finder Resource"
+        ],
+        "summary": "Get Full Text Links",
+        "description": "This operation allows you to use a DOI, or Digital Object Identifier, to get access to full text links.  The operation can accept a DOI in either openurl 1.0 or 1.1 format.",
+        "operationId": "openurl",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "profile",
+            "in": "path",
+            "description": "EBSCO credentials formatted as customerId.groupId.profileId",
+            "required": true,
+            "type": "string",
+            "default": "demo.main.ftf"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Profile token",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Link-Origin",
+            "in": "header",
+            "description": "Origin of the incoming link",
+            "required": false,
+            "type": "string",
+            "default": "https"
+          },
+          {
+            "name": "Referer",
+            "in": "header",
+            "description": "referrering url will be used as a Link-Origin backup",
+            "required": false,
+            "type": "string",
+            "default": "apigee.ebsco.com"
+          },
+          {
+            "name": "doi",
+            "in": "query",
+            "description": "Digital Object Identifier query",
+            "required": false,
+            "type": "string",
+            "default": "10.1080/1470243032000214340"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoveryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
           }
         ]
-      }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "profile",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "components": {
@@ -169,7 +264,15 @@
           }
         },
         "title": "DiscoveryResponse",
-        "description": "Get FTF Links Response"
+        "description": "Get FTF Links Response",
+        "x-examples": {
+          "example-1": {
+            "link": "http://search.ebscohost.com/login.aspx?direct=true&scope=site&db=aph&AN=16133335&ErrorURL=http%3A%2F%2Flinksource%2Eebsco%2Ecom%2Ferror%2Easpx"
+          },
+          "v3 example response": {
+            "link": "http://apis.ebsco.com/ehostentitlements/v3/{profile}/resolver?token=XyEF6ziaXTw531tj6trRqvgMsumz7qpRyIlzxHDzVIHQEIiTWk9tsAmWCDwlfoVI"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -178,9 +281,7 @@
         "flows": {
           "clientCredentials": {
             "tokenUrl": "https://apis.ebsco.com/oauth-proxy/token",
-            "scopes": {
-              
-            }
+            "scopes": {}
           }
         }
       }
