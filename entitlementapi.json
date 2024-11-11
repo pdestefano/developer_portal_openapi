@@ -16,7 +16,7 @@
   ],
   "tags": [
     {
-      "name": "Full Text Finder Resource"
+      "name": "Full Text Finder Resources"
     }
   ],
   "consumes": [
@@ -29,7 +29,7 @@
     "/{profile}/discovery": {
       "get": {
         "tags": [
-          "Full Text Finder Resource"
+          "Full Text Finder Resources"
         ],
         "summary": "Get Full Text Links",
         "description": "This operation allows you to use a DOI, or Digital Object Identifier, to get access to full text links.  The operation can accept a DOI in either openurl 1.0 or 1.1 format.",
@@ -116,11 +116,11 @@
     "/v3/{profile}/discovery": {
       "get": {
         "tags": [
-          "Full Text Finder Resource"
+          "Full Text Finder Resources"
         ],
-        "summary": "Get Full Text Links",
+        "summary": "Get Full Text Links V3",
         "description": "This operation allows you to use a DOI, or Digital Object Identifier, to get access to full text links.  The operation can accept a DOI in either openurl 1.0 or 1.1 format.",
-        "operationId": "openurl",
+        "operationId": "openurlv3",
         "produces": [
           "application/json"
         ],
@@ -197,17 +197,7 @@
             "OAuth2": []
           }
         ]
-      },
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "profile",
-          "in": "path",
-          "required": true
-        }
-      ]
+      }
     }
   },
   "components": {
