@@ -4484,9 +4484,20 @@
             }
           },
           {
+            "name": "categoryfilter",
+            "in": "query",
+            "description": "Filters package search by given categories. Accepts category id or name. If multiple categories are given, documents containing any of the given categories will be returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "facetstoinclude",
             "in": "query",
-            "description": "Select facets to include in response. Allowed value is 'subject'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
+            "description": "Select facets to include in response. Allowed value is 'subject', 'packagefreeaccess', and 'packagecategory'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
             "schema": {
               "type": "string"
             }
@@ -4723,9 +4734,20 @@
             }
           },
           {
+            "name": "categoryfilter",
+            "in": "query",
+            "description": "Filters package search by given categories. Accepts category id or name. If multiple categories are given, documents containing any of the given categories will be returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "facetstoinclude",
             "in": "query",
-            "description": "Select facets to include in response. Allowed value is 'subject'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
+            "description": "Select facets to include in response. Allowed values are 'subject', 'packagefreeaccess', and 'packagecategory'. Use subjectFacetCount to limit the number of subject facets returned. Default is 1000 when facetsToInclude contains subject.",
             "schema": {
               "type": "string"
             }
@@ -5574,7 +5596,7 @@
           },
           "schema": {
             "type": "string",
-            "description": "Schema of a Subject",
+            "description": "Schema of a Facet",
             "example": "Library of Congress"
           },
           "id": {
@@ -5593,6 +5615,11 @@
             "format": "int32",
             "description": "Count of results matching the Facet",
             "example": 1
+          },
+          "rank": {
+            "type": "integer",
+            "description": "Rank of a Facet",
+            "example": 2
           }
         },
         "description": "List of package characteristics."
@@ -9806,6 +9833,16 @@
                 "$ref": "#/components/schemas/FacetsModel"
               }
             }
+          },
+          "categories": {
+            "type": "array",
+            "description": "List of category facets",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FacetsModel"
+              }
+            }
           }
         }
       },
@@ -9837,6 +9874,32 @@
             "type": "boolean",
             "description": "Indicates if the subject has been custom selected by the customer",
             "example": false
+          }
+        }
+      },
+      "PackageCategoryResponse": {
+        "title": "PackageCategoryResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Id of a category",
+            "example": 35408
+          },
+          "parentId": {
+            "type": "integer",
+            "description": "Id of Category's Parent",
+            "example": 35407
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of a Category",
+            "example": "Technology"
+          },
+          "rank": {
+            "type": "integer",
+            "description": "Rank of a Category",
+            "example": 3
           }
         }
       },
@@ -9998,6 +10061,13 @@
             "description": "List of subject associations",
             "items": {
               "$ref": "#/components/schemas/PackageSubjectResponse"
+            }
+          },
+          "packageCategories": {
+            "type": "array",
+            "description": "List of category associations",
+            "items": {
+              "$ref": "#/components/schemas/PackageCategoryResponse"
             }
           }
         },
