@@ -35,8 +35,11 @@
       "name": "Label and Proxy Resources"
     },
     {
-      "name": "Subject Resources"
-    }
+      "name": "Subject Resource"
+    },
+	{
+	  "name": "Category Resources"
+	}
   ],
   "paths": {
     "/{custid}/": {
@@ -4796,7 +4799,7 @@
     "/v1/{custid}/subjects/{schemaid}": {
       "get": {
         "tags": [
-          "Subject Resources"
+          "Subject Resource"
         ],
         "summary": "Get Available Subjects By Schema Id",
         "description": "This operation retrieves all available subjects within a specified subject schema. If 0 is used for the schema id parameter, subjects for all subject schemas will be returned. In the response, the properties for each item in the list includes the subject name, parent id, subject id, schema id, schema name, and subject hierarchy.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
@@ -4882,7 +4885,7 @@
         }
       }
     },
-    "/{custid}/categories": {
+    "/{custid}/categories": {		
       "parameters": [
         {
           "schema": {
@@ -4894,6 +4897,9 @@
         }
       ],
       "post": {
+        "tags": [
+          "Category Resources"
+        ],		  
         "summary": "Get Package Categories",
         "operationId": "post-custid-categories",
         "responses": {
@@ -4903,7 +4909,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "description": "List of categories owned by the customer corresponding to the ids requested. List is sorted by categoryId in descending order.",
+                  "description": "List of categories owned by the customer corresponding to the ids requested. The list is sorted by categoryId in descending order.",
                   "items": {
                     "$ref": "#/components/schemas/category"
                   }
@@ -5059,7 +5065,7 @@
             }
           }
         },
-        "description": "This operation allows the retrieval of existing package categories for a customer. To retieve all categories for a customer, send an empty array for the categoryIds field. To retrieve specific categories for a customer, send the desired ids of the categories in the array of the categoryIds field.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows the retrieval of existing package categories for a customer. To retrieve all categories for a customer, send an empty array for the categoryIds field. To retrieve specific categories for a customer, send the desired ids for the categories in the array of the categoryIds field.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "schema": {
@@ -5075,37 +5081,23 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
                 "description": "Array of categoryIds to retrieve",
-                "properties": {
-                  "categoryIds": {
-                    "type": "array",
-                    "description": "Array of categoryIds to retrieve",
-                    "items": {
-                      "type": "integer"
-                    }
-                  }
-                }
+                "type": "array",
+                "items": {
+                   "type": "integer"
+                }			
               },
               "examples": {
                 "Get all categories for the customer": {
-                  "value": {
-                    "categoryIds": []
-                  }
+                  "value": []
                 },
                 "Get specific categories for the customer": {
-                  "value": {
-                    "categoryIds": [
-                      1,
-                      2,
-                      3
-                    ]
-                  }
+                  "value": [1,2,3]
                 }
               }
             }
           },
-          "description": "Array of categoryIds to retrieve. Can include one or more categoryIds, or be sent as an empty array to retrieve all categories."
+          "description": "Array of categoryIds to retrieve. The array can include one or more categoryIds or be sent as an empty array to retrieve all categories."
         }
       }
     },
@@ -5121,6 +5113,9 @@
         }
       ],
       "post": {
+		"tags": [
+          "Category Resources"
+        ],
         "summary": "Create Package Category",
         "operationId": "post-custid-category",
         "responses": {
@@ -5159,7 +5154,7 @@
             }
           }
         },
-        "description": "This operation allows the creation of a package category. Only one category can be created per call, but it allows both the basic category information to be set and for assignments to be made. The catgory can be given a name, assigned a rank, assigned a child or parent given the child/parent specified exist, and assigned to existing selected packages. \n\nA category name is required and cannot be blank, but all other fields are optional. The rank will default to 1 if not supplied for a parent cateory. It will be 0 for all child categories regardless of input. The maximum number of assignable packages is equal to the number of selected packages a customer owns. \n\nFor each customer, there is a maximum of 10 parent categories and a maximum of 50 children per parent. A category is classified as a parent if either of these cases are true:\n1. The category has one or more categories assigned as a child of it.\n2. The cateogry has no categories assigned as a child of it, but also is not, itself, assigned as a child of another category.\n\nA category is classified as a child if it has a parent category assigned. A child category can only have one parent. It cannot be both a child and parent category, therefore, the operation will fail if an attempt is made to assign both fields.\n  \n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows the creation of a package category. Only one category can be created per call. It allows both the basic category information to be set and for assignments to be made. The category can be assigned a child or parent given the child or parent specified exists.  Also, the category can be given a name, assigned a rank, and assigned to existing selected packages. \n\nA category name is required and cannot be blank, but all other fields are optional. The rank will default to 1 if not supplied for a parent category. It will be 0 for all child categories regardless of input. The maximum number of assignable packages is equal to the number of selected packages a customer owns. \n\nFor each customer, there is a maximum of 10 parent categories and a maximum of 50 children per parent. A category is classified as a parent if either of these cases are true:\n1. The category has one or more categories assigned as a child of it.\n2. The category has no categories assigned as a child of it and it is not assigned as a child of another category.\n\nA category is classified as a child if it has a parent category assigned. A child category can only have one parent. It cannot be both a child and parent category.  The operation will fail if an attempt is made to assign both fields.\n  \n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "schema": {
@@ -5178,6 +5173,11 @@
                 "$ref": "#/components/schemas/categoryRequest"
               },
               "examples": {
+				"Create a Category": {
+				  "value": {
+                       "categoryName": "Books"
+                    }
+				},
                 "Create a Category with only an assigned package and rank": {
                   "value": {
                     "categoryName": "Books",
@@ -5219,7 +5219,7 @@
         }
       }
     },
-    "/{custid}/categoy/{categoyId}": {
+    "/{custid}/category/{categoryId}": {
       "parameters": [
         {
           "schema": {
@@ -5233,12 +5233,15 @@
           "schema": {
             "type": "string"
           },
-          "name": "categoyId",
+          "name": "categoryId",
           "in": "path",
           "required": true
         }
       ],
       "put": {
+        "tags": [
+          "Category Resources"
+        ],		  
         "summary": "Update a Package Category",
         "operationId": "put-custid-categoy-categoyId",
         "responses": {
@@ -5256,7 +5259,7 @@
             }
           }
         },
-        "description": "This operation allows the edit of an existing package category. Only one category can be edited per call. The catgory name and rank can be changed, a parent category or child categories can be changed or assigned/unassigned, and packages can be assigned/unassigned. \n\nA category name cannot be removed or made blank. The maximum number of assignable packages is equal to the number of selected packages a customer owns. A child category rank will always remain 0 regardless of input. If this operation results in a child category becoming a parent category, the rank will remain 0 unless changed by the customer.\n\nFor each customer, there is a maximum of 10 parent categories and a maximum of 50 children per parent. A category is classified as a parent if either of these cases are true:\n1. The category has one or more categories assigned as a child of it.\n2. The cateogry has no categories assigned as a child of it, but also is not, itself, assigned as a child of another category.\n\nA category is classified as a child if it has a parent category assigned. A child category can only have one parent. It cannot be both a child and parent category, therefore, the operation will fail if an attempt is made to assign both fields.\n\nIf an operation would result in either parent or child category maximums being exceeded, it will fail with an error. \n  \n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to edit an existing package category. Only one category can be edited per call. The category name and rank can be changed.  A parent category can be changed or assigned/unassigned.  Child categories can also be changed or assigned/unassigned and packages can be assigned/unassigned. \n\nA category name cannot be removed or made blank. The maximum number of assignable packages is equal to the number of selected packages a customer owns. A child category rank will always remain 0 regardless of input. If this operation results in a child category becoming a parent category, the rank will remain 0 unless changed by the customer.\n\nFor each customer, there is a maximum of 10 parent categories and a maximum of 50 children per parent. A category is classified as a parent if either of these cases are true:\n1. The category has one or more categories assigned as a child of it.\n2. The category has no categories assigned as a child of it and it is not assigned as a child of another category.\n\nA category is classified as a child if it has a parent category assigned. A child category can only have one parent. It cannot be both a child and parent category. The operation will fail if an attempt is made to assign both fields.\n\nIf an operation would result in either parent or child category maximums being exceeded, it will fail with an error. \n  \n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "schema": {
@@ -5314,8 +5317,11 @@
           "required": true
         }
       ],
-      "delete": {
-        "summary": "",
+      "post": {
+        "tags": [
+          "Category Resources"
+        ],		  
+        "summary": "Delete Categories",
         "operationId": "delete-custid-deleteCategories",
         "responses": {
           "200": {
@@ -5332,7 +5338,7 @@
             }
           }
         },
-        "description": "This operation allows the removal of package categories. At least one or more category ids must be included in the request, an empty array will result in an error. The delete includes the removal of both the category itself and any package assignments it had.\n\nIf a parent category is deleted, ALL categories assigned to it as a child category will also be deleted, along with their package assignments.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to remove package categories. At least one or more category ids must be included in the request.  An empty array will result in an error. The delete includes the removal of both the category itself and any package assignments it had.\n\nIf a parent category is deleted, ALL categories assigned to it as a child category will also be deleted with their package assignments.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "parameters": [
           {
             "schema": {
