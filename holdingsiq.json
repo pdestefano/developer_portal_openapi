@@ -9900,6 +9900,11 @@
             "type": "integer",
             "description": "Rank of a Category",
             "example": 3
+          },
+          "explicit": {
+            "type": "boolean",
+            "description": "Returns true if the category is explicitly related to the package. Otherwise returns false.",
+            "example": false
           }
         }
       },
