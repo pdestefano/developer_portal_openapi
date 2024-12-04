@@ -1,0 +1,5356 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "contact": {
+      "name": "ApiWizards",
+      "email": "EIS.APIWizards@ebsco.com"
+    },
+    "title": "EDS API",
+    "description": "AWS Api Gateway for EdsApi",
+    "version": "2023-09-01T20:36:12Z"
+  },
+  "servers": [
+    {
+      "url": "https://eds-api.ebscohost.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication Resources",
+      "description": "Authentication methods"
+    },
+    {
+      "name": "Session Resources",
+      "description": "Session related methods"
+    },
+    {
+      "name": "Search Resources",
+      "description": "Discovery Service Methods"
+    },
+    {
+      "name": "Publication Resources",
+      "description": "Publication Search Methods"
+    }
+  ],
+  "paths": {
+    "/authservice/rest/uidauth": {
+      "post": {
+        "tags": [
+          "Authentication Resources"
+        ],
+        "summary": "Generate Authentication Token User ID",
+        "description": "This operation generates an authentication token that will be required for all other calls to the API.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseMessage"
+                },
+                "examples": {
+                  
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "Request body posted to endpoint.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UIDAuthRequestMessage"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/UIDAuthRequestMessage"
+              }
+            }
+          }
+        },
+        "operationId": "authentication-uidauth"
+      }
+    },
+    "/authservice/rest/ipauth": {
+      "post": {
+        "tags": [
+          "Authentication Resources"
+        ],
+        "summary": "Generate Authentication Token IP",
+        "description": "This operation generates an authentication token that will be required for all other calls to the API.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Options": {
+                    "type": "array",
+                    "description": "Options for IP Authentication.",
+                    "items": {
+                      "type": "string",
+                      "example": "autocomplete"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Request body posted to the endpoint."
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseMessage"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "authentication-ipauth"
+      },
+      "parameters": [
+        
+      ]
+    },
+    "/edsapi/rest/createsession": {
+      "get": {
+        "tags": [
+          "Session Resources"
+        ],
+        "summary": "Create a Session",
+        "description": "This operation is used to generate a session ID that will be used in subsequent API calls for the session.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "edsapi"
+            },
+            "in": "query",
+            "name": "profile",
+            "description": "Profile Identifier",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "n",
+              "example": "n",
+              "enum": [
+                "n",
+                "y"
+              ]
+            },
+            "in": "query",
+            "name": "guest",
+            "description": "Set to y for a guest session."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "XYZLibrary"
+            },
+            "in": "query",
+            "name": "org",
+            "description": "Any string identifying the caller organization."
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSessionResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSessionResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "sessions-createsession-get"
+      },
+      "post": {
+        "tags": [
+          "Session Resources"
+        ],
+        "summary": "Create a Session",
+        "description": "This operation is used to generate a session ID that will be used in subsequent API calls for the session.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "Profile": "edsapi",
+                    "Guest": "n",
+                    "Org": "ABC Profile"
+                  }
+                },
+                "properties": {
+                  "Profile": {
+                    "type": "string",
+                    "description": "Profile Identifier",
+                    "example": "wsapi"
+                  },
+                  "Guest": {
+                    "type": "string",
+                    "description": "Set to y for a guest session.",
+                    "enum": [
+                      "y",
+                      "n"
+                    ],
+                    "example": "y",
+                    "default": "n"
+                  },
+                  "Org": {
+                    "type": "string",
+                    "description": "Any string identifying the caller organization.",
+                    "example": "XYZ_organization"
+                  }
+                },
+                "required": [
+                  "Profile"
+                ]
+              }
+            }
+          },
+          "description": "Request body posted to endpoint."
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSessionResponseMessage"
+                },
+                "examples": {
+                  
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSessionResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "sessions-createsession-post"
+      }
+    },
+    "/edsapi/rest/endsession": {
+      "get": {
+        "tags": [
+          "Session Resources"
+        ],
+        "summary": "End a Session",
+        "description": "This operation invalidates the session token. End session should be called when you know a user logs out.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EndSessionResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EndSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "c3421b6c-1f4b-41d0-8381-e273abbd8ec4.Qlmb/P3sNDGCd4GZyvP6yw=="
+            },
+            "in": "query",
+            "name": "SessionToken",
+            "description": "Session token to invalidate.",
+            "required": true
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "operationId": "sessions-endsession-get"
+      },
+      "post": {
+        "tags": [
+          "Session Resources"
+        ],
+        "summary": "End a Session",
+        "description": "This operation is used to invalidate the session token. End session should be called when you know a user logs out.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EndSessionResponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "IsSuccessful": "y"
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EndSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EndSessionRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/EndSessionRequest"
+              }
+            }
+          },
+          "description": "Request body posted to endpoint."
+        },
+        "operationId": "sessions-endsession-post"
+      }
+    },
+    "/edsapi/rest/info": {
+      "get": {
+        "tags": [
+          "Search Resources"
+        ],
+        "summary": "Retrieve Option Information",
+        "description": "This operation returns the common EDS limiters, sort options, search tags, expanders and search modes available for the associated profile.",
+        "operationId": "edsapi-info-get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		  
+        ]
+      },
+      "post": {
+        "tags": [
+          "Search Resources"
+        ],
+        "summary": "Retrieve Option Information",
+        "description": "This operation returns the common EDS limiters, sort options, search tags, expanders and search modes available for the associated profile.",
+        "operationId": "edsapi-info-post",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/InfoResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      }
+    },
+    "/edsapi/rest/search": {
+      "get": {
+        "tags": [
+          "Search Resources"
+        ],
+        "operationId": "edsapi-search-get",
+        "summary": "Search",
+        "description": "This operation is used to perform searches against the databases in the profile. It returns a results list along with the relevant facets and abstracts.\n\nNote: The characters : , ( and ) are used as search syntax and need to be escaped if you want to use them as within a parameter's value.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponseMessageGET"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponseMessageGET"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "y",
+              "enum": [
+                "y",
+                "n"
+              ],
+              "example": "y"
+            },
+            "in": "query",
+            "name": "includefacets",
+            "description": "Specifies whether or not facets should be included in the response. The date range is included in the response when set to y."
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "facetfilter",
+            "description": "Specify a facet filter to refine the results of a previous search.  Filters are defined in terms of a facet types and values. A facet value group is a collection of one or more pairs of facet types (identified by an ID) and values that are applied as follows to the search.  Individual facet filters within a group are OR'd together. If multiple facet filter groups are specified, they are AND'd together.  Facets and their values are obtained by specifying the parameter 'includeFacets=y' in the original search request. The response to such a request will include facets and their values that are available for filtering the current results.  {filter_Id},{facet_Id}:{value}[,{facet_Id}:{value}]*   filter_Id: A number that identifies the filter. The value must be unique within the request.  facet_Id: unique ID of the facet. value: The facet value to filter on. example '1,Publisher:wiley-blackwell' "
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "relevance"
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "Specifies how the search results should be sorted. The available sorts can be obtained from the API’s Info method"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "limiter",
+            "description": "Specifies what to further limit the search by. The available limiters are specified in the response from the Info Method. {limiter_Id}:{value}[,{value}]*  limiter_Id: (required) The ID of the limiter  value: (required) The value(s) to limit by, separated by a comma. (Note: only limiters of type MultiSelectValue will accept more than one value) Example: FT:y"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "any",
+                "bool",
+                "all",
+                "smart"
+              ],
+              "default": "all"
+            },
+            "in": "query",
+            "name": "searchmode",
+            "description": "Allows the client to specify the search mode that he wants to be effective with this search"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "expander",
+            "description": "Expanders to be applied to this search  The available expanders can be obtained from the API’s Info method."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "brief",
+              "enum": [
+                "title",
+                "brief",
+                "detailed"
+              ]
+            },
+            "in": "query",
+            "name": "view",
+            "description": "Specifies the level of detail in the records returned."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "in": "query",
+            "name": "resultsperpage",
+            "description": "This indicates the number or records to return with a search request."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "in": "query",
+            "name": "pagenumber",
+            "description": "Specifies the page number of records to return. This is used to determine which records to return for the search. For example, if the results per page is specified as 20 and the page number is set to 2, records 21-40 are returned."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "y",
+                "n"
+              ],
+              "default": "y"
+            },
+            "in": "query",
+            "name": "highlight",
+            "description": "Specifies whether or not to highlight the search term"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "action-1",
+            "description": "Specifies an action used to operate on the current search request.   Actions are applied after all query string parameters have been resolved.    Actions can optionally specify an ordinal. Like the query parameter, if the ordinal is omitted, the parameters will be evaluated from left to right as received. (see Actions Documentation) Example: addfacetfilter(Journal:backpacker)"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "relatedcontent",
+            "description": "Comma separated list of related content types to return with the search results. (see AvailableRelatedContent from the Info method call results for available options)"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "publicationid",
+            "description": "Specifies a publication to search within. (only used for profiles configured for publication searching)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "y",
+                "n"
+              ],
+              "default": "n"
+            },
+            "in": "query",
+            "name": "autosuggest",
+            "description": "Specifies whether or not auto suggestions should be included in the response. (Read more about autosuggestion here.)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "n",
+              "enum": [
+                "y",
+                "n"
+              ]
+            },
+            "in": "query",
+            "name": "autocorrect",
+            "description": "Specifies whether or not auto correction should be included in the response."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "n",
+              "enum": [
+                "y",
+                "n"
+              ]
+            },
+            "in": "query",
+            "description": "Specifies whether or not the image quick view data is included in search response.",
+            "name": "includeimagequickview"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      },
+      "post": {
+        "tags": [
+          "Search Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "https://eds-api.ebscohost.com/edsapi/rest/search",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "summary": "Search",
+        "description": "This operation is used to perform searches against the databases in the profile. It returns a results list along with the relevant facets and abstracts.\n\nNote: The characters : , ( and ) are used as search syntax and need to be escaped if you want to use them as within a parameter's value.",
+        "operationId": "edsapi-search-post",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponseMessage"
+                },
+                "examples": {
+                  
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequestMessage"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequestMessage"
+              }
+            }
+          },
+          "description": "Request body posted to endpoint"
+        }
+      }
+    },
+    "/edsapi/rest/retrieve": {
+      "get": {
+        "tags": [
+          "Search Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "GET",
+          "uri": "https://eds-api.ebscohost.com/edsapi/rest/retrieve",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "summary": "Retrieve",
+        "description": "The operation is used to retrieve a single record. It returns the complete record along with its abstract and full text.",
+        "operationId": "edsapi-retrieve-get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrieveResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrieveResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "dbid",
+            "description": "Database short name specifying which database to retrieve the record from. The dbid for a particular record can be found in the header section of the search response. ",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "an",
+            "description": "Identifier of the record to obtain. The an for a particular record can be found in the header section of the search response.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "highlightterms",
+            "description": "Comma separated list of terms to highlight in the record. Example: air, water"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ebook-pub",
+                "ebook-pdf"
+              ]
+            },
+            "in": "query",
+            "name": "ebookpreferredformat",
+            "description": "Format to return eBook full text content in."
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      },
+      "post": {
+        "tags": [
+          "Search Resources"
+        ],
+        "summary": "Retrieve",
+        "description": "This operation is used to retrieve a single record. It returns the complete record along with its abstract and full text.",
+        "operationId": "edsapi-retrieve-post",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrieveResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrieveResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetrieveRequestMessage"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RetrieveRequestMessage"
+              }
+            }
+          },
+          "description": "Request body posted to the endpoint."
+        }
+      }
+    },
+    "/edsapi/rest/citationstyles": {
+      "get": {
+        "tags": [
+          "Search Resources"
+        ],
+        "summary": "Retrieve Record Citations",
+        "description": "This operation retrieves a record citation(s) by specifying an AN, database, and a list of formats. You can find the AN and DBID of a record in the header of the Search or Retrieve response message.",
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "GET",
+          "uri": "https://eds-api.ebscohost.com/edsapi/rest/citationstyles",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitationStylesResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitationStylesResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                },
+                "examples": {
+                  
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "a9h"
+            },
+            "in": "query",
+            "name": "dbid",
+            "description": "Database short name specifying which database to retrieve the record from",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "129860888"
+            },
+            "in": "query",
+            "name": "an",
+            "description": "Identifier of the record to obtain",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "mla,chicago"
+            },
+            "in": "query",
+            "name": "styles",
+            "description": "Comma separated list of citation styles to build. To request all available citations, use the value 'all'.",
+            "required": true
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "operationId": "edsapi-citationstyles"
+      }
+    },
+    "/edsapi/rest/exportformat": {
+      "get": {
+        "tags": [
+          "Search Resources"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "lfh"
+            },
+            "in": "query",
+            "name": "dbid",
+            "description": "Database short name specifying which database to retrieve the record from.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "9701242189"
+            },
+            "in": "query",
+            "name": "an",
+            "description": "Record Identifier",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "ris"
+            },
+            "in": "query",
+            "name": "format",
+            "description": "Export Format",
+            "required": true
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "summary": "Export Record Citation by Format",
+        "description": "This operation retrieves a single record citation by specifying an AN, database ID (DBID) and format. You can find the AN and DBID of a record in the header of the Search or Retrieve response message. \n\nNote: This operation is not available for guest sessions.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportFormatResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportFormatResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "edsapi-exportformats"
+      }
+    },
+    "/edsapi/publication/searchcriteria": {
+      "get": {
+        "tags": [
+          "Publication Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "GET",
+          "uri": "https://eds-api.ebscohost.com/edsapi/publication/searchcriteria",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "operationId": "publication-searchcriteria-get",
+        "summary": "Retrieve Search Criteria",
+        "description": "This operation obtains the search options available for publication searching within a given profile. The response contains the sort options, search fields, and limiters.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchCriteriaResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchCriteriaResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      },
+      "post": {
+        "tags": [
+          "Publication Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "https://eds-api.ebscohost.com/edsapi/publication/searchcriteria",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "operationId": "publication-searchcriteria-post",
+        "summary": "Retrieve Search Criteria",
+        "description": "This operation obtains the search options available for publication searching within a given profile. The response contains the sort options, search fields, and limiters.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchCriteriaResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchCriteriaResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      }
+    },
+    "/edsapi/publication/search": {
+      "get": {
+        "tags": [
+          "Publication Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "GET",
+          "uri": "https://eds-api.ebscohost.com/edsapi/publication/search",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "operationId": "publication-search-get",
+        "summary": "Search",
+        "description": "This operation is used to perform searches for publications.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationSearchResponseMessageGET"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationSearchResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "y",
+              "enum": [
+                "y",
+                "n"
+              ],
+              "example": "y"
+            },
+            "in": "query",
+            "name": "includefacets",
+            "description": "Specifies whether or not facets should be included in the response."
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "facetfilter",
+            "description": "Specify a facet filter to refine the results of a previous search. Filters are defined in terms of a facet types and values. A facet value group is a collection of one or more pairs of facet types (identified by an ID) and values that are applied as follows to the search. Individual facet filters within a group are joined by OR. If multiple facet filter groups are specified, they are joined by AND. Facets and their values are obtained by specifying the parameter 'includeFacets=y' in the original search request. The response to such a request will include facets and their values that are available for filtering the current results. Format: {{filter_Id}},{facet_Id}:{value}[,{facet_Id}:{value}]*     filter_Id- A number that identifies the filter. The value must be unique within the request. facet_Id- unique ID of the facet. value- The facet value to filter on. Example: 1, Publisher:wiley-blackwell"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "relevance"
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "Specifies how the search results should be sorted. The available sorts can be obtained from the Info method."
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "limiter",
+            "description": "Specifies which limiters are used to reduce the search results. The available limiters are specified in the response from the Info Method. {limiter_Id}:{value}[,{value}]*  limiter_Id: (required) The ID of the limiter  value: (required) The value(s) to limit by, separated by a comma. (Note: only limiters of type MultiSelectValue will accept more than one value) Example: FT:y"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "brief",
+              "enum": [
+                "title",
+                "brief",
+                "detailed"
+              ]
+            },
+            "in": "query",
+            "name": "view",
+            "description": "Specifies the level of detail in the records returned."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "in": "query",
+            "name": "resultsperpage",
+            "description": "This indicates the number or records to return with a search request."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "in": "query",
+            "name": "pagenumber",
+            "description": "Specifies the page number of records to return. This is used to determine which records to return for the search. For example, if the results per page is specified as 20 and the page number is set to 2, records 21-40 are returned."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "y",
+                "n"
+              ],
+              "default": "y"
+            },
+            "in": "query",
+            "name": "highlight",
+            "description": "Specifies whether or not to highlight the search term"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "action-1",
+            "description": "Specifies an action used to operate on the current search request.   Actions are applied after all query string parameters have been resolved. Actions can optionally specify an ordinal. Like the query parameter, if the ordinal is omitted, the parameters will be evaluated from left to right as received. (see Actions Documentation) Example: addfacetfilter(Journal:backpacker)"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "relatedcontent",
+            "description": "Comma separated list of related content types to return with the search results. (see AvailableRelatedContent from the Info method call results for available options)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "y",
+                "n"
+              ],
+              "default": "n"
+            },
+            "in": "query",
+            "name": "autosuggest",
+            "description": "Specifies whether or not auto suggestions should be included in the response."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "n",
+              "enum": [
+                "y",
+                "n"
+              ]
+            },
+            "in": "query",
+            "name": "autocorrect",
+            "description": "Specifies whether or not auto correction should be included in the response."
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      },
+      "post": {
+        "tags": [
+          "Publication Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "POST",
+          "uri": "https://eds-api.ebscohost.com/edsapi/publication/search",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "operationId": "publication-search-post",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationSearchResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationSearchResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Search",
+        "description": "This operation is used to perform searches for publications.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicationSearchRequestMessage"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicationSearchRequestMessage"
+              }
+            }
+          },
+          "description": "Request body posted to endpoint"
+        }
+      }
+    },
+    "/edsapi/publication/retrieve": {
+      "get": {
+        "tags": [
+          "Publication Resources"
+        ],
+        "x-amazon-apigateway-integration": {
+          "httpMethod": "GET",
+          "uri": "https://eds-api.ebscohost.com/edsapi/publication/retrieve",
+          "requestParameters": {
+            "integration.request.header.x-api-key": "context.usageIdentifierKey"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "http_proxy"
+        },
+        "operationId": "publication-retrieve-get",
+        "summary": "Retrieve",
+        "description": "This operation retrieves a single publication record by specifying a publication ID. The publication ID can be found in the header section of the publication Search response message.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationRetrieveResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationRetrieveResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-authenticationToken"
+          },
+          {
+            "$ref": "#/components/parameters/x-sessionToken"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "Identifier of the publication to retrieve",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "highlightterms",
+            "description": "Terms to highlight in the record. Format: string[,string]*"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ]
+      },
+      "post": {
+        "tags": [
+          "Publication Resources"
+        ],
+        "operationId": "publication-retrieve-post",
+        "summary": "Retrieve",
+        "description": "This operation retrieves a single publication record by specifying a publication ID. The publication ID can be found in the header section of the publication Search response message.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationRetrieveResponseMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationRetrieveResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Unique code assigned by EBSCO to monitor access.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }		
+        ],		
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicationRetrieveRequestMessage"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicationRetrieveRequestMessage"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "EdsApiLambdaAuthorizer": {
+        "type": "apiKey",
+        "name": "Unused",
+        "in": "header",
+        "x-amazon-apigateway-authtype": "custom",
+        "x-amazon-apigateway-authorizer": {
+          "authorizerUri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:987389417107:function:test-apigateway-EdsApiLambdaAuthorizerFunction-bba434lJ7y1q/invocations",
+          "authorizerResultTtlInSeconds": 0,
+          "type": "request"
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "CitationStylesResponseMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          "success": {
+            "Citations": [
+              {
+                "Id": "mla",
+                "Label": "MLA",
+                "SectionLabel": "Works Cited",
+                "Data": "Sanderson, Katharine. “H2Oh!: Water Is Not One Liquid... It’s Two, Says Katharine Sanderson.” <i>New Scientist</i>, vol. 238, no. 3180, June 2018, pp. 26–29.",
+                "Caption": "Modern Language Assoc.",
+                "Indent": 1
+              },
+              {
+                "Id": "chicago",
+                "Label": "Chicago/Turabian: Author-Date",
+                "SectionLabel": "Reference List",
+                "Data": "Sanderson, Katharine. 2018. “H2Oh!: Water Is Not One Liquid... It’s Two, Says Katharine Sanderson.” <i>New Scientist</i> 238 (3180): 26–29.",
+                "Indent": 1
+              }
+            ]
+          }
+        },
+        "description": "Response message for a Citation Styles Request",
+        "properties": {
+          "Citations": {
+            "type": "array",
+            "description": "Citations",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "The ID for the citation style."
+                },
+                "Label": {
+                  "type": "string",
+                  "description": "The name of the citation style / standard represented by the citation. This is the displayed citation style label.",
+                  "nullable": true
+                },
+                "SectionLabel": {
+                  "type": "string",
+                  "description": "Standard specific section heading label.",
+                  "nullable": true
+                },
+                "Caption": {
+                  "type": "string",
+                  "description": "An optional description of what the cite style is."
+                },
+                "Data": {
+                  "type": "string",
+                  "description": "The data of the citation that is formatted per the citation style.",
+                  "nullable": true
+                },
+                "Indent": {
+                  "type": "integer",
+                  "description": "Some citation standards use a \"hanging indent\". This causes the body to be indented by 1/2 inch from the second line onward. The value is \"1\" if the citation should use a hanging indent. If not present or is a different value, there should not be an indent."
+                },
+                "Error": {
+                  "type": "string",
+                  "description": "Message returned if there was an error returning the requested style. (ex. Style does not exist.)"
+                }
+              },
+              "required": [
+                "Id",
+                "Label",
+                "SectionLabel",
+                "Data"
+              ]
+            }
+          }
+        }
+      },
+      "AuthResponseMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          "success": {
+            "AuthToken": "AGIlYTl2QeHxEgMR7ulvf4UbpmDCXWQCHfF7IkN1c3RvbWVySWQiOiJ3ZWJ0ZXN0cWEiLCJHcm91cElkIjoiYXV0byJ9",
+            "AuthTimeout": "1800",
+            "Autocomplete": {
+              "Url": "https://global.ac.ebsco-content.com/autocomplete/rest/autoComplete",
+              "Token": "AhAE4v1UrWeesJRQovHcXLvgxVnbhC2QSQ6707O3DMLUSK2zL4o0/Mgd1hNFtSUWM+8bjuVpLm4=",
+              "TokenTimeOut": "1800",
+              "CustId": "abcdefg"
+            }
+          }
+        },
+        "description": "Response message for an Authentication request",
+        "properties": {
+          "AuthToken": {
+            "type": "string",
+            "description": "The authentication token that was generated.",
+            "example": "AGIlYTl2QeHxEgMR7ulvf4UbpmDCXWQCHfF7IkN1c3RvbWVySWQiOiJ3ZWJ0ZXN0cWEiLCJHcm91cElkIjoiYXV0byJ9"
+          },
+          "AuthTimeout": {
+            "type": "string",
+            "description": "How long (in minutes) the auth token is good for.",
+            "example": "1800"
+          },
+          "Autocomplete": {
+            "type": "object",
+            "description": "AutoComplete",
+            "properties": {
+              "Url": {
+                "type": "string",
+                "description": "URI to be used to call the autocomplete service.",
+                "example": "https://global.ac.ebsco-content.com/autocomplete/rest/autoComplete"
+              },
+              "Token": {
+                "type": "string",
+                "description": "Token to be used for calls to the autocomplete service",
+                "example": "AhAE4v1UrWeesJRQovHcXLvgxVnbhC2QSQ6707O3DMLUSK2zL4o0/Mgd1hNFtSUWM+8bjuVpLm4="
+              },
+              "TokenTimeOut": {
+                "type": "string",
+                "description": "How long (in minutes) the autocomplete token is valid.",
+                "example": "1800"
+              },
+              "CustId": {
+                "type": "string",
+                "description": "Customer Id that the autocomplete call is to be made for.",
+                "example": "abd897"
+              }
+            }
+          }
+        },
+        "required": [
+          "AuthToken",
+          "AuthTimeout"
+        ]
+      },
+      "CreateSessionResponseMessage": {
+        "title": "CreateSessionResponseMessage",
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "description": "Response message for a Create Session Request",
+        "x-examples": {
+          "success": {
+            "SessionToken": "3d748d98-8d19-4907-ba59-6a04db1c9003.gSVK2avGBDfZm57Y7NAwFw=="
+          }
+        },
+        "properties": {
+          "SessionToken": {
+            "type": "string",
+            "description": "Session token to represent a users session.",
+            "example": "3d748d98-8d19-4907-ba59-6a04db1c9003.gSVK2avGBDfZm57Y7NAwFw=="
+          }
+        },
+        "required": [
+          "SessionToken"
+        ]
+      },
+      "EndSessionResponse": {
+        "title": "EndSessionResponse",
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          "success": {
+            "IsSuccessful": "y"
+          }
+        },
+        "description": "Response message returned from the endSession method.",
+        "x-internal": false,
+        "properties": {
+          "IsSuccessful": {
+            "type": "string",
+            "description": "y if the session successfully ended.",
+            "example": "y"
+          }
+        }
+      },
+      "UIDAuthRequestMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://www.ebscohost.com/services/public/AuthService/Response/2012/06/01"
+        },
+        "x-examples": {
+          "success": {
+            "UserId": "userid",
+            "Password": "password",
+            "InterfaceId": "customer_app",
+            "Options": [
+              "autocomplete"
+            ]
+          }
+        },
+        "properties": {
+          "UserId": {
+            "type": "string",
+            "description": "The User ID for the customer.",
+            "example": "userid"
+          },
+          "Password": {
+            "type": "string",
+            "description": "The password for the User ID.",
+            "example": "password"
+          },
+          "InterfaceId": {
+            "type": "string",
+            "description": "The application that you are authenticating for.",
+            "example": "wsapi"
+          },
+          "Options": {
+            "type": "array",
+            "description": "The options for the User ID.",
+            "items": {
+              "type": "string",
+              "example": "autocomplete"
+            }
+          }
+        },
+        "required": [
+          "UserId",
+          "Password"
+        ],
+        "description": "Request message for the UIDAuth method."
+      },
+      "ExportFormatResponseMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          "success": {
+            "Format": "RIS",
+            "Label": "RIS Format",
+            "Data": "TY  - THES\r\nID  - 2017-33541-134\r\nAN  - 2017-33541-134\r\nAU  - Sokolow, Sharona Yael\r\nT1  - Health impacts of expanding urban recycled water use in California.\r\nJF  - Dissertation Abstracts International: Section B: The Sciences and Engineering\r\nJO  - Dissertation Abstracts International: Section B: The Sciences and Engineering\r\nY1  - 2018///\r\nVL  - 78\r\nIS  - 10-B(E)\r\nCY  - US\r\nPB  - ProQuest Information & Learning\r\nSN  - 0419-4217\r\nSN  - 978-1369847185\r\nN1  - Accession Number: 2017-33541-134. Other Journal Title: Dissertation Abstracts International. Partial author list: First Author & Affiliation: Sokolow, Sharona Yael; University of California, Los Angeles, Environmental Health Sciences, US. Release Date: 20171106. Publication Type: Dissertation Abstract (0400). Format Covered: Electronic. Document Type: Dissertation. Dissertation Number: AAI10286999. ISBN: 978-1369847185. Language: English. Major Descriptor: Conservation (Ecological Behavior); Public Health; Water Safety. Minor Descriptor: Health. Classification: Health & Mental Health Treatment & Prevention (3300). Population: Human (10). Location: US. Methodology: Empirical Study; Interview; Nonclinical Case Study; Qualitative Study. \r\nAB  - The overarching goal of the work described herein is to elucidate how expanding recycled water systems throughout California would impact human health and how we might lower barriers to the expanded use of recycled water in this region. We focused on three topics: (1) comparing the health impacts of expanded use of recycled water to other water conservation strategies in Southern California; (2) conducting a detailed case study on the financial costs, greenhouse gas emissions, energy and health of different water source scenarios for Long Beach Water District (LBWD); and (3) interviewing public health and water industry professionals to understand barriers to expanded use of recycled water in California. Based on our first study, we concluded that expansion of recycled water has the potential to yield greater net health benefits than other water conservation strategies in Southern California, when the full range of health impacts of water conservation strategies, including those related to energy use and human health, are taken into consideration. In our second study, we found that maximizing recycled water use in LBWD would lower energy and greenhouse gas emissions and be more cost effective than other water source options by as early as 2025. In our third study, we found that critical stakeholders perceive that the majority of the barriers that prevent expansion of recycled water use in Southern California fall into the following categories: regulatory restrictions, infrastructure costs, lack of funding, requirements for new technology, adverse health effects, and negative public perception of recycled water. Taken together, these studies provide clear insights into the advantages associated with expanding use of recycled water in Southern California, the gaps between perceived and real barriers to expanded use of recycled water, and how committed stakeholders---including those in the public health profession---can help ensure that water solutions that benefit our region's health are pursued going forward. (APA PsycInfo Database Record (c) 2017 APA, all rights reserved)\r\nKW  - health\r\nKW  - recycled water\r\nKW  - water conservation\r\nKW  - public health\r\nKW  - Conservation (Ecological Behavior)\r\nKW  - Public Health\r\nKW  - Water Safety\r\nKW  - Health\r\nUR  - http://search.ebscohost.com/login.aspx?direct=true&db=psyh&AN=2017-33541-134&site=eds-live&scope=site\r\nDP  - EBSCOhost\r\nDB  - psyh\r\nER  - "
+          }
+        },
+        "properties": {
+          "Format": {
+            "type": "string",
+            "description": "Format of the data property"
+          },
+          "Label": {
+            "type": "string",
+            "description": "Label representing the data format"
+          },
+          "Data": {
+            "type": "string",
+            "description": "Record data in for format identified by the Format property"
+          }
+        },
+        "description": "Response message from the Export Formats Request"
+      },
+      "APIErrorMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi"
+        },
+        "x-examples": {
+          "error-148": {
+            "DetailedErrorDescription": "No guest access for citations.",
+            "ErrorDescription": "Guest session access restricted",
+            "ErrorNumber": "148"
+          }
+        },
+        "description": "Error Response message object.",
+        "properties": {
+          "DetailedErrorDescription": {
+            "type": "string",
+            "description": "Detailed Description of this error.",
+            "example": "No guest access for citations."
+          },
+          "ErrorDescription": {
+            "type": "string",
+            "description": "Description of this error.",
+            "example": "Guest session access restricted"
+          },
+          "ErrorNumber": {
+            "type": "string",
+            "description": "Error Code",
+            "example": "148"
+          }
+        }
+      },
+      "EndSessionRequest": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          "example-request": {
+            "SessionToken": "2cda1e91-417b-41a0-bad4-38cd59d5702b.45Zt9Zm/q9OqZn99jzfcxg=="
+          }
+        },
+        "properties": {
+          "SessionToken": {
+            "type": "string",
+            "description": "Session token to invalidate.",
+            "example": "2cda1e91-417b-41a0-bad4-38cd59d5702b.45Zt9Zm\\/q9OqZn99jzfcxg=="
+          }
+        },
+        "required": [
+          "SessionToken"
+        ],
+        "title": "End Session Request",
+        "description": "Request message for End Session."
+      },
+      "PublicationSearchRequestMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+        },
+        "x-examples": {
+          
+        },
+        "properties": {
+          "SearchCriteria": {
+            "$ref": "#/components/schemas/PublicationSearchCriteria"
+          },
+          "RetrievalCriteria": {
+            "$ref": "#/components/schemas/PublicationRetrievalCriteria"
+          },
+          "Actions": {
+            "type": "array",
+            "description": "Specifies an action used to operate on the current search request.   Actions are applied after all query string parameters have been resolved. Actions can optionally specify an ordinal. Like the query parameter, if the ordinal is omitted, the parameters will be evaluated from left to right as received. (see Actions Documentation) Example: addfacetfilter(Journal:backpacker)",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Request message for a publication search"
+      },
+      "SearchRequestMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "properties": {
+          "SearchCriteria": {
+            "$ref": "#/components/schemas/SearchCriteria"
+          },
+          "RetrievalCriteria": {
+            "$ref": "#/components/schemas/RetrievalCriteria"
+          },
+          "Actions": {
+            "type": "array",
+            "description": "Specifies an action used to operate on the current search request.   Actions are applied after all query string parameters have been resolved. Actions can optionally specify an ordinal. Like the query parameter, if the ordinal is omitted, the parameters will be evaluated from left to right as received. (see Actions Documentation) Example: addfacetfilter(Journal:backpacker)",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Request message for a search"
+      },
+      "SearchResponseMessage": {
+        "type": "object",
+        "x-examples": {
+          
+        },
+        "description": "Response message for a search",
+        "properties": {
+          "SearchRequest": {
+            "type": "object",
+            "description": "SearchResult",
+            "properties": {
+              "SearchCriteria": {
+                "$ref": "#/components/schemas/SearchCriteria"
+              },
+              "RetrievalCriteria": {
+                "$ref": "#/components/schemas/RetrievalCriteria"
+              },
+              "SearchCriteriaWithActions": {
+                "$ref": "#/components/schemas/SearchCriteriaWithActions"
+              }
+            }
+          },
+          "SearchResult": {
+            "$ref": "#/components/schemas/SearchResult"
+          }
+        }
+      },
+      "SearchResponseMessageGET": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          
+        },
+        "description": "Response message for a search - GET",
+        "properties": {
+          "SearchRequestGet": {
+            "type": "object",
+            "description": "SearchRequestGet",
+            "properties": {
+              "QueryString": {
+                "type": "string",
+                "description": "Parameters on the GET request querystring"
+              },
+              "SearchCriteriaWithActions": {
+                "$ref": "#/components/schemas/SearchCriteriaWithActions"
+              }
+            }
+          },
+          "SearchResult": {
+            "$ref": "#/components/schemas/SearchResult"
+          }
+        }
+      },
+      "PublicationSearchResponseMessageGET": {
+        "title": "PublicationSearchResponseMessageGET",
+        "type": "object",
+        "description": "Response message for a publication search - GET",
+        "properties": {
+          "SearchRequestGet": {
+            "type": "object",
+            "description": "SearchRequestGet",
+            "properties": {
+              "QueryString": {
+                "type": "string",
+                "description": "Parameters on GET requst querystring."
+              },
+              "SearchCriteriaWithActions": {
+                "$ref": "#/components/schemas/PublicationSearchCriteriaWithActions"
+              }
+            }
+          },
+          "SearchResult": {
+            "$ref": "#/components/schemas/PublicationSearchResult"
+          }
+        }
+      },
+      "Query": {
+        "title": "Query",
+        "type": "object",
+        "description": "The query parameter specifies what to search for. This parameter may appear multiple times in a request. When evaluating a search request, the order in which the query expressions are evaluated may affects the results.",
+        "properties": {
+          "Term": {
+            "type": "string",
+            "description": "The term to search for."
+          },
+          "BooleanOperator": {
+            "type": "string",
+            "description": "Specifies the how this query expression relates to other query expressions within the same search request."
+          },
+          "FieldCode": {
+            "type": "string",
+            "description": "If not specified the default is to search all these fields: all authors, all subjects, all keywords, all title info (including source title) and all abstracts."
+          }
+        }
+      },
+      "PublicationSearchResponseMessage": {
+        "title": "PublicationSearchResponseMessage",
+        "type": "object",
+        "properties": {
+          "SearchRequest": {
+            "$ref": "#/components/schemas/PublicationSearchRequest"
+          },
+          "SearchResult": {
+            "$ref": "#/components/schemas/PublicationSearchResult"
+          }
+        },
+        "description": "Response message for a publication search"
+      },
+      "PublicationRetrieveResponseMessage": {
+        "title": "PublicationRetrieveResponseMessage",
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "RetrieveResponseMessage"
+        },
+        "properties": {
+          "Record": {
+            "$ref": "#/components/schemas/PublicationRecord"
+          }
+        },
+        "description": "Response message for a publication retrieval"
+      },
+      "PublicationRetrieveRequestMessage": {
+        "type": "object",
+        "xml": {
+          "name": "RetrieveRequestMessage",
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+        },
+        "description": "Request message for a publication retrieval",
+        "properties": {
+          "HighlightTerms": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Terms to highlight in the record. Format: string[,string]*",
+            "items": {
+              "xml": {
+                "name": "Term"
+              },
+              "type": "string"
+            }
+          },
+          "Id": {
+            "type": "string",
+            "description": "Publication Identifier",
+            "example": "edp1364077"
+          }
+        },
+        "required": [
+          "Id"
+        ]
+      },
+      "SearchCriteriaResponseMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contract"
+        },
+        "x-examples": {
+          "example": {
+            "AvailableSearchCriteria": {
+              "AvailableSorts": [
+                {
+                  "Id": "relevance",
+                  "Label": "Relevance",
+                  "AddAction": "setsort(relevance)"
+                },
+                {
+                  "Id": "title",
+                  "Label": "Title",
+                  "AddAction": "setsort(title)"
+                },
+                {
+                  "Id": "date",
+                  "Label": "Date Newest",
+                  "AddAction": "setsort(date)"
+                },
+                {
+                  "Id": "date2",
+                  "Label": "Date Oldest",
+                  "AddAction": "setsort(date2)"
+                }
+              ],
+              "AvailableSearchFields": [
+                {
+                  "FieldCode": "TX",
+                  "Label": "All Text Fields"
+                },
+                {
+                  "FieldCode": "TI",
+                  "Label": "Title"
+                },
+                {
+                  "FieldCode": "IS",
+                  "Label": "ISSN"
+                },
+                {
+                  "FieldCode": "IB",
+                  "Label": "ISBN"
+                },
+                {
+                  "FieldCode": "PT",
+                  "Label": "Resource Type"
+                },
+                {
+                  "FieldCode": "PB",
+                  "Label": "Publisher"
+                },
+                {
+                  "FieldCode": "SU",
+                  "Label": "Subject"
+                },
+                {
+                  "FieldCode": "AU",
+                  "Label": "Author"
+                }
+              ],
+              "AvailableLimiters": [
+                {
+                  "Id": "RV3",
+                  "Label": "Peer Reviewed Journals",
+                  "Type": "select",
+                  "AddAction": "addlimiter(RV3:value)",
+                  "DefaultOn": "n",
+                  "Order": "1"
+                }
+              ]
+            }
+          }
+        },
+        "description": "Response message for search criteria",
+        "properties": {
+          "AvailableSearchCriteria": {
+            "type": "object",
+            "description": "Available search criteria",
+            "properties": {
+              "AvailableSorts": {
+                "type": "array",
+                "description": "By relevance, date news and date oldest.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of sort (relevance, date, date2)."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Sort label (relevance, date newest, date oldest)."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Sets the sort E.g. setsort(date)."
+                    }
+                  }
+                }
+              },
+              "AvailableSearchFields": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Array of field codes and lebels.",
+                "items": {
+                  "xml": {
+                    "name": "AvailableSearchField"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "FieldCode": {
+                      "type": "string",
+                      "description": "Code that represents the property to search E.g. TX = All Text."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for search code E.g. FieldCode = AU, Label = Author."
+                    }
+                  }
+                }
+              },
+              "AvailableLimiters": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Criteria to limit the search results by.\nExample: LA99:English,French,German.",
+                "items": {
+                  "xml": {
+                    "name": "AvailableLimiter"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of limiter E.g. AU (author)."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for limiter E.g. Author."
+                    },
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of input E.g. text, dropdown select box."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Action added to the search E.g. addlimiter(TI:value)."
+                    },
+                    "DefaultOn": {
+                      "type": "string",
+                      "description": "Default on or off."
+                    },
+                    "Order": {
+                      "type": "string",
+                      "description": "Numeric order represented as a string E.g. \"1\", \"2\"."
+                    },
+                    "LimiterValues": {
+                      "type": "array",
+                      "description": "Array of limiter values.",
+                      "items": {
+                        "$ref": "#/components/schemas/LimiterValues"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LimiterValues": {
+        "title": "LimiterValue",
+        "type": "array",
+        "xml": {
+          "wrapped": true
+        },
+        "description": "Model for limiter values",
+        "items": {
+          "type": "object",
+          "xml": {
+            "name": "LimiterValue"
+          },
+          "properties": {
+            "Value": {
+              "type": "string",
+              "description": "Value of limiter"
+            },
+            "AddAction": {
+              "type": "string",
+              "description": "Adds a limiter to the object E.g. addlimiter(DT1:value)."
+            },
+            "LimiterValues": {
+              "$ref": "#/components/schemas/LimiterValues"
+            }
+          }
+        }
+      },
+      "RetrieveRequestMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "x-examples": {
+          "example": {
+            "EbookPreferredFormat": "ebook-epub",
+            "HighlightTerms": [
+              "WATER"
+            ],
+            "An": "123456789",
+            "DbId": "abc"
+          }
+        },
+        "description": "Request message for a retrieval",
+        "properties": {
+          "EbookPreferredFormat": {
+            "type": "string",
+            "description": "Format to return eBook full text content in."
+          },
+          "HighlightTerms": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Comma separated list of terms to highlight in the record. Example: air, water",
+            "items": {
+              "xml": {
+                "name": "Term"
+              },
+              "type": "string"
+            }
+          },
+          "An": {
+            "type": "string",
+            "description": "Identifier of the record to obtain. The an for a particular record can be found in the header section of the search response. "
+          },
+          "DbId": {
+            "type": "string",
+            "description": "Database short name specifying which database to retrieve the record from. The dbid for a particular record can be found in the header section of the search response. "
+          }
+        },
+        "required": [
+          "An",
+          "DbId"
+        ]
+      },
+      "InfoResponseMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "description": "Response message for the info object.",
+        "properties": {
+          "AvailableSearchCriteria": {
+            "type": "object",
+            "description": "Criteria avialable for search",
+            "properties": {
+              "AvailableSorts": {
+                "type": "array",
+                "description": "By relevance, date news and date oldest.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of sort (relevance, date, date2)."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Sort label (relevance, date newest, date oldest)."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Sets the sort E.g. setsort(date)."
+                    }
+                  }
+                }
+              },
+              "AvailableSearchFields": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Array of field codes and lebels.",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "AvailableSearchField"
+                  },
+                  "properties": {
+                    "FieldCode": {
+                      "type": "string",
+                      "description": "Code that represents the property to search E.g. TX = \"All Text\"."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for search code E.g. FieldCode = AU, Label = Author."
+                    }
+                  }
+                }
+              },
+              "AvailableExpanders": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Expanders that can be applied to the search E.g. fulltext, thesaurus.",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "AvailableExpander"
+                  },
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of expander E.g. thesaurus, fulltext, relatedsubjects."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label of expander E.g. \"Apply related words\"."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Adds action to the expander E.g. addexpander(thesaurus)."
+                    },
+                    "DefaultOn": {
+                      "type": "string",
+                      "description": "Default on or off."
+                    }
+                  }
+                }
+              },
+              "AvailableLimiters": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Criteria to limit the search results by.\nExample: LA99:English,French,German.",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "AvailableLimiter"
+                  },
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of limiter E.g. AU (author)."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for limiter E.g. Author."
+                    },
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of input E.g. text, dropdown select box."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Action added to the search E.g. addlimiter(TI:value)."
+                    },
+                    "DefaultOn": {
+                      "type": "string",
+                      "description": "Default on or off."
+                    },
+                    "Order": {
+                      "type": "string",
+                      "description": "Numeric order represented as a string E.g. \"1\", \"2\"."
+                    },
+                    "LimiterValues": {
+                      "$ref": "#/components/schemas/LimiterValues"
+                    }
+                  }
+                }
+              },
+              "AvailableSearchModes": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Specifies a mode to use for search E.g. all, any, smart or bool.",
+                "items": {
+                  "xml": {
+                    "name": "AvailableSearchMode"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Mode": {
+                      "type": "string",
+                      "description": "Mode of search E.g. all, any, smart or bool."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for search mode E.g. all = \"\"Find all my search terms\"."
+                    },
+                    "DefaultOn": {
+                      "type": "string",
+                      "description": "Default on or off."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Add action to search E.g. \"setsearchmode(all)\"."
+                    }
+                  }
+                }
+              },
+              "AvailableRelatedContent": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Identifies content as \"Research Starters\" or \"Exact Match Publication\".",
+                "items": {
+                  "xml": {
+                    "name": "AvailableRelatedContent"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of content E.g. emp or rs."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label of content E.g. \"Exact Match Publication\"."
+                    },
+                    "DefaultOn": {
+                      "type": "string",
+                      "description": "Default on or off."
+                    },
+                    "AddAction": {
+                      "type": "string",
+                      "description": "Add action to search E.g. \"includerelatedcontent(emp)\"."
+                    }
+                  }
+                }
+              },
+              "AvailableDidYouMeanOptions": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Options that help auto correct and suggest.",
+                "items": {
+                  "xml": {
+                    "name": "AvailableDidYouMeanOption"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of helper E.g. AutoSuggest, AutoCorrect."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label of helper E.g. \"Did You Mean\" and \"Auto Correct\"."
+                    },
+                    "DefaultOn": {
+                      "type": "string",
+                      "description": "Default on or off."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ViewResultSettings": {
+            "type": "object",
+            "description": "Settings that define how the view is presented",
+            "properties": {
+              "ResultsPerPage": {
+                "type": "string",
+                "description": "Number of results to display per page."
+              },
+              "ResultListView": {
+                "type": "string",
+                "description": "Mode for results view E.g. brief."
+              },
+              "IncludeImageQuickView": {
+                "type": "object",
+                "description": "Show the image quick view.",
+                "properties": {
+                  "Id": {
+                    "type": "string",
+                    "description": "Id of quick view E.g. ImageQuickViewResults."
+                  },
+                  "Label": {
+                    "type": "string",
+                    "description": "Label of image quick view E.g. \"Image Quick View Results\"."
+                  },
+                  "DefaultOn": {
+                    "type": "string",
+                    "description": "Default on or off."
+                  }
+                }
+              }
+            }
+          },
+          "ApplicationSettings": {
+            "type": "object",
+            "description": "Settings at the application level.",
+            "properties": {
+              "SessionTimeout": {
+                "type": "string",
+                "description": "E.g. 3600 seconds"
+              }
+            }
+          },
+          "ApiSettings": {
+            "type": "object",
+            "description": "Settings at the Api level",
+            "properties": {
+              "MaxRecordJumpAhead": {
+                "type": "string",
+                "description": "E.g. 250."
+              }
+            }
+          },
+          "ExportFormatSettings": {
+            "type": "object",
+            "description": "Export format settings",
+            "properties": {
+              "AvailableFormats": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Available formats for export",
+                "items": {
+                  "xml": {
+                    "name": "AvailableFormat"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id for export format E.g. \"RIS\""
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for export format E.g. \"RIS Format\""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "CitationStyleSettings": {
+            "type": "object",
+            "description": "Citation style settings",
+            "properties": {
+              "AvailableStyles": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Available styles",
+                "items": {
+                  "xml": {
+                    "name": "AvailableStyle"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of style setting E.g. ama, apa, mla."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for style setting E.g. \"AMa 11th Edition\"."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SearchResult": {
+        "title": "SearchResult",
+        "type": "object",
+        "description": "Result model for a search",
+        "properties": {
+          "Statistics": {
+            "type": "object",
+            "description": "Metrics on search results",
+            "properties": {
+              "TotalHits": {
+                "type": "integer",
+                "description": "Number of records matched in a search"
+              },
+              "TotalSearchTime": {
+                "type": "integer",
+                "description": "Total duration of the search workflow"
+              },
+              "Databases": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Repository of content to be searched",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "Database"
+                  },
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of a database"
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label of a database"
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Status of a database"
+                    },
+                    "Hits": {
+                      "type": "integer",
+                      "description": "Number of databases spanned by search results"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Data": {
+            "type": "object",
+            "description": "Data in the form of Record objects",
+            "properties": {
+              "RecordFormat": {
+                "type": "string",
+                "description": "The format of the results' records E.g. brief, detailed, full."
+              },
+              "Records": {
+                "type": "array",
+                "description": "Detailed information on returned records from a search.",
+                "items": {
+                  "$ref": "#/components/schemas/Record"
+                }
+              }
+            }
+          },
+          "AvailableFacets": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Facets available to stratify records by.",
+            "items": {
+              "xml": {
+                "name": "AvailableFacet"
+              },
+              "type": "object",
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of facet."
+                },
+                "Label": {
+                  "type": "string",
+                  "description": "Label of facet."
+                },
+                "AvailableFacetValues": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Values of available facets.",
+                  "items": {
+                    "type": "object",
+                    "xml": {
+                      "name": "AvailableFacetValue"
+                    },
+                    "properties": {
+                      "Value": {
+                        "type": "string",
+                        "description": "Value of a facet."
+                      },
+                      "Count": {
+                        "type": "integer",
+                        "description": "Count of facet values"
+                      },
+                      "AddAction": {
+                        "type": "string",
+                        "description": "Action that adds a facet value E.g. addfacetfilter(ContentProvider:MEDLINE)."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "RelatedContent": {
+            "type": "object",
+            "description": "Comma separated list of related content types to return with the search results.",
+            "properties": {
+              "RelatedPublications": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true,
+                  "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+                },
+                "description": "Publication returned in the case of an exact match.",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "RelatedPublication"
+                  },
+                  "properties": {
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of related publication."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label of related publication."
+                    },
+                    "PublicationRecords": {
+                      "type": "array",
+                      "xml": {
+                        "wrapped": true
+                      },
+                      "description": "Collection of PublicationRecord.",
+                      "items": {
+                        "$ref": "#/components/schemas/PublicationRecord"
+                      }
+                    }
+                  }
+                }
+              },
+              "RelatedRecords": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Records returned in the case of a match.",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "RelatedRecord"
+                  },
+                  "properties": {
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of related record."
+                    },
+                    "Label": {
+                      "type": "string",
+                      "description": "Label for a related record."
+                    },
+                    "Records": {
+                      "type": "array",
+                      "description": "A",
+                      "items": {
+                        "$ref": "#/components/schemas/Record"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "AvailableCriteria": {
+            "type": "object",
+            "description": "Specified as a date range.",
+            "properties": {
+              "DateRange": {
+                "type": "object",
+                "description": "Delta between a minimum and maximum date.",
+                "properties": {
+                  "MinDate": {
+                    "type": "string",
+                    "description": "Start date for range."
+                  },
+                  "MaxDate": {
+                    "type": "string",
+                    "description": "End date for range."
+                  }
+                }
+              }
+            }
+          },
+          "AutoSuggestedTerms": {
+            "type": "array",
+            "xml": {
+              "wrapped": true,
+              "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+            },
+            "description": "Autosuggested terms for the query.",
+            "items": {
+              "xml": {
+                "name": "AutoSuggestedTerm"
+              },
+              "type": "string"
+            }
+          },
+          "AutoCorrectedTerms": {
+            "type": "array",
+            "xml": {
+              "wrapped": true,
+              "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+            },
+            "description": "The did you mean term that is generated from a search with autocorrect enabled.",
+            "items": {
+              "xml": {
+                "name": "AutoCorrectedTerm"
+              },
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RecordInfo": {
+        "title": "RecordInfo",
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "description": "Root element for a Record, containing citationInfo and fileInfo.   citationInfo holds one Item (the \"Main Item\") and any Relationships to other Items needed to describe the Main Item.",
+        "properties": {
+          "AccessInfo": {
+            "type": "object",
+            "description": "AccessInfo",
+            "properties": {
+              "Permissions": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Authorizations",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "Permit"
+                  },
+                  "properties": {
+                    "Flag": {
+                      "type": "string",
+                      "description": "Permit status. Described Types: \"Y\", \"N\". Deprecated after Dec 2015 in favor of using Type only."
+                    },
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of permission. Described Types: \"pda\", \"ExternalSearchEngineIndexing."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "BibRecord": {
+            "type": "object",
+            "description": "BibRecord",
+            "properties": {
+              "BibEntity": {
+                "$ref": "#/components/schemas/BibEntity"
+              },
+              "BibRelationships": {
+                "type": "object",
+                "description": "BibRelationships",
+                "properties": {
+                  "HasContributorRelationships": {
+                    "type": "array",
+                    "xml": {
+                      "wrapped": true
+                    },
+                    "description": "A bibItem relationship describing properties of the Contributors (Author, Editor, Illustrator, etc.) that had a contribution to the bibItem described.  A Contributor can be a personItem or organizationItem.",
+                    "items": {
+                      "xml": {
+                        "name": "HasContributor"
+                      },
+                      "type": "object",
+                      "properties": {
+                        "PersonEntity": {
+                          "type": "object",
+                          "description": "PersonEntity",
+                          "properties": {
+                            "Name": {
+                              "$ref": "#/components/schemas/Name"
+                            }
+                          }
+                        },
+                        "OrganizationEntity": {
+                          "type": "object",
+                          "description": "The role the Contributor played in contributing to the described item. (author, editor, illustrator, translator, etc.)",
+                          "properties": {
+                            "Name": {
+                              "$ref": "#/components/schemas/Name"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "HasPubAgentRelationships": {
+                    "type": "array",
+                    "description": "HasPubAgentRelationships",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "OraganizationEntity": {
+                          "type": "object",
+                          "deprecated": true,
+                          "description": "OrganizationEntity",
+                          "properties": {
+                            "Name": {
+                              "$ref": "#/components/schemas/Name"
+                            }
+                          }
+                        },
+                        "Roles": {
+                          "type": "array",
+                          "xml": {
+                            "wrapped": true
+                          },
+                          "description": "Roles",
+                          "items": {
+                            "xml": {
+                              "name": "Role"
+                            },
+                            "type": "string"
+                          }
+                        },
+                        "OrganizationEntity": {
+                          "type": "object",
+                          "description": "OrganizationEntity",
+                          "properties": {
+                            "Name": {
+                              "$ref": "#/components/schemas/Name"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "IsPartOfRelationships": {
+                    "type": "array",
+                    "xml": {
+                      "wrapped": true
+                    },
+                    "description": "A bibItem relationship describing properties of a containing bibItem.",
+                    "items": {
+                      "type": "object",
+                      "xml": {
+                        "name": "IsPartOf"
+                      },
+                      "properties": {
+                        "BibEntity": {
+                          "$ref": "#/components/schemas/BibEntity"
+                        }
+                      }
+                    }
+                  },
+                  "HasPartRelationships": {
+                    "type": "array",
+                    "xml": {
+                      "wrapped": true
+                    },
+                    "description": "HasPartRelationships",
+                    "items": {
+                      "type": "object",
+                      "xml": {
+                        "name": "HasPart"
+                      },
+                      "properties": {
+                        "BibEntity": {
+                          "$ref": "#/components/schemas/BibEntity"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "FileInfo": {
+            "type": "object",
+            "description": "The portion of the record containing the properties/metadata of files that make up part of the Record.  This may include any full text files for the item described in citationInfo, as well as files used in presentation of the Record (images).",
+            "properties": {
+              "File": {
+                "$ref": "#/components/schemas/File"
+              },
+              "FileList": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Array of files.",
+                "items": {
+                  "$ref": "#/components/schemas/File"
+                }
+              },
+              "FilePosLinks": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "FilePosLinks",
+                "items": {
+                  "xml": {
+                    "name": "FilePosLink"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Id": {
+                      "type": "string",
+                      "description": "Id of file position links"
+                    },
+                    "FragId": {
+                      "type": "string",
+                      "description": "Fragment id"
+                    },
+                    "FileId": {
+                      "type": "string",
+                      "description": "File id"
+                    },
+                    "Labels": {
+                      "xml": {
+                        "wrapped": true
+                      },
+                      "type": "array",
+                      "description": "Labels for file position links",
+                      "items": {
+                        "xml": {
+                          "name": "Label"
+                        },
+                        "type": "object",
+                        "properties": {
+                          "Type": {
+                            "type": "string",
+                            "description": "Defined Types:  \"Full\", \"Key\", \"KeyWhenExactMatch\", \"Search\"."
+                          },
+                          "Text": {
+                            "type": "string",
+                            "description": "Text for Label"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "FilePosLinkRefLists": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "FilePosLinkRefLists",
+                "items": {
+                  "xml": {
+                    "name": "FilePosLinkRefList"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Use": {
+                      "type": "string",
+                      "description": "Defined Types: \"Key\", \"KeyWhenExactMatch\""
+                    },
+                    "FilePosLinkRefs": {
+                      "type": "array",
+                      "xml": {
+                        "wrapped": true
+                      },
+                      "description": "FilePosLinkRefs",
+                      "items": {
+                        "xml": {
+                          "name": "FilePosLinkRef"
+                        },
+                        "type": "object",
+                        "properties": {
+                          "FilePosLinkId": {
+                            "type": "string",
+                            "description": "FilePosLinkId"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "PersonRecord": {
+            "type": "object",
+            "description": "PersonRecord",
+            "properties": {
+              "Entity": {
+                "type": "object",
+                "description": "A person / single individual entity. (i.e. \"John Smith\", \"Lawyer\", etc.)",
+                "properties": {
+                  "Name": {
+                    "$ref": "#/components/schemas/Name"
+                  }
+                }
+              }
+            }
+          },
+          "RightsInfo": {
+            "type": "object",
+            "description": "RightsInfo",
+            "properties": {
+              "RightsStatements": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "RightsStatements",
+                "items": {
+                  "xml": {
+                    "name": "RightsStatement"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "Type": {
+                      "type": "string",
+                      "description": "Described Types: \"Copyright\""
+                    },
+                    "Text": {
+                      "type": "string",
+                      "description": "Text for rights statement"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Name": {
+        "title": "Name",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "type": "object",
+        "properties": {
+          "NameFull": {
+            "type": "string",
+            "description": "Full name"
+          }
+        },
+        "description": "Simple model for name full"
+      },
+      "BibEntity": {
+        "title": "BibEntity",
+        "type": "object",
+        "description": "A bibliographic item or work (article, book chapter, book, journal, book series, etc.)",
+        "properties": {
+          "Classifications": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Classifications",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Classification"
+              },
+              "properties": {
+                "Code": {
+                  "type": "string",
+                  "description": "Identifier within the classification scheme."
+                },
+                "Scheme": {
+                  "type": "string",
+                  "description": "Described Types: \"llc\", \"ddc\", \"ICD10Diag\", \"SNOMED\",\"AgeGroup\", \"Lexile\" ??? (llc = library of congress classification, ddc = dewey decimal classification)."
+                },
+                "Type": {
+                  "type": "string",
+                  "description": "Type of classification. Described Types: \"prePub\", \"audience\", \"Complexity Measure\"."
+                }
+              }
+            }
+          },
+          "Dates": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Dates",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Date"
+              },
+              "properties": {
+                "D": {
+                  "type": "string",
+                  "description": "DD - Day"
+                },
+                "M": {
+                  "type": "string",
+                  "description": "MM - Month"
+                },
+                "Text": {
+                  "type": "string",
+                  "description": "Formatted Date string."
+                },
+                "Type": {
+                  "type": "string",
+                  "description": "Type of date. Values: published, created."
+                },
+                "Y": {
+                  "type": "string",
+                  "description": "YYYY - Year"
+                }
+              }
+            }
+          },
+          "Identifiers": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Identifiers",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Identifier"
+              },
+              "properties": {
+                "Type": {
+                  "type": "string",
+                  "enum": [
+                    "issn-print",
+                    "issn-electronic",
+                    "issn-locals",
+                    "issn-other",
+                    "isbn-print",
+                    "isbn-electronic",
+                    "isbn-amazon",
+                    "isbn-other",
+                    "doi",
+                    "ep-an"
+                  ],
+                  "description": "Described Types: \"isbn\", \"issn-link\", \"issn-foo\", \"doi\", \"AN\", \"issnnodash\", \"issn\", \"termID\"."
+                },
+                "Value": {
+                  "type": "string",
+                  "description": "Unique identifier for a type/scope."
+                },
+                "Scope": {
+                  "type": "string",
+                  "description": "Scope of the type/value, limiting the context in which the identifier is valid in. For example, the scope of the Type=AN would be the databaes identifier."
+                }
+              }
+            }
+          },
+          "Languages": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Languages",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Language"
+              },
+              "properties": {
+                "Code": {
+                  "type": "string",
+                  "description": "ISO 639-2 Language Code."
+                },
+                "Text": {
+                  "type": "string",
+                  "description": "Readable language value."
+                }
+              }
+            }
+          },
+          "Numbering": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Numbering",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Number"
+              },
+              "properties": {
+                "Type": {
+                  "type": "string",
+                  "description": "Described Types: \"issue\", \"volume\", \"edition\", \"volume/part\", timescited\"."
+                },
+                "Value": {
+                  "type": "string",
+                  "description": "Value within the type (ex. an issue number); may be a number or a text statement  for timescited, is the numeric count."
+                }
+              }
+            }
+          },
+          "PhysicalDescription": {
+            "type": "object",
+            "description": "Deprecated. Not used in first canonicalizer RecordInfo.",
+            "properties": {
+              "Pagination": {
+                "type": "object",
+                "description": "Details related to paging information for this record.",
+                "properties": {
+                  "PageCount": {
+                    "type": "string",
+                    "description": "Number of pages this record contains"
+                  },
+                  "StartPage": {
+                    "type": "string",
+                    "description": "Page this record should start on /open to."
+                  }
+                }
+              }
+            }
+          },
+          "Subjects": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Subjects",
+            "items": {
+              "xml": {
+                "name": "Subject"
+              },
+              "type": "object",
+              "properties": {
+                "Authority": {
+                  "type": "string",
+                  "description": "Described Types: \"lcsh\",..."
+                },
+                "SubjectFull": {
+                  "type": "string",
+                  "description": "Subject value."
+                },
+                "Type": {
+                  "type": "string",
+                  "description": "Described Types: \"general\", \"geographic\", \"person\", \"guest\", \"chronologic\", \"thesaurus\", \"nonpreferred\", \"company\", \"product\",\"ASkeyword\", \"EISkeyword\" ..."
+                }
+              }
+            }
+          },
+          "Titles": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Titles",
+            "items": {
+              "xml": {
+                "name": "Title"
+              },
+              "type": "object",
+              "properties": {
+                "TitleFull": {
+                  "type": "string",
+                  "description": "Entire title."
+                },
+                "Type": {
+                  "type": "string",
+                  "description": "Described Types: \"main\", \"alt\"."
+                }
+              }
+            }
+          },
+          "Type": {
+            "type": "string",
+            "description": "Described Types: \"Serial\",\"Issue\",\"Article\",\"Image\",\"Software\", \"VolumeIssue\"."
+          },
+          "ItemTypes": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "ItemTypes",
+            "items": {
+              "xml": {
+                "name": "ItemType"
+              },
+              "type": "object",
+              "properties": {
+                "Type": {
+                  "type": "string",
+                  "description": "Described Types: \"Original\", \"Original - Feature\", \"StandardizedEIS\", \"StandardizedEIS - Feature\"."
+                },
+                "Text": {
+                  "type": "string",
+                  "description": "Value of the item type."
+                }
+              }
+            }
+          },
+          "ContentDescriptions": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "ContentDescriptions",
+            "items": {
+              "xml": {
+                "name": "ContentDescription"
+              },
+              "type": "object",
+              "properties": {
+                "Type": {
+                  "type": "string",
+                  "description": "Described Types: \"ShortDescription\", \"Caption\", \"TopicLeaderText\"."
+                },
+                "Text": {
+                  "type": "string",
+                  "description": "The actual content type text."
+                }
+              }
+            }
+          },
+          "Id": {
+            "type": "string",
+            "description": "Id of the BibEntity"
+          }
+        }
+      },
+      "File": {
+        "title": "File",
+        "type": "object",
+        "description": "File that is part of Record Info",
+        "properties": {
+          "IsDownloadable": {
+            "type": "string",
+            "description": "Described Types: \"Y\",\"N\""
+          },
+          "Id": {
+            "type": "string",
+            "description": "Unique identifier for this file within the record"
+          },
+          "FileName": {
+            "type": "string",
+            "description": "Name of the file"
+          },
+          "FileLocation": {
+            "type": "object",
+            "description": "Place where file is located",
+            "properties": {
+              "Type": {
+                "type": "string",
+                "description": "Relative, absolute"
+              },
+              "LocationTemplateId": {
+                "type": "string",
+                "description": "Identifier of type of file location. Example possible values: ImgServer"
+              },
+              "Path": {
+                "type": "string",
+                "description": "Path of file"
+              }
+            }
+          },
+          "ImgCategory": {
+            "type": "string",
+            "description": "Described Types: \"Thumb\", \"Placard\" ..."
+          }
+        }
+      },
+      "Record": {
+        "title": "Record",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "type": "object",
+        "description": "Model for a record",
+        "properties": {
+          "ResultId": {
+            "type": "integer",
+            "description": "Ordinal number for records returned."
+          },
+          "Header": {
+            "type": "object",
+            "description": "Information global to all records in the returned type.",
+            "properties": {
+              "DbId": {
+                "type": "string",
+                "description": "Id of the database containing the content E.g. aph, ers."
+              },
+              "DbLabel": {
+                "type": "string",
+                "description": "Label of the database containing the returned content."
+              },
+              "An": {
+                "type": "string",
+                "description": "An identifying number of an article in the database."
+              },
+              "RelevancyScore": {
+                "type": "string",
+                "description": "Ranks the results according to relevancey descending."
+              },
+              "AccessLevel": {
+                "type": "string",
+                "description": "0 - Not Available to search via Guest Access, 1 - Metadata is searched, but only a placeholder record is displayed, 2 - Display record in the results but no access to detailed record, or full text, 3 - Full access: search/display all content to guests, 6 – Display full record but no access to full text."
+              },
+              "PubType": {
+                "type": "string",
+                "description": "Type of publiction E.g. ebook."
+              },
+              "PubTypeId": {
+                "type": "string",
+                "description": "Identifier of publication type."
+              }
+            }
+          },
+          "PLink": {
+            "type": "string",
+            "description": "A link to Ehost web server running on an internal VM, with various Ehost parameters already filled in.  Magic links are sent to EBSCO colleagues who don't have easy access to the fast-changing environmental details needed to correctly fill in the parameters."
+          },
+          "ImageInfo": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Information about an image.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "CoverArt"
+              },
+              "properties": {
+                "Size": {
+                  "type": "string",
+                  "description": "Size of the image."
+                },
+                "Target": {
+                  "type": "string",
+                  "description": "Where the image is open E.g. new tab."
+                }
+              }
+            }
+          },
+          "CustomLinks": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "CustomLinks",
+            "items": {
+              "$ref": "#/components/schemas/CustomLink"
+            }
+          },
+          "FullText": {
+            "type": "object",
+            "description": "FullText",
+            "properties": {
+              "Links": {
+                "type": "array",
+                "description": "Array of links consisting of a type and a URL.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "Type": {
+                      "type": "string",
+                      "description": "Type of link."
+                    },
+                    "Url": {
+                      "type": "string",
+                      "description": "URl for link."
+                    }
+                  }
+                }
+              },
+              "Text": {
+                "type": "object",
+                "description": "The txt that makes up a record.",
+                "properties": {
+                  "Availability": {
+                    "type": "string",
+                    "description": "Whether or not a record resource is available."
+                  }
+                }
+              },
+              "CustomLinks": {
+                "type": "array",
+                "description": "CustomLinks",
+                "items": {
+                  "$ref": "#/components/schemas/CustomLink"
+                }
+              }
+            }
+          },
+          "Items": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "List of items that belong to a record.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Item"
+              },
+              "properties": {
+                "Name": {
+                  "type": "string",
+                  "description": "Name of an item."
+                },
+                "Label": {
+                  "type": "string",
+                  "description": "Label of an item."
+                },
+                "Group": {
+                  "type": "string",
+                  "description": "Group an item belongs to."
+                },
+                "Data": {
+                  "type": "string",
+                  "description": "Details about an item. Often a title."
+                }
+              }
+            }
+          },
+          "RecordInfo": {
+            "$ref": "#/components/schemas/RecordInfo"
+          },
+          "Holdings": {
+            "type": "array",
+            "description": "Holdings",
+            "items": {
+              "type": "object",
+              "properties": {
+                "HoldingSimple": {
+                  "type": "object",
+                  "description": "Simple list of holdings.",
+                  "properties": {
+                    "CopyInformationList": {
+                      "type": "array",
+                      "xml": {
+                        "wrapped": true
+                      },
+                      "description": "Array of holdings locations.",
+                      "items": {
+                        "xml": {
+                          "name": "CopyInformation"
+                        },
+                        "type": "object",
+                        "properties": {
+                          "Sublocation": {
+                            "type": "string",
+                            "description": "Institution where the holding is held."
+                          },
+                          "ShelfLocator": {
+                            "type": "string",
+                            "description": "Designated shelf location at an institution."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ImageQuickViewItems": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "ImageQuickViewItems",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "ImageQuickViewItem"
+              },
+              "properties": {
+                "DbId": {
+                  "type": "string",
+                  "description": "Database short name specifying which database to retrieve the record from. The dbid for a particular record can be found in the header section of the search response."
+                },
+                "An": {
+                  "type": "string",
+                  "description": "An identifying number of an article in the database."
+                },
+                "Type": {
+                  "type": "string",
+                  "description": "Item type."
+                },
+                "Url": {
+                  "type": "string",
+                  "description": "Url of item."
+                }
+              }
+            }
+          },
+          "IllustrationInfo": {
+            "type": "object",
+            "description": "IllustrationInfo",
+            "properties": {
+              "Images": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "Array of image objects.",
+                "items": {
+                  "type": "object",
+                  "xml": {
+                    "name": "Image"
+                  },
+                  "properties": {
+                    "Size": {
+                      "type": "string",
+                      "description": "Size of image."
+                    },
+                    "Target": {
+                      "type": "string",
+                      "description": "Where the image is open E.g. new tab."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomLink": {
+        "title": "CustomLink",
+        "type": "object",
+        "description": "Allows links to be calculated using a customer-controlled URL template.",
+        "properties": {
+          "Url": {
+            "type": "string",
+            "description": "URI of the link resource."
+          },
+          "Name": {
+            "type": "string",
+            "description": "Name of the custom link"
+          },
+          "Category": {
+            "type": "string",
+            "description": "Category for a custom link E.g. \"Document Delivery\", Full Text\", \"ILL\"."
+          },
+          "Text": {
+            "type": "string",
+            "description": "Readable text for the link."
+          },
+          "Icon": {
+            "type": "string",
+            "description": "URI that points to an optional image."
+          },
+          "MouseOverText": {
+            "type": "string",
+            "description": "Text pop up when hovering over an element with a mouse."
+          }
+        }
+      },
+      "SearchCriteria": {
+        "title": "SearchCriteria",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "type": "object",
+        "description": "Specify criteria for a search",
+        "properties": {
+          "Queries": {
+            "type": "array",
+            "description": "Specifies what to search for. This parameter may appear multiple times in a request. When evaluating a search request, the order in which the query expressions are evaluated may affects results. This parameter optionally takes an “ordinal” which defines the order when multiple parameters of the same type are found in a search request. If the ordinal is omitted, the parameters will be evaluated from left to right as received.  Note: there is no RFC that specifies that the order of parameters will be preserved.  [{boolean operator},][{field code}:]{term}  boolean operator : (optional) AND | OR | NOT.  field Code:(optional) Specifies which searchfield to search for the term in. Valid fields are specified in the metadata supplied by the INFO method.  term : (Required) The text to search for",
+            "items": {
+              "$ref": "#/components/schemas/Query"
+            }
+          },
+          "SearchMode": {
+            "type": "string",
+            "description": "Allows the client to specify the search mode that he wants to be effective with this search"
+          },
+          "IncludeFacets": {
+            "type": "string",
+            "description": "Specifies whether or not facets should be included in the response. The date range is included in the response when set to y."
+          },
+          "FacetFilters": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Specify a facet filter to refine the results of a previous search.  Filters are defined in terms of a facet types and values. A facet value group is a collection of one or more pairs of facet types (identified by an ID) and values that are applied as follows to the search.  Individual facet filters within a group are OR'd together. If multiple facet filter groups are specified, they are AND'd together.  Facets and their values are obtained by specifying the parameter 'includeFacets=y' in the original search request. The response to such a request will include facets and their values that are available for filtering the current results.  {filter_Id},{facet_Id}:{value}[,{facet_Id}:{value}]*   filter_Id: A number that identifies the filter. The value must be unique within the request.  facet_Id: unique ID of the facet. value: The facet value to filter on. example '1,Publisher:wiley-blackwell' ",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "FacetFilter"
+              },
+              "properties": {
+                "FilterId": {
+                  "type": "integer",
+                  "description": "Id for a facet filter"
+                },
+                "FacetValues": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Array of values for a facet",
+                  "items": {
+                    "type": "object",
+                    "xml": {
+                      "name": "FacetValue"
+                    },
+                    "properties": {
+                      "Id": {
+                        "type": "string",
+                        "description": "Id of a facet value."
+                      },
+                      "Value": {
+                        "type": "string",
+                        "description": "Value of a facet."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Limiters": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Specifies what to further limit the search by. The available limiters are specified in the response from the Info Method. {limiter_Id}:{value}[,{value}]*  limiter_Id: (required) The ID of the limiter  value: (required) The value(s) to limit by, separated by a comma. (Note: only limiters of type MultiSelectValue will accept more than one value) Example: FT:y",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Limiter"
+              },
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of a limiter"
+                },
+                "Values": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Value of a limiter",
+                  "items": {
+                    "type": "string",
+                    "xml": {
+                      "name": "Value"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Expanders": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Expanders to be applied to this search  The available expanders can be obtained from the API’s Info method.",
+            "items": {
+              "type": "string",
+              "xml": {
+                "name": "Id"
+              }
+            }
+          },
+          "Sort": {
+            "type": "string",
+            "description": "Specifies how the search results should be sorted. The available sorts can be obtained from the API’s Info method"
+          },
+          "PublicationId": {
+            "type": "string",
+            "description": "Specifies a publication to search within. (only used for profiles configured for publication searching)"
+          },
+          "RelatedContent": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Comma separated list of related content types to return with the search results. (see AvailableRelatedContent from the Info method call results for available options)",
+            "items": {
+              "type": "string",
+              "xml": {
+                "name": "Type"
+              }
+            }
+          },
+          "AutoSuggest": {
+            "type": "string",
+            "description": "Specifies whether or not auto suggestions should be included in the response. (Read more about autosuggestion here.)"
+          },
+          "AutoCorrect": {
+            "type": "string",
+            "description": "Specifies whether or not auto correction should be included in the response."
+          }
+        }
+      },
+      "RetrievalCriteria": {
+        "title": "RetrievalCriteria",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "type": "object",
+        "properties": {
+          "View": {
+            "type": "string",
+            "description": "Specifies the level of detail in the records returned."
+          },
+          "ResultsPerPage": {
+            "type": "integer",
+            "description": "This indicates the number or records to return with a search request."
+          },
+          "PageNumber": {
+            "type": "integer",
+            "description": "Specifies the page number of records to return. This is used to determine which records to return for the search. For example, if the results per page is specified as 20 and the page number is set to 2, records 21-40 are returned."
+          },
+          "Highlight": {
+            "type": "string",
+            "description": "Specifies whether or not to highlight the search term"
+          },
+          "IncludeImageQuickView": {
+            "type": "string",
+            "description": "Specifies whether or not the image quick view data is included in search response."
+          }
+        },
+        "description": "Model for retrieval criteria"
+      },
+      "SearchCriteriaWithActions": {
+        "title": "SearchCriteriaWithActions",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "type": "object",
+        "description": "Model for search criteria and associated remove actions",
+        "properties": {
+          "QueriesWithAction": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Specify a query to use in a search",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "QueryWithAction"
+              },
+              "properties": {
+                "Query": {
+                  "type": "object",
+                  "description": "Specifies the parameters of a search",
+                  "properties": {
+                    "BooleanOperator": {
+                      "type": "string",
+                      "description": "Conditional operator E.g. AND / OR"
+                    },
+                    "Term": {
+                      "type": "string",
+                      "description": "Term being searched on E.g. \"water\""
+                    },
+                    "FieldCode": {
+                      "type": "string",
+                      "description": "If not specified the default is to search all these fields: all authors, all subjects, all keywords, all title info (including source title) and all abstracts."
+                    }
+                  }
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove an expander from the currently specified search."
+                }
+              }
+            }
+          },
+          "FacetFiltersWithAction": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Facets to filter on with action to take",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "FacetFilterWithAction"
+              },
+              "properties": {
+                "FilterId": {
+                  "type": "integer",
+                  "description": "Id of filter"
+                },
+                "FacetValuesWithAction": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Facet values to filter on with action to take",
+                  "items": {
+                    "xml": {
+                      "name": "FacetValueWithAction"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "FacetValue": {
+                        "type": "object",
+                        "description": "Array of values for a facet",
+                        "properties": {
+                          "Id": {
+                            "type": "string",
+                            "description": "Id of a facet value."
+                          },
+                          "Value": {
+                            "type": "string",
+                            "description": "Value of a facet."
+                          }
+                        }
+                      },
+                      "RemoveAction": {
+                        "type": "string",
+                        "description": "Specifies the Action that will remove a facet value from the currently specified search."
+                      }
+                    }
+                  }
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove a facet filter from the currently specified search."
+                }
+              }
+            }
+          },
+          "LimitersWithAction": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Limit the scope of a query with specified removal action.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "LimiterWithAction"
+              },
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of the limiter"
+                },
+                "LimiterValuesWithAction": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Limit the scope of a query with specified removal action",
+                  "items": {
+                    "type": "object",
+                    "xml": {
+                      "name": "LimiterValueWithAction"
+                    },
+                    "properties": {
+                      "Value": {
+                        "type": "string",
+                        "description": "Value by which to limit"
+                      },
+                      "RemoveAction": {
+                        "type": "string",
+                        "description": "Specifies the Action that will remove a limiter from the currently specified sear."
+                      }
+                    }
+                  }
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove a limiter from the currently specified search."
+                }
+              }
+            }
+          },
+          "ExpandersWithAction": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Expand the scope of a query with specified removal action.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "ExpanderWithAction"
+              },
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of the expander"
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove an expander from the currently specified search."
+                }
+              }
+            }
+          },
+          "PublicationWithAction": {
+            "type": "object",
+            "description": "Restrict a search to a publication",
+            "properties": {
+              "Id": {
+                "type": "string",
+                "description": "Id of a publication"
+              },
+              "RemoveAction": {
+                "type": "string",
+                "description": "Specifies the Action that will remove a Publication action from the currently specified search."
+              }
+            }
+          }
+        }
+      },
+      "PublicationSearchCriteria": {
+        "title": "PublicationSearchCriteria",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "SearchCriteria"
+        },
+        "type": "object",
+        "description": "Model for publication search criteria",
+        "properties": {
+          "Queries": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Specifies what to search for. This parameter may appear multiple times in a request. When evaluating a search request, the order in which the query expressions are evaluated may affects results. This parameter optionally takes an “ordinal” which defines the order when multiple parameters of the same type are found in a search request. If the ordinal is omitted, the parameters will be evaluated from left to right as received.  Note: there is no RFC that specifies that the order of parameters will be preserved.  [{boolean operator},][{field code}:]{term}  boolean operator : (optional) AND | OR | NOT.  field Code:(optional) Specifies which searchfield to search for the term in. Valid fields are specified in the metadata supplied by the INFO method.  term : (Required) The text to search for",
+            "items": {
+              "$ref": "#/components/schemas/PublicationQuery"
+            }
+          },
+          "IncludeFacets": {
+            "type": "string",
+            "description": "Specifies whether or not facets should be included in the response."
+          },
+          "FacetFilters": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Specify a facet filter to refine the results of a previous search. Filters are defined in terms of a facet types and values. A facet value group is a collection of one or more pairs of facet types (identified by an ID) and values that are applied as follows to the search. Individual facet filters within a group are joined by OR. If multiple facet filter groups are specified, they are joined by AND. Facets and their values are obtained by specifying the parameter 'includeFacets=y' in the original search request. The response to such a request will include facets and their values that are available for filtering the current results. Format: {{filter_Id}},{facet_Id}:{value}[,{facet_Id}:{value}]*     filter_Id- A number that identifies the filter. The value must be unique within the request. facet_Id- unique ID of the facet. value- The facet value to filter on. Example: 1, Publisher:wiley-blackwell",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "FacetFilter"
+              },
+              "properties": {
+                "FilterId": {
+                  "type": "integer",
+                  "description": "Id of a facet filter."
+                },
+                "FacetValues": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Array of facet values.",
+                  "items": {
+                    "$ref": "#/components/schemas/PublicationFacetValue"
+                  }
+                }
+              }
+            }
+          },
+          "Limiters": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Specifies which limiters are used to reduce the search results. The available limiters are specified in the response from the Info Method. {limiter_Id}:{value}[,{value}]*  limiter_Id: (required) The ID of the limiter  value: (required) The value(s) to limit by, separated by a comma. (Note: only limiters of type MultiSelectValue will accept more than one value) Example: FT:y",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Limiter"
+              },
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of a limiter."
+                },
+                "Values": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Value of a limiter.",
+                  "items": {
+                    "type": "string",
+                    "xml": {
+                      "name": "Value"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Sort": {
+            "type": "string",
+            "description": "Specifies how the search results should be sorted. The available sorts can be obtained from the Info method."
+          },
+          "AutoSuggest": {
+            "type": "string",
+            "description": "Specifies whether or not auto suggestions should be included in the response."
+          },
+          "AutoCorrect": {
+            "type": "string",
+            "description": "Specifies whether or not auto correction should be included in the response."
+          }
+        }
+      },
+      "PublicationRetrievalCriteria": {
+        "title": "PublicationRetrievalCriteria",
+        "description": "Model for publication retrieval criteria",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "RetrievalCriteria"
+        },
+        "type": "object",
+        "properties": {
+          "View": {
+            "type": "string",
+            "description": "Specifies the level of detail in the records returned."
+          },
+          "ResultsPerPage": {
+            "type": "integer",
+            "description": "This indicates the number or records to return with a search request."
+          },
+          "PageNumber": {
+            "type": "integer",
+            "description": "Specifies the page number of records to return. This is used to determine which records to return for the search. For example, if the results per page is specified as 20 and the page number is set to 2, records 21-40 are returned."
+          },
+          "Highlight": {
+            "type": "string",
+            "description": "Specifies whether or not to highlight the search term"
+          }
+        }
+      },
+      "PublicationSearchCriteriaWithActions": {
+        "title": "PublicationSearchCriteriaWithActions",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "SearchCriteriaWithActions"
+        },
+        "type": "object",
+        "description": "Model for publication search criteria with remove actions",
+        "properties": {
+          "QueriesWithAction": {
+            "type": "array",
+            "description": "QueriesWithAction",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Query": {
+                  "type": "array",
+                  "description": "Query",
+                  "items": {
+                    "$ref": "#/components/schemas/PublicationQuery"
+                  }
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove the expander from the currently specified search."
+                }
+              }
+            }
+          },
+          "FacetFiltersWithAction": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Array of filters with associated actions.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "FacetFilterWithAction"
+              },
+              "properties": {
+                "FilterId": {
+                  "type": "integer",
+                  "description": "Identifier for filter."
+                },
+                "FacetValuesWithAction": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Array of facets with remove actions.",
+                  "items": {
+                    "type": "object",
+                    "xml": {
+                      "name": "FacetValueWithAction"
+                    },
+                    "properties": {
+                      "FacetValue": {
+                        "type": "array",
+                        "xml": {
+                          "wrapped": true
+                        },
+                        "description": "FacetValue",
+                        "items": {
+                          "$ref": "#/components/schemas/PublicationFacetValue"
+                        }
+                      },
+                      "RemoveAction": {
+                        "type": "string",
+                        "description": "Specifies the Action that will remove the facet from the currently specified search."
+                      }
+                    }
+                  }
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove the facet from the currently specified search."
+                }
+              }
+            }
+          },
+          "LimitersWithAction": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Limit the scope of a query with specified removal action.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "LimiterWithAction"
+              },
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of limiter"
+                },
+                "LimiterValuesWithAction": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Values that limit the scope of a query with specified removal action.",
+                  "items": {
+                    "xml": {
+                      "name": "LimiterValueWithAction"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "Value": {
+                        "type": "string",
+                        "description": "Value of the limiter."
+                      },
+                      "RemoveAction": {
+                        "type": "string",
+                        "description": "Specifies the Action that will remove the limiter from the currently specified search."
+                      }
+                    }
+                  }
+                },
+                "RemoveAction": {
+                  "type": "string",
+                  "description": "Specifies the Action that will remove the limiter from the currently specified search."
+                }
+              }
+            }
+          }
+        }
+      },
+      "PublicationQuery": {
+        "title": "PublicationQuery",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "Query"
+        },
+        "type": "object",
+        "description": "Model for publication queries",
+        "properties": {
+          "BooleanOperator": {
+            "type": "string",
+            "description": "Specifies the how this query expression relates to other query expressions within the same search request."
+          },
+          "FieldCode": {
+            "type": "string",
+            "description": "If not specified the default is to search all these fields: all authors, all subjects, all keywords, all title info (including source title) and all abstracts."
+          },
+          "Term": {
+            "type": "string",
+            "description": "The term to search for."
+          }
+        }
+      },
+      "PublicationFacetValue": {
+        "title": "PublicationFacetValue",
+        "type": "object",
+        "xml": {
+          "name": "FacetValue",
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+        },
+        "description": "Model for publication facet values",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "description": "Id of publication facet."
+          },
+          "Value": {
+            "type": "string",
+            "description": "Value of publication facet."
+          }
+        }
+      },
+      "PublicationSearchRequest": {
+        "title": "PublicationSearchRequest",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "SearchRequest"
+        },
+        "type": "object",
+        "description": "Representation of the Publication Search Request performed in the Search Response",
+        "properties": {
+          "SearchCriteria": {
+            "$ref": "#/components/schemas/PublicationSearchCriteria"
+          },
+          "RetrievalCriteria": {
+            "$ref": "#/components/schemas/PublicationRetrievalCriteria"
+          },
+          "SearchCriteriaWithActions": {
+            "$ref": "#/components/schemas/PublicationSearchCriteriaWithActions"
+          }
+        }
+      },
+      "PublicationSearchResult": {
+        "title": "PublicationSearchResult",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts",
+          "name": "SearchResult"
+        },
+        "type": "object",
+        "description": "Model for publication search results",
+        "properties": {
+          "Statistics": {
+            "type": "object",
+            "description": "Metrics on search results",
+            "properties": {
+              "TotalHits": {
+                "type": "integer",
+                "description": "Number of records matched in a search"
+              },
+              "TotalSearchTime": {
+                "type": "integer",
+                "description": "Total duration of the search workflow"
+              }
+            }
+          },
+          "Data": {
+            "type": "object",
+            "description": "Header data about records",
+            "properties": {
+              "RecordFormat": {
+                "type": "string",
+                "description": "The format of the results'' records E.g. brief, detailed, full."
+              },
+              "Records": {
+                "type": "array",
+                "xml": {
+                  "wrapped": true
+                },
+                "description": "PublicationRecord",
+                "items": {
+                  "$ref": "#/components/schemas/PublicationRecord"
+                }
+              }
+            }
+          },
+          "AvailableFacets": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Facets available to stratify records by.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "AvailableFacet"
+              },
+              "properties": {
+                "Id": {
+                  "type": "string",
+                  "description": "Id of facet"
+                },
+                "Label": {
+                  "type": "string",
+                  "description": "Label of facet"
+                },
+                "AvailableFacetValues": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Array of available facets.",
+                  "items": {
+                    "xml": {
+                      "name": "AvailableFacetValue"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "Value": {
+                        "type": "string",
+                        "description": "Values of available facets."
+                      },
+                      "Count": {
+                        "type": "integer",
+                        "description": "Count of facet values"
+                      },
+                      "AddAction": {
+                        "type": "string",
+                        "description": "Action that adds a facet value E.g. addfacetfilter(ContentProvider:MEDLINE)."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "AvailableCriteria": {
+            "type": "object",
+            "description": "Specified as a date range.",
+            "properties": {
+              "DateRange": {
+                "type": "object",
+                "description": "Delta between a minimum and maximum date.",
+                "properties": {
+                  "MinDate": {
+                    "type": "string",
+                    "description": "Start date for a range."
+                  },
+                  "MaxDate": {
+                    "type": "string",
+                    "description": "End date for a range."
+                  }
+                }
+              }
+            }
+          },
+          "AutoSuggestedTerms": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Auto-suggested terms for the query.",
+            "items": {
+              "xml": {
+                "name": "AutoSuggestedTerm"
+              },
+              "type": "string"
+            }
+          },
+          "AutoCorrectedTerms": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "The did you mean term that is generated from a search with autocorrect enabled.",
+            "items": {
+              "xml": {
+                "name": "AutoCorrectedTerm"
+              },
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PublicationRecord": {
+        "title": "PublicationRecord",
+        "type": "object",
+        "xml": {
+          "name": "Record",
+          "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+        },
+        "description": "Model for publication records",
+        "properties": {
+          "ResultId": {
+            "type": "integer",
+            "description": "Ordinal number for records returned."
+          },
+          "Header": {
+            "type": "object",
+            "xml": {
+              "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+            },
+            "description": "Information global to all records.",
+            "properties": {
+              "PublicationId": {
+                "type": "string",
+                "description": "Specifies a publication to search within. (only used for profiles configured for publication searching)."
+              },
+              "IsSearchable": {
+                "type": "string",
+                "description": "Defines whether or not a publication is searchable."
+              },
+              "RelevancyScore": {
+                "type": "string",
+                "description": "Ranks the results according to relevancey descending."
+              },
+              "AccessLevel": {
+                "type": "string",
+                "description": "0 - Not Available to search via Guest Access, 1 - Metadata is searched, but only a placeholder record is displayed, 2 - Display record in the results but no access to detailed record, or full text, 3 - Full access: search/display all content to guests, 6 – Display full record but no access to full text."
+              },
+              "ResourceType": {
+                "type": "string",
+                "description": "Type of publiction E.g. ebook."
+              }
+            }
+          },
+          "PLink": {
+            "type": "string",
+            "description": "A link to Ehost web server running on an internal VM, with various Ehost parameters already filled in.  Magic links are sent to EBSCO colleagues who don't have easy access to the fast-changing environmental details needed to correctly fill in the parameters."
+          },
+          "ImageInfo": {
+            "type": "array",
+            "xml": {
+              "wrapped": true,
+              "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+            },
+            "description": "Information about an image.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "CoverArt"
+              },
+              "properties": {
+                "Size": {
+                  "type": "string",
+                  "description": "Size of the image."
+                },
+                "Target": {
+                  "type": "string",
+                  "description": "Where the image is open E.g. new tab."
+                }
+              }
+            }
+          },
+          "CustomLinks": {
+            "type": "array",
+            "xml": {
+              "wrapped": true,
+              "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+            },
+            "description": "Allows links to be calculated using a customer-controlled URL template.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "CustomLink"
+              },
+              "properties": {
+                "Url": {
+                  "type": "string",
+                  "description": "URI of the link resource."
+                },
+                "Name": {
+                  "type": "string",
+                  "description": "Name of the custom link."
+                },
+                "Category": {
+                  "type": "string",
+                  "description": "Category for a custom link E.g. \"Document Delivery\", Full Text\", \"ILL\"."
+                },
+                "Text": {
+                  "type": "string",
+                  "description": "Readable text for the link."
+                },
+                "Icon": {
+                  "type": "string",
+                  "description": "URI that points to an optional image."
+                },
+                "MouseOverText": {
+                  "type": "string",
+                  "description": "Text pop up when hovering over an element with a mouse."
+                }
+              }
+            }
+          },
+          "Items": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "List of items that belong to a record.",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "Item",
+                "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+              },
+              "properties": {
+                "Name": {
+                  "type": "string",
+                  "description": "Name of an item."
+                },
+                "Label": {
+                  "type": "string",
+                  "description": "Label of an item."
+                },
+                "Group": {
+                  "type": "string",
+                  "description": "Group an item belongs to."
+                },
+                "Data": {
+                  "type": "string",
+                  "description": "Details about an item. Often a title."
+                }
+              }
+            }
+          },
+          "RecordInfo": {
+            "$ref": "#/components/schemas/RecordInfo"
+          },
+          "FullTextHoldings": {
+            "type": "array",
+            "xml": {
+              "wrapped": true
+            },
+            "description": "Array of full text holdings",
+            "items": {
+              "type": "object",
+              "xml": {
+                "name": "FullTextHolding",
+                "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+              },
+              "properties": {
+                "URL": {
+                  "type": "string",
+                  "description": "URL that points to the full text of a holding."
+                },
+                "Name": {
+                  "type": "string",
+                  "description": "Name of holding"
+                },
+                "CoverageDates": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Date range for holding specified as yyyymmdd.",
+                  "items": {
+                    "type": "object",
+                    "xml": {
+                      "name": "CoverageDate",
+                      "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+                    },
+                    "properties": {
+                      "StartDate": {
+                        "type": "string",
+                        "description": "Start date for range."
+                      },
+                      "EndDate": {
+                        "type": "string",
+                        "description": "End date for range."
+                      }
+                    }
+                  }
+                },
+                "CoverageStatement": {
+                  "type": "string",
+                  "description": "Display of coverage range E.g. 07/01/1994 - present."
+                },
+                "Databases": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true,
+                    "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+                  },
+                  "description": "String array of database identifiers.",
+                  "items": {
+                    "xml": {
+                      "name": "Database"
+                    },
+                    "type": "string"
+                  }
+                },
+                "Embargo": {
+                  "type": "integer",
+                  "description": "Number of EmbargoUnits an Embargo covers."
+                },
+                "EmbargoUnit": {
+                  "type": "string",
+                  "description": "Multiplier for Embargo E.g. WEEK."
+                },
+                "EmbargoDescription": {
+                  "type": "string",
+                  "description": "A publisher may occasionally suppress the availability of its full text articles in online databases until the peak time for publication print sales has passed."
+                },
+                "Facts": {
+                  "type": "array",
+                  "xml": {
+                    "wrapped": true
+                  },
+                  "description": "Facts E.g. packagename, vendorid, galesiteid etc...",
+                  "items": {
+                    "type": "object",
+                    "xml": {
+                      "name": "Fact",
+                      "namespace": "http://epnet.com/webservices/EbscoApi/Publication/Contracts"
+                    },
+                    "properties": {
+                      "Key": {
+                        "type": "string",
+                        "description": "Kay"
+                      },
+                      "Value": {
+                        "type": "string",
+                        "description": "Value"
+                      }
+                    }
+                  }
+                },
+                "Notes": {
+                  "type": "array",
+                  "description": "Array of notes",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "NoteId": {
+                        "type": "integer",
+                        "description": "Id of note"
+                      },
+                      "Rank": {
+                        "type": "integer",
+                        "description": "Rank of note"
+                      },
+                      "NoteName": {
+                        "type": "string",
+                        "description": "Name of note"
+                      },
+                      "NoteText": {
+                        "type": "string",
+                        "description": "Text of note"
+                      },
+                      "IconUrl": {
+                        "type": "string",
+                        "description": "Url pointing to the location of an icon"
+                      },
+                      "IconText": {
+                        "type": "string",
+                        "description": "Text to display with icon"
+                      },
+                      "IconLibRef": {
+                        "type": "string",
+                        "description": "Library reference for icon"
+                      },
+                      "HoverText": {
+                        "type": "string",
+                        "description": "Pop up text when mouse hover over an icon"
+                      },
+                      "LinkUrl": {
+                        "type": "string",
+                        "description": "Hyperlink around an icon"
+                      },
+                      "DisplaySettings": {
+                        "type": "array",
+                        "xml": {
+                          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts",
+                          "wrapped": true
+                        },
+                        "description": "DisplaySettings",
+                        "items": {
+                          "xml": {
+                            "name": "DisplaySetting"
+                          },
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseMessage": {
+        "type": "object",
+        "xml": {
+          "namespace": "http://www.ebscohost.com/services/public/AuthService/2012/06/01"
+        },
+        "properties": {
+          "ErrorCode": {
+            "type": "integer",
+            "description": "Error code",
+            "example": 112
+          },
+          "Reason": {
+            "type": "string",
+            "description": "Reason for exception.",
+            "example": "Invalid Argument Value"
+          },
+          "AdditionalDetail": {
+            "type": "string",
+            "description": "Any additional details offered by the exception.",
+            "example": "Parameter Name"
+          }
+        },
+        "description": "Model for error responses"
+      },
+      "RetrieveResponseMessage": {
+        "title": "RetrieveResponseMessage",
+        "type": "object",
+        "xml": {
+          "namespace": "http://epnet.com/webservices/EbscoApi/Contracts"
+        },
+        "properties": {
+          "Record": {
+            "$ref": "#/components/schemas/Record"
+          }
+        },
+        "description": "Response message for retrievals"
+      }
+    },
+    "parameters": {
+      "x-authenticationToken": {
+        "name": "x-authenticationToken",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Token identifying the caller.",
+        "example": "AGIlYTl2QeHxEgMR7ulvf4UbpmDCXWQCHfF7IkN1c3RvbWVySWQiOiJ3ZWJ0ZXN0cWEiLCJHcm91cElkIjoiYXV0byJ9"
+      },
+      "x-sessionToken": {
+        "name": "x-sessionToken",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Token identifying the session this call is in relation to.",
+        "example": "3d748d98-8d19-4907-ba59-6a04db1c9003.gSVK2avGBDfZm57Y7NAwFw=="
+      },
+      "query": {
+        "name": "query-1",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "water",
+            "OR,SU:Hydrology"
+          ]
+        },
+        "description": "Specifies what to search for. This parameter may appear multiple times in a request. When evaluating a search request, the order in which the query expressions are evaluated may affects results. This parameter optionally takes an “ordinal” which defines the order when multiple parameters of the same type are found in a search request. If the ordinal is omitted, the parameters will be evaluated from left to right as received.  Note: there is no RFC that specifies that the order of parameters will be preserved.  [{boolean operator},][{field code}:]{term}  boolean operator : (optional) AND | OR | NOT.  field Code:(optional) Specifies which searchfield to search for the term in. Valid fields are specified in the metadata supplied by the INFO method.  term : (Required) The text to search for"
+      }
+    }
+  },
+  "x-amazon-apigateway-minimum-compression-size": 10485760,
+  "x-amazon-apigateway-endpoint-configuration": true,
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}
