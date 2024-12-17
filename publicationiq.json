@@ -821,8 +821,8 @@
                 },
                 "peerReviewed": {
                   "type": "boolean",
-                  "description": "Title Description",
-                  "example": "Description Test."
+                  "description": "Indicates if the title is peer reviewed or not",
+                  "example": false
                 },
                 "publisherName": {
                   "type": "string",
@@ -837,7 +837,7 @@
                       "id": {
                         "type": "string",
                         "description": "Identifier Value",
-                        "example": 1
+                        "example": "1"
                       },
                       "source": {
                         "type": "string",
@@ -1042,7 +1042,7 @@
                           "embargoValue": {
                             "type": "integer",
                             "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo.",
-                            "example": "1"
+                            "example": 1
                           }
                         }
                       },
@@ -1064,7 +1064,7 @@
                           "embargoValue": {
                             "type": "integer",
                             "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo.",
-                            "example": "1"
+                            "example": 1
                           }
                         }
                       },
@@ -1147,7 +1147,7 @@
                               "type": "integer",
                               "format": "int64",
                               "description": "Unique identifier for the note",
-                              "example": "309"
+                              "example": 309
                             },
                             "custId": {
                               "type": "integer",
@@ -1217,7 +1217,7 @@
                               "type": "integer",
                               "format": "int64",
                               "description": "ID",
-                              "example": "a123"
+                              "example": 123
                             },
                             "label": {
                               "type": "string",
@@ -1256,7 +1256,7 @@
                         "type": "integer",
                         "format": "int64",
                         "description": "Customer ID",
-                        "example": "1123"
+                        "example": 1123
                       },
                       "displayName": {
                         "type": "string",
@@ -1409,7 +1409,7 @@
                     "items": {
                       "type": "string"
                     },
-                    "example": "Faculty, Student, Staff and Walk-Ins"
+                    "example": ["Faculty, Student, Staff and Walk-Ins"]
                   },
                   "weight": {
                     "type": "integer",
@@ -5996,7 +5996,7 @@
                 "items": {
                   "type": "string"
                 },
-                "example": "Faculty, Student, Staff and Walk-Ins"
+                "example": ["Faculty, Student, Staff and Walk-Ins"]
               },
               "weight": {
                 "type": "integer",
