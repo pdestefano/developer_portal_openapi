@@ -5371,6 +5371,17 @@
             "true",
             "false"
           ]
+        },
+        {
+          "name": "categoryfacet",
+          "in": "query",
+          "description": "Filters package search results by given categories. Accepts category id or name. If multiple categories are given, packages assigned to any of the given categories will be returned. Example: 4672.",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "collectionFormat": "multi"
         }
       ],
       "get": {
@@ -6431,6 +6442,56 @@
         }
       }
     },
+    "packageFreeAccessFacet": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "boolean",
+          "description": "Indicates whether the given facet count is the count of free access packages or non free access packages",
+          "example": false
+        }
+      }
+    },
+    "categoryFacet": {
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The ID of the parent caregory",
+          "example": 4604
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The ID of the category",
+          "example": 5061
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the category",
+          "example": "Science collection"
+        },
+        "rank": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The rank of the category",
+          "example": 2
+        }
+      }
+    },
     "HSMPackageFacets":{
       "type": "object",
       "properties": {
@@ -6438,6 +6499,18 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/HSMPackageFacet"
+          }
+        },
+        "packageFreeAccessFacets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/packageFreeAccessFacet"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/categoryFacet"
           }
         }
       }
