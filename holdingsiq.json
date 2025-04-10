@@ -9047,7 +9047,7 @@
           },
           "format": {
             "type": "string",
-            "description": "Format type.  Valid values are TSV, CSV or XLSX.",
+            "description": "Specifies file format type.  Valid values by export type are as follows: Standard exports: TSV, CSV; KBART exports: TSV, CSV; Holdings Integration Change Exports: CSV, XLSX; Cost Exports: CSV.",
             "example": "TSV",
             "enum": [
               "TSV",
