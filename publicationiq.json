@@ -5098,7 +5098,7 @@
             },
             "in": "query",
             "name": "subjectfacet",
-            "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'"
+            "description": "Subject Type Facet filtration option. Required in order to access specific titles via refined results. e.g. 'Medical'. Adding multiple subjects to the array narrows your results to those with all supplied subjects assigned."
           },
           {
             "name": "packagefreeaccess",
