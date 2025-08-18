@@ -9640,6 +9640,14 @@
             "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom",
             "example": "Selected"
           },
+          "consortia": {
+            "type": "string",
+            "description": "Indicates the consortia associated with the package."
+          },
+          "isPrimaryPackage": {
+            "type": "boolean",
+            "description": "Indicates if the package is a vendor's primary package."
+          },
           "proxy": {
             "$ref": "#/components/schemas/ProxyDto"
           },
@@ -10077,6 +10085,14 @@
             "items": {
               "$ref": "#/components/schemas/PackageSubjectResponse"
             }
+          },
+          "consortia": {
+            "type": "string",
+            "description": "Indicates the consortia associated with the package."
+          },
+          "isPrimaryPackage": {
+            "type": "boolean",
+            "description": "Indicates if the package is a vendor's primary package."
           }
         },
         "description": "This object represents data elements that describe a vendor package."
