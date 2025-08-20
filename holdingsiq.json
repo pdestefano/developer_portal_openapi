@@ -2542,22 +2542,9 @@
             }
           },
           {
-            "name": "isprimarypackage",
-            "in": "query",
-            "description": "Limits the results based on Primary Package. The filter options are (true, false, all), and the default is all., and the default is all.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "true",
-                "false"
-              ]
-            }
-          },
-          {
             "name": "consortia",
             "in": "query",
-            "description": "Filters package search by given consortia. If multiple consortia names are given, documents containing any of the given consortias will be returned. Accepts consortia names or no_consortia.",
+            "description": "Filters title search by given consortia values. If multiple consortia names are given, documents containing any of the given consortias will be returned. Accepts consortia names or no_consortia.",
             "schema": {
               "type": "array",
               "items": {
@@ -4550,20 +4537,15 @@
           {
             "name": "isprimarypackage",
             "in": "query",
-            "description": "Limits the results based on Primary Package. The filter options are (true, false, all), and the default is all., and the default is all.",
+            "description": "If true, limits the results to only include packages that are a vendor's primary package. If false or not provided, all packages are included regardless of their primary status.",
             "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "true",
-                "false"
-              ]
+              "type": "boolean"
             }
           },
           {
             "name": "consortia",
             "in": "query",
-            "description": "Filters package search by given consortia. Selected titles and titles ordered through EBSCO are ignored. If multiple consortia names are given, documents containing any of the given consortias will be returned. Accepts consortia names or no_consortia.",
+            "description": "Filters package search by given consortia. Selected packages and packages ordered through EBSCO are ignored. If multiple consortia names are given, documents containing any of the given consortias will be returned. Accepts consortia names or no_consortia.",
             "schema": {
               "type": "array",
               "items": {
@@ -4813,20 +4795,15 @@
           {
             "name": "isprimarypackage",
             "in": "query",
-            "description": "Limits the results based on Primary Package. The filter options are (true, false, all), and the default is all., and the default is all.",
+            "description": "If true, limits the results to only include packages that are a vendor's primary package. If false or not provided, all packages are included regardless of their primary status.",
             "schema": {
-              "type": "string",
-              "enum": [
-                "all",
-                "true",
-                "false"
-              ]
+              "type": "boolean"
             }
           },
           {
             "name": "consortia",
             "in": "query",
-            "description": "Filters package search by given consortia. Selected titles and titles ordered through EBSCO are ignored. If multiple consortia names are given, documents containing any of the given consortias will be returned. Accepts consortia names or no_consortia.",
+            "description": "Filters package search by given consortia. Selected packages and packages ordered through EBSCO are ignored. If multiple consortia names are given, documents containing any of the given consortias will be returned. Accepts consortia names or no_consortia.",
             "schema": {
               "type": "array",
               "items": {
@@ -6265,6 +6242,11 @@
           "packageFreeAccess": {
             "type": "boolean",
             "description": "Indicates if the package is freely available."
+          },
+          "isSmartLinksPlusEligible": {
+            "type": "boolean",
+            "description": "Field to indicate if a package is eligible for Smart Links Plus.",
+            "example": true
           }
         },
         "required": [
@@ -9642,7 +9624,7 @@
           },
           "consortia": {
             "type": "string",
-            "description": "Indicates the consortia associated with the package."
+            "description": "Indicates the consortia associated with a package."
           },
           "isPrimaryPackage": {
             "type": "boolean",
@@ -10088,7 +10070,7 @@
           },
           "consortia": {
             "type": "string",
-            "description": "Indicates the consortia associated with the package."
+            "description": "Indicates the consortia associated with a package."
           },
           "isPrimaryPackage": {
             "type": "boolean",
