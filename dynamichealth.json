@@ -35,27 +35,29 @@
       "description": "Dynamic Health Article Notes Endpoints"
     },
     {
-      "name": "Article Exclusions",
-      "description": "Dynamic Health Article Exclusions Endpoints"
+      "name": "Content Exclusions",
+      "description": "Dynamic Health Article/Content Set Exclusions Endpoints"
     },
     {
-      "name": "Personalization",
-      "description": "Dynamic Health Personalization Endpoints"
+      "name": "User",
+      "description": "Dynamic Health User Endpoints"
+    },
+    {
+      "name": "MCP",
+      "description": "DynaMed/DynaMedex Model Context Protocol API"
     }
   ],
   "servers": [
+    {
+      "url": "https://apis.ebsco.com/medsapi-auth/v1",
+      "description": "MedsAPI token endpoint"
+    },
     {
       "url": "https://apis.ebsco.com/medsapi-dynamic-health/v1"
     }
   ],
   "paths": {
     "/token": {
-      "servers": [
-        {
-          "url": "https://apis.ebsco.com/medsapi-auth/v1",
-          "description": "MedsAPI token endpoint"
-        }
-      ],
       "post": {
         "summary": "Get an authorization token",
         "tags": [
@@ -229,17 +231,13 @@
             "application/javascript": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  
-                }
+                "properties": {}
               }
             },
             "text/plain": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  
-                }
+                "properties": {}
               }
             }
           },
@@ -321,22 +319,6 @@
                     "type": "object",
                     "description": "List of types that will be used for searching and aggregations.",
                     "properties": {
-                      "populations": {
-                        "minItems": 1,
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "One or more populations to include in the results.",
-                        "items": {
-                          "type": "string",
-                          "description": "Example: Adult or all or Pediatric",
-                          "example": "pediatric",
-                          "enum": [
-                            "adults",
-                            "pediatric",
-                            "all"
-                          ]
-                        }
-                      },
                       "categoryPaths": {
                         "minItems": 1,
                         "uniqueItems": true,
@@ -358,29 +340,11 @@
                           "example": "Emergency & Trauma Medicine"
                         }
                       },
-                      "genders": {
-                        "type": "array",
-                        "items": {
-                          "type": "string",
-                          "example": "All"
-                        }
-                      },
-                      "pubTypeIds": {
+                      "pubTypeId": {
                         "type": "array",
                         "items": {
                           "type": "string",
                           "example": "nursingskills"
-                        }
-                      },
-                      "mediaTypes": {
-                        "type": "array",
-                        "items": {
-                          "type": "string",
-                          "example": "videos",
-                          "enum": [
-                            "images",
-                            "videos"
-                          ]
                         }
                       }
                     }
@@ -392,11 +356,14 @@
                       "type": "string",
                       "example": "specialties",
                       "enum": [
-                        "cdh",
+                        "categoryPath",
                         "media",
                         "specialties",
-                        "population",
-                        "gender"
+                        "populations",
+                        "gender",
+                        "pubTypeId",
+                        "pubTypeGroup",
+                        "contentSets"
                       ]
                     }
                   },
@@ -410,36 +377,16 @@
                         "title",
                         "pubType",
                         "description",
+                        "metadata",
                         "hitSummary",
                         "images",
                         "videos",
                         "toc",
                         "gender",
-                        "population",
+                        "populations",
                         "specialties"
                       ]
                     }
-                  },
-                  "imageSizes": {
-                    "type": "array",
-                    "description": "Size(s) of images to return in the image link(s). (small, medium, large, full)",
-                    "items": {
-                      "type": "string",
-                      "example": "small"
-                    }
-                  },
-                  "posterSizes": {
-                    "type": "array",
-                    "description": "Size(s) of the poster link representing the video. (small, medium, large, full)",
-                    "items": {
-                      "type": "string",
-                      "example": "small"
-                    }
-                  },
-                  "secure": {
-                    "type": "boolean",
-                    "description": "Return secure (https) URLs for media links",
-                    "default": true
                   }
                 }
               }
@@ -929,9 +876,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ],
         "x-codegen-request-body-name": "body"
@@ -963,6 +908,28 @@
             "name": "maxItemsPerSuggestionType",
             "description": "The maximum number of search suggestions to return for each suggestion type (term or article title)",
             "required": false
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "pubTypeGroup",
+            "description": "Publication Groups to include in results"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "completionType",
+            "description": "Search results should match these fields: term or title (default is both)"
           }
         ],
         "responses": {
@@ -1010,15 +977,1123 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       },
-      "parameters": [
-        
+      "parameters": []
+    },
+    "/v1/content/search/rag": {
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Dyna Search DynaMedex content",
+        "description": "Return answers and references to questions from DynaMedex content",
+        "operationId": "post-rag-v1",
+        "parameters": [
+          {
+            "name": "x-eis-id-token",
+            "in": "header",
+            "description": "id token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "keep-alive"
+            },
+            "in": "header",
+            "name": "Connection",
+            "required": true,
+            "description": "Keep the connection alive until done"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "no"
+            },
+            "in": "header",
+            "name": "X-Accel-Buffering-Type",
+            "required": true,
+            "description": "Send the responses as they are received"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "no-cache"
+            },
+            "in": "header",
+            "name": "Cache-Control",
+            "description": "Do not cache responses"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "full"
+              ]
+            },
+            "in": "query",
+            "name": "imageSize",
+            "description": "Specify small (200w), medium (500w) and large (1000w) image sizes are supported. Also, the full image size is supported and is the default if no image size was specified."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "browser",
+                "server"
+              ],
+              "example": "browser"
+            },
+            "in": "query",
+            "name": "mediaLinksFormat",
+            "description": "Returns a secure link in its original size. Options are server or browser (default)."
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "example": "false"
+            },
+            "in": "query",
+            "name": "convertSvg",
+            "description": "Return images and algorithms that are originally in svg format as png format when true."
+          }
+        ],
+        "requestBody": {
+          "description": "The query to ask Dyna",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "criteria": {
+                    "description": "Query to ask Dyna",
+                    "type": "object",
+                    "properties": {
+                      "query": {
+                        "type": "string",
+                        "example": "what is the cause of hypercalcemia in a 35 year old woman with squamous cell lung cancer, granulomatous TB and abnormal lab values",
+                        "description": "The initial query to ask"
+                      },
+                      "conversationId": {
+                        "type": "string",
+                        "example": "2026-01-20-c9387ddb-7380-498d-b8eb-a1b03e4d046f",
+                        "description": "Required if asking a follow-up question.  Pulled from the previous response."
+                      },
+                      "messageId": {
+                        "type": "string",
+                        "example": "0",
+                        "description": "Required if asking a follow-up question.  Pulled from the previous response."
+                      },
+                      "history": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "query": {
+                              "type": "string",
+                              "example": "what is the cause of hypercalcemia in a 35 year old woman with squamous cell lung cancer, granulomatous TB and abnormal lab values",
+                              "description": "Required if asking a follow-up question.  Pulled from the previous response."
+                            },
+                            "question": {
+                              "type": "string",
+                              "example": "What are the potential causes of hypercalcemia in a 35-year-old woman with squamous cell lung cancer, granulomatous TB, and abnormal lab values?",
+                              "description": "Required if asking a follow-up question.  Pulled from the previous response."
+                            },
+                            "response": {
+                              "type": "string",
+                              "example": "<ul><li>Hypercalcemia can result from malignancies such as squamous cell carcinoma of the lung, which is associated with hypercalcemia of malignancy. This condition is often caused by the release of parathyroid hormone-related protein (PTHrP) from cancer cells, leading to increased calcium reabsorption in the kidney and stimulation of osteoclast activity, resulting in elevated calcium levels.<sup data-type='references'><span data-ref-id='8do20ue1mc'>1</span>,<span data-ref-id='u4bf8ktioh'>2</span></sup></li><li>Granulomatous disorders, including tuberculosis (TB), can also cause hypercalcemia. These conditions may lead to increased production of calcitriol, which stimulates gastrointestinal calcium absorption and osteoclastic activity, further elevating calcium levels.<sup data-type='references'><span data-ref-id='8do20ue1mc'>1</span>,<span data-ref-id='u4bf8ktioh'>2</span></sup></li><li>Abnormal lab values such as elevated PTHrP levels, low or normal PTH levels, and elevated vitamin D levels may indicate hypercalcemia of malignancy or other underlying causes such as granulomatous disorders.<sup data-type='references'><span data-ref-id='ufm4iqfl89'>3</span>,<span data-ref-id='3721nekngd'>4</span></sup></li></ul>",
+                              "description": "Required if asking a follow-up question.  Pulled from the previous response."
+                            }
+                      }
+                    }
+                  }
+                    },
+                    "required": [
+                      "query"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "viewModel": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "string",
+                          "description": "The primary concept for the question.  This helps to focus the question.",
+                          "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6"
+                        },
+                        "question": {
+                          "type": "string",
+                          "description": "The question to be answered.",
+                          "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6"
+                        },
+                        "answer": {
+                          "type": "string",
+                          "description": "The answer to the question.",
+                          "example": " In infants, the evaluation for congenital heart disease (CHD) involves... "
+                        },
+                        "supported": {
+                          "type": "boolean",
+                          "description": "Indicates if this query is supported."
+                        },
+                        "answerFound": {
+                          "type": "boolean",
+                          "description": "Indicates that the answer has been found."
+                        },
+                        "conceptCount": {
+                          "type": "number",
+                          "example": 12,
+                          "description": "The number of medical concepts covered by the query"
+                        },
+                        "conversationId": {
+                          "type": "string",
+                          "example": "2026-01-20-845b03d9-64bf-4b6e-8c12-7b1721833e9f",
+                          "description": "Identifier to be used for subsequent requests"
+                        },
+                        "messageId": {
+                          "type": "string",
+                          "example": "0",
+                          "description": "Reflects the number of queries for this Dyna conversation"
+                        },
+                        "disclaimer": {
+                          "type": "object",
+                          "properties": {
+                            "content": {
+                              "type": "string",
+                              "example": "Dyna AI responses are for educational purposes only and should not be solely relied upon for medical practice.",
+                              "description": "Disclaimer content"
+                            },
+                            "moreContent": {
+                              "type": "string",
+                              "example": "The presentation of a response does not imply any specific ranking by importance or probability and a response may not include all possibly relevant material. Interpretation and application are subject to the judgment of a healthcare professional. Dyna AI responses are not intended to serve as recommendations for individual patients. Do not enter Protected Health Information (PHI).",
+                              "description": "Additional disclaimers"
+                            }
+                          }
+                        },
+                        "workplaceNotes": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "example": "A note from your workplace is included that should be reviewed. (Notes are not included in the Dyna AI response)",
+                              "description": "A message to be displayed when notes are used to form an answer"
+                            }
+                          }
+                        },
+                        "workplaceSkills": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "example": "One or more related 'Your Workplace Skills' exist and are not included in this Dyna AI response",
+                              "description": "A message to call attention that the answer includes a workplace skill."
+                            },
+                            "results": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "url": {
+                                    "type": "string",
+                                    "example": "https://apis.ebsco.com/medsapi-dynamic-health/v1/content/custom-articles/C1767984405021",
+                                    "description": "URL of the skill"
+                                  },
+                                  "title": {
+                                    "type": "string",
+                                    "example": "Case Management for Patients with Diabetes Workplace Skill",
+                                    "description": "Title of the skill"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "example": "C1767984405021",
+                                    "description": "ID of the skill which can be used with the custom article endpoint"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "references": {
+                          "type": "object",
+                          "description": "References used to provide the answer",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "example": "DynaMed Sources",
+                              "description": "Title to show"
+                            },
+                            "hasNotes": {
+                              "type": "boolean",
+                              "description": "Indicates if there are workplace notes in any results. Only can be true if workplace notes exist in Dynamic Health or the reference."
+                            },
+                            "results": {
+                              "type": "array",
+                              "description": "List of references",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "title": {
+                                    "type": "string",
+                                    "description": "Title of the page cited",
+                                    "example": "Evaluation of the Infant for Congenital Heart Disease (CHD) >"
+                                  },
+                                  "slug": {
+                                    "type": "string",
+                                    "description": "Slug to the page cited",
+                                    "example": "/evaluation/evaluation-of-the-infant-for-congenital-heart-disease-chd"
+                                  },
+                                  "sections": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "title": {
+                                          "type": "string",
+                                          "description": "Title of the specific section on the page cited in the answer",
+                                          "example": "Physical exam for screening"
+                                        },
+                                        "slug": {
+                                          "type": "string",
+                                          "description": "Slug to the page and section",
+                                          "example": "/evaluation/evaluation-of-the-infant-for-congenital-heart-disease-chd"
+                                        },
+                                        "anchor": {
+                                          "type": "string",
+                                          "description": "Section to advance to",
+                                          "example": "PHYSICAL_EXAM_FOR_SCREENING"
+                                        },
+                                        "breadcrumb": {
+                                          "type": "string",
+                                          "description": "Breadcrumb to be displayed",
+                                          "example": "Screening >"
+                                        },
+                                        "refIndex": {
+                                          "type": "integer",
+                                          "example": 1,
+                                          "description": "Matches to the “<span data-ref-id='kbe0fnhkmg'>1</span>” in the answer"
+                                        },
+                                        "metadata": {
+                                          "type": "object",
+                                          "description": "Contextualizing information for the UI",
+                                          "properties": {
+                                            "title": {
+                                              "type": "string",
+                                              "description": "Title of this reference",
+                                              "example": "Evaluation of the Infant for Congenital Heart Disease (CHD)"
+                                            },
+                                            "navigateTo": {
+                                              "type": "array",
+                                              "description": "Navigational guidance",
+                                              "items": {
+                                                "type": "string",
+                                                "example": "Screening"
+                                              }
+                                            },
+                                            "id": {
+                                              "type": "string",
+                                              "description": "Article ID",
+                                              "example": "T566082"
+                                            },
+                                            "pubType": {
+                                              "type": "object",
+                                              "description": "Publication information",
+                                              "properties": {
+                                                "pretty": {
+                                                  "type": "string",
+                                                  "description": "Display publication name",
+                                                  "example": "Nursing Skill"
+                                                },
+                                                "id": {
+                                                  "type": "string",
+                                                  "description": "ID for the publication",
+                                                  "example": "nursingskills"
+                                                },
+                                                "group": {
+                                                  "type": "string",
+                                                  "description": "Group for the pubType",
+                                                  "example": "articles"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "hasNote": {
+                                    "type": "boolean",
+                                    "description": "Indicates if any section has workplace notes. Only can be true if workplace notes exist in Dynamic Health or the reference."
+                                  },
+                                  "metadata": {
+                                    "type": "object",
+                                    "description": "This section is used as a reference in the answer",
+                                    "properties": {
+                                      "title": {
+                                        "type": "string",
+                                        "description": "Title of the Article used in the answer",
+                                        "example": "Evaluation of the Infant for Congenital Heart Disease (CHD)"
+                                      },
+                                      "id": {
+                                        "type": "string",
+                                        "description": "Article ID",
+                                        "example": "T566082"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "streamComplete": {
+                          "type": "boolean",
+                          "description": "Flag to indicate if the streaming response is complete",
+                          "example": true
+                        },
+                        "media": {
+                          "type": "object",
+                          "properties": {
+                            "images": {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string",
+                                  "example": "Images:",
+                                  "description": "Title to be displayed"
+                                },
+                                "results": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "example": "I1699300761963",
+                                        "description": "ID of the image, which can be used with the media endpoint"
+                                      },
+                                      "publicId": {
+                                        "type": "string",
+                                        "example": "EBSCOHealth/CCMS/Dynamed/images/I1699300761963",
+                                        "description": "Public ID, for those with access to Cloudinary"
+                                      },
+                                      "description": {
+                                        "type": "string",
+                                        "example": "(A) Chest radiograph reveals poorly defined bilateral nodular opacities in the superior lung fields. (B) Axial computed tomography image of the chest shows centrilobular ground-glass nodules and heterogeneous attenuation, features suggestive of calcium deposition. ",
+                                        "description": "Description of the media"
+                                      },
+                                      "copyright": {
+                                        "type": "string",
+                                        "example": "© 2010 Massachusetts Medical Society. All rights reserved. Used with permission."
+                                      },
+                                      "format": {
+                                        "type": "string",
+                                        "example": "jpg",
+                                        "description": "File type"
+                                      },
+                                      "alt": {
+                                        "type": "string",
+                                        "example": "(A) Chest radiograph reveals poorly defined bilateral nodular opacities in the superior lung fields. (B) Axial computed tomography image of the chest shows centrilobular ground-glass nodules and heterogeneous attenuation, features suggestive of calcium deposition. ",
+                                        "description": "Alternate text to display if the image is not rendered"
+                                      },
+                                      "links": {
+                                        "type": "object",
+                                        "description": "TBD",
+                                        "properties": {
+                                          "rel": {
+                                            "type": "string",
+                                            "example": "external",
+                                            "description": "Relation of the link"
+                                          },
+                                          "href": {
+                                            "type": "string",
+                                            "example": "https://media.ebsco.healthcare/eis-live/image/authenticated/t_s200/v1/EBSCOHealth/CCMS/Dynamed/images/I1616935757565.jpg?__cld_token__=exp=1769014832~hmac=e1280e9b0eb5c5572ab3359a064b4a4ca6208bbe9297098ebf7328c060cd1175%22",
+                                            "description": "Link to the image"
+                                          },
+                                          "imageSize": {
+                                            "type": "string",
+                                            "example": "small",
+                                            "description": "Size of the image"
+                                          }
+                                        }
+                                      },
+                                      "telemetryData": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "example": "I1699300761963"
+                                          },
+                                          "title": {
+                                            "type": "string",
+                                            "example": "Metastatic pulmonary calcification"
+                                          },
+                                          "format": {
+                                            "type": "string",
+                                            "example": "jpg"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "algorithms": {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string",
+                                  "example": "Algorithms:",
+                                  "description": "Title to be displayed"
+                                },
+                                "results": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "example": "A1655215417932",
+                                        "description": "ID of the algorithm, which can be used with the media endpoint"
+                                      },
+                                      "publicId": {
+                                        "type": "string",
+                                        "example": "EBSCOHealth/CCMS/Dynamed/images/I1699300761963",
+                                        "description": "Public ID, for those with access to Cloudinary"
+                                      },
+                                      "description": {
+                                        "type": "string",
+                                        "example": "Adapted from Pediatr Nephrol. 2018 Sep;33(9):1475-1488, Clin Med. (Lond) 2017 Jun;17(3):270-273, BMJ. 2015 Jun 2;350:h2723. Last reviewed 2025. ",
+                                        "description": "Description of the media"
+                                      },
+                                      "copyright": {
+                                        "type": "string",
+                                        "example": "Copyright ©2025 EBSCO Information Services."
+                                      },
+                                      "format": {
+                                        "type": "string",
+                                        "example": "svg",
+                                        "description": "File type"
+                                      },
+                                      "alt": {
+                                        "type": "string",
+                                        "example": "Adapted from Pediatr Nephrol. 2018 Sep;33(9):1475-1488, Clin Med. (Lond) 2017 Jun;17(3):270-273, BMJ. 2015 Jun 2;350:h2723. Last reviewed 2025. ",
+                                        "description": "Alternate text to display if the image is not rendered"
+                                      },
+                                      "links": {
+                                        "type": "array",
+                                        "description": "TBD",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "rel": {
+                                              "type": "string",
+                                              "example": "external",
+                                              "description": "Relation of the link"
+                                            },
+                                            "href": {
+                                              "type": "string",
+                                              "example": "https://media.ebsco.healthcare/eis-live/image/authenticated/v1/EBSCOHealth/CCMS/Dynamed/images/A1686155706208.svg?__cld_token__=exp=1769014832~hmac=cd4be9dd62811f46dcaa31afdbf8f3a89fedf82e6cfbf545a3bd004cfff3ef04",
+                                              "description": "Link to the algorithm image"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "telemetryData": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "example": "A1655215417932"
+                                          },
+                                          "title": {
+                                            "type": "string",
+                                            "example": "Hypercalcemia diagnosis algorithm"
+                                          },
+                                          "format": {
+                                            "type": "string",
+                                            "example": "svg"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "recommendedQuestions": {
+                          "type": "array",
+                          "description": "Suggested follow-up questions from Dyna AI related to the original query",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "recommendedContent": {
+                          "type": "object",
+                          "description": "Recommended content related to the answer",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "Title for the UI",
+                              "example": "Recommended Content"
+                            },
+                            "hasNotes": {
+                              "example": "Recommended Content",
+                              "type": "boolean",
+                              "description": "Indicates if content contains a  workplace note when the request is for Dynamic Health."
+                            },
+                            "results": {
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            }
+                          }
+                        },
+                        "followupQuestions": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "example": "Ask a Follow-up",
+                              "description": "Title to display"
+                            },
+                            "enabled": {
+                              "type": "boolean",
+                              "description": "Indicates if followup queries may be asked"
+                            }
+                          }
+                        },
+                        "telemetryData": {
+                          "type": "object",
+                          "properties": {
+                            "searchTerm": {
+                              "type": "string",
+                              "description": "Original search term",
+                              "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6"
+                            },
+                            "question": {
+                              "type": "string",
+                              "description": "Question that was asked",
+                              "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6"
+                            },
+                            "pageToken": {
+                              "type": "string",
+                              "description": "Token used for tracking a session",
+                              "example": "2026-01-20-845b03d9-64bf-4b6e-8c12-7b1731833e9f"
+                            },
+                            "conversationId": {
+                              "type": "string",
+                              "example": "2026-01-20-845b03d9-64bf-4b6e-8c12-7b1731833e9f",
+                              "description": "Conversation Id"
+                            },
+                            "messageId": {
+                              "type": "string",
+                              "example": "0",
+                              "description": "The number of questions related to this query"
+                            },
+                            "searchTimeInMs": {
+                              "type": "integer",
+                              "description": "Time to search",
+                              "example": 16103
+                            },
+                            "ragResponseTimeInMs": {
+                              "type": "integer",
+                              "description": "Time for the Retrieval-Augmented Generation (RAG)",
+                              "example": 11158
+                            },
+                            "userIntentTimeInMs": {
+                              "type": "integer",
+                              "description": "Time for the entire answer to be completed",
+                              "example": 4792
+                            },
+                            "answerFound": {
+                              "type": "boolean",
+                              "description": "Indicates if there is an answer"
+                            },
+                            "answerNotFound": {
+                              "type": "boolean",
+                              "description": "Indicates if there is an answer - this is needed for EBSCO statistics"
+                            },
+                            "userIntentCategory": {
+                              "type": "string",
+                              "description": "DM_DIAGNOSTIC_EVAL_TESTING",
+                              "example": 4792
+                            },
+                            "conceptCount": {
+                              "type": "integer",
+                              "example": 12,
+                              "description": "The number of medical concepts covered by the query"
+                            },
+                            "disclaimer": {
+                              "type": "boolean",
+                              "description": "Indicates whether or not the query intent category triggered a disclaimer that was included with the answer"
+                            },
+                            "imageCount": {
+                              "type": "integer",
+                              "example": 4,
+                              "description": "Number of images in the response"
+                            },
+                            "algorithmCount": {
+                              "type": "integer",
+                              "description": "Number of algorithms inthe response"
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "streamComplete"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching\nthis request.",
+            "content": {}
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
+            "content": {}
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media\ntype.",
+            "content": {}
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
+            "content": {}
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "x-internal": false,
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/v1/content/search/rag/conversations": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get all Dyna AI Conversations for a user",
+        "description": "Gets basic information on all conversations for the specified user. Only returns the top-level (question, query, timestamp) information for the most recent message in the conversation.",
+        "operationId": "get-rag-conversations-v1",
+        "parameters": [
+          {
+            "name": "x-eis-id-token",
+            "in": "header",
+            "description": "id token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of conversations to return"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextPageToken",
+            "description": "Pagination key for retrieving the next set of results"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "example": "false"
+            },
+            "in": "query",
+            "name": "isBookmarked",
+            "description": "Filter conversations by bookmark status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "properties": {
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SelfLink"
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ConversationHistoryItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+        "401": {
+          "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+          "content": {}
+        },
+        "403": {
+          "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+          "content": {}
+        },
+        "404": {
+          "description": "Not Found - The server was unable to find a resource matching\nthis request.",
+          "content": {}
+        },
+        "405": {
+          "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
+          "content": {}
+        },
+        "406": {
+          "description": "Not Acceptable - The server cannot return the requested media\ntype.",
+          "content": {}
+        },
+        "415": {
+          "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
+          "content": {}
+        },
+        "429": {
+          "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
+          "content": {}
+        },
+        "500": {
+          "description": "Internal Server Error - There was an unexpected error with\nthe server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error-Response"
+              }
+            }
+          }
+        }
+        },
+      "security": [
+        {
+          "BearerToken": []
+        }
       ]
+      },
+      "delete": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Delete all Dyna AI Conversations for a user",
+        "description": "Deletes all conversations for the specified user",
+        "operationId": "delete-rag-conversations-v1",
+        "parameters": [
+          {
+            "name": "x-eis-id-token",
+            "in": "header",
+            "description": "id token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - All conversations for the specified user have been deleted"
+          },
+          "400": {
+            "description": "Bad Request - Required property is missing or contains an illegal value"
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition which prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+      "security": [
+        {
+          "BearerToken": []
+        }
+      ]
+      }
+    },
+    "/v1/content/search/rag/conversations/{id}": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get a single Dyna AI Conversation for a user",
+        "description": "Gets the messages information for a single conversation for the specified user.",
+        "operationId": "get-conversation-by-id-v1",
+        "parameters": [
+          {
+            "name": "x-eis-id-token",
+            "in": "header",
+            "description": "id token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "description": "Conversation ID",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "full"
+              ]
+            },
+            "in": "query",
+            "name": "imageSize",
+            "description": "Specify small (200w), medium (500w) and large (1000w) image sizes are supported. Also, the full image size is supported and is the default if no image size was specified."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "browser",
+                "server"
+              ],
+              "example": "browser"
+            },
+            "in": "query",
+            "name": "mediaLinksFormat",
+            "description": "Returns a secure link in its original size. Options are server or browser (default)."
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "example": "false"
+            },
+            "in": "query",
+            "name": "convertSvg",
+            "description": "Return images and algorithms that are originally in svg format as png format when true."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "properties": {
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SelfLink"
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BaseConversationResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+        "400": {
+          "description": "Bad Request"
+        },
+        "401": {
+          "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+          "content": {}
+        },
+        "403": {
+          "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+          "content": {}
+        },
+        "404": {
+          "description": "Not Found - The server was unable to find a resource matching\nthis request.",
+          "content": {}
+        },
+        "405": {
+          "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
+          "content": {}
+        },
+        "406": {
+          "description": "Not Acceptable - The server cannot return the requested media\ntype.",
+          "content": {}
+        },
+        "415": {
+          "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
+          "content": {}
+        },
+        "429": {
+          "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
+          "content": {}
+        },
+        "500": {
+          "description": "Internal Server Error - There was an unexpected error with\nthe server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error-Response"
+              }
+            }
+          }
+        }
+        },
+      "security": [
+        {
+          "BearerToken": []
+        }
+      ]
+      },
+      "delete": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Delete Dyna AI Conversation by ID",
+        "description": "Deletes the single conversation specified for the specified user",
+        "operationId": "delete-rag-conversation-by-id-v1",
+        "parameters": [
+          {
+            "name": "x-eis-id-token",
+            "in": "header",
+            "description": "id token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "description": "Conversation ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - The requested conversation for the specified user has been deleted"
+          },
+          "400": {
+            "description": "Bad Request - Required property is missing or contains an illegal value"
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "500": {
+            "description": "The server encountered an unexpected condition which prevented it from fulfilling the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+      "security": [
+        {
+          "BearerToken": []
+        }
+      ]
+      }
     },
     "/content/articles/{id}": {
       "get": {
@@ -1121,9 +2196,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -1292,9 +2365,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -1469,9 +2540,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -1649,14 +2718,10 @@
             }
           }
         },
-        "parameters": [
-          
-        ],
+        "parameters": [],
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -1835,9 +2900,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -1845,14 +2908,12 @@
     "/content/article-exclusions": {
       "get": {
         "tags": [
-          "Article Exclusions"
+          "Content Exclusions"
         ],
         "summary": "Get all excluded articles",
         "operationId": "get-all-article-exclusions",
         "description": "Additional Documentation [/content/article-exclusions](https://developer.ebsco.com/medical-point-care-apis/dynamic-health/docs/get-article-exclusions) ",
-        "parameters": [
-          
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -2030,21 +3091,132 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       },
-      "parameters": [
-        
-      ]
+      "parameters": []
+    },
+    "/content/pubtype-exclusions": {
+      "get": {
+        "tags": [
+          "Content Exclusions"
+        ],
+        "summary": "Retrieve excluded pubtypes for a given customer",
+        "operationId": "getPubTypeExclusions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK. Resources found. Please note that an empty array will be returned in case no resources are found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "properties": {
+                        "links": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "description": "Relationship of the link",
+                                "example": "self"
+                              },
+                              "href": {
+                                "type": "string",
+                                "description": "Link to this response",
+                                "example": "https://apis.ebsco.com/medsapi-dynamic-health/v1/content/pubtype-exclusions"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "links"
+                      ]
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "contentSet": {
+                            "type": "string",
+                            "example": "drug-monographs",
+                            "description": "Set of contents that are excluded for this customer"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "pubType",
+                              "categoryPath"
+                            ],
+                            "description": "Publication type or category path"
+                          }
+                        },
+                        "required": [
+                          "contentSet",
+                          "type"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
     },
     "/user/ce-counter": {
       "get": {
         "summary": "Get Continuing Education Credits for a User",
         "tags": [
-          "Personalization"
+          "User"
         ],
         "operationId": "get-ce-counter",
         "description": "Additional Documentation [/user/ce-counter](https://developer.ebsco.com/medical-point-care-apis/dynamic-health/docs/get-educations-counts) ",
@@ -2147,9 +3319,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -2158,7 +3328,7 @@
       "get": {
         "summary": "Get Recent Article Views For This User",
         "tags": [
-          "Personalization"
+          "User"
         ],
         "operationId": "get-article-views",
         "description": "Additional Documentation [/user/article-views](https://developer.ebsco.com/medical-point-care-apis/dynamic-health/docs/get-article-views) ",
@@ -2282,9 +3452,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -2293,7 +3461,7 @@
       "post": {
         "summary": "Store Multiple Article View Events",
         "tags": [
-          "Personalization"
+          "User"
         ],
         "operationId": "post-store-article-views",
         "description": "Additional Documentation [/user/store-article-views](https://developer.ebsco.com/medical-point-care-apis/dynamic-health/docs/store-article-views) ",
@@ -2333,9 +3501,7 @@
             }
           }
         },
-        "parameters": [
-          
-        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2410,9 +3576,376 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
+          }
+        ]
+      }
+    },
+    "/user/transfer-token": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Fetch a transferToken",
+        "operationId": "post-transfertoken",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-eis-id-token",
+            "description": "Id token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The id of the to product",
+            "in": "query",
+            "name": "toProductId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transferToken": {
+                      "type": "string",
+                      "example": "aaaaaa.bbbbbbb.ccccc.ddddd",
+                      "description": "The generated JWE token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource"
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request"
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server"
+          }
+        },
+        "x-codegen-request-body-name": "body",
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    },
+    "/content/search/mcp": {
+      "post": {
+        "tags": [
+          "MCP"
+        ],
+        "summary": "Dyna MCP Request endpoint",
+        "description": "Handles initialization and requests for a Dyna MCP session. Requires JSON-RPC body and may require 'mcp-session-id' header.",
+        "operationId": "post-mcp-v1",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "keep-alive",
+              "example": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "description": "Body contains JSON"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "no",
+              "example": "application/json, text/event-stream"
+            },
+            "in": "header",
+            "name": "Accept",
+            "required": true,
+            "description": "Accept type"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "no-cache",
+              "example": "42324"
+            },
+            "in": "header",
+            "name": "mcp-session-id",
+            "description": "Session ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "The query to ask Dyna",
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "jsonrpc": "2.0",
+                    "id": "iou42",
+                    "method": "tools/call",
+                    "params": {
+                      "name": "dyna_question_answer",
+                      "arguments": {
+                        "workflowId": "DMX",
+                        "query": "covid adults"
+                      }
+                    }
+                  }
+                },
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "2.0"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "ou812"
+                  },
+                  "method": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "tools/call"
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "Params for a Dyna query",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "example": "dyna_question_answer"
+                      },
+                      "arguments": {
+                        "type": "object",
+                        "properties": {
+                          "workflowId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "example": "DMX",
+                            "description": "The product you are querying"
+                          },
+                          "query": {
+                            "type": "string",
+                            "minLength": 1,
+                            "example": "covid adults",
+                            "description": "The actual Dyna question"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "jsonrpc",
+                  "id",
+                  "method"
+                ]
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "x-internal": false,
+        "x-codegen-request-body-name": "body"
+      },
+      "get": {
+        "tags": [
+          "MCP"
+        ],
+        "summary": "Get events for an MCP Dyna session",
+        "description": "Method not allowed in stateless mode. This tells MCP client. Requires 'mcp-session-id' header.",
+        "operationId": "get-v1-content-search-mcp",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "42324"
+            },
+            "in": "header",
+            "name": "mcp-session-id",
+            "description": "Session ID",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "42324"
+            },
+            "in": "header",
+            "name": "last-event-id",
+            "description": "Last received event ID for SSE reconnects.",
+            "required": false
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "MCP"
+        ],
+        "summary": "Delete an MCP Dyna session (when in State mode)",
+        "description": "Method not allowed in stateless mode and will terminate an MCP session. Requires 'mcp-session-id' header.",
+        "operationId": "delete-v1-content-search-mcp",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "42324"
+            },
+            "in": "header",
+            "name": "mcp-session-id",
+            "description": "Session ID",
+            "required": true
           }
         ]
       }
@@ -2818,25 +4351,24 @@
                 }
               },
               "contributors": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "contributorType": {
-                      "type": "string",
-                      "example": "authors"
-                    },
-                    "degrees": {
-                      "type": "string",
-                      "example": "BS"
-                    },
-                    "lastName": {
-                      "type": "string",
-                      "example": "Schub"
-                    },
-                    "firstName": {
-                      "type": "string",
-                      "example": "Tanja"
+                "type": "object",
+                "properties": {
+                  "authors": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contributor"
+                    }
+                  },
+                  "editors": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contributor"
+                    }
+                  },
+                  "reviewers": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contributor"
                     }
                   }
                 }
@@ -3112,6 +4644,576 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Contributor": {
+        "type": "object",
+        "properties": {
+          "degrees": {
+            "type": "string",
+            "description": "Editor credentials",
+            "example": "MD, FACC, FHFSA, FAHA"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Editor given name",
+            "example": "Anekwe E."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Editor surname",
+            "example": "Onwuanyi"
+          }
+        }
+      },
+      "ConversationHistoryItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the conversation",
+            "example": "2025-06-27-3bdb099e-d2b2-4351-a069-ef20630aaaf1"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO timestamp when the conversation was created",
+            "example": "2025-08-19T11:35:33.675Z"
+          },
+          "query": {
+            "type": "string",
+            "description": "The original query/search term from the conversation",
+            "example": "What are the causes of COPD?"
+          },
+          "question": {
+            "type": "string",
+            "description": "The processed question from the conversation",
+            "example": "what causes copd"
+          },
+          "telemetryData": {
+            "type": "object",
+            "description": "Telemetry information for tracking and analytics",
+            "properties": {
+              "conversationId": {
+                "type": "string",
+                "description": "Conversation identifier for telemetry",
+                "example": "2025-06-27-3bdb099e-d2b2-4351-a069-ef20630aaaf1"
+              },
+              "searchTerm": {
+                "type": "string",
+                "description": "Search term for telemetry tracking",
+                "example": "What are the causes of COPD?"
+              },
+              "question": {
+                "type": "string",
+                "description": "Question for telemetry tracking",
+                "example": "what causes copd"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO timestamp when the conversation was created",
+                "example": "2025-08-19T11:35:33.675Z"
+              }
+            },
+            "required": [
+              "conversationId",
+              "searchTerm",
+              "question"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "query",
+          "question",
+          "telemetryData"
+        ]
+      },
+      "SelfLink": {
+        "type": "object",
+        "description": "A link object representing a relationship and its URL",
+        "properties": {
+          "rel": {
+            "type": "string",
+            "example": "self"
+          },
+          "href": {
+            "type": "string",
+            "example": "https://ebscois-development-devqa.apigee.net/medsapi-dynamedex/v2/content/search/rag/conversations"
+          }
+        },
+        "required": [
+          "rel",
+          "href"
+        ]
+      },
+      "BaseConversationResponse": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6",
+            "description": "The primary concept for the question.  This helps to focus the question."
+          },
+          "question": {
+            "type": "string",
+            "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6",
+            "description": "The question to be answerd."
+          },
+          "answer": {
+            "type": "string",
+            "example": " In infants, the evaluation for congenital heart disease (CHD) involves... ",
+            "description": "The answer to the question."
+          },
+          "supported": {
+            "type": "boolean",
+            "description": "Indicates where Dyna supports this type of question"
+          },
+          "answerFound": {
+            "type": "boolean",
+            "description": "Indicates if this response includes the final answer"
+          },
+          "conversationId": {
+            "type": "string",
+            "example": "2025-12-30-66f09f69-883a-4791-85c8-dbbb9fc53762",
+            "description": "ID of the rag search conversation"
+          },
+          "messageId": {
+            "type": "string",
+            "example": "1",
+            "description": "ID of the message in the conversation"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2025-08-19T11:35:33.675Z",
+            "description": "ISO8601 timestamp when the conversation was created"
+          },
+          "followUpQuestions": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Ask a Follow-up",
+                "description": "Title for the follow-up questions section"
+              },
+              "enabled": {
+                "type": "boolean",
+                "example": true,
+                "description": "Indicates if follow-up questions are enabled for this conversation"
+              }
+            }
+          },
+          "disclaimer": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "example": "Dyna AI responses are for educational purposes only and should not be solely relied upon for medical practice.",
+                "description": "Disclaimer content for the conversation"
+              },
+              "moreContent": {
+                "type": "string",
+                "example": "The presentation of a response does not imply any specific ranking by importance or probability and a response may not include all possibly relevant material. Interpretation and application are subject to the judgment of a healthcare professional. Dyna AI responses are not intended to serve as recommendations for individual patients. Do not enter Protected Health Information (PHI).",
+                "description": "Additional disclaimer content for the conversation"
+              }
+            }
+          },
+          "workplaceNotes": {
+            "type": "object",
+            "description": "Contains a message to display to users indicating there are workplace notes associated with the Dyna AI response.  Only included for DH users and only when there are workplace notes associated with the Dyna AI response.",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "A note from your workplace is included that should be reviewed. (Notes are not included in the Dyna AI response)",
+                "description": "User-facing messaging to notify the user there are workplace notes associated with the Dyna AI response."
+              }
+            }
+          },
+          "workplaceSkills": {
+            "type": "object",
+            "description": "Object indicating whether or not there are workplace skills associated with the Dyna AI response. Only included for DH users and only when there are workplace skills associated with the Dyna AI response.",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "One or more related 'Your Workplace Skills' exist and are not included in this Dyna AI response",
+                "description": "User-facing messaging to notify the user there are workplace skills associated with the Dyna AI response."
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "example": "/skills/teamwork",
+                      "description": "URL to more information about the workplace skill"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Teamwork",
+                      "description": "Name of the workplace skill"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "C12345",
+                      "description": "Unique identifier for the workplace skill"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "media": {
+            "$ref": "#/components/schemas/Media"
+          },
+          "references": {
+            "$ref": "#/components/schemas/References"
+          },
+          "recommendedContent": {
+            "$ref": "#/components/schemas/RecommendedContent"
+          },
+          "recommendedQuestions": {
+            "$ref": "#/components/schemas/RecommendedQuestions"
+          },
+          "telemetryData": {
+            "$ref": "#/components/schemas/ConversationTelemetryData"
+          }
+        }
+      },
+      "References": {
+        "type": "object",
+        "description": "References used to provide the answer",
+        "properties": {
+          "hasNotes": {
+            "type": "boolean",
+            "description": "Indicates if this reference is coming from a workplace note"
+          },
+          "results": {
+            "type": "array",
+            "description": "List of references",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string",
+                  "example": "/evaluation/evaluation-of-the-infant-for-congenital-heart-disease-chd",
+                  "description": "Slug to the page cited"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Evaluation of the Infant for Congenital Heart Disease (CHD) >",
+                  "description": "Title of the page cited"
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "Title of this section",
+                        "example": "Treatment Strategies"
+                      },
+                      "slug": {
+                        "type": "string",
+                        "example": "/evaluation/evaluation-of-the-infant-for-congenital-heart-disease-chd#PHYSICAL_EXAM_FOR_SCREENING",
+                        "description": "Slug to the page and section"
+                      },
+                      "breadcrumb": {
+                        "type": "string",
+                        "example": "Screening >",
+                        "description": "Breadcrumb to be displayed"
+                      },
+                      "metadata": {
+                        "type": "object",
+                        "description": "Contextualizing information for the UI",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "example": "Evaluation of the Infant for Congenital Heart Disease (CHD)",
+                            "description": "Title of this reference"
+                          },
+                          "navigateTo": {
+                            "type": "array",
+                            "description": "Navigational guidance",
+                            "items": {
+                              "type": "string",
+                              "example": "Screening"
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "T566082",
+                            "description": "Article ID"
+                          },
+                          "pubType": {
+                            "type": "object",
+                            "description": "Publication information",
+                            "properties": {
+                              "pretty": {
+                                "type": "string",
+                                "example": "Nursing Skill",
+                                "description": "Display publication name"
+                              },
+                              "id": {
+                                "type": "string",
+                                "example": "nursingskills",
+                                "description": "ID for the publication"
+                              },
+                              "group": {
+                                "type": "string",
+                                "example": "articles",
+                                "description": "Group for the pubType"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "hasNote": {
+                  "type": "boolean",
+                  "description": "Indicates if this reference has a workplace note"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Evaluation of the Infant for Congenital Heart Disease (CHD)",
+                      "description": "Title of the Article used in the answer"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "T566082",
+                      "description": "Article ID"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedContent": {
+        "type": "object",
+        "description": "Recommended content related to the answer",
+        "properties": {
+          "hasNotes": {
+            "type": "boolean",
+            "description": "Indicates if there is recommended content whether it is from a workplace note"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RecommendedQuestions": {
+        "type": "array",
+        "description": "Questions that might be used for followup on this answer.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "ConversationTelemetryData": {
+        "type": "object",
+        "properties": {
+          "searchTerm": {
+            "type": "string",
+            "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6",
+            "description": "Original sarch term"
+          },
+          "question": {
+            "type": "string",
+            "example": "How do I evaluate an Infant for Congenital Heart Disease (CHD)-389hsqogd6",
+            "description": "Question that was asked"
+          },
+          "pageToken": {
+            "type": "string",
+            "example": "2025-12-30-66f09f69-883a-4791-85c8-dbbb9fc53762",
+            "description": "Token used for follow-up questions"
+          },
+          "conversationId": {
+            "type": "string",
+            "example": "2025-12-30-66f09f69-883a-4791-85c8-dbbb9fc53762",
+            "description": "ID of the rag search conversation"
+          },
+          "messageId": {
+            "type": "string",
+            "example": "1",
+            "description": "ID of the message in the conversation"
+          },
+          "searchTimeInMs": {
+            "type": "integer",
+            "example": 16103,
+            "description": "Time to search"
+          },
+          "ragResponseTimeInMs": {
+            "type": "integer",
+            "example": 11158,
+            "description": "Time for the Retrieval-Augmented Generation (RAG)"
+          },
+          "userIntentTimeInMs": {
+            "type": "integer",
+            "example": 4792,
+            "description": "Time for the entire answer to be completed"
+          },
+          "userIntentCategory": {
+            "type": "string",
+            "example": "DH_DISEASE",
+            "description": "The category that the user seems to be querying"
+          },
+          "answerFound": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates if an answer was found for the user's query"
+          },
+          "answerNotFound": {
+            "type": "boolean",
+            "example": false,
+            "description": "Indicates if an answer was not found for the user's query"
+          },
+          "disclaimer": {
+            "type": "boolean",
+            "example": false,
+            "description": "Indicates if there is a disclaimer associated with the answer"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-06-01T12:00:00Z",
+            "description": "The ISO8601 timestamp when the answer was created"
+          }
+        }
+      },
+      "MediaResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the media item"
+          },
+          "publicId": {
+            "type": "string",
+            "description": "Public identifier for the media item"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the media item"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the media item"
+          },
+          "pubType": {
+            "type": "string",
+            "enum": [
+              "image",
+              "algorithm"
+            ],
+            "description": "Publication type"
+          },
+          "copyright": {
+            "type": "string",
+            "description": "Copyright information for the media item"
+          },
+          "format": {
+            "type": "string",
+            "description": "Format of the media item"
+          },
+          "alt": {
+            "type": "string",
+            "description": "Alt text for the media item"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to the media item (full resolution image or algorithm PDF)"
+          },
+          "thumbnails": {
+            "type": "object",
+            "description": "Thumbnail URLs for images at different sizes. Only present for image pubType.",
+            "properties": {
+              "small": {
+                "type": "string",
+                "description": "URL to small thumbnail"
+              },
+              "medium": {
+                "type": "string",
+                "description": "URL to medium thumbnail"
+              },
+              "large": {
+                "type": "string",
+                "description": "URL to large thumbnail"
+              },
+              "lightbox1x": {
+                "type": "string",
+                "description": "URL to 1x lightbox image"
+              },
+              "lightbox2x": {
+                "type": "string",
+                "description": "URL to 2x lightbox image"
+              }
+            }
+          },
+          "telemetryData": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "ID for telemetry tracking"
+              },
+              "title": {
+                "type": "string",
+                "description": "Title for telemetry tracking"
+              },
+              "format": {
+                "type": "string",
+                "description": "Format for telemetry tracking"
+              }
+            }
+          }
+        }
+      },
+      "Media": {
+        "type": "object",
+        "properties": {
+          "images": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Images:",
+                "description": "Title for the images section"
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MediaResult"
+                }
+              }
+            }
+          },
+          "algorithms": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Algorithms:",
+                "description": "Title for the algorithms section"
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MediaResult"
                 }
               }
             }
