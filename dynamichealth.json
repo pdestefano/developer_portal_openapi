@@ -988,7 +988,7 @@
         "tags": [
           "Search"
         ],
-        "summary": "Dyna Search DynaMedex content",
+        "summary": "Questioning Dyna Content",
         "description": "Return answers and references to questions from DynaMedex content",
         "operationId": "post-rag-v1",
         "parameters": [
