@@ -22,16 +22,14 @@
   "servers": [
     {
       "url": "https://apis.ebsco.com/medsapi-consumer-health/v1"
+    },
+    {
+      "url": "https://apis.ebsco.com/medsapi-auth/v1",
+      "description": "MedsAPI token endpoint"
     }
   ],
   "paths": {
     "/token": {
-      "servers": [
-        {
-          "url": "https://apis.ebsco.com/medsapi-auth/v1",
-          "description": "MedsAPI token endpoint"
-        }
-      ],
       "post": {
         "summary": "Get an authorization token",
         "tags": [
@@ -205,17 +203,13 @@
             "application/javascript": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  
-                }
+                "properties": {}
               }
             },
             "text/plain": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  
-                }
+                "properties": {}
               }
             }
           },
@@ -482,51 +476,35 @@
           },
           "400": {
             "description": "Bad Request - Required property is missing or contains an illegal value",
-            "content": {
-              
-            }
+            "content": {}
           },
           "401": {
             "description": "Unauthorized - This request requires authentication and none was provided.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "403": {
             "description": "Forbidden - The authentication credentials do not have access to this resource.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "404": {
             "description": "Not Found - The server was unable to find a resource matching this request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "405": {
             "description": "Method Not Allowed - The server has not implemented the requested HTTP method.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "406": {
             "description": "Not Acceptable - The server cannot return the requested media type.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "415": {
             "description": "Unsupported Media Type - The server cannot understand the media type in this request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "429": {
             "description": "Too Many Requests - The client has sent too many requests within the given time.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "500": {
             "description": "Internal Server Error - There was an unexpected error with the server\"",
@@ -557,9 +535,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ],
         "x-codegen-request-body-name": "body"
@@ -611,6 +587,14 @@
             "in": "query",
             "name": "posterSize",
             "description": "Indicates the size(s) of still image of videos that should be returned"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "mediaLinksFormat",
+            "description": "Media links should include file type, and not expire."
           }
         ],
         "responses": {
@@ -654,6 +638,16 @@
                       "type": "object",
                       "description": "Metadata Fields",
                       "properties": {
+                        "copyright": {
+                          "type": "string",
+                          "description": "Copyright date",
+                          "example": "(C) Copyright 2022"
+                        },
+                        "DC.rights.owner": {
+                          "type": "string",
+                          "description": "Owner of the copyright",
+                          "example": "(C) Copyright 2022"
+                        },
                         "DC.Type": {
                           "type": "string",
                           "description": "Type of article - topic",
@@ -664,34 +658,23 @@
                           "description": "Title of the article",
                           "example": "Valproic Acid"
                         },
-                        "DC.Format": {
+                        "DC.Coverage": {
                           "type": "string",
-                          "description": "Format of the article (e.g. XHTML)",
-                          "example": "XHTML"
-                        },
-                        "copyright": {
-                          "type": "string",
-                          "description": "Copyright date",
-                          "example": "(C) Copyright 2022"
+                          "example": "/tnp/pg000419,26 11000004 12000004 13000004 14000004,Trade Names : Depakene"
                         },
                         "DC.Creator": {
                           "type": "string",
                           "description": "Creator of the content",
                           "example": "by Julia M. Smith, MA"
                         },
-                        "DC.Coverage": {
+                        "DC.Publisher": {
                           "type": "string",
-                          "example": "/tnp/pg000419,26 11000004 12000004 13000004 14000004,Trade Names : Depakene"
+                          "example": "EBSCO Publishing",
+                          "description": "Publisher"
                         },
-                        "DC.Language": {
+                        "DC.Date.Created": {
                           "type": "string",
-                          "description": "Language of the article",
-                          "example": "en"
-                        },
-                        "DC.Identifier": {
-                          "type": "string",
-                          "description": "GUID identifier of the article",
-                          "example": "GUID-8F887103-7A62-4FA3-9AE4-BBD23310BE87"
+                          "example": "2015-12-01T00:00:00.000Z"
                         },
                         "DC.Date.Revised": {
                           "type": "string",
@@ -699,10 +682,20 @@
                           "format": "date",
                           "example": "2015-12-01T00:00:00.000Z"
                         },
-                        "DC.rights.owner": {
+                        "DC.Format": {
                           "type": "string",
-                          "description": "Owner of the copyright",
-                          "example": "(C) Copyright 2022"
+                          "description": "Format of the article (e.g. XHTML)",
+                          "example": "XHTML"
+                        },
+                        "DC.Identifier": {
+                          "type": "string",
+                          "description": "GUID identifier of the article",
+                          "example": "GUID-8F887103-7A62-4FA3-9AE4-BBD23310BE87"
+                        },
+                        "DC.Language": {
+                          "type": "string",
+                          "description": "Language of the article",
+                          "example": "en"
                         },
                         "DC.Subject": {
                           "type": "string",
@@ -713,6 +706,166 @@
                           "type": "string",
                           "description": "Keywords related to the article",
                           "example": "Entrees, Vegetarian"
+                        },
+                        "DC.Relation": {
+                          "type": "string",
+                          "example": "https://apis.ebsco.com/medsapi-consumer-health/v1/content/articles/T1643473858707",
+                          "description": "Related article"
+                        },
+                        "ageGroup": {
+                          "type": "string",
+                          "example": "Adult,Middle Age",
+                          "description": "Applicable ages"
+                        },
+                        "author": {
+                          "type": "string",
+                          "example": "Calvagna M",
+                          "description": "Author of the article"
+                        },
+                        "category": {
+                          "type": "string",
+                          "example": "Allergies",
+                          "description": "Category"
+                        },
+                        "chunkId": {
+                          "type": "string",
+                          "example": "21170",
+                          "description": "Chunk ID"
+                        },
+                        "editor": {
+                          "type": "string",
+                          "example": "Woods M",
+                          "description": "Editor of the article"
+                        },
+                        "publisherPlace": {
+                          "type": "string",
+                          "example": "Ipswich, Massachusetts",
+                          "description": "Indicates where the publisher"
+                        },
+                        "age": {
+                          "type": "string",
+                          "enum": [
+                            "Adult",
+                            "Aged",
+                            "Middle Aged",
+                            "Aged",
+                            "70 and Older"
+                          ],
+                          "example": "Adult",
+                          "description": "Age rangearticle is applicable to"
+                        },
+                        "gender": {
+                          "type": "array",
+                          "enum": [
+                            "male",
+                            "female"
+                          ],
+                          "description": "Gender the article is applicable to",
+                          "items": {
+                            "example": "female",
+                            "type": "string"
+                          }
+                        },
+                        "alternateTitle": {
+                          "type": "array",
+                          "description": "Alternate Title",
+                          "items": {
+                            "type": "string",
+                            "example": "Multiple Sclerosis & Relationships"
+                          }
+                        },
+                        "subject": {
+                          "description": "Subject Heading Major",
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "Multiple Sclerosis--Psychosocial Factors"
+                          }
+                        },
+                        "subject.minor": {
+                          "type": "string",
+                          "example": "Aged, 80 and Ove",
+                          "description": "Subject heading minor"
+                        },
+                        "specificInterest": {
+                          "type": "string",
+                          "example": "Consumer Health",
+                          "description": "Specific Interest & Current Awareness"
+                        },
+                        "medicalCodes.ICD-10-CM": {
+                          "type": "string",
+                          "example": "G35|Multiple sclerosis",
+                          "description": "ICD-10-CM"
+                        },
+                        "medicalCodes.ICD-10-PCS": {
+                          "type": "array",
+                          "example": "102",
+                          "description": "ICD-10-PCS",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "medicalCodes.ICD-9-CM-D": {
+                          "type": "string",
+                          "example": "340|Multiple sclerosis",
+                          "description": "ICD-9-CM Diagnostic"
+                        },
+                        "medicalCodes.ICD-9-CM-P": {
+                          "type": "array",
+                          "description": "ICD-9-CM Procedure",
+                          "items": {
+                            "type": "string",
+                            "example": "639"
+                          }
+                        },
+                        "medicalCodes.NDC": {
+                          "type": "array",
+                          "description": "NDC (National Drug Code Directory)",
+                          "items": {
+                            "type": "string",
+                            "example": "13533060320|Antithrombin III, Human 50 UNT/ML Injectable Solution"
+                          }
+                        },
+                        "medicalCodes.RxNorm": {
+                          "type": "array",
+                          "description": "RxNorm",
+                          "items": {
+                            "type": "string",
+                            "example": "1009|Antithrombin III"
+                          }
+                        },
+                        "medicalCodes.SNOMED": {
+                          "type": "string",
+                          "example": "15770003|Acute cholestatic jaundice syndrome",
+                          "description": "SNOMED"
+                        },
+                        "medicalCodes.LOINC": {
+                          "type": "array",
+                          "description": "LOINC",
+                          "items": {
+                            "type": "string",
+                            "example": "59205-5|Gamma tocopherol Ser/Plas SCnc Pt Qn"
+                          }
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "Relationships & MS",
+                          "description": "Title"
+                        },
+                        "pubDate": {
+                          "type": "string",
+                          "example": "2017 Jan 6",
+                          "description": "Publication Date"
+                        },
+                        "created": {
+                          "type": "string",
+                          "example": "20110429",
+                          "description": "Entry Date"
+                        },
+                        "revised": {
+                          "type": "string",
+                          "example": "20171013",
+                          "description": "Revision Date"
                         }
                       }
                     },
@@ -876,6 +1029,11 @@
                                       "description": "Host for the media",
                                       "example": "cloudinary"
                                     },
+                                    "publicId": {
+                                      "description": "Media host",
+                                      "example": "EBSCOHealth/CCMS/Dynamed/images/i1616936170274",
+                                      "type": "string"
+                                    },
                                     "description": {
                                       "type": "string",
                                       "description": "Summary of the media content",
@@ -932,15 +1090,99 @@
                           "items": {
                             "type": "object",
                             "properties": {
-                              "contributorType": {
+                              "reviewers": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "example": "T123456",
+                                      "description": "The article id"
+                                    },
+                                    "chunkId": {
+                                      "type": "string",
+                                      "example": "21170",
+                                      "description": "The article chunkId"
+                                    },
+                                    "reviewer": {
+                                      "type": "string",
+                                      "example": "Nicole S. Smith, PA",
+                                      "description": "Clinician name"
+                                    },
+                                    "lastName": {
+                                      "type": "string",
+                                      "example": "SMITH",
+                                      "description": "Clinician's last name in all caps"
+                                    },
+                                    "organization": {
+                                      "type": "string",
+                                      "example": "EBSCO Medical Review Board",
+                                      "description": "Organization name"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "pubFamily": {
+                          "type": "string",
+                          "example": "patientinformation",
+                          "description": "Publication family"
+                        },
+                        "navigationGroup": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
                                 "type": "string",
-                                "description": "Type of contributor, e.g. reviewer",
-                                "example": "reviewers"
+                                "example": "T123456",
+                                "description": "Id number"
                               },
-                              "clinician": {
+                              "title": {
                                 "type": "string",
-                                "description": "Clinician name",
-                                "example": "Nicole S. Smith, PA"
+                                "example": "Main Page",
+                                "description": "Title of the link"
+                              },
+                              "chunkId": {
+                                "type": "string",
+                                "example": "103020",
+                                "description": "Chunk id of the link"
+                              }
+                            }
+                          }
+                        },
+                        "productionInformation": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "an": {
+                                "type": "string",
+                                "example": "2009858136",
+                                "description": "AN number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "example": "Shingles",
+                                "description": "Product specific title"
+                              },
+                              "publisher": {
+                                "type": "string",
+                                "example": "Patient Education Reference Center, EBSCO Publishing",
+                                "description": "Publisher"
+                              },
+                              "publicationType": {
+                                "type": "string",
+                                "example": "patient education, lifestyle sheet",
+                                "description": "Publication type"
+                              },
+                              "product": {
+                                "type": "string",
+                                "example": "perc",
+                                "description": "Product the article belongs to"
                               }
                             }
                           }
@@ -960,51 +1202,35 @@
           },
           "400": {
             "description": "Bad Request - Required property is missing or contains an illegal value",
-            "content": {
-              
-            }
+            "content": {}
           },
           "401": {
             "description": "Unauthorized - This request requires authentication and none was provided.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "403": {
             "description": "Forbidden - The authentication credentials do not have access to this resource.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "404": {
             "description": "Not Found - The server was unable to find a resource matching this request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "405": {
             "description": "Method Not Allowed - The server has not implemented the requested HTTP method.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "406": {
             "description": "Not Acceptable - The server cannot return the requested media type.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "415": {
             "description": "Unsupported Media Type - The server cannot understand the media type in this request.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "429": {
             "description": "Too Many Requests - The client has sent too many requests within the given time.",
-            "content": {
-              
-            }
+            "content": {}
           },
           "500": {
             "description": "Internal Server Error - There was an unexpected error with the server\"",
@@ -1035,11 +1261,186 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
+      }
+    },
+    "/content/articles": {
+      "get": {
+        "tags": [
+          "Consumer Health"
+        ],
+        "summary": "GET a list of articles and metadata that have been updated",
+        "description": "Return list of updated articles within a given range",
+        "operationId": "get-v1-products-product-content-articles-updates",
+        "parameters": [
+          {
+            "name": "updatedSince",
+            "in": "query",
+            "description": "Return article metadata starting at this date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updatedBefore",
+            "in": "query",
+            "description": "Return article metdata ending at this date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Next page of items to return",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "hlType",
+            "description": "Health Library type"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NUP",
+                "PERC",
+                "HLT",
+                "HLS",
+                "NURC",
+                "RRC",
+                "SPANISH",
+                "SWRC",
+                "CHC"
+              ]
+            },
+            "in": "query",
+            "name": "chProduct",
+            "description": "Consumer Health Product"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "totalItems",
+                        "links"
+                      ],
+                      "properties": {
+                        "totalItems": {
+                          "type": "integer",
+                          "description": "Total number of items  that fall within the requested dates.",
+                          "example": 523
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total number of pages that fall within the requested dates.",
+                          "example": "5"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "Page of items that are returned in this response.",
+                          "example": "3"
+                        },
+                        "links": {
+                          "minItems": 1,
+                          "type": "array",
+                          "description": "HATEOAS links for self, previous, next, first, last as available.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "description": "Relationship of the link and the current page of results.",
+                                "example": "self"
+                              },
+                              "href": {
+                                "type": "string",
+                                "description": "Hypertext REFerence link.",
+                                "example": "https://apis.ebsco.com/medsapi-consumer-health/v1/articles"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "A list of all items matching the search request.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID of the article.",
+                            "example": "T913716"
+                          },
+                          "slug": {
+                            "type": "string",
+                            "example": "/drug-monograph/calcium-acetate",
+                            "description": "Slug for the article"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2021-11-19T11:39:10.637Z",
+                            "description": "When the article was created"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-08-02T02:44:18.746Z",
+                            "description": "When the article was last modified"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Calcium Acetate",
+                            "description": "Title of the article"
+                          },
+                          "hlType": {
+                            "type": "string",
+                            "example": "ConditionInDepth",
+                            "description": "Health Library type (if Consumer Health)"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "links"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "x-internal": false
       }
     }
   },
