@@ -1,0 +1,1152 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MedsAPI NAH Reference Center",
+    "contact": {
+      "name": "EBSCO Information Services",
+      "url": "https://connect.ebsco.com/"
+    },
+    "version": "1.0.0",
+    "description": ""
+  },
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "MedsAPI Token API"
+    },
+    {
+      "name": "Reference Center",
+      "description": "Reference Center Content Endpoints"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://apis.ebsco.com/medsapi-auth/v1",
+      "description": "MedsAPI token endpoint"
+    },
+    {
+      "url": "https://apis.ebsco.com/medsapi-ref-ctr"
+    }
+  ],
+  "paths": {
+    "/token": {
+      "post": {
+        "summary": "Get an authorization token",
+        "tags": [
+          "Authorization"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token_expires_in": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "The number of seconds remaining before the refresh token will expire.  The lifespan of refresh tokens is usually larger than Access tokens. The exact duration depends on the type of Refresh Tokens issued. The different types explained below in the document."
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "reference-center",
+                      "description": "The type of token issued"
+                    },
+                    "organization_name": {
+                      "type": "string",
+                      "example": "ebscois",
+                      "description": "The issuer of the token"
+                    },
+                    "developer.email": {
+                      "type": "string",
+                      "example": "msmith@mycompany.com",
+                      "description": "Name of the owener of the token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "BearerToken",
+                      "description": "Always set to be a bearer token"
+                    },
+                    "issued_at": {
+                      "type": "string",
+                      "example": "1593011837412",
+                      "description": "Epoch time when the token was issued"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "example": "{client_id}",
+                      "description": "Client Id that the token can be used by"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "{actual bearer token to use}",
+                      "description": "Bearer token"
+                    },
+                    "application_name": {
+                      "type": "string",
+                      "example": "{id}",
+                      "description": "Id of the application that is registered for this token"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "admin:rw",
+                      "description": "Authorization scope"
+                    },
+                    "expires_in": {
+                      "type": "string",
+                      "example": "14399",
+                      "description": "Seconds until this token has expired"
+                    },
+                    "refresh_count": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "When this token can be refreshed automatically"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "approved",
+                      "description": "Indicates that the token has been approved"
+                    }
+                  },
+                  "required": [
+                    "refresh_token_expires_in",
+                    "product",
+                    "organization_name",
+                    "developer.email",
+                    "token_type",
+                    "issued_at",
+                    "client_id",
+                    "access_token",
+                    "application_name",
+                    "scope",
+                    "expires_in",
+                    "refresh_count",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error-Response"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials",
+                    "description": "Must be set to client_credentials"
+                  },
+                  "product": {
+                    "type": "string",
+                    "example": "reference-center",
+                    "description": "Must be set to reference-center"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "example": "{client_id}",
+                    "description": "The client_id to use will be provided by EBSCO"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "example": "{client secret}",
+                    "description": "This will be provided by EBSCO"
+                  }
+                }
+              },
+              "examples": {
+                "Example Body": {
+                  "value": {
+                    "grant_type": "client_credentials",
+                    "product": "reference-center",
+                    "client_id": "{client id}",
+                    "client_secret": "{client secret}"
+                  }
+                }
+              }
+            },
+            "application/javascript": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": "{\n  \"grant_type\": \"client_credentials\",\n  \"product\": \"reference-center\",\n  \"client_id\": \"client_id\",\n  \"client_secret\": \"client secret\"\n}\n"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": ""
+          }
+        ],
+        "description": "The authentication endpoint for getting a token, used in all other NAH Reference Center APIs."
+      }
+    },
+    "/v1/content/articles/{id}": {
+      "get": {
+        "summary": "Get a Reference Center article",
+        "description": "Get a Reference center article by the article Id",
+        "tags": [
+          "Reference Center"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secure",
+            "in": "query",
+            "description": "Return secure (https) media links",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "imageSize",
+            "in": "query",
+            "description": "Size(s) of images to return in image links",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "posterSize",
+            "in": "query",
+            "description": "Size(s) of posters to return in video links",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": [
+                "small",
+                "medium",
+                "large",
+                "full"
+              ]
+            }
+          },
+          {
+            "name": "mediaLinksFormat",
+            "in": "query",
+            "description": "If server, return a secure link to the image or video in its original size",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": [
+                "browser",
+                "server"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Required property is missing or contains an illegal value",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided.",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource.",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request.",
+            "content": {}
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method.",
+            "content": {}
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type.",
+            "content": {}
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request.",
+            "content": {}
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time.",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "message",
+                    "name"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Standardized label for this error",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Details about this error",
+                      "example": "Error description."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    },
+    "/v1/content/articles": {
+      "get": {
+        "tags": [
+          "Reference Center"
+        ],
+        "summary": "GET a list of articles and metadata that have been updated",
+        "description": "Return list of updated articles within a given range",
+        "operationId": "get-v1-products-product-content-articles-updates",
+        "parameters": [
+          {
+            "name": "updatedSince",
+            "in": "query",
+            "description": "Return article metadata starting at this date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updatedBefore",
+            "in": "query",
+            "description": "Return article metdata ending at this date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Next page of items to return",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_metadata": {
+                      "type": "object",
+                      "required": [
+                        "totalItems",
+                        "links"
+                      ],
+                      "properties": {
+                        "totalItems": {
+                          "type": "integer",
+                          "description": "Total number of items  that fall within the requested dates.",
+                          "example": 523
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total number of pages that fall within the requested dates.",
+                          "example": "5"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "Page of items that are returned in this response.",
+                          "example": "3"
+                        },
+                        "links": {
+                          "minItems": 1,
+                          "type": "array",
+                          "description": "HATEOAS links for self, previous, next, first, last as available.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "rel": {
+                                "type": "string",
+                                "description": "Relationship of the link and the current page of results.",
+                                "example": "self"
+                              },
+                              "href": {
+                                "type": "string",
+                                "description": "Hypertext REFerence link.",
+                                "example": "https://apis.ebsco.com/medsapi-ref-ctr/v1/articles"
+                              }
+                            },
+                            "required": [
+                              "rel",
+                              "href"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "A list of all items matching the search request.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID of the article.",
+                            "example": "t904163"
+                          },
+                          "slug": {
+                            "type": "string",
+                            "example": "/drug-monograph/calcium-acetate",
+                            "description": "Slug for the article"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-11-19T11:39:10.637Z",
+                            "description": "When the article was created"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2024-04-25T14:52:33.116Z",
+                            "description": "When the article was last modified"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Calcium Acetate",
+                            "description": "Title of the article"
+                          },
+                          "hlType": {
+                            "type": "string",
+                            "example": "SkillCompetencyChecklist",
+                            "description": "Disseminated Intravascular Coagulation (DIC): Managing in Patients with Cancer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "links"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "_metadata"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ],
+        "x-internal": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "t700110"
+          },
+          "title": {
+            "type": "string",
+            "example": "Dental Malpractice: Periodontal surgery on two upper right molars: failure to diagnose and treat subsequent infection: resultant restricted jaw opening: $93,500 verdict less 40% for comparative negligence"
+          },
+          "links": {
+            "type": "array",
+            "description": "HATEOAS links.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rel": {
+                  "type": "string",
+                  "description": "Relationship of the link and the article",
+                  "example": "self"
+                },
+                "href": {
+                  "type": "string",
+                  "description": "Hypertext Reference link to this article.",
+                  "example": "https://apis.ebsco.com/medsapi-ref-ctr/v1/content/articles/T12345"
+                }
+              }
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "toc": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/toc"
+            }
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/sections"
+            }
+          },
+          "ancillary": {
+            "$ref": "#/components/schemas/Ancillary"
+          }
+        }
+      },
+      "Metadata": {
+        "type": "object",
+        "properties": {
+          "dbAn": {
+            "type": "string",
+            "example": "2009534613"
+          },
+          "gender": {
+            "type": "array",
+            "example": [
+              "Male"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string",
+            "example": "Renee Harris v Big Valley Dental Center and Henry J. Lerian, DDS"
+          },
+          "created": {
+            "type": "string",
+            "example": "2023-08-02T02:44:18.746Z"
+          },
+          "revised": {
+            "type": "string",
+            "example": "2023-08-02T02:44:18.746Z"
+          },
+          "visible": {
+            "example": "True",
+            "type": "string"
+          },
+          "DC.Format": {
+            "type": "string",
+            "example": "XHTML"
+          },
+          "copyright": {
+            "type": "string",
+            "example": "(C) Copyright 2022"
+          },
+          "keyTerms": {
+            "type": "array",
+            "example": [
+              "Child Laryngopharynx Nasopharynx"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "legalCase": {
+            "type": "string",
+            "example": "NC038860, Los Angeles Superior Court, Norwalk, California"
+          },
+          "DC.Language": {
+            "type": "string",
+            "example": "en"
+          },
+          "description": {
+            "type": "string",
+            "example": "Dental Malpractice: Periodontal surgery on two upper right molars: failure to diagnose and treat subsequent infection: resultant restricted jaw opening: $93,500 verdict less 40% for comparative negligence"
+          },
+          "standAlone": {
+            "example": [
+              "true"
+            ],
+            "type": "string"
+          },
+          "docRevised": {
+            "type": "string",
+            "example": "2017-05-26T00:00:00.000Z"
+          },
+          "patientAgeMax": {
+            "example": "120",
+            "type": "string"
+          },
+          "patientAgeMin": {
+            "example": "0",
+            "type": "string"
+          },
+          "imageCaption": {
+            "example": [
+              "Upper Airway: Adults and Younger Pediatric Patients"
+            ],
+            "type": "string"
+          },
+          "subject.major": {
+            "type": "array",
+            "example": [
+              "Failure to Diagnose/Legislation and Jurisprudence/United States"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "subject.minor": {
+            "type": "array",
+            "example": [
+              "Adult"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "publisherPlace": {
+            "example": "Ipswich, Massachusetts",
+            "type": "string"
+          },
+          "subject.filter": {
+            "type": "array",
+            "example": [
+              "Dental Care"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "example": "2017-06-20T00:00:00.000Z"
+          },
+          "seeReferences": {
+            "type": "array",
+            "example": [
+              "Managing in Patients with Cancer: Disseminated Intravascular Coagulation (DIC)"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "alternateTerms": {
+            "type": "array",
+            "example": [
+              "Managing in Patients with Cancer: Disseminated Intravascular Coagulation (DIC)"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "nursingSpecialty": {
+            "type": "array",
+            "example": [
+              "Oncologic Nursing"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-9": {
+            "type": "array",
+            "example": [
+              "286.6"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.LOINC": {
+            "type": "array",
+            "example": [
+              "2106-3"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.RxNorm": {
+            "type": "array",
+            "example": [
+              "152061"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.SNOMED": {
+            "type": "array",
+            "example": [
+              "67406007"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-10-CM": {
+            "type": "array",
+            "example": [
+              "D65"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-10-CAN": {
+            "type": "array",
+            "example": [
+              "D65"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-9-CM-D": {
+            "type": "array",
+            "example": [
+              "294.9"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-9-CM-P": {
+            "type": "array",
+            "example": [
+              "39.65"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-10-CM-D": {
+            "type": "array",
+            "example": [
+              "F99"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.ICD-10-CM-P": {
+            "type": "array",
+            "example": [
+              "5A15223"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "medicalCodes.CoreCollection": {
+            "type": "array",
+            "example": [
+              "70"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "toc": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Procedure"
+          },
+          "anchor": {
+            "type": "string",
+            "example": "PROCEDURE-WRAPPER"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/children"
+            }
+          }
+        }
+      },
+      "children": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Supplies"
+          },
+          "anchor": {
+            "type": "string",
+            "example": "SUPPLIES"
+          }
+        }
+      },
+      "sections": {
+        "type": "object",
+        "properties": {
+          "anchor": {
+            "type": "string",
+            "example": "GUID-29E9C1DB-63DD-48B8-BE96-C373DDD9EBF2__SYNOPSIS_OF_FACTS"
+          },
+          "content": {
+            "type": "string",
+            "example": "<div class=\"section\"><p class=\"p\">Plaintiff, female, 38, had periodontal surgery on her two upper right molar teeth performed by Dr. Wright, periodontist. Plaintiff then had difficulty eating because she could not open her jaw which was painful. Dr. Wright prescribed penicillin and referred plaintiff to a chiropractor. This did not work, so 3 days later defendant sent her to a temporomandibular disorder dental specialist. The latter referred her to an oral surgeon who drained 40cc of pus and diagnosed supra-temporal fossa infection of the jaw with only a 5mm jaw opening.</p></div>"
+          },
+          "title": {
+            "type": "string",
+            "example": "Synopsis of Facts"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "anchor": {
+                  "type": "string",
+                  "description": "The anchor location of the subsection.",
+                  "example": "GUID-CF51EDA8-39E0-46C5-90A3-969246792E25__AMYS"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "Content for this sub-section",
+                  "example": "<html>Html content for this subsection</html>"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Title of this subsection",
+                  "example": "Details"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Ancillary": {
+        "type": "object",
+        "properties": {
+          "pubType": {
+            "type": "string",
+            "example": "LegalCase"
+          },
+          "abstract": {
+            "type": "string",
+            "example": "SYNOPSIS OF FACTS: Plaintiff, female, 38, had periodontal surgery on her two upper right molar teeth performed by Dr. Wright, periodontist. Plaintiff then had difficulty eating because she could not open her jaw which was painful. Dr. Wright prescribed penicillin and referred plaintiff to a chiropractor. This did not work, so 3 days later defendant sent her to a temporomandibular disorder dental specialist. The latter referred her to an oral surgeon who drained 40cc of pus and diagnosed supra-temporal fossa infection of the jaw with only a 5mm jaw opening."
+          },
+          "ExtLink": {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "example": "I000001.png"
+              },
+              "type": {
+                "type": "string",
+                "example": "image"
+              },
+              "xlink": {
+                "type": "string",
+                "example": "http://www.w3.org/1999/xlink"
+              },
+              "lastModifiedDate": {
+                "type": "string",
+                "example": "2023-08-02T02:44:18.746Z"
+              }
+            }
+          },
+          "multimedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Multimedia"
+            }
+          },
+          "contributors": {
+            "$ref": "#/components/schemas/Contributors"
+          }
+        }
+      },
+      "ExtLink": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "example": "I000001.png"
+          },
+          "type": {
+            "type": "string",
+            "example": "image"
+          },
+          "xlink": {
+            "type": "string",
+            "example": "http://www.w3.org/1999/xlink"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "example": "2023-08-02T02:44:18.746Z"
+          }
+        }
+      },
+      "Multimedia": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MultimediaContent"
+            }
+          },
+          "mediaType": {
+            "type": "string",
+            "example": "video"
+          }
+        }
+      },
+      "MultimediaContent": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Units of Packed Red Blood Cells, Fresh Frozen Plasma, and Platelets"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "href": {
+                  "description": "Link to the image, video or poster for the video",
+                  "example": "https://media.ebsco.healthcare/video/authenticated/s--y2MpK4a9--/v1674665799/EBSCOHealth/CCMS/Dynamed/videos/V1674666001630.mp4",
+                  "type": "string"
+                },
+                "imageSize": {
+                  "description": "Size of the image",
+                  "example": "medium",
+                  "type": "string"
+                },
+                "posterSize": {
+                  "description": "Size of the poster for the video",
+                  "example": "small",
+                  "type": "string"
+                },
+                "rel": {
+                  "description": "Relationship of the link",
+                  "example": "external",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "copyright": {
+            "type": "string",
+            "example": "Copyright© 2014, EBSCO Information Services."
+          },
+          "mediaHost": {
+            "type": "string",
+            "example": "Cloudinary"
+          },
+          "publicId": {
+            "description": "Media host",
+            "example": "EBSCOHealth/CCMS/Dynamed/images/i1616936170274",
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "example": "Procedures / Units of packed red blood cells (RBCs), fresh frozen plasma (FFP), and platelets."
+          }
+        }
+      },
+      "Contributors": {
+        "type": "object",
+        "properties": {
+          "authors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Author"
+            }
+          },
+          "editors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Editor"
+            }
+          },
+          "reviewers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reviewer"
+            }
+          }
+        }
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "degrees": {
+            "type": "string",
+            "example": "Esq."
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Levy"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "D"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Cinahl Information Systems, Glendale, CA"
+          }
+        }
+      },
+      "Editor": {
+        "type": "object",
+        "properties": {
+          "degrees": {
+            "type": "string",
+            "example": "RN, PhD, FAAN"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Pravikoff"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Diane"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Cinahl Information Systems, Glendale, CA"
+          }
+        }
+      },
+      "Reviewer": {
+        "type": "object",
+        "properties": {
+          "degrees": {
+            "type": "string",
+            "example": "RN, MSN, CCRN"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Walsh"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Kathleen"
+          }
+        }
+      },
+      "Error-Response": {
+        "title": "Error-Response",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Standardized reason phrase for this status code",
+            "example": "Error Name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Details about the error",
+            "example": "Error Description"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
