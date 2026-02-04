@@ -1,0 +1,1344 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Product Content",
+    "description": "MedsAPI Product Content provides endpoints to retrieve current and accurate evidence-based content. The documentation on this site covers all supported functionality of the MedsAPI suite of APIs. Any fields or parameters not represented by the documentation are unsupported and subject to change. Additional optional query parameters and fields in the response could be added in the future as a non breaking change. Any other change that could break the contract would be considered in a future version.",
+    "contact": {
+      "name": "EBSCO Information Services",
+      "url": "https://connect.ebsco.com/"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Token",
+      "description": "Product Content Token API"
+    },
+    {
+      "name": "Articles",
+      "description": "Product Content Articles API"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://apis.ebsco.com/medsapi-auth/v1",
+      "description": "MedsAPI token endpoint"
+    },
+    {
+      "url": "https://apis.ebsco.com/medsapi-product-content"
+    }
+  ],
+  "paths": {
+    "/token": {
+      "post": {
+        "summary": "Get an authorization token",
+        "tags": [
+          "Token"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token_expires_in": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "The number of seconds remaining before the refresh token will expire.  The lifespan of refresh tokens is usually larger than Access tokens. The exact duration depends on the type of Refresh Tokens issued. The different types explained below in the document."
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "product-content",
+                      "description": "The type of token issued"
+                    },
+                    "organization_name": {
+                      "type": "string",
+                      "example": "ebscois",
+                      "description": "The issuer of the token"
+                    },
+                    "developer.email": {
+                      "type": "string",
+                      "example": "msmith@mycompany.com",
+                      "description": "Name of the owener of the token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "BearerToken",
+                      "description": "Always set to be a bearer token"
+                    },
+                    "issued_at": {
+                      "type": "string",
+                      "example": "1593011837412",
+                      "description": "Epoch time when the token was issued"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "example": "{client_id}",
+                      "description": "Client Id that the token can be used by"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "{actual bearer token to use}",
+                      "description": "Bearer token"
+                    },
+                    "application_name": {
+                      "type": "string",
+                      "example": "{id}",
+                      "description": "Id of the application that is registered for this token"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "read:selected-content",
+                      "description": "Authorization scope"
+                    },
+                    "expires_in": {
+                      "type": "string",
+                      "example": "14399",
+                      "description": "Seconds until this token has expired"
+                    },
+                    "refresh_count": {
+                      "type": "string",
+                      "example": "0",
+                      "description": "When this token can be refreshed automatically"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "approved",
+                      "description": "Indicates that the token has been approved"
+                    }
+                  },
+                  "required": [
+                    "refresh_token_expires_in",
+                    "product",
+                    "organization_name",
+                    "developer.email",
+                    "token_type",
+                    "issued_at",
+                    "client_id",
+                    "access_token",
+                    "application_name",
+                    "scope",
+                    "expires_in",
+                    "refresh_count",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none was provided."
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access to this resource."
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching this request."
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested HTTP method."
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media type."
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media type in this request."
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within the given time."
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials",
+                    "description": "Must be set to client_credentials"
+                  },
+                  "product": {
+                    "type": "string",
+                    "example": "product-content",
+                    "description": "Requesting an article from all MedsAPI content"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "example": "{client_id}",
+                    "description": "The client_id to use will be provided by EBSCO"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "example": "{client secret}",
+                    "description": "This will be provided by EBSCO"
+                  }
+                }
+              },
+              "examples": {
+                "Example Body": {
+                  "value": {
+                    "grant_type": "client_credentials",
+                    "product": "product-content",
+                    "client_id": "{client id}",
+                    "client_secret": "{client secret}"
+                  }
+                }
+              }
+            },
+            "application/javascript": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": "{\n  \"grant_type\": \"client_credentials\",\n  \"product\": \"product-content\",\n  \"client_id\": \"client_id\",\n  \"client_secret\": \"client secret\"\n}\n"
+        },
+        "parameters": [],
+        "description": "The authentication endpoint for getting a token, used in all other Product Content APIs."
+      }
+    },
+    "/v1/content/articles/{articleId}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "operationId": "get-article",
+        "summary": "Get an article by ID",
+        "description": "Additional Documentation [/articles/{articleId}](https://developer.ebsco.com/medical-point-care-apis/product-content/docs). See also the documentation for the /articles/{articleId} endpoint for each MedsAPI product for more specific information on the fields.",
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "Article ID (e.g., `dm:t116814`).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MedsAPI DynaMed Article",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicContentProductArticleById"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - This request requires authentication and none\nwas provided.",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found - The server was unable to find a resource matching\nthis request.",
+            "content": {}
+          },
+          "405": {
+            "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
+            "content": {}
+          },
+          "406": {
+            "description": "Not Acceptable - The server cannot return the requested media\ntype.",
+            "content": {}
+          },
+          "415": {
+            "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
+            "content": {}
+          },
+          "429": {
+            "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error - There was an unexpected error with\nthe server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "articleId",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/v1/content/articles": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "GET a list of articles and metadata that have been updated",
+        "description": "Return list of updated articles within a given range",
+        "operationId": "get-v1-products-product-articles-updates",
+        "parameters": [
+          {
+            "name": "updatedSince",
+            "in": "query",
+            "description": "Return article metadata starting at this UTC date. Must be formatted in ISO_8601 standards: YYYY-MM-DD time is optional",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updatedBefore",
+            "in": "query",
+            "description": "Return article metdata ending at this UTC date. Must be formatted in ISO_8601 standards: YYYY-MM-DD time is optional",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Next page of items to return",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticlesUpdateMeta"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerToken": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PublicContentProductArticleById": {
+        "type": "object",
+        "title": "Article-Response-Common",
+        "properties": {
+          "id": {
+            "description": "Article ID",
+            "example": "dm:t115279",
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the Article",
+            "example": "Acne",
+            "type": "string"
+          },
+          "slug": {
+            "description": "Slug ID (not available in CH)",
+            "example": "/condition/acne",
+            "type": "string"
+          },
+          "links": {
+            "description": "HATEAOS links",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "href": {
+                  "description": "HTML reference link",
+                  "example": "https://apis.ebsco.com/medsapi-product-content/v1/content/articles/t12345",
+                  "type": "string"
+                },
+                "rel": {
+                  "description": "Relationship of the link",
+                  "example": "self",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "metadata": {
+            "description": "Information available about the article (not all fields shown; see the product /articles/{articleId} for more fields to expect for each product)",
+            "type": "object",
+            "properties": {
+              "DC.Coverage": {
+                "description": "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant.",
+                "type": "array",
+                "items": {
+                  "example": "PediatricsDermatologic disorders",
+                  "type": "string"
+                }
+              },
+              "DC.Date.Created": {
+                "description": "Date the resource was created.",
+                "example": "2017-06-27T00:00:00.00z",
+                "format": "date",
+                "type": "string"
+              },
+              "DC.Date.Revised": {
+                "description": "Date when the article was last revised.",
+                "example": "2019-07-29T00:00:00.00z",
+                "format": "date",
+                "type": "string"
+              },
+              "DC.Format": {
+                "description": "The file format, physical medium, or dimensions of the resource.",
+                "example": "XHTML",
+                "type": "string"
+              },
+              "DC.Identifier": {
+                "description": "The unambiguous reference to the resource within a given context.",
+                "example": "GUID-944EB57C-4546-4A61-924E-713D3A3DB473",
+                "type": "string"
+              },
+              "DC.Language": {
+                "description": "The language of the resource.",
+                "example": "en",
+                "type": "string"
+              },
+              "DC.Publisher": {
+                "description": "The organization responsible for making the resource available.",
+                "example": "EBSCO Publishing",
+                "type": "string"
+              },
+              "DC.Title": {
+                "description": "The name given to the resource.",
+                "example": "Acne",
+                "type": "string"
+              },
+              "DC.Type": {
+                "description": "The nature or genre of the resource.",
+                "example": "topic",
+                "type": "string"
+              },
+              "DC.rights.owner": {
+                "description": "Name of the holder of the copyright.",
+                "example": "(C) Copyright 2023",
+                "type": "string"
+              },
+              "abstract": {
+                "description": "The summary of the resource.",
+                "example": "Acne is a chronic skin condition characterized by noninflammatory open and/or closed comedones and inflammatory lesions.",
+                "type": "string"
+              },
+              "copyright": {
+                "description": "Copyright of the content.",
+                "example": "(C) Copyright 2023",
+                "type": "string"
+              },
+              "description": {
+                "description": "An account of the resource.",
+                "example": "Acne is a chronic skin condition characterized by noninflammatory open and/or closed comedones and inflammatory lesions.",
+                "type": "string"
+              }
+            }
+          },
+          "toc": {
+            "description": "Table of Contents",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "anchor": {
+                  "description": "Anchor location  in the article",
+                  "example": "GUID-3E2BB624-A1C1-4C77-BF7A-19789BD87180",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "Zero or more child sections",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "anchor": {
+                        "description": "Anchor location inthe article",
+                        "example": "OVERVIEW_BACKGROUND",
+                        "type": "string"
+                      },
+                      "title": {
+                        "description": "Title of the child section",
+                        "example": "Background",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "title": {
+                  "description": "Title ofthe section",
+                  "example": "Overview and Recommendations",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "sections": {
+            "description": "HTML Content",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "anchor": {
+                  "description": "Anchor for this content",
+                  "example": "GUID-3E2BB624-A1C1-4C77-BF7A-19789BD87180",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "Child section(s), which can also have children.",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "anchor": {
+                        "description": "Anchor for this content",
+                        "example": "OVERVIEW_BACKGROUND",
+                        "type": "string"
+                      },
+                      "content": {
+                        "description": "Content for this child section",
+                        "example": "<html>...</html>",
+                        "type": "string"
+                      },
+                      "title": {
+                        "description": "Title of the subsection",
+                        "example": "Background",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "content",
+                      "title"
+                    ]
+                  }
+                },
+                "content": {
+                  "description": "Optional content for this section",
+                  "example": "<html>...</html>",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "Title of the section",
+                  "example": "Overview and Recommendations",
+                  "type": "string"
+                },
+                "references": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "example": "References",
+                        "description": "References referred to in this article"
+                      },
+                      "anchor": {
+                        "type": "string",
+                        "example": "REFERENCES",
+                        "description": "anchor location"
+                      },
+                      "content": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "GUID-77FE74DB-FA1A-40B5-9DFF-866561FA6CE3__P1",
+                              "description": "Guid identifier for the refrence"
+                            },
+                            "data": {
+                              "type": "string",
+                              "example": "Tartaglia NR . A review of trisomy X. Orphanet J Rare Dis. 2010;5:8.",
+                              "description": "The referred reference"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "title"
+              ]
+            }
+          },
+          "tableContent": {
+            "description": "A list of HTML table contents, referenced by their anchor.",
+            "type": "object"
+          },
+          "ancillary": {
+            "type": "object",
+            "properties": {
+              "abstract": {
+                "type": "string",
+                "description": "An abstract may be found in NAH Reference Center articles",
+                "example": "SYNOPSIS OF FACTS: Plaintiff, female, 38, had periodontal surgery on her two upper right molar teeth performed by Dr. Wright, periodontist. Plaintiff then had difficulty eating because she could not open her jaw which was painful. Dr. Wright prescribed penicillin and referred plaintiff to a chiropractor. This did not work, so 3 days later defendant sent her to a temporomandibular disorder dental specialist. The latter referred her to an oral surgeon who drained 40cc of pus and diagnosed supra-temporal fossa infection of the jaw with only a 5mm jaw opening."
+              },
+              "checklist": {
+                "type": "array",
+                "description": "A checklist may be found in Dynamic Health articles",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "anchor": {
+                      "type": "string",
+                      "example": "GUID-0F92EBD8-09F3-4CF5-BBC3-3722E5F6E038__GUID-77FE98B5-96E3-49F2-B0BC-AD01B69A6BBE"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "<html></html>"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Pre-Procedure Steps"
+                    }
+                  }
+                }
+              },
+              "consensusDetails": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "anchor": {
+                      "description": "Anchor location",
+                      "example": "GUID-342C5BB2-451B-44EA-977C-EC127205856A__CONSENSUSDETAIL",
+                      "type": "string"
+                    },
+                    "consensusNote": {
+                      "description": "Consensus note",
+                      "example": "<div>Content referenced with...</div>",
+                      "type": "string"
+                    },
+                    "consensusPanel": {
+                      "description": "HTML content indicating the panel.",
+                      "example": "<div>Panel participants:</div>",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "contributors": {
+                "type": "object",
+                "properties": {
+                  "revisedDate": {
+                    "type": "string",
+                    "example": "2018-07-17",
+                    "description": "Last editorial revision"
+                  },
+                  "acpContributor": {
+                    "type": "string",
+                    "example": "American College of Physicians",
+                    "description": "Contributor organization"
+                  },
+                  "authors": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contributor"
+                    }
+                  },
+                  "editors": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contributor"
+                    }
+                  },
+                  "reviewers": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contributor"
+                    }
+                  }
+                }
+              },
+              "description": {
+                "description": "Summary of the article",
+                "example": "Acne is a chronic skin condition characterized by noninflammatory open and/or closed comedones and inflammatory lesions.",
+                "type": "string"
+              },
+              "extLink": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string",
+                    "example": "I000001.png"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "image"
+                  },
+                  "xlink": {
+                    "type": "string",
+                    "example": "http://www.w3.org/1999/xlink"
+                  },
+                  "lastModifiedDate": {
+                    "type": "string",
+                    "example": "2023-08-02T02:44:18.746Z"
+                  }
+                }
+              },
+              "glossary": {
+                "type": "object",
+                "description": "A glossary may be found in Dynamic Health articles",
+                "properties": {
+                  "anchor": {
+                    "type": "string",
+                    "example": "GUID-0FD93E05-5A58-460E-A875-DECF39E9C5D2"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "Glossary"
+                  },
+                  "sections": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "anchor": {
+                          "type": "string",
+                          "example": "GUID-DC4C8487-B3A7-429B-ADF2-5FDE8D98C96A"
+                        },
+                        "content": {
+                          "type": "string",
+                          "example": "<html></html>"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "peristalsis"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "headerMetadata": {
+                "type": "object",
+                "properties": {
+                  "boxedWarnings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "heading": {
+                          "example": "Intravenous (Powder for Solution)",
+                          "type": "string"
+                        },
+                        "warnings": {
+                          "type": "array",
+                          "items": {
+                            "example": "Hypersensitivity Reactions Including Anaphylaxis",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "classes": {
+                    "type": "array",
+                    "items": {
+                      "example": "Enzyme",
+                      "type": "string"
+                    }
+                  },
+                  "routes": {
+                    "type": "array",
+                    "items": {
+                      "example": "intravenous",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "multimedia": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "i1616936170274",
+                            "description": "Media Identifier"
+                          },
+                          "title": {
+                            "description": "Title of the media",
+                            "example": "Birt-Hogg-Dubé syndrome. ",
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string",
+                            "example": "jpg",
+                            "description": "Original format of the media"
+                          },
+                          "copyright": {
+                            "description": "Copyright for the media",
+                            "example": "Copyright 2023, Luke Danaher. Video courtesy of Luke Danaher and Radiopaedia.org. Used under licence.",
+                            "type": "string"
+                          },
+                          "description": {
+                            "description": "TBD",
+                            "example": "Diagnostic Approach to Cystic Lung Disease",
+                            "type": "string"
+                          },
+                          "mediaProvider": {
+                            "type": "string",
+                            "example": "Science Photo Library",
+                            "description": "Source of the media"
+                          },
+                          "mediaHost": {
+                            "description": "Media host",
+                            "example": "cloudinary",
+                            "type": "string"
+                          },
+                          "publicId": {
+                            "description": "Media host",
+                            "example": "EBSCOHealth/CCMS/Dynamed/videos/V1674666001630",
+                            "type": "string"
+                          },
+                          "links": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "href": {
+                                  "description": "Link to the image, video or poster for the video",
+                                  "example": "https://media.ebsco.healthcare/video/authenticated/s--y2MpK4a9--/v1674665799/EBSCOHealth/CCMS/Dynamed/videos/V1674666001630.mp4",
+                                  "type": "string"
+                                },
+                                "imageSize": {
+                                  "description": "Size of the image",
+                                  "example": "medium",
+                                  "type": "string"
+                                },
+                                "posterSize": {
+                                  "description": "Size of the poster for the video",
+                                  "example": "small",
+                                  "type": "string"
+                                },
+                                "rel": {
+                                  "description": "Relationship of the link",
+                                  "example": "external",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "mediaType": {
+                      "description": "Media type",
+                      "enum": [
+                        "video",
+                        "image",
+                        "algorithm"
+                      ],
+                      "example": "video",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "navigationGroup": {
+                "type": "array",
+                "description": "A navigationGroup may be found in Consumer Health articles",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "T123456",
+                      "description": "Id number"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Main Page",
+                      "description": "Title of the link"
+                    },
+                    "chunkId": {
+                      "type": "string",
+                      "example": "103020",
+                      "description": "Chunk id of the link"
+                    }
+                  }
+                }
+              },
+              "productionInformation": {
+                "type": "array",
+                "description": "A productionInformation may be found in Consumer Health articles",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "an": {
+                      "type": "string",
+                      "example": "2009858136",
+                      "description": "AN number"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Shingles",
+                      "description": "Product specific title"
+                    },
+                    "publisher": {
+                      "type": "string",
+                      "example": "Patient Education Reference Center, EBSCO Publishing",
+                      "description": "Publisher"
+                    },
+                    "publicationType": {
+                      "type": "string",
+                      "example": "patient education, lifestyle sheet",
+                      "description": "Publication type"
+                    },
+                    "product": {
+                      "type": "string",
+                      "example": "perc",
+                      "description": "Product the article belongs to"
+                    }
+                  }
+                }
+              },
+              "pubDate": {
+                "description": "TBD",
+                "example": "2018-06-29",
+                "format": "date",
+                "type": "string"
+              },
+              "pubType": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "Publication id",
+                    "example": "condition",
+                    "type": "string"
+                  },
+                  "title": {
+                    "description": "TBD",
+                    "example": "Skill",
+                    "type": "string"
+                  }
+                }
+              },
+              "referenceLinks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "anchor": {
+                      "description": "Anchor for this reference",
+                      "example": "GUID-C22B30D6-C077-4BDE-8547-F6C9F2DAE88A__AAD2016",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "Reference link",
+                      "example": "<li>Eichenfield DZ<div data-title=\\\"JAMA 2021\\\" data-transform=\\\"full-text-container\\\" data-value=\\\"34812859\\\"><a href=\\\"http://pubmed.ncbi.nlm.nih.gov/34812859?dopt=Abstract\\\">PubMed Abstract</a></div>.</li>",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "revisedDate": {
+                "description": "TBD",
+                "example": "2019-07-29",
+                "format": "date",
+                "type": "string"
+              },
+              "relatedLinks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "T902822"
+                },
+                "description": "Related links for the content"
+              },
+              "supplemental": {
+                "type": "object",
+                "description": "A supplemental section may be found in Dynamic Health articles",
+                "properties": {
+                  "anchor": {
+                    "type": "string",
+                    "example": "GUID-A951E562-1BBE-41CB-B43D-53D46F4FEFD7"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "Supplemental Information"
+                  },
+                  "sections": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "anchor": {
+                          "type": "string",
+                          "example": "GUID-A951E562-1BBE-41CB-B43D-53D46F4FEFD7__GUID-5A4B56A8-7993-4A5D-92F3-9F3E4602F89B"
+                        },
+                        "content": {
+                          "type": "string",
+                          "example": "<html></html>"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "Contraindications to Gait Belt Use"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "videoIds": {
+                "description": "List of video Ids in the article",
+                "type": "array",
+                "items": {
+                  "example": "V1674666001630",
+                  "type": "string"
+                }
+              },
+              "HFC": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "example": "<div>This content is supported by",
+                    "description": "The content shown in the body of the article containing a link to a dialog."
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "Hospitalist Panel",
+                    "description": "Title of the dialog"
+                  },
+                  "dialog": {
+                    "type": "string",
+                    "example": "<div>content to display in the dialog",
+                    "description": "HTML content to display inthe dialog"
+                  }
+                }
+              },
+              "tables": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "STAGING__D12E20",
+                      "description": "Tabke identifier"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Table 1",
+                      "description": "Lable for the table"
+                    },
+                    "caption": {
+                      "type": "string",
+                      "example": "AHA/ACC/HFSA Staging of Heart Failure",
+                      "description": "Table caption"
+                    },
+                    "standAlone": {
+                      "type": "boolean",
+                      "description": "Indicates if table can stand independent of the article"
+                    },
+                    "parentSection": {
+                      "type": "string",
+                      "example": "INCIDENCE_PREVALENCE",
+                      "description": "Section the table is shown in"
+                    }
+                  }
+                }
+              },
+              "updates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "example": "Heart Failure Society of America guideline on heart failure epidemiology...",
+                      "description": "Description of the update"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2023-10-18T00:47:05.000Z",
+                      "description": "Indicates when the update wasmade"
+                    },
+                    "practiceChangingUpdate": {
+                      "type": "boolean",
+                      "example": "true",
+                      "description": "Indicates if this update cause a practice change."
+                    },
+                    "healthEquity": {
+                      "type": "string",
+                      "example": "false",
+                      "description": "Indicates if this update indicates a change to health equity"
+                    },
+                    "updateType": {
+                      "type": "string",
+                      "example": "guidelineNotationUpdate",
+                      "description": "Type of update"
+                    },
+                    "updatePriority": {
+                      "type": "string",
+                      "example": "low",
+                      "description": "Priority of the update"
+                    },
+                    "anchor": {
+                      "type": "string",
+                      "example": "UNITED_STATES_GUIDELINES__LI_XR1_ZCK_DZBGNU101723",
+                      "description": "Location in the atrticle of the update"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "links",
+          "metadata",
+          "toc",
+          "sections",
+          "ancillary"
+        ]
+      },
+      "ArticlesUpdateMeta": {
+        "properties": {
+          "_metadata": {
+            "properties": {
+              "links": {
+                "description": "HATEOAS links for self, previous, next, first, last as available.",
+                "items": {
+                  "properties": {
+                    "href": {
+                      "description": "Hypertext REFerence link.",
+                      "example": "https/apis.ebsco.com/medsapi-product-content/v1/content/articles",
+                      "type": "string"
+                    },
+                    "rel": {
+                      "description": "Relationship of the link and the current page of results.",
+                      "example": "self",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "rel",
+                    "href"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "page": {
+                "type": "integer",
+                "example": "1",
+                "description": "Current page of items returned."
+              },
+              "totalItems": {
+                "description": "Total number of items that match the query.",
+                "example": "523",
+                "type": "integer"
+              },
+              "totalPages": {
+                "type": "integer",
+                "example": "53",
+                "description": "Total number of pages."
+              }
+            },
+            "required": [
+              "totalItems",
+              "links"
+            ],
+            "type": "object"
+          },
+          "items": {
+            "description": "A list of all items matching the search request.",
+            "items": {
+              "properties": {
+                "createdAt": {
+                  "description": "When the article was created",
+                  "example": "2021-11-19T11:39:10.637Z",
+                  "type": "string"
+                },
+                "hlType": {
+                  "description": "Health Library type (if Consumer Health)",
+                  "example": "ConditionInDepth",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "ID of the article.",
+                  "example": "T913716",
+                  "type": "string"
+                },
+                "product": {
+                  "description": "Product code for the article",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "dm",
+                        "dmx",
+                        "dh",
+                        "ch",
+                        "rc"
+                      ],
+                      "example": "dm",
+                      "description": "Product code"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "DynaMed",
+                      "description": "Name of the product"
+                    }
+                  }
+                },
+                "slug": {
+                  "description": "Slug for the article, when available",
+                  "example": "/drug-monograph/calcium-acetate",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "Title of the article",
+                  "example": "Calcium Acetate",
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "description": "When the article was last modified",
+                  "example": "2025-03-22T1133:56.315",
+                  "type": "string"
+                },
+                "addedToListAt": {
+                  "description": "When the article was made available to your account",
+                  "example": "2025-01-01T15:22:56.315",
+                  "type": "string"
+                },
+                "removedFromListAt": {
+                  "description": "When the article was removed from your account",
+                  "example": "2025-01-22T09:09:56.315",
+                  "type": "string"
+                },
+                "isDeleted": {
+                  "description": "When true, the article has been removed from EBSCO systems",
+                  "example": "true",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "links"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "_metadata"
+        ],
+        "type": "object"
+      },
+      "Contributor": {
+        "type": "object",
+        "properties": {
+          "affiliationText": {
+            "type": "string",
+            "description": "Editors affiliations",
+            "example": "\"The Skin Clinic, Massachusetts, United States"
+          },
+          "conflictsText": {
+            "type": "string",
+            "description": "Identifies any conflicts of interest",
+            "example": "Dr. Elpern declares no relevant conflicts of\\n interest."
+          },
+          "degrees": {
+            "type": "string",
+            "description": "Editor credentials",
+            "example": "MD, FACC, FHFSA, FAHA"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Editor given name",
+            "example": "Anekwe E."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Editor surname",
+            "example": "Onwuanyi"
+          },
+          "label": {
+            "type": "string",
+            "description": "Editor title",
+            "example": "Topic Editor"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Standardized label for this error",
+            "example": "Error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Details about this error",
+            "example": "Error description."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer Token"
+      }
+    }
+  }
+}
