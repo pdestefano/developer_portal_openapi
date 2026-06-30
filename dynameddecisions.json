@@ -21,18 +21,16 @@
   ],
   "servers": [
     {
+      "url": "https://apis.ebsco.com/medsapi-auth/v1",
+      "description": "MedsAPI token endpoint"
+    },
+    {
       "url": "https://apis.ebsco.com/medsapi-dynamed-decisions/v1",
       "description": "Apigee Live Server"
     }
   ],
   "paths": {
     "/token": {
-      "servers": [
-        {
-          "url": "https://apis.ebsco.com/medsapi-auth/v1",
-          "description": "MedsAPI token endpoint"
-        }
-      ],
       "post": {
         "summary": "Get an authorization token",
         "tags": [
@@ -207,7 +205,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  
+
                 }
               }
             },
@@ -215,7 +213,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  
+
                 }
               }
             }
@@ -279,43 +277,43 @@
           "401": {
             "description": "Unauthorized - This request requires authentication and none\nwas provided.",
             "content": {
-              
+
             }
           },
           "403": {
             "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
             "content": {
-              
+
             }
           },
           "404": {
             "description": "Not Found - The server was unable to find a resource matching\nthis request.",
             "content": {
-              
+
             }
           },
           "405": {
             "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
             "content": {
-              
+
             }
           },
           "406": {
             "description": "Not Acceptable - The server cannot return the requested media\ntype.",
             "content": {
-              
+
             }
           },
           "415": {
             "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
             "content": {
-              
+
             }
           },
           "429": {
             "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
             "content": {
-              
+
             }
           },
           "500": {
@@ -331,9 +329,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -371,43 +367,43 @@
           "401": {
             "description": "Unauthorized - This request requires authentication and none\nwas provided.",
             "content": {
-              
+
             }
           },
           "403": {
             "description": "Forbidden - The authentication credentials do not have access\nto this resource.",
             "content": {
-              
+
             }
           },
           "404": {
             "description": "Not Found - The server was unable to find a resource matching\nthis request.",
             "content": {
-              
+
             }
           },
           "405": {
             "description": "Method Not Allowed - The server has not implemented the requested\nHTTP method.",
             "content": {
-              
+
             }
           },
           "406": {
             "description": "Not Acceptable - The server cannot return the requested media\ntype.",
             "content": {
-              
+
             }
           },
           "415": {
             "description": "Unsupported Media Type - The server cannot understand the media\ntype in this request.",
             "content": {
-              
+
             }
           },
           "429": {
             "description": "Too Many Requests - The client has sent too many requests within\nthe given time.",
             "content": {
-              
+
             }
           },
           "500": {
@@ -423,9 +419,7 @@
         },
         "security": [
           {
-            "BearerToken": [
-              
-            ]
+            "BearerToken": []
           }
         ]
       }
@@ -589,7 +583,7 @@
         "properties": {
           "polarDecisionTool": {
             "type": "boolean",
-            "description": "Single column presentation of a “polar decision”. True means the tool has 2 options. False means it has more than 2 options.  Some polar decision aids have a single answer that crosses both options.<br/><br/>Multiple column presentation of the most common options for the healthcare decision presented in the decision aid (Ex: Self-Care vs. Exercise vs. Surgery)",
+            "description": "Single column presentation of a “polar decision”. True means the tool has 2 options. False means it has more than 2 options.  Some polar decision aids have a single answer that crosses both options.\u003Cbr/\u003E\u003Cbr/\u003EMultiple column presentation of the most common options for the healthcare decision presented in the decision aid (Ex: Self-Care vs. Exercise vs. Surgery)",
             "example": "true"
           },
           "options": {
@@ -601,22 +595,22 @@
           "references": {
             "type": "string",
             "description": "List of references for resources used to create the content for the decision aid.",
-            "example": "<ol><li><p>Akman T, Binbay M, Tekinarslan E, Tepeler A, Akcay M, Ozgor F.</p></li></ol>"
+            "example": "\u003Col\u003E\u003Cli\u003E\u003Cp\u003EAkman T, Binbay M, Tekinarslan E, Tepeler A, Akcay M, Ozgor F.\u003C/p\u003E\u003C/li\u003E\u003C/ol\u003E"
           },
           "contributors": {
             "type": "string",
             "description": "List of editors responsible for the creation or review of the content for the decision aid.",
-            "example": "<h2><p>Clinical Review</p></h2><p>Kevin Loughlin, MD, MBA</p>"
+            "example": "\u003Ch2\u003E\u003Cp\u003EClinical Review\u003C/p\u003E\u003C/h2\u003E\u003Cp\u003EKevin Loughlin, MD, MBA\u003C/p\u003E"
           },
           "certifications": {
             "type": "string",
             "description": "Tool certification of a specific decision aid, when applicable.",
-            "example": "<p>This product has been certified by the Washington State Health Care Authority pursuant to RCW 7.70.060.</p>"
+            "example": "\u003Cp\u003EThis product has been certified by the Washington State Health Care Authority pursuant to RCW 7.70.060.\u003C/p\u003E"
           },
           "competingInterests": {
             "type": "string",
             "description": "Declaration of no conflicts of interest for editorial staff and reviewers involved in creation of the decision aid.",
-            "example": "<p>The editors and reviewers on this EBSCO Health Option Grid decision aid have declared no conflicts of interest, as of Apr 2, 2019.</p>"
+            "example": "\u003Cp\u003EThe editors and reviewers on this EBSCO Health Option Grid decision aid have declared no conflicts of interest, as of Apr 2, 2019.\u003C/p\u003E"
           },
           "definitions": {
             "$ref": "#/components/schemas/definitions"
@@ -624,7 +618,7 @@
           "supplementalInformation": {
             "type": "string",
             "description": "Additional background information for specific content within the decision aid, when applicable.",
-            "example": "<p><data base=\"name\">Enlarged Prostate (Benign Prostatic Hypertrophy) Treatment Options </data></p>"
+            "example": "\u003Cp\u003E\u003Cdata base=\"name\"\u003EEnlarged Prostate (Benign Prostatic Hypertrophy) Treatment Options \u003C/data\u003E\u003C/p\u003E"
           }
         }
       },
@@ -667,7 +661,7 @@
                   "answer": {
                     "type": "string",
                     "description": "Answer for question for particular disease/treatments.",
-                    "example": "<p>You will have no tests or treatments now. Ask for advice if you notice new symptoms.</p>"
+                    "example": "\u003Cp\u003EYou will have no tests or treatments now. Ask for advice if you notice new symptoms.\u003C/p\u003E"
                   }
                 }
               }
@@ -689,12 +683,12 @@
             "name": {
               "type": "string",
               "description": "The name of medicine.",
-              "example": "<p>BPH</p>"
+              "example": "\u003Cp\u003EBPH\u003C/p\u003E"
             },
             "text": {
               "type": "string",
               "description": "Description/Definition of medicine.",
-              "example": "<p>BPH is another name for benign prostatic hypertrophy.</p>"
+              "example": "\u003Cp\u003EBPH is another name for benign prostatic hypertrophy.\u003C/p\u003E"
             }
           }
         }
@@ -722,5 +716,9 @@
         "scheme": "bearer"
       }
     }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
   }
 }
