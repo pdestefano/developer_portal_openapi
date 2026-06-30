@@ -9870,6 +9870,7 @@
             "description": "List of subject facets",
             "items": {
               "$ref": "#/components/schemas/FacetsModel"
+			}
           }
         }
       },
