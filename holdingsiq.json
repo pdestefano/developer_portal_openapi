@@ -1335,14 +1335,26 @@
                       "beginCoverage": "2003-01-01",
                       "endCoverage": "2003-12-12"
                     },
-                    "isHidden": true
+                    "visibility": [
+                      {
+                        "category": "PF",
+                        "hidden": true,
+                        "reason": "Hidden by Customer"
+                      }
+                    ]
                   }
                 },
                 "bodyoptionc": {
                   "summary": "JSON payload to hide a package",
                   "value": {
                     "isSelected": true,
-                    "isHidden": true
+                    "visibility": [
+                      {
+                        "category": "PF",
+                        "hidden": true,
+                        "reason": "Hidden by Customer"
+                      }
+                    ]
                   }
                 },
                 "bodyoptiond": {
@@ -1353,7 +1365,13 @@
                       "beginCoverage": "2003-01-01",
                       "endCoverage": "2003-12-12"
                     },
-                    "isHidden": false
+                    "visibility": [
+                      {
+                        "category": "PF",
+                        "hidden": false,
+                        "reason": "Set By EP"
+                      }
+                    ]
                   }
                 },
                 "bodyoptione": {
@@ -1375,10 +1393,16 @@
                 },
                 "bodyoptiong": {
                   "summary": "JSON payload to set values in a managed package",
-                  "description": "JSON payload to set values in a managed package.  isSelected is required for a managed package.",
+                  "description": "JSON payload to set values in a managed package. isSelected is required for a managed package.",
                   "value": {
                     "isSelected": true,
-                    "isHidden": false,
+                    "visibility": [
+                      {
+                        "category": "PF",
+                        "hidden": false,
+                        "reason": "Set By EP"
+                      }
+                    ],
                     "allowEbscoToAddTitles": true,
                     "customCoverage": {
                       "beginCoverage": "2003-01-01",
@@ -1400,7 +1424,13 @@
                     "packageName": "Library Package 1",
                     "contentType": 3,
                     "isSelected": true,
-                    "isHidden": false,
+                    "visibility": [
+                      {
+                        "category": "PF",
+                        "hidden": false,
+                        "reason": "Set By EP"
+                      }
+                    ],
                     "customCoverage": {
                       "beginCoverage": "2003-01-01",
                       "endCoverage": "2003-12-12"
