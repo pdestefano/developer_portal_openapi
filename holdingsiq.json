@@ -9869,11 +9869,8 @@
             "type": "array",
             "description": "List of subject facets",
             "items": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/FacetsModel"
-              }
-            }
+              "$ref": "#/components/schemas/FacetsModel"
+			}
           }
         }
       },
