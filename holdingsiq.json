@@ -1369,7 +1369,7 @@
                       {
                         "category": "PF",
                         "hidden": false,
-                        "reason": "Set By EP"
+                        "reason": 0
                       }
                     ]
                   }
