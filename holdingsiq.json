@@ -1369,7 +1369,7 @@
                       {
                         "category": "PF",
                         "hidden": false,
-                        "reason": 0
+                        "reason": "0"
                       }
                     ]
                   }
@@ -1400,7 +1400,7 @@
                       {
                         "category": "PF",
                         "hidden": false,
-                        "reason": 0
+                        "reason": "0"
                       }
                     ],
                     "allowEbscoToAddTitles": true,
@@ -1428,7 +1428,7 @@
                       {
                         "category": "PF",
                         "hidden": false,
-                        "reason": 0
+                        "reason": "0"
                       }
                     ],
                     "customCoverage": {
