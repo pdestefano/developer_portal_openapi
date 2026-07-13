@@ -821,8 +821,8 @@
                 },
                 "peerReviewed": {
                   "type": "boolean",
-                  "description": "Title Description",
-                  "example": "Description Test."
+                  "description": "Indicates if the title is peer reviewed or not",
+                  "example": false
                 },
                 "publisherName": {
                   "type": "string",
@@ -837,7 +837,7 @@
                       "id": {
                         "type": "string",
                         "description": "Identifier Value",
-                        "example": 1
+                        "example": "1"
                       },
                       "source": {
                         "type": "string",
@@ -1042,7 +1042,7 @@
                           "embargoValue": {
                             "type": "integer",
                             "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo.",
-                            "example": "1"
+                            "example": 1
                           }
                         }
                       },
@@ -1064,7 +1064,7 @@
                           "embargoValue": {
                             "type": "integer",
                             "description": "The embargo value (number of embargoUnits).  A Null value means there is no embargo.",
-                            "example": "1"
+                            "example": 1
                           }
                         }
                       },
@@ -1147,7 +1147,7 @@
                               "type": "integer",
                               "format": "int64",
                               "description": "Unique identifier for the note",
-                              "example": "309"
+                              "example": 309
                             },
                             "custId": {
                               "type": "integer",
@@ -1217,7 +1217,7 @@
                               "type": "integer",
                               "format": "int64",
                               "description": "ID",
-                              "example": "a123"
+                              "example": 123
                             },
                             "label": {
                               "type": "string",
@@ -1256,7 +1256,7 @@
                         "type": "integer",
                         "format": "int64",
                         "description": "Customer ID",
-                        "example": "1123"
+                        "example": 1123
                       },
                       "displayName": {
                         "type": "string",
@@ -1409,7 +1409,7 @@
                     "items": {
                       "type": "string"
                     },
-                    "example": "Faculty, Student, Staff and Walk-Ins"
+                    "example": ["Faculty, Student, Staff and Walk-Ins"]
                   },
                   "weight": {
                     "type": "integer",
@@ -5371,6 +5371,17 @@
             "true",
             "false"
           ]
+        },
+        {
+          "name": "categoryfacet",
+          "in": "query",
+          "description": "Filters package search results by given categories. Accepts category id or name. If multiple categories are given, packages assigned to any of the given categories will be returned. Example: 4672.",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "collectionFormat": "multi"
         }
       ],
       "get": {
@@ -5985,7 +5996,7 @@
                 "items": {
                   "type": "string"
                 },
-                "example": "Faculty, Student, Staff and Walk-Ins"
+                "example": ["Faculty, Student, Staff and Walk-Ins"]
               },
               "weight": {
                 "type": "integer",
@@ -6431,6 +6442,56 @@
         }
       }
     },
+    "packageFreeAccessFacet": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "boolean",
+          "description": "Indicates whether the given facet count is the count of free access packages or non free access packages",
+          "example": false
+        }
+      }
+    },
+    "categoryFacet": {
+      "type": "object",
+      "properties": {
+        "parentId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The ID of the parent caregory",
+          "example": 4604
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The ID of the category",
+          "example": 5061
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Count",
+          "example": 15
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the category",
+          "example": "Science collection"
+        },
+        "rank": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The rank of the category",
+          "example": 2
+        }
+      }
+    },
     "HSMPackageFacets":{
       "type": "object",
       "properties": {
@@ -6438,6 +6499,18 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/HSMPackageFacet"
+          }
+        },
+        "packageFreeAccessFacets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/packageFreeAccessFacet"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/categoryFacet"
           }
         }
       }
