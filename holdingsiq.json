@@ -2598,7 +2598,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/titles"
+                  "$ref": "#/components/schemas/TitleSearchResultsV2"
                 }
               }
             }
@@ -3788,7 +3788,7 @@
           "Title Resources"
         ],
         "summary": "Get Title Details Regardless of Package",
-        "description": "This operation allows you to search and retrieve a list of titles from EPKB regardless of the package(s) that the titles are a part of. The response will reflect the context of the EBSCO customer ID included in the request.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve details for a particular title from EPKB regardless of the package that it is a part of.  The response will reflect the context of the EBSCO customer ID included in the request.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "getTitleDetailsRegardlessOfPackageV2UsingGET",
         "parameters": [
           {
@@ -3852,7 +3852,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TitlesResponseV2"
+                  "$ref": "#/components/schemas/TitleResponseV2"
                 }
               }
             }
@@ -4093,7 +4093,7 @@
           "Title Resources"
         ],
         "summary": "Get Title Details by Package",
-        "description": "This operation allows you to search and retrieve a list of titles from EPKB respective of the package(s) that the titles are a part of. The response will reflect the context of the EBSCO customer ID included in the request.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
+        "description": "This operation allows you to retrieve details for a particular title within a specified list from EPKB.  The response will reflect the context of the EBSCO customer ID included in the request.\n\n  **Please Note:**  You will need an API key to gain access to the API through our interactive documentation. If you require an API key, please contact EBSCO customer support.",
         "operationId": "getTitleDetailsByPackageV2UsingGET",
         "parameters": [
           {
@@ -9522,6 +9522,267 @@
             "description": "Represents the number of results returned in the response"
           }
         }
+      },
+      "TitleSearchResultsV2": {
+        "required": [
+          "totalResults"
+        ],
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "description": "Total number of results found.",
+            "example": 5
+          },
+          "titles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TitleResponseV2"
+            }
+          },
+          "facets": {
+            "$ref": "#/components/schemas/Facets"
+          }
+        },
+        "description": "List of titles regardless of package, from EPKB, and the total number of results found. Each title carries its customer resources in 'customerResourcesList'."
+      },
+      "TitleResponseV2": {
+        "required": [
+          "pubType",
+          "kbid",
+          "titleName"
+        ],
+        "type": "object",
+        "properties": {
+          "kbid": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the title",
+            "example": 1157191
+          },
+          "titleName": {
+            "type": "string",
+            "description": "Title Name",
+            "example": "A Tale of Two Cities"
+          },
+          "publisherName": {
+            "type": "string",
+            "description": "Publisher Name",
+            "example": "www.ebsco.com"
+          },
+          "identifiersList": {
+            "type": "array",
+            "description": "Identifiers",
+            "items": {
+              "$ref": "#/components/schemas/LocalIdentifier"
+            }
+          },
+          "subjectsList": {
+            "type": "array",
+            "description": "Subjects",
+            "items": {
+              "$ref": "#/components/schemas/LocalSubject"
+            }
+          },
+          "isTitleCustom": {
+            "type": "boolean",
+            "description": "Is this a custom title owned by the customer.",
+            "example": false
+          },
+          "alternateTitleList": {
+            "type": "array",
+            "description": "Alternate Titles",
+            "items": {
+              "$ref": "#/components/schemas/LocalAlternateTitle"
+            }
+          },
+          "pubType": {
+            "type": "string",
+            "description": "Publication Type",
+            "example": "Journal"
+          },
+          "customerResourcesList": {
+            "type": "array",
+            "description": "Customer Resources List",
+            "items": {
+              "$ref": "#/components/schemas/CustomerResourcesV2"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Title Description",
+            "example": "Description Test."
+          },
+          "edition": {
+            "type": "string",
+            "description": "Title Edition",
+            "example": "1"
+          },
+          "isPeerReviewed": {
+            "type": "boolean",
+            "description": "Is this title peer reviewed.",
+            "example": false
+          },
+          "contributorsList": {
+            "type": "array",
+            "description": "Contributors List",
+            "items": {
+              "$ref": "#/components/schemas/LocalContributor"
+            }
+          },
+          "titleRelationships": {
+            "type": "array",
+            "description": "Title relationships (e.g. ABSORBED_BY, CONTINUED_BY, PARENT_OF) for this title. Populated only when includerelationships=true was passed on the request. Not applicable to search results.",
+            "items": {
+              "$ref": "#/components/schemas/RelationshipRecord"
+            }
+          }
+        },
+        "description": "Title-level v2 response: the same shape as the v0 'TitleResponse' schema, with 'customerResourcesList' carrying PF/FTF/MARC visibility (see CustomerResourcesV2) instead of the v0 single hidden/reason flag, and 'titleId' named 'kbid'. 'titleRelationships' is attached to the title and is populated only when includerelationships=true was passed on the request."
+      },
+      "CustomerResourcesV2": {
+        "type": "object",
+        "properties": {
+          "kbid": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the title",
+            "example": 1157191
+          },
+          "listId": {
+            "type": "integer",
+            "description": "EBSCO KB's unique identifier for the package.  In EPKB, this is 'PkgID'.",
+            "example": 1117849
+          },
+          "packageName": {
+            "type": "string",
+            "description": "Name of the Package. In EPKB, this is 'PkgName'.",
+            "example": "Health & Wellness Resource Center (w/alt health module)"
+          },
+          "packageType": {
+            "type": "string",
+            "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom.",
+            "example": "Complete"
+          },
+          "proxy": {
+            "$ref": "#/components/schemas/ProxyDto"
+          },
+          "isPackageCustom": {
+            "type": "boolean",
+            "description": "Is the Package Custom.",
+            "example": false
+          },
+          "vendorId": {
+            "type": "integer",
+            "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
+            "example": 19
+          },
+          "vendorName": {
+            "type": "string",
+            "description": "Provider name.  In EPKB, this is the 'VendorName'.",
+            "example": "EBSCO"
+          },
+          "locationId": {
+            "type": "integer",
+            "description": "Location ID",
+            "example": 123456789
+          },
+          "isSelected": {
+            "type": "boolean",
+            "description": "Indicates if selected in a customer's account.",
+            "example": false
+          },
+          "isOrderedThroughEbsco": {
+            "type": "boolean",
+            "description": "Limiter to include only records associated with an EBSCO order.",
+            "example": false
+          },
+          "isTokenNeeded": {
+            "type": "boolean",
+            "description": "Field to indicate if a token is needed",
+            "example": false
+          },
+          "visibility": {
+            "type": "array",
+            "description": "Visibility details for PF, FTF and MARC.",
+            "items": {
+              "$ref": "#/components/schemas/VisibilityDataV1"
+            }
+          },
+          "managedCoverageList": {
+            "type": "array",
+            "description": "Managed Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/CoverageList"
+            }
+          },
+          "customCoverageList": {
+            "type": "array",
+            "description": "Custom Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/CoverageList"
+            }
+          },
+          "coverageStatement": {
+            "type": "string",
+            "description": "Coverage Statement",
+            "example": "Issues on or after 6/1/1992"
+          },
+          "managedEmbargoPeriod": {
+            "$ref": "#/components/schemas/EmbargoPeriod"
+          },
+          "customEmbargoPeriod": {
+            "$ref": "#/components/schemas/EmbargoPeriod"
+          },
+          "url": {
+            "type": "string",
+            "description": "Package URL",
+            "example": "http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
+          },
+          "isPrimaryPackage": {
+            "type": "boolean",
+            "description": "Indicates if the package is a vendor's primary package.",
+            "example": false
+          },
+          "kbartExcluded": {
+            "type": "boolean",
+            "description": "Indicates if the resource is excluded from KBART holdings exports.",
+            "example": false
+          },
+          "kbartCoverageOwnership": {
+            "type": "boolean",
+            "description": "Indicates ownership of the KBART coverage for this resource.",
+            "example": false
+          },
+          "userDefinedField1": {
+            "type": "string",
+            "description": "User Defined Field 1",
+            "example": "string1"
+          },
+          "userDefinedField2": {
+            "type": "string",
+            "description": "User Defined Field 2",
+            "example": "string2"
+          },
+          "userDefinedField3": {
+            "type": "string",
+            "description": "User Defined Field 3",
+            "example": "string3"
+          },
+          "userDefinedField4": {
+            "type": "string",
+            "description": "User Defined Field 4",
+            "example": "string4"
+          },
+          "userDefinedField5": {
+            "type": "string",
+            "description": "User Defined Field 5",
+            "example": "string5"
+          },
+          "consortia": {
+            "type": "string",
+            "description": "Indicates the consortia associated with a package."
+          }
+        },
+        "description": "v2 counterpart of the v0 'LocalCustomerResourcesList' schema. Field-for-field identical, except 'visibilityData' is replaced by 'visibility', a list covering PF, FTF and MARC individually, and 'titleId'/'packageId' are named 'kbid'/'listId'."
       },
       "TitlesResponseV2": {
         "title": "TitlesResponseV2",
