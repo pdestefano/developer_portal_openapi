@@ -9544,7 +9544,7 @@
             "$ref": "#/components/schemas/Facets"
           }
         },
-        "description": "Title-level list of titles regardless of package, from EPKB, and the total number of results found. Each title carries its nested customer resources with PF/FTF/MARC visibility. This is a new schema distinct from TitleSearchResponseV2, which remains the original flat shape used by the by-package/by-list search endpoint."
+        "description": "List of titles regardless of package, from EPKB, and the total number of results found. Each title carries its customer resources in 'customerResourcesList'."
       },
       "TitleResponseV2": {
         "required": [
@@ -9573,14 +9573,14 @@
             "type": "array",
             "description": "Identifiers",
             "items": {
-              "$ref": "#/components/schemas/identifier"
+              "$ref": "#/components/schemas/LocalIdentifier"
             }
           },
           "subjectsList": {
             "type": "array",
             "description": "Subjects",
             "items": {
-              "$ref": "#/components/schemas/subj"
+              "$ref": "#/components/schemas/LocalSubject"
             }
           },
           "isTitleCustom": {
@@ -9592,7 +9592,7 @@
             "type": "array",
             "description": "Alternate Titles",
             "items": {
-              "$ref": "#/components/schemas/alternateTitle"
+              "$ref": "#/components/schemas/LocalAlternateTitle"
             }
           },
           "pubType": {
@@ -9626,7 +9626,7 @@
             "type": "array",
             "description": "Contributors List",
             "items": {
-              "$ref": "#/components/schemas/contributorID"
+              "$ref": "#/components/schemas/LocalContributor"
             }
           },
           "titleRelationships": {
@@ -9637,15 +9637,9 @@
             }
           }
         },
-        "description": "This object represents data elements that describe a title, regardless of package, in the v2 contract. It is the v2 counterpart of the v0 'titleDetails' schema: same title-level shape, with customerResourcesList items updated to carry PF/FTF/MARC visibility instead of a single isHidden/reason flag."
+        "description": "Title-level v2 response: the same shape as the v0 'TitleResponse' schema, with 'customerResourcesList' carrying PF/FTF/MARC visibility (see CustomerResourcesV2) instead of the v0 single hidden/reason flag, and 'titleId' named 'kbid'. 'titleRelationships' is attached to the title and is populated only when includerelationships=true was passed on the request."
       },
       "CustomerResourcesV2": {
-        "required": [
-          "listId",
-          "packageName",
-          "packageType",
-          "proxy"
-        ],
         "type": "object",
         "properties": {
           "kbid": {
@@ -9669,7 +9663,7 @@
             "example": "Complete"
           },
           "proxy": {
-            "$ref": "#/components/schemas/proxyURL"
+            "$ref": "#/components/schemas/ProxyDto"
           },
           "isPackageCustom": {
             "type": "boolean",
@@ -9717,14 +9711,14 @@
             "type": "array",
             "description": "Managed Coverage List",
             "items": {
-              "$ref": "#/components/schemas/coverageDates"
+              "$ref": "#/components/schemas/CoverageList"
             }
           },
           "customCoverageList": {
             "type": "array",
             "description": "Custom Coverage List",
             "items": {
-              "$ref": "#/components/schemas/coverageDates"
+              "$ref": "#/components/schemas/CoverageList"
             }
           },
           "coverageStatement": {
@@ -9733,10 +9727,10 @@
             "example": "Issues on or after 6/1/1992"
           },
           "managedEmbargoPeriod": {
-            "$ref": "#/components/schemas/embargoPeriod"
+            "$ref": "#/components/schemas/EmbargoPeriod"
           },
           "customEmbargoPeriod": {
-            "$ref": "#/components/schemas/embargoPeriod"
+            "$ref": "#/components/schemas/EmbargoPeriod"
           },
           "url": {
             "type": "string",
@@ -9788,7 +9782,7 @@
             "description": "Indicates the consortia associated with a package."
           }
         },
-        "description": "This object represents data elements that describe customer resources information for a title, regardless of package, in the v2 contract. It is the v2 counterpart of the v0 'customerResources' schema, with 'visibilityData' (single isHidden/reason) replaced by 'visibility' (an array covering PF, FTF and MARC individually)."
+        "description": "v2 counterpart of the v0 'LocalCustomerResourcesList' schema. Field-for-field identical, except 'visibilityData' is replaced by 'visibility', a list covering PF, FTF and MARC individually, and 'titleId'/'packageId' are named 'kbid'/'listId'."
       },
       "TitlesResponseV2": {
         "title": "TitlesResponseV2",
