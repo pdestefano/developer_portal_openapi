@@ -37,9 +37,9 @@
     {
       "name": "Subject Resource"
     },
-	{
-	  "name": "Category Resources"
-	}
+    {
+      "name": "Category Resources"
+    }
   ],
   "paths": {
     "/{custid}/": {
@@ -2567,13 +2567,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string",
-                "enum": [
-                  "bisac",
-                  "libraryofcongress",
-                  "medical",
-                  "tli"
-                ]
+                "type": "string"
               }
             }
           },
@@ -2587,7 +2581,7 @@
                 "type": "string"
               }
             }
-          },      
+          },
           {
             "name": "x-api-key",
             "in": "header",
@@ -3825,16 +3819,13 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "bisac",
-                  "libraryofcongress",
-                  "medical",
-                  "tli"
-                ]
-              }
+              "type": "string",
+              "enum": [
+                "bisac",
+                "libraryofcongress",
+                "medical",
+                "tli"
+              ]
             }
           },
           {
@@ -4027,16 +4018,13 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "bisac",
-                  "libraryofcongress",
-                  "medical",
-                  "tli"
-                ]
-              }
+              "type": "string",
+              "enum": [
+                "bisac",
+                "libraryofcongress",
+                "medical",
+                "tli"
+              ]
             }
           },
           {
@@ -4055,7 +4043,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TitleSearchResponseV2"
+                  "$ref": "#/components/schemas/titles"
                 }
               }
             }
@@ -4141,21 +4129,18 @@
           {
             "name": "subjects",
             "in": "query",
-            "description": "Types of subjects to be returned. By default returns tli and bisac. Valid values are: bisac, tli, libraryofcongress and medical.",
+            "description": "Type of subject to be returned. By default returns tli, bisac. Valid values are: bisac, tli, libraryofcongress, medical. It is also valid to use 0 for bisac, 1 for tli, 2 for libraryofcongress, 3 for medical",
             "required": false,
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "bisac",
-                  "libraryofcongress",
-                  "medical",
-                  "tli"
-                ]
-              }
+              "type": "string",
+              "enum": [
+                "bisac",
+                "libraryofcongress",
+                "medical",
+                "tli"
+              ]
             }
           },
           {
@@ -4979,7 +4964,7 @@
         }
       }
     },
-    "/{custid}/categories": {		
+    "/{custid}/categories": {
       "parameters": [
         {
           "schema": {
@@ -4993,7 +4978,7 @@
       "post": {
         "tags": [
           "Category Resources"
-        ],		  
+        ],
         "summary": "Get Package Categories",
         "operationId": "post-custid-categories",
         "responses": {
@@ -5178,15 +5163,19 @@
                 "description": "Array of categoryIds to retrieve",
                 "type": "array",
                 "items": {
-                   "type": "integer"
-                }			
+                  "type": "integer"
+                }
               },
               "examples": {
                 "Get all categories for the customer": {
                   "value": []
                 },
                 "Get specific categories for the customer": {
-                  "value": [1,2,3]
+                  "value": [
+                    1,
+                    2,
+                    3
+                  ]
                 }
               }
             }
@@ -5207,7 +5196,7 @@
         }
       ],
       "post": {
-		"tags": [
+        "tags": [
           "Category Resources"
         ],
         "summary": "Create Package Category",
@@ -5267,11 +5256,11 @@
                 "$ref": "#/components/schemas/categoryRequest"
               },
               "examples": {
-				"Create a Category": {
-				  "value": {
-                       "categoryName": "Books"
-                    }
-				},
+                "Create a Category": {
+                  "value": {
+                    "categoryName": "Books"
+                  }
+                },
                 "Create a Category with only an assigned package and rank": {
                   "value": {
                     "categoryName": "Books",
@@ -5335,7 +5324,7 @@
       "put": {
         "tags": [
           "Category Resources"
-        ],		  
+        ],
         "summary": "Update a Package Category",
         "operationId": "put-custid-categoy-categoyId",
         "responses": {
@@ -5414,7 +5403,7 @@
       "post": {
         "tags": [
           "Category Resources"
-        ],		  
+        ],
         "summary": "Delete Categories",
         "operationId": "delete-custid-deleteCategories",
         "responses": {
@@ -7176,296 +7165,6 @@
         },
         "description": "This object represents data elements to set custom coverage, coverage statement and custom embargo."
       },
-      "TitleSearchResultsV2": {
-        "required": [
-          "totalResults"
-        ],
-        "type": "object",
-        "properties": {
-          "totalResults": {
-            "type": "integer",
-            "description": "Total number of results found.",
-            "example": 5
-          },
-          "titles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TitleResponseV2"
-            }
-          },
-          "facets": {
-            "$ref": "#/components/schemas/Facets"
-          }
-        },
-        "description": "Title-level list of titles regardless of package, from EPKB, and the total number of results found. Each title carries its nested customer resources with PF/FTF/MARC visibility. This is a new schema distinct from TitleSearchResponseV2, which remains the original flat shape used by the by-package/by-list search endpoint."
-      },
-      "TitleSearchResponseV2": {
-        "required": [
-          "totalResults"
-        ],
-        "type": "object",
-        "properties": {
-          "totalResults": {
-            "type": "integer",
-            "description": "Total number of results found.",
-            "example": 5
-          },
-          "titles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LocationV2"
-            }
-          },
-          "facets": {
-            "$ref": "#/components/schemas/Facets"
-          }
-        },
-        "description": "Flat, list-scoped list of titles within a specified package, from EPKB, and the total number of results found. One row per title/resource pair, matching LocationV2. This is the original, unchanged shape for this endpoint."
-      },
-      "TitleResponseV2": {
-        "required": [
-          "pubType",
-          "kbid",
-          "titleName"
-        ],
-        "type": "object",
-        "properties": {
-          "kbid": {
-            "type": "integer",
-            "description": "EBSCO's unique identifier for the title",
-            "example": 1157191
-          },
-          "titleName": {
-            "type": "string",
-            "description": "Title Name",
-            "example": "A Tale of Two Cities"
-          },
-          "publisherName": {
-            "type": "string",
-            "description": "Publisher Name",
-            "example": "www.ebsco.com"
-          },
-          "identifiersList": {
-            "type": "array",
-            "description": "Identifiers",
-            "items": {
-              "$ref": "#/components/schemas/identifier"
-            }
-          },
-          "subjectsList": {
-            "type": "array",
-            "description": "Subjects",
-            "items": {
-              "$ref": "#/components/schemas/subj"
-            }
-          },
-          "isTitleCustom": {
-            "type": "boolean",
-            "description": "Is this a custom title owned by the customer.",
-            "example": false
-          },
-          "alternateTitleList": {
-            "type": "array",
-            "description": "Alternate Titles",
-            "items": {
-              "$ref": "#/components/schemas/alternateTitle"
-            }
-          },
-          "pubType": {
-            "type": "string",
-            "description": "Publication Type",
-            "example": "Journal"
-          },
-          "customerResourcesList": {
-            "type": "array",
-            "description": "Customer Resources List",
-            "items": {
-              "$ref": "#/components/schemas/CustomerResourcesV2"
-            }
-          },
-          "description": {
-            "type": "string",
-            "description": "Title Description",
-            "example": "Description Test."
-          },
-          "edition": {
-            "type": "string",
-            "description": "Title Edition",
-            "example": "1"
-          },
-          "isPeerReviewed": {
-            "type": "boolean",
-            "description": "Is this title peer reviewed.",
-            "example": false
-          },
-          "contributorsList": {
-            "type": "array",
-            "description": "Contributors List",
-            "items": {
-              "$ref": "#/components/schemas/contributorID"
-            }
-          },
-          "titleRelationships": {
-            "type": "array",
-            "description": "Title relationships (e.g. ABSORBED_BY, CONTINUED_BY, PARENT_OF) for this title. Populated only when includerelationships=true was passed on the request. Not applicable to search results.",
-            "items": {
-              "$ref": "#/components/schemas/RelationshipRecord"
-            }
-          }
-        },
-        "description": "This object represents data elements that describe a title, regardless of package, in the v2 contract. It is the v2 counterpart of the v0 'titleDetails' schema: same title-level shape, with customerResourcesList items updated to carry PF/FTF/MARC visibility instead of a single isHidden/reason flag."
-      },
-      "CustomerResourcesV2": {
-        "required": [
-          "listId",
-          "packageName",
-          "packageType",
-          "proxy"
-        ],
-        "type": "object",
-        "properties": {
-          "kbid": {
-            "type": "integer",
-            "description": "EBSCO's unique identifier for the title",
-            "example": 1157191
-          },
-          "listId": {
-            "type": "integer",
-            "description": "EBSCO KB's unique identifier for the package.  In EPKB, this is 'PkgID'.",
-            "example": 1117849
-          },
-          "packageName": {
-            "type": "string",
-            "description": "Name of the Package. In EPKB, this is 'PkgName'.",
-            "example": "Health & Wellness Resource Center (w/alt health module)"
-          },
-          "packageType": {
-            "type": "string",
-            "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom.",
-            "example": "Complete"
-          },
-          "proxy": {
-            "$ref": "#/components/schemas/proxyURL"
-          },
-          "isPackageCustom": {
-            "type": "boolean",
-            "description": "Is the Package Custom.",
-            "example": false
-          },
-          "vendorId": {
-            "type": "integer",
-            "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
-            "example": 19
-          },
-          "vendorName": {
-            "type": "string",
-            "description": "Provider name.  In EPKB, this is the 'VendorName'.",
-            "example": "EBSCO"
-          },
-          "locationId": {
-            "type": "integer",
-            "description": "Location ID",
-            "example": 123456789
-          },
-          "isSelected": {
-            "type": "boolean",
-            "description": "Indicates if selected in a customer's account.",
-            "example": false
-          },
-          "isOrderedThroughEbsco": {
-            "type": "boolean",
-            "description": "Limiter to include only records associated with an EBSCO order.",
-            "example": false
-          },
-          "isTokenNeeded": {
-            "type": "boolean",
-            "description": "Field to indicate if a token is needed",
-            "example": false
-          },
-          "visibility": {
-            "type": "array",
-            "description": "Visibility details for PF, FTF and MARC.",
-            "items": {
-              "$ref": "#/components/schemas/VisibilityDataV1"
-            }
-          },
-          "managedCoverageList": {
-            "type": "array",
-            "description": "Managed Coverage List",
-            "items": {
-              "$ref": "#/components/schemas/coverageDates"
-            }
-          },
-          "customCoverageList": {
-            "type": "array",
-            "description": "Custom Coverage List",
-            "items": {
-              "$ref": "#/components/schemas/coverageDates"
-            }
-          },
-          "coverageStatement": {
-            "type": "string",
-            "description": "Coverage Statement",
-            "example": "Issues on or after 6/1/1992"
-          },
-          "managedEmbargoPeriod": {
-            "$ref": "#/components/schemas/embargoPeriod"
-          },
-          "customEmbargoPeriod": {
-            "$ref": "#/components/schemas/embargoPeriod"
-          },
-          "url": {
-            "type": "string",
-            "description": "Package URL",
-            "example": "http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
-          },
-          "isPrimaryPackage": {
-            "type": "boolean",
-            "description": "Indicates if the package is a vendor's primary package.",
-            "example": false
-          },
-          "kbartExcluded": {
-            "type": "boolean",
-            "description": "Indicates if the resource is excluded from KBART holdings exports.",
-            "example": false
-          },
-          "kbartCoverageOwnership": {
-            "type": "boolean",
-            "description": "Indicates ownership of the KBART coverage for this resource.",
-            "example": false
-          },
-          "userDefinedField1": {
-            "type": "string",
-            "description": "User Defined Field 1",
-            "example": "string1"
-          },
-          "userDefinedField2": {
-            "type": "string",
-            "description": "User Defined Field 2",
-            "example": "string2"
-          },
-          "userDefinedField3": {
-            "type": "string",
-            "description": "User Defined Field 3",
-            "example": "string3"
-          },
-          "userDefinedField4": {
-            "type": "string",
-            "description": "User Defined Field 4",
-            "example": "string4"
-          },
-          "userDefinedField5": {
-            "type": "string",
-            "description": "User Defined Field 5",
-            "example": "string5"
-          },
-          "consortia": {
-            "type": "string",
-            "description": "Indicates the consortia associated with a package."
-          }
-        },
-        "description": "This object represents data elements that describe customer resources information for a title, regardless of package, in the v2 contract. It is the v2 counterpart of the v0 'customerResources' schema, with 'visibilityData' (single isHidden/reason) replaced by 'visibility' (an array covering PF, FTF and MARC individually)."
-      },
       "titlesPackageId": {
         "required": [
           "totalResults"
@@ -7654,12 +7353,8 @@
             "description": "Indicates if selected in a customer's account.",
             "example": true
           },
-          "visibility": {
-            "type": "array",
-            "description": "Visibility details for PF, FTF and MARC.",
-            "items": {
-              "$ref": "#/components/schemas/VisibilityDataV1"
-            }
+          "visibilityData": {
+            "$ref": "#/components/schemas/visibilityInfo"
           },
           "userDefinedField1": {
             "type": "string",
@@ -10209,7 +9904,7 @@
             "description": "List of subject facets",
             "items": {
               "$ref": "#/components/schemas/FacetsModel"
-			}
+            }
           }
         }
       },
@@ -10750,6 +10445,273 @@
         "required": [
           "categoryName"
         ]
+      },
+      "TitleSearchResultsV2": {
+        "required": [
+          "totalResults"
+        ],
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "description": "Total number of results found.",
+            "example": 5
+          },
+          "titles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TitleResponseV2"
+            }
+          },
+          "facets": {
+            "$ref": "#/components/schemas/Facets"
+          }
+        },
+        "description": "Title-level list of titles regardless of package, from EPKB, and the total number of results found. Each title carries its nested customer resources with PF/FTF/MARC visibility. This is a new schema distinct from TitleSearchResponseV2, which remains the original flat shape used by the by-package/by-list search endpoint."
+      },
+      "TitleResponseV2": {
+        "required": [
+          "pubType",
+          "kbid",
+          "titleName"
+        ],
+        "type": "object",
+        "properties": {
+          "kbid": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the title",
+            "example": 1157191
+          },
+          "titleName": {
+            "type": "string",
+            "description": "Title Name",
+            "example": "A Tale of Two Cities"
+          },
+          "publisherName": {
+            "type": "string",
+            "description": "Publisher Name",
+            "example": "www.ebsco.com"
+          },
+          "identifiersList": {
+            "type": "array",
+            "description": "Identifiers",
+            "items": {
+              "$ref": "#/components/schemas/identifier"
+            }
+          },
+          "subjectsList": {
+            "type": "array",
+            "description": "Subjects",
+            "items": {
+              "$ref": "#/components/schemas/subj"
+            }
+          },
+          "isTitleCustom": {
+            "type": "boolean",
+            "description": "Is this a custom title owned by the customer.",
+            "example": false
+          },
+          "alternateTitleList": {
+            "type": "array",
+            "description": "Alternate Titles",
+            "items": {
+              "$ref": "#/components/schemas/alternateTitle"
+            }
+          },
+          "pubType": {
+            "type": "string",
+            "description": "Publication Type",
+            "example": "Journal"
+          },
+          "customerResourcesList": {
+            "type": "array",
+            "description": "Customer Resources List",
+            "items": {
+              "$ref": "#/components/schemas/CustomerResourcesV2"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Title Description",
+            "example": "Description Test."
+          },
+          "edition": {
+            "type": "string",
+            "description": "Title Edition",
+            "example": "1"
+          },
+          "isPeerReviewed": {
+            "type": "boolean",
+            "description": "Is this title peer reviewed.",
+            "example": false
+          },
+          "contributorsList": {
+            "type": "array",
+            "description": "Contributors List",
+            "items": {
+              "$ref": "#/components/schemas/contributorID"
+            }
+          },
+          "titleRelationships": {
+            "type": "array",
+            "description": "Title relationships (e.g. ABSORBED_BY, CONTINUED_BY, PARENT_OF) for this title. Populated only when includerelationships=true was passed on the request. Not applicable to search results.",
+            "items": {
+              "$ref": "#/components/schemas/RelationshipRecord"
+            }
+          }
+        },
+        "description": "This object represents data elements that describe a title, regardless of package, in the v2 contract. It is the v2 counterpart of the v0 'titleDetails' schema: same title-level shape, with customerResourcesList items updated to carry PF/FTF/MARC visibility instead of a single isHidden/reason flag."
+      },
+      "CustomerResourcesV2": {
+        "required": [
+          "listId",
+          "packageName",
+          "packageType",
+          "proxy"
+        ],
+        "type": "object",
+        "properties": {
+          "kbid": {
+            "type": "integer",
+            "description": "EBSCO's unique identifier for the title",
+            "example": 1157191
+          },
+          "listId": {
+            "type": "integer",
+            "description": "EBSCO KB's unique identifier for the package.  In EPKB, this is 'PkgID'.",
+            "example": 1117849
+          },
+          "packageName": {
+            "type": "string",
+            "description": "Name of the Package. In EPKB, this is 'PkgName'.",
+            "example": "Health & Wellness Resource Center (w/alt health module)"
+          },
+          "packageType": {
+            "type": "string",
+            "description": "Package Type. Valid values are Selectable, Complete, Variable and Custom.",
+            "example": "Complete"
+          },
+          "proxy": {
+            "$ref": "#/components/schemas/proxyURL"
+          },
+          "isPackageCustom": {
+            "type": "boolean",
+            "description": "Is the Package Custom.",
+            "example": false
+          },
+          "vendorId": {
+            "type": "integer",
+            "description": "EBSCO KB's unique identifier for the provider.  In EPKB, this is 'VendorID'.",
+            "example": 19
+          },
+          "vendorName": {
+            "type": "string",
+            "description": "Provider name.  In EPKB, this is the 'VendorName'.",
+            "example": "EBSCO"
+          },
+          "locationId": {
+            "type": "integer",
+            "description": "Location ID",
+            "example": 123456789
+          },
+          "isSelected": {
+            "type": "boolean",
+            "description": "Indicates if selected in a customer's account.",
+            "example": false
+          },
+          "isOrderedThroughEbsco": {
+            "type": "boolean",
+            "description": "Limiter to include only records associated with an EBSCO order.",
+            "example": false
+          },
+          "isTokenNeeded": {
+            "type": "boolean",
+            "description": "Field to indicate if a token is needed",
+            "example": false
+          },
+          "visibility": {
+            "type": "array",
+            "description": "Visibility details for PF, FTF and MARC.",
+            "items": {
+              "$ref": "#/components/schemas/VisibilityDataV1"
+            }
+          },
+          "managedCoverageList": {
+            "type": "array",
+            "description": "Managed Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/coverageDates"
+            }
+          },
+          "customCoverageList": {
+            "type": "array",
+            "description": "Custom Coverage List",
+            "items": {
+              "$ref": "#/components/schemas/coverageDates"
+            }
+          },
+          "coverageStatement": {
+            "type": "string",
+            "description": "Coverage Statement",
+            "example": "Issues on or after 6/1/1992"
+          },
+          "managedEmbargoPeriod": {
+            "$ref": "#/components/schemas/embargoPeriod"
+          },
+          "customEmbargoPeriod": {
+            "$ref": "#/components/schemas/embargoPeriod"
+          },
+          "url": {
+            "type": "string",
+            "description": "Package URL",
+            "example": "http://search.ebscohost.com/login.aspx?authtype=ip,uid&profile=ehost&defaultdb=27h"
+          },
+          "isPrimaryPackage": {
+            "type": "boolean",
+            "description": "Indicates if the package is a vendor's primary package.",
+            "example": false
+          },
+          "kbartExcluded": {
+            "type": "boolean",
+            "description": "Indicates if the resource is excluded from KBART holdings exports.",
+            "example": false
+          },
+          "kbartCoverageOwnership": {
+            "type": "boolean",
+            "description": "Indicates ownership of the KBART coverage for this resource.",
+            "example": false
+          },
+          "userDefinedField1": {
+            "type": "string",
+            "description": "User Defined Field 1",
+            "example": "string1"
+          },
+          "userDefinedField2": {
+            "type": "string",
+            "description": "User Defined Field 2",
+            "example": "string2"
+          },
+          "userDefinedField3": {
+            "type": "string",
+            "description": "User Defined Field 3",
+            "example": "string3"
+          },
+          "userDefinedField4": {
+            "type": "string",
+            "description": "User Defined Field 4",
+            "example": "string4"
+          },
+          "userDefinedField5": {
+            "type": "string",
+            "description": "User Defined Field 5",
+            "example": "string5"
+          },
+          "consortia": {
+            "type": "string",
+            "description": "Indicates the consortia associated with a package."
+          }
+        },
+        "description": "This object represents data elements that describe customer resources information for a title, regardless of package, in the v2 contract. It is the v2 counterpart of the v0 'customerResources' schema, with 'visibilityData' (single isHidden/reason) replaced by 'visibility' (an array covering PF, FTF and MARC individually)."
       }
     }
   }
