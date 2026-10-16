@@ -10515,7 +10515,7 @@
             "example": "General Works"
           },
           "parentId": {
-            "type": "string",
+            "type": "integer",
             "description": "The parent id of the subject (will not be displayed if the associated subject is a root subject)."
           },
           "id": {
