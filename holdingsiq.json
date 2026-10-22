@@ -4519,7 +4519,7 @@
           {
             "name": "subjectfilter",
             "in": "query",
-            "description": "Filters package search by given subjects. Accepts subject id or name. If multiple subjects are given, documents containing any of the given subjects will be returned.",
+            "description": "Filters package search by given subjects. Accepts subject id or name. If multiple subjects are given, only documents containing all of the given subjects will be returned.",
             "schema": {
               "type": "array",
               "items": {
@@ -4777,7 +4777,7 @@
           {
             "name": "subjectfilter",
             "in": "query",
-            "description": "Filters package search by given subjects. Accepts subject id or name. If multiple subjects are given, documents containing any of the given subjects will be returned.",
+            "description": "Filters package search by given subjects. Accepts subject id or name. If multiple subjects are given, only documents containing all of the given subjects will be returned.",
             "schema": {
               "type": "array",
               "items": {
